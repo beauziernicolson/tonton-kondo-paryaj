@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Prototype mobile-first de la page d'accueil Tonton Kondo Paryaj." />
+  <title>Tonton Kondo Paryaj — Index</title>
+
+  <style>
+    :root{
+      --bg:#020813;
+      --bg-2:#061426;
+      --panel:#07182b;
+      --panel-2:#0b2038;
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --soft:#7f91ad;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --red:#ff3434;
+      --blue:#39a8ff;
+      --purple:#ba4cff;
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --bottom-nav-height:86px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Segoe UI",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 70% 0%, rgba(255,210,31,.12), transparent 24%),
+        radial-gradient(circle at 10% 8%, rgba(57,168,255,.15), transparent 28%),
+        linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%);
+      line-height:1.5;
+    }
+
+    button,input{font:inherit}
+    button{cursor:pointer}
+    img{max-width:100%;display:block}
+
+    .app{
+      width:min(100%, 430px);
+      margin:0 auto;
+      padding:18px 16px calc(var(--bottom-nav-height) + 22px);
+    }
+
+    /* Header mobile : zone identité + solde + actions. */
+    .mobile-header{
+      display:grid;
+      grid-template-columns:1fr auto auto;
+      align-items:center;
+      gap:12px;
+      padding:8px 0 16px;
+    }
+
+    .brand{display:flex;align-items:center;min-width:0;text-decoration:none;color:inherit}
+    .brand-block{display:flex;align-items:center;gap:12px}
+    .brand-icon{
+      width:56px;
+      height:56px;
+      object-fit:contain;
+      flex-shrink:0;
+      display:block;
+      border-radius:0;
+      box-shadow:none;
+    }
+    .brand-text{display:flex;flex-direction:column;line-height:1}
+    .brand-top,
+    .brand-middle{display:block;font-weight:900;font-size:22px;letter-spacing:.04em}
+    .brand-top{color:#fff}
+    .brand-middle{color:var(--gold)}
+    .brand-bottom{
+      position:relative;
+      display:block;
+      margin-top:4px;
+      text-align:center;
+      color:#d7dde8;
+      font-size:9px;
+      font-weight:800;
+      letter-spacing:.5em;
+    }
+    .brand-bottom::before,
+    .brand-bottom::after{
+      content:"";
+      position:absolute;
+      top:50%;
+      width:22px;
+      height:1px;
+      background:rgba(255,255,255,.35);
+    }
+    .brand-bottom::before{right:100%;margin-right:8px}
+    .brand-bottom::after{left:100%;margin-left:8px}
+
+    .wallet-chip{
+      display:none;
+      align-items:center;gap:8px;
+      background:rgba(9,30,54,.92);
+      border:1px solid var(--line);
+      border-radius:17px;
+      padding:10px 12px;
+      box-shadow:var(--shadow);
+      white-space:nowrap;
+    }
+    .wallet-icon,.action-icon,.stat-icon,.section-icon{
+      display:grid;place-items:center;flex-shrink:0;
+    }
+    .wallet-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(70,227,111,.16);color:var(--green)}
+    .wallet-icon svg{width:26px;height:26px;display:block;}
+    .wallet-chip strong{display:block;font-size:15px}
+    .wallet-chip span{display:block;color:var(--muted);font-size:12px;margin-top:-2px}
+
+    .header-actions{display:flex;gap:8px}
+    .action-btn{
+      width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+      background:rgba(8,24,43,.95);color:var(--gold);position:relative;
+      display:grid;place-items:center;box-shadow:var(--shadow);
+    }
+    .badge{
+      position:absolute;right:-2px;top:-5px;background:var(--gold);color:#111;
+      border-radius:999px;font-size:11px;font-weight:900;min-width:19px;height:19px;
+      display:grid;place-items:center;border:2px solid #061426;
+    }
+
+    /* Hero : visuel principal. Les images sont volontairement en placeholder vide. */
+    .hero{
+      border:1px solid var(--line);border-radius:var(--radius-xl);overflow:hidden;
+      background:
+        linear-gradient(90deg,rgba(3,12,26,.94) 0%,rgba(5,19,34,.72) 48%,rgba(4,13,24,.35) 100%),
+        linear-gradient(135deg,#071a32,#092846);
+      min-height:305px;position:relative;box-shadow:var(--shadow);
+      padding:28px 22px;isolation:isolate;
+    }
+    /* L’image hero utilise object-position pour garder le sujet principal visible sans le couper sur la droite. */
+    .hero-image{
+      position:absolute;
+      inset:0 0 0 42%;
+      z-index:-1;
+      width:58%;
+      height:100%;
+      object-fit:cover;
+      object-position:center right;
+      display:block;
+      border-left:1px solid rgba(255,255,255,.10);
+      opacity:.95;
+    }
+    .hero h1{margin:0 0 14px;font-size:42px;line-height:1.05;letter-spacing:-.04em}
+    .hero h1 span{display:block;color:var(--gold)}
+    .hero p{margin:0;color:#e4eaf4;font-size:16px;max-width:270px}
+    .hero-actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+    .btn-primary,.btn-secondary,.btn-ghost{
+      border:0;border-radius:14px;padding:14px 18px;font-weight:900;
+      display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    }
+    .btn-primary{background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#121212;box-shadow:0 10px 28px rgba(255,210,31,.22)}
+    .btn-secondary,.btn-ghost{background:rgba(11,32,56,.92);border:1px solid var(--line);color:#fff}
+    .slider-dots{display:flex;justify-content:center;gap:8px;margin:12px 0 24px}
+    .dot{width:18px;height:6px;border-radius:999px;background:rgba(255,255,255,.18)}
+    .dot.active{background:var(--gold)}
+
+    /* Stat cards : solde, tickets, gains, bonus. */
+    .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px}
+    .stat-card{
+      border:1px solid var(--line);border-radius:20px;background:rgba(8,24,43,.88);
+      padding:16px;min-height:118px;box-shadow:var(--shadow);
+    }
+    .stat-icon{width:46px;height:46px;border-radius:50%;margin-bottom:14px}
+    .stat-icon.gold{background:rgba(255,210,31,.14);color:var(--gold)}
+    .stat-icon.green{background:rgba(70,227,111,.15);color:var(--green)}
+    .stat-icon.blue{background:rgba(57,168,255,.16);color:var(--blue)}
+    .stat-icon.purple{background:rgba(186,76,255,.16);color:var(--purple)}
+    .stat-card small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+    .stat-card strong{display:block;font-size:19px;margin:3px 0;color:#fff}
+    .stat-card span{color:#cfd8e8;font-size:14px}
+
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 0 12px}
+    .section-title{display:flex;align-items:center;gap:10px;margin:0;font-size:24px;letter-spacing:-.02em}
+    .section-icon{width:28px;height:28px;color:var(--gold)}
+    .see-all{display:flex;align-items:center;gap:6px;color:#f3f7ff;text-decoration:none;font-size:14px}
+
+    /* Jeux populaires : carrousel horizontal mobile-first. */
+    .games-row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin-inline:-2px}
+    .games-row::-webkit-scrollbar{display:none}
+    .game-card{
+      flex:0 0 138px;height:150px;scroll-snap-align:start;border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);background:linear-gradient(135deg,#071b38,#0b2443);
+      display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:12px;
+      position:relative;overflow:hidden;box-shadow:var(--shadow);
+    }
+    .game-card.purple{background:linear-gradient(135deg,#22113c,#45135f)}
+    .game-card.green{background:linear-gradient(135deg,#052c18,#106225)}
+    .game-card.blue{background:linear-gradient(135deg,#06294d,#064a86)}
+    .game-card.red{background:linear-gradient(135deg,#421014,#8f161c)}
+    .game-card strong{font-size:16px;text-align:center;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+
+    .game-art,
+    .hero-image,
+    .site-logo{
+      display:block;
+    }
+
+    .game-art{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .3s ease;
+    }
+
+    .game-card .game-art{
+      width:100%;
+      aspect-ratio:1 / 1;
+      border-radius:16px;
+      overflow:hidden;
+    }
+
+    .game-card:hover .game-art{
+      transform:scale(1.05);
+    }
+
+    /* Paris sportifs. */
+    .sport-tabs{display:flex;gap:8px;overflow:auto;margin-bottom:12px}.sport-tabs::-webkit-scrollbar{display:none}
+    .sport-tab{white-space:nowrap;border:1px solid var(--line);background:rgba(8,24,43,.9);color:#fff;border-radius:999px;padding:9px 15px;font-weight:700}
+    .sport-tab.active{border-color:var(--gold);color:#fff;background:rgba(255,210,31,.06)}
+    .matches-list{display:grid;gap:12px;}
+    .match-card{
+      border:1px solid var(--line);border-radius:18px;background:rgba(8,24,43,.9);
+      padding:14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;box-shadow:var(--shadow);
+    }
+    .live-pill{background:var(--red);color:#fff;border-radius:7px;padding:7px 8px;font-weight:900;font-size:12px}
+    .match-title strong{display:block;font-size:15px}.match-title span{color:var(--muted);font-size:13px}
+    .odds{display:flex;gap:7px;align-items:center}.odd{border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.03);padding:8px 12px;text-align:center;min-width:52px}.odd span{display:block;color:var(--soft);font-size:12px}.odd strong{font-size:15px}
+
+    .floating-coupon-btn{
+      position:fixed;right:24px;bottom:24px;z-index:100;border:none;border-radius:999px;
+      background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#111;padding:14px 18px;
+      display:flex;align-items:center;gap:10px;font-weight:900;box-shadow:0 16px 40px rgba(255,210,31,.35);
+    }
+    .coupon-icon{display:grid;place-items:center}
+    .coupon-icon svg{width:18px;height:18px;display:block}
+    .coupon-badge{min-width:24px;height:24px;border-radius:999px;background:#111;color:#fff;display:grid;place-items:center;font-size:12px;}
+
+    @media (max-width:760px){
+      .match-card{grid-template-columns:1fr;align-items:flex-start;}
+      .odds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;}
+      .odd{min-width:0;}
+      .floating-coupon-btn{
+        bottom:calc(var(--bottom-nav-height) + 18px);right:18px;width:62px;height:62px;border-radius:50%;padding:0;justify-content:center;
+      }
+      .coupon-text{display:none;}
+      .coupon-badge{position:absolute;top:-6px;right:-4px;border:2px solid var(--gold);}
+    }
+
+    /* Bottom navigation : 5 entrées principales, pensée pour usage au pouce. */
+    .bottom-nav{
+      position:fixed;left:50%;bottom:0;transform:translateX(-50%);z-index:25;
+      width:min(100%,430px);height:var(--bottom-nav-height);
+      background:rgba(3,13,25,.97);border-top:1px solid var(--line);backdrop-filter:blur(16px);
+      display:grid;grid-template-columns:repeat(5,1fr);padding:10px 10px 8px;
+    }
+    .bottom-link{color:#c8d1e0;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:600}
+    .bottom-link svg{width:28px;height:28px;display:block;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .bottom-link.active{color:var(--gold)}.bottom-link.active .nav-icon-wrap{background:rgba(255,210,31,.12)}
+    .nav-icon-wrap{width:46px;height:46px;border-radius:14px;display:grid;place-items:center}
+    .nav-icon-wrap svg{width:26px;height:26px;display:block}
+
+    .desktop-only{display:none}
+    .icon{width:1.1em;height:1.1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .icon-lg{width:1.55em;height:1.55em}
+
+    @media (max-width:760px){
+      .brand-icon{width:44px;height:44px}
+      .brand-top,.brand-middle{font-size:18px}
+      .brand-bottom{font-size:8px}
+      .hero-image{
+        inset:0;
+        width:100%;
+        height:100%;
+        object-position:center right;
+        opacity:.45;
+      }
+    }
+
+    @media (min-width:760px){
+      .app{width:min(100%,1180px);padding:24px 28px 40px}.mobile-header{grid-template-columns:1fr auto auto}.wallet-chip{display:flex}.desktop-only{display:flex}.bottom-nav,.floating-ticket{display:none}.hero{min-height:360px}.stats-grid{grid-template-columns:repeat(4,1fr)}.game-card{flex-basis:170px}.coupon{max-width:440px;margin-left:auto}.coupon-body{display:block}.coupon-toggle{display:none}
+    }
+
+    .final-cta{
+      margin-top:40px;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:linear-gradient(135deg,rgba(7,24,43,.95),rgba(4,12,24,.95));
+      min-height:260px;
+      padding:34px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+      align-items:center;
+      overflow:hidden;
+    }
+
+    .final-cta-content span{color:var(--gold);font-weight:900;}
+    .final-cta h2{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:10px 0;}
+    .final-cta h2 strong{color:var(--gold);}
+    .final-cta p{color:var(--muted);max-width:420px;}
+
+    .final-cta-visual{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:260px;
+    }
+
+    .cta-image{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .trophy-placeholder{
+      height:220px;
+      border-radius:24px;
+      background:radial-gradient(circle,rgba(255,210,31,.35),transparent 45%),linear-gradient(135deg,#081a2e,#020813);
+      display:grid;
+      place-items:center;
+      color:var(--gold);
+      font-weight:900;
+    }
+
+    .trust-grid{margin-top:30px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+    .trust-grid article{background:rgba(8,24,43,.75);border:1px solid var(--line);border-radius:20px;padding:18px;}
+    .trust-icon{width:32px;height:32px;display:grid;place-items:center;color:var(--gold);}
+    .trust-icon svg{width:24px;height:24px;display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+    .trust-grid span{font-size:30px;}
+    .trust-grid strong{display:block;margin:10px 0 4px;}
+    .trust-grid p{margin:0;color:var(--muted);font-size:14px;}
+
+    .payment-section{margin-top:40px;padding-top:28px;border-top:1px solid var(--line);}
+    .payment-section h2{font-size:28px;margin-bottom:18px;}
+    .payment-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
+    .payment-grid .payment-card{
+      height:120px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(8,24,43,.75);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition:.3s ease;
+      padding:12px 10px;
+      text-align:center;
+    }
+    .payment-grid .payment-card:hover{transform:translateY(-4px);border-color:rgba(255,210,31,.4);}
+    .payment-grid .payment-card h3{margin:0;font-size:14px;font-weight:800;color:#fff;}
+    .payment-logo{width:90px;height:40px;object-fit:contain;display:block;}
+
+    .site-footer{margin-top:54px;padding:36px;border:1px solid var(--line);border-radius:30px;background:rgba(5,18,34,.92);}
+    .footer-grid{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:34px;}
+    .footer-brand img{width:130px;height:auto;object-fit:contain;}
+    .footer-brand p{color:var(--muted);margin:18px 0;}
+    /* Premium Social Links */
+    .premium-socials{display:flex;gap:12px;align-items:center;}
+    .social-link{
+      width:48px;height:48px;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:900;
+      font-size:24px;line-height:1;
+      padding:0;margin:0;
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      transition:.25s ease;
+      box-shadow:0 14px 30px rgba(0,0,0,.28);
+    }
+    .social-link:hover{transform:translateY(-3px);border-color:rgba(255,210,31,.55);box-shadow:0 16px 36px rgba(255,210,31,.18);}
+    .facebook{color:#3b82f6;font-size:26px;}
+    .instagram{color:#e879f9;font-size:22px;}
+    .x-twitter{color:#f8fafc;font-size:20px;}
+    .youtube{color:#ef4444;font-size:24px;}
+    .site-footer h3{margin:0 0 14px;font-size:16px;text-transform:uppercase;}
+    .site-footer a{display:block;color:var(--muted);text-decoration:none;margin-bottom:10px;font-size:14px;}
+    .site-footer a:hover{color:var(--gold);}
+
+    .footer-accordion{border-top:1px solid rgba(255,255,255,.06);}
+    .footer-accordion-trigger{width:100%;border:0;background:none;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:14px 0;font-weight:900;text-transform:uppercase;cursor:pointer;}
+    .footer-accordion-content{display:grid;gap:10px;padding-bottom:12px;}
+    .footer-accordion-content a{color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:0;}
+    .footer-accordion-icon{transition:transform .25s ease;}
+    .footer-accordion.is-open .footer-accordion-icon{transform:rotate(180deg);}
+
+    .footer-bottom{margin-top:34px;padding-top:24px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;color:var(--muted);font-size:13px;}
+    .footer-bottom strong{color:var(--red);border:1px solid var(--red);border-radius:50%;padding:6px;margin-right:8px;}
+
+    .back-to-top{position:fixed;right:22px;bottom:22px;width:54px;height:54px;border-radius:50%;border:none;background:var(--gold);color:#111;font-size:24px;font-weight:900;box-shadow:0 16px 40px rgba(255,210,31,.35);z-index:40;}
+
+    @media (max-width:760px){
+      .back-to-top{display:none !important;}
+      .footer-accordion-content{display:none;}
+      .footer-accordion.is-open .footer-accordion-content{display:grid;}
+    }
+
+    @media (min-width:761px){
+      .footer-accordion-trigger{pointer-events:none;}
+      .footer-accordion-icon{display:none;}
+      .footer-accordion-content{display:grid;}
+    }
+
+    @media (max-width:900px){
+      .final-cta{grid-template-columns:1fr;}
+      .trust-grid{grid-template-columns:repeat(2,1fr);}
+      .payment-grid{grid-template-columns:repeat(2,1fr);}
+      .footer-grid{grid-template-columns:1fr 1fr;}
+      .footer-bottom{grid-template-columns:1fr;}
+    }
+
+    @media (max-width:520px){
+      .final-cta{padding:24px;}
+      .trust-grid{grid-template-columns:1fr;}
+      .footer-grid{grid-template-columns:1fr;}
+      .site-footer{padding:24px;}
+      .social-link{width:44px;height:44px;border-radius:14px;font-size:18px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="mobile-header" aria-label="En-tête principal">
+      <a class="brand" href="#" aria-label="Accueil Tonton Kondo">
+        <div class="brand-block">
+          <img src="assets/logo.png" alt="Tonton Kondo" class="brand-icon" />
+          <div class="brand-text">
+            <span class="brand-top">TONTON</span>
+            <span class="brand-middle">KONDO</span>
+            <span class="brand-bottom">PARYAJ</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="wallet-chip" aria-label="Solde utilisateur">
+        <span><strong>18 450 HTG</strong><span>Solde disponible</span></span>
+      </div>
+
+      <div class="header-actions">
+        <button class="action-btn" type="button" aria-label="Promotions"><svg class="icon icon-lg"><use href="#i-gift"/></svg><span class="badge">3</span></button>
+        <button class="action-btn" type="button" aria-label="Notifications"><svg class="icon icon-lg"><use href="#i-bell"/></svg><span class="badge">2</span></button>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Présentation principale">
+      <img src="assets/heroimage.png" alt="Hero Tonton Kondo" class="hero-image" />
+      <h1>PARYAJ <span>TONTON KONDO</span></h1>
+      <p>La plateforme de paris et jeux en ligne conçue pour un parcours joueur clair, rapide et professionnel.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" type="button">Parier maintenant <span>→</span></button>
+        <button class="btn-secondary" type="button">Voir les jeux</button>
+      </div>
+    </section>
+    <div class="slider-dots" aria-hidden="true"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+
+    <section class="stats-grid" aria-label="Statistiques du joueur">
+      <article class="stat-card"><span class="stat-icon gold"><svg class="icon icon-lg"><use href="#i-wallet"/></svg></span><small>Solde</small><strong>18 450 HTG</strong><span>Disponible</span></article>
+      <article class="stat-card"><span class="stat-icon green"><svg class="icon icon-lg"><use href="#i-ticket"/></svg></span><small>Tickets</small><strong>14 actifs</strong><span>2 prêts à confirmer</span></article>
+      <article class="stat-card"><span class="stat-icon blue"><svg class="icon icon-lg"><use href="#i-chart"/></svg></span><small>Gains du jour</small><strong>+ 3 240 HTG</strong><span>Mises en cours</span></article>
+      <article class="stat-card"><span class="stat-icon purple"><svg class="icon icon-lg"><use href="#i-gift"/></svg></span><small>Bonus</small><strong>12 %</strong><span>Promotion</span></article>
+    </section>
+
+    <section aria-labelledby="popular-games-title">
+      <div class="section-head"><h2 class="section-title" id="popular-games-title"><svg class="section-icon"><use href="#i-star"/></svg>Jeux populaires</h2><a class="see-all" href="#">Voir tous <span>›</span></a></div>
+      <div class="games-row">
+        <!-- Le fichier assets/borlette.png n’est pas présent dans le dossier assets ; l’image disponible utilisée ici est assets/Lotterie.png. -->
+        <article class="game-card"><img src="assets/Lotterie.png" alt="Borlette" class="game-art" /><strong>Borlette</strong></article>
+        <article class="game-card purple"><img src="assets/mariage.png" alt="Mariage" class="game-art" /><strong>Mariage</strong></article>
+        <article class="game-card green"><img src="assets/lo3.png" alt="Lotto 3" class="game-art" /><strong>Lotto 3</strong></article>
+        <article class="game-card blue"><img src="assets/lo4.png" alt="Lotto 4" class="game-art" /><strong>Lotto 4</strong></article>
+        <article class="game-card red"><img src="assets/lo5.png" alt="Lotto 5" class="game-art" /><strong>Lotto 5</strong></article>
+      </div>
+      <div class="slider-dots" aria-hidden="true"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+    </section>
+
+    <section aria-labelledby="sports-title">
+      <div class="section-head"><h2 class="section-title" id="sports-title"><svg class="section-icon"><use href="#i-trophy"/></svg>Paris sportifs</h2><a class="see-all" href="#">Voir tous <span>›</span></a></div>
+      <div class="sport-tabs"><button class="sport-tab active">Football</button><button class="sport-tab">Basketball</button><button class="sport-tab">Tennis</button><button class="sport-tab">eSports</button></div>
+      <div class="matches-list">
+        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>Real Madrid vs Barcelona</strong><span>La Liga - Espagne</span></div><div class="odds"><div class="odd"><span>1</span><strong>2.10</strong></div><div class="odd"><span>X</span><strong>3.40</strong></div><div class="odd"><span>2</span><strong>3.05</strong></div></div></article>
+        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>Manchester City vs Arsenal</strong><span>Premier League - Angleterre</span></div><div class="odds"><div class="odd"><span>1</span><strong>1.95</strong></div><div class="odd"><span>X</span><strong>3.25</strong></div><div class="odd"><span>2</span><strong>2.75</strong></div></div></article>
+        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>PSG vs Marseille</strong><span>Ligue 1 - France</span></div><div class="odds"><div class="odd"><span>1</span><strong>2.20</strong></div><div class="odd"><span>X</span><strong>3.10</strong></div><div class="odd"><span>2</span><strong>2.90</strong></div></div></article>
+        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>Inter Miami vs LA Galaxy</strong><span>MLS - USA</span></div><div class="odds"><div class="odd"><span>1</span><strong>1.85</strong></div><div class="odd"><span>X</span><strong>3.50</strong></div><div class="odd"><span>2</span><strong>3.20</strong></div></div></article>
+        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>Bayern Munich vs Dortmund</strong><span>Bundesliga - Allemagne</span></div><div class="odds"><div class="odd"><span>1</span><strong>1.75</strong></div><div class="odd"><span>X</span><strong>3.60</strong></div><div class="odd"><span>2</span><strong>3.40</strong></div></div></article>
+      </div>
+    </section>
+
+    <!-- SECTION CTA AVANT FOOTER -->
+    <section class="final-cta">
+      <div class="final-cta-content">
+        <span>Rejoignez des milliers de parieurs</span>
+        <h2>Pariez. Gagnez.<br><strong>Vivez la passion.</strong></h2>
+        <p>Plateforme rapide, sécurisée et pensée pour les parieurs haïtiens.</p>
+      </div>
+
+      <div class="final-cta-visual">
+        <img
+          src="assets/hero2.png"
+          alt="Promotion Tonton Kondo"
+          class="cta-image"
+        >
+      </div>
+    </section>
+
+    <!-- SECTION AVANTAGES -->
+    <section class="trust-grid">
+      <article>
+        <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.2 2.8 7.8 7 10 4.2-2.2 7-5.8 7-10V6l-7-3Z"/><path d="m9.5 12 1.8 1.8 3.2-3.5"/></svg></span>
+        <strong>100% Sécurisé</strong>
+        <p>Transactions protégées et cryptées.</p>
+      </article>
+
+      <article>
+        <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2 4 6v6c0 5 3.4 8.7 9 10 5.6-1.3 9-5 9-10V6l-9-4Z"/><path d="M12 7v5l3 2"/></svg></span>
+        <strong>Rapide &amp; Fiable</strong>
+        <p>Mises instantanées et paiements rapides.</p>
+      </article>
+
+      <article>
+        <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0v4a1 1 0 0 1-1 1h-2"/><path d="M7 15h10a2 2 0 0 1 2 2v1H5v-1a2 2 0 0 1 2-2Z"/><path d="M9 19v1m6-1v1"/></svg></span>
+        <strong>Support 24/7</strong>
+        <p>Notre équipe reste disponible pour vous.</p>
+      </article>
+
+      <article>
+        <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 8 7H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3l4 4V3Z"/><path d="M16 8a3 3 0 1 1 0 6"/></svg></span>
+        <strong>Bonus Exclusifs</strong>
+        <p>Des offres spéciales chaque semaine.</p>
+      </article>
+    </section>
+
+    <!-- MOYENS DE PAIEMENT -->
+    <section class="payment-section">
+      <h2>Moyens de paiement</h2>
+
+      <div class="payment-grid">
+        <div class="payment-card">
+          <h3>NatCash</h3>
+          <img src="assets/natcash.jpg" alt="NatCash" class="payment-logo">
+        </div>
+        <div class="payment-card">
+          <h3>MonCash</h3>
+          <img src="assets/moncash.png" alt="MonCash" class="payment-logo">
+        </div>
+        <div class="payment-card">
+          <h3>Sogebank</h3>
+          <img src="assets/sogebank.png" alt="Sogebank" class="payment-logo">
+        </div>
+        <div class="payment-card">
+          <h3>PayCash</h3>
+          <img src="assets/paycash.png" alt="PayCash" class="payment-logo">
+        </div>
+        <div class="payment-card">
+          <h3>Zelle</h3>
+          <img src="assets/zelle.png" alt="Zelle" class="payment-logo">
+        </div>
+        <div class="payment-card">
+          <h3>Western Union</h3>
+          <!-- Fichier image manquant : assets/western-union.png -->
+          <img src="assets/western-union.png" alt="Western Union" class="payment-logo">
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Logo Tonton Kondo">
+          <p>La plateforme de paris et jeux en ligne conçue pour un parcours joueur clair, rapide et professionnel.</p>
+
+          <!--<div class="socials premium-socials">
+            <a href="#" class="social-link facebook" aria-label="Facebook">f</a>
+            <a href="#" class="social-link instagram" aria-label="Instagram">◎</a>
+            <a href="#" class="social-link x-twitter" aria-label="X">𝕏</a>
+            <a href="#" class="social-link youtube" aria-label="YouTube">▶</a>
+          </div>
+        </div> -->
+
+        <div class="footer-accordion">
+          <button class="footer-accordion-trigger" type="button" aria-expanded="false">
+            <span>Paris</span>
+            <span class="footer-accordion-icon">⌄</span>
+          </button>
+          <div class="footer-accordion-content">
+            <a href="#">Paris sportifs</a>
+            <a href="#">En direct</a>
+            <a href="#">Prochains matchs</a>
+            <a href="#">Résultats</a>
+          </div>
+        </div>
+
+        <div class="footer-accordion">
+          <button class="footer-accordion-trigger" type="button" aria-expanded="false">
+            <span>Jeux</span>
+            <span class="footer-accordion-icon">⌄</span>
+          </button>
+          <div class="footer-accordion-content">
+            <a href="#">Lotterie</a>
+            <a href="#">Borlette</a>
+            <a href="#">Mariage</a>
+            <a href="#">Lotto 3</a>
+            <a href="#">Lotto 4</a>
+            <a href="#">Lotto 5</a>
+          </div>
+        </div>
+
+        <div class="footer-accordion">
+          <button class="footer-accordion-trigger" type="button" aria-expanded="false">
+            <span>Compte</span>
+            <span class="footer-accordion-icon">⌄</span>
+          </button>
+          <div class="footer-accordion-content">
+            <a href="#">Mon compte</a>
+            <a href="#">Historique</a>
+            <a href="#">Dépôt</a>
+            <a href="#">Retrait</a>
+            <a href="#">Mes tickets</a>
+          </div>
+        </div>
+
+        <div class="footer-accordion">
+          <button class="footer-accordion-trigger" type="button" aria-expanded="false">
+            <span>Aide</span>
+            <span class="footer-accordion-icon">⌄</span>
+          </button>
+          <div class="footer-accordion-content">
+            <a href="#">Centre d’aide</a>
+            <a href="#">FAQ</a>
+            <a href="#">Nous contacter</a>
+            <a href="#">Conditions générales</a>
+            <a href="#">Politique de confidentialité</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Tonton Kondo Paryaj. Tous droits réservés.</p>
+        <p><strong>18+</strong> Jeu responsable. Pariez avec modération.</p>
+        <p>🔒 Plateforme sécurisée. Vos données sont protégées.</p>
+      </div>
+    </footer>
+  </div>
+
+  <button class="floating-coupon-btn" type="button" aria-label="Ouvrir le coupon de pari">
+    <span class="coupon-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span>
+    <span class="coupon-text">Coupon de pari</span>
+    <span class="coupon-badge">3</span>
+  </button>
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Retour en haut">↑</button>
+
+  <nav class="bottom-nav" aria-label="Navigation mobile principale">
+    <a class="bottom-link active" href="#"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>Accueil</a>
+    <a class="bottom-link" href="#"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dices-icon lucide-dices"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg></span>Jeux</a>
+    <a class="bottom-link" href="#"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volleyball-icon lucide-volleyball"><path d="M11 7a16 16 20 0 1 10.98 4.362"/><path d="M12 12a13 13 0 0 1-8.66 5"/><path d="M16.83 13.634a16 16 0 0 1-9.267 7.328"/><path d="M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10"/><path d="M8.17 15.366a16 16 0 0 1-1.713-11.69"/><circle cx="12" cy="12" r="10"/></svg></span>Sports</a>
+    <a class="bottom-link" href="#"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-signal-icon lucide-signal"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg></span>Résultats</a>
+    <a class="bottom-link" href="#"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span>Portefeuille</a>
+  </nav>
+
+  <!-- SVG sprite inline : aucune dépendance externe, maintenable par un autre développeur. -->
+  <svg width="0" height="0" style="position:absolute;visibility:hidden" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></symbol>
+    <symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m12 7 4 3-1.5 5h-5L8 10l4-3Z"/><path d="M12 7V3M8 10 4.5 8M16 10l3.5-2M9.5 15 7 20M14.5 15l2.5 5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="5" rx="1"/><rect x="12" y="7" width="3" height="9" rx="1"/><rect x="17" y="4" width="3" height="12" rx="1"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7h15a2 2 0 0 1 2 2v10H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h13"/><path d="M16 13h5"/><circle cx="17" cy="13" r="1"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7Z"/><path d="M13 5v14"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0V4Z"/><path d="M8 6H4a3 3 0 0 0 3 3h1"/><path d="M16 6h4a3 3 0 0 1-3 3h-1"/><path d="M12 12v5"/><path d="M8 21h8"/><path d="M10 17h4"/></symbol>
+  </svg>
+
+  <script>
+    const floatingCouponBtn = document.querySelector('.floating-coupon-btn');
+
+    floatingCouponBtn?.addEventListener('click', () => {
+      console.log('Coupon de pari à ouvrir plus tard');
+    });
+
+    document.querySelectorAll('.footer-accordion-trigger').forEach((button) => {
+      button.addEventListener('click', () => {
+        const accordion = button.closest('.footer-accordion');
+        const isOpen = accordion.classList.toggle('is-open');
+        button.setAttribute('aria-expanded', String(isOpen));
+      });
+    });
+
+    const backToTop = document.getElementById('backToTop');
+    backToTop?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
