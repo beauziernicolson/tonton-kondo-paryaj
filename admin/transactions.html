@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Transactions Admin</title>
+  <style>
+    :root {
+      --bg: #020813;
+      --panel: rgba(8, 24, 43, 0.96);
+      --panel-soft: rgba(255, 255, 255, 0.03);
+      --line: rgba(255, 255, 255, 0.10);
+      --text: #f5f7fb;
+      --muted: #aebbd0;
+      --gold: #ffd21f;
+      --gold-2: #ffb900;
+      --green: #46e36f;
+      --red: #ff5f6d;
+      --blue: #39a8ff;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 80% 0%, rgba(255, 210, 31, 0.10), transparent 18%),
+        radial-gradient(circle at 15% 10%, rgba(57, 168, 255, 0.12), transparent 22%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+
+    .app { width: min(100%, 1360px); margin: 0 auto; padding: 18px 16px 40px; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; color: #fff; }
+    .brand img { width: 56px; height: 56px; border-radius: 16px; object-fit: contain; background: rgba(255,255,255,.04); padding: 6px; }
+    .brand-text strong { display: block; font-size: 18px; letter-spacing: .03em; }
+    .brand-text span { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .35em; }
+
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--line); border-radius: 999px;
+      background: rgba(8,24,43,.92); color: #fff; box-shadow: var(--shadow);
+      padding: 10px 12px; font-size: 13px; font-weight: 700;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96));
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: .25em; font-size: 11px; font-weight: 900; }
+    .hero h1 { margin: 8px 0 8px; font-size: clamp(26px, 5vw, 40px); line-height: 1.05; }
+    .hero p { color: var(--muted); margin: 0; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .stat-card {
+      border: 1px solid var(--line); border-radius: 18px;
+      background: rgba(255,255,255,.03);
+      padding: 14px;
+      min-height: 108px;
+    }
+    .stat-card small { display: block; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+    .stat-card strong { display: block; font-size: 22px; color: #fff; margin-top: 4px; }
+    .stat-card span { display: block; color: #dfe6f2; font-size: 13px; margin-top: 2px; }
+
+    .badge-line { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 999px; border: 1px solid var(--line); color: #fff; background: rgba(255,255,255,.03); font-size: 12px; font-weight: 800; }
+    .badge.gold { color: var(--gold); }
+    .badge.green { color: var(--green); }
+    .badge.red { color: var(--red); }
+
+    .quick-panel { display: grid; gap: 10px; }
+    .mini-card { border: 1px solid var(--line); border-radius: 18px; padding: 12px; background: rgba(255,255,255,.03); }
+    .mini-card strong { display: block; color: #fff; font-size: 15px; }
+    .mini-card span { color: var(--muted); font-size: 13px; }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr auto;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .field { display: grid; gap: 6px; }
+    .field label { color: #edf2f8; font-size: 13px; font-weight: 700; }
+    .field input, .field select {
+      width: 100%; border: 1px solid var(--line); border-radius: 12px;
+      background: rgba(255,255,255,.03); color: #fff; padding: 10px 12px;
+      outline: none;
+    }
+    .field input:focus, .field select:focus { border-color: rgba(255,210,31,.45); background: rgba(255,255,255,.05); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border-radius: 12px; border: 0; padding: 10px 12px; font-weight: 900; cursor: pointer;
+    }
+    .btn-primary { background: linear-gradient(180deg, var(--gold), var(--gold-2)); color: #111; box-shadow: 0 10px 28px rgba(255,210,31,.18); }
+    .btn-secondary { background: rgba(255,255,255,.04); border: 1px solid var(--line); color: #fff; }
+    .btn-success { background: rgba(70,227,111,.10); color: #dfffe8; border: 1px solid rgba(70,227,111,.18); }
+    .btn-danger { background: rgba(255,95,109,.10); color: #ffe2e6; border: 1px solid rgba(255,95,109,.16); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.02);
+      margin-top: 16px;
+    }
+
+    table { width: 100%; border-collapse: collapse; min-width: 820px; }
+    th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 13px; }
+    th { color: #eaf1f9; font-size: 12px; text-transform: uppercase; letter-spacing: .18em; background: rgba(255,255,255,.03); }
+    tbody tr:hover { background: rgba(255,255,255,.03); }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 999px; padding: 6px 8px; font-size: 12px; font-weight: 800;
+      border: 1px solid var(--line); background: rgba(255,255,255,.03);
+    }
+    .pill.deposit { color: #dfffe8; background: rgba(70,227,111,.08); border-color: rgba(70,227,111,.16); }
+    .pill.withdrawal { color: #ffe2e6; background: rgba(255,95,109,.08); border-color: rgba(255,95,109,.16); }
+    .pill.bet { color: #ffe9c8; background: rgba(255,210,31,.08); border-color: rgba(255,210,31,.18); }
+    .pill.win { color: #dff7ff; background: rgba(57,168,255,.08); border-color: rgba(57,168,255,.16); }
+    .pill.approved { color: #dfffe8; background: rgba(70,227,111,.08); border-color: rgba(70,227,111,.18); }
+    .pill.pending { color: #fff4d8; background: rgba(255,210,31,.08); border-color: rgba(255,210,31,.18); }
+    .pill.rejected { color: #ffe2e6; background: rgba(255,95,109,.08); border-color: rgba(255,95,109,.18); }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+
+    .footer-note { color: var(--muted); font-size: 12px; margin-top: 10px; }
+
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(1, 6, 12, 0.72); display: none; align-items: center; justify-content: center; padding: 18px; z-index: 30;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      width: min(100%, 760px); border-radius: 24px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(8,24,43,.98), rgba(5,17,31,.98)); box-shadow: var(--shadow); padding: 18px;
+    }
+    .modal-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 10px; }
+    .modal-head h2 { margin: 0; font-size: 20px; }
+    .modal-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .detail-box { border:1px solid var(--line); border-radius: 16px; padding: 12px; background: rgba(255,255,255,.03); }
+    .detail-box span { display:block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .16em; }
+    .detail-box strong { display:block; color: #fff; font-size: 14px; margin-top: 4px; }
+
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 820px) {
+      .filters { grid-template-columns: 1fr 1fr; }
+      .filters .field:last-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 640px) {
+      .app { padding: 12px 12px 28px; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .chip { display: none; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .filters { grid-template-columns: 1fr; }
+      .actions { justify-content: flex-start; }
+      .modal-grid { grid-template-columns: 1fr; }
+      table { min-width: 760px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Administration</span>
+        </span>
+      </a>
+      <span class="chip">Transactions • Vue admin prototype</span>
+    </header>
+
+    <section class="hero">
+      <article class="panel">
+        <div class="eyebrow">Espace admin</div>
+        <h1>Gestion des transactions financières</h1>
+        <p>Préparation statique pour les comptes de dépôt, retrait, mise, gain et commission. Cette page est un support d’interface pour la phase suivante.</p>
+        <div class="badge-line">
+          <span class="badge gold">Dépôts</span>
+          <span class="badge red">Retraits</span>
+          <span class="badge">Mises</span>
+          <span class="badge green">Gains</span>
+          <span class="badge">Commissions</span>
+        </div>
+      </article>
+
+      <article class="panel quick-panel">
+        <div class="mini-card">
+          <strong>Rôle attendu</strong>
+          <span>Admin / Super Admin — préparation de la gestion financière.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Mode actuel</strong>
+          <span>Prototype statique, aucune intégration Supabase ni validation réelle.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Actions disponibles</strong>
+          <span>Voir, Approuver, Rejeter, filtrer et consulter les détails de chaque transaction.</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="eyebrow">Statistiques rapides</div>
+      <div class="stats-grid">
+        <article class="stat-card"><small>Total transactions</small><strong>128</strong><span>Dernier mois</span></article>
+        <article class="stat-card"><small>Dépôts validés</small><strong>42</strong><span>+8% vs. semaine dernière</span></article>
+        <article class="stat-card"><small>Retraits en attente</small><strong>9</strong><span>3 à vérifier</span></article>
+        <article class="stat-card"><small>Montant traité</small><strong>1,24M FCFA</strong><span>Somme totale en consultation</span></article>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top: 18px;">
+      <div class="eyebrow">Filtres</div>
+      <div class="filters">
+        <div class="field">
+          <label for="search">Recherche</label>
+          <input id="search" type="search" placeholder="Nom, téléphone, référence..." />
+        </div>
+        <div class="field">
+          <label for="type">Type</label>
+          <select id="type">
+            <option>Tous</option>
+            <option>deposit</option>
+            <option>withdrawal</option>
+            <option>bet</option>
+            <option>win</option>
+            <option>refund</option>
+            <option>commission</option>
+            <option>adjustment</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="status">Statut</label>
+          <select id="status">
+            <option>Tous</option>
+            <option>pending</option>
+            <option>approved</option>
+            <option>rejected</option>
+            <option>completed</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" type="button">Appliquer les filtres</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Référence</th>
+              <th>Client</th>
+              <th>Type</th>
+              <th>Montant</th>
+              <th>Statut</th>
+              <th>Créé le</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TRX-10021</td>
+              <td>Jean Kouassi<br><small style="color:var(--muted);">+229 97 00 00 00</small></td>
+              <td><span class="pill deposit">deposit</span></td>
+              <td>25 000 FCFA</td>
+              <td><span class="pill approved">approved</span></td>
+              <td>13 juin 2026</td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10021')">Voir</button>
+                  <button class="btn btn-success" type="button">Approuver</button>
+                  <button class="btn btn-danger" type="button">Rejeter</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>TRX-10022</td>
+              <td>Marie Delice<br><small style="color:var(--muted);">+229 96 11 22 33</small></td>
+              <td><span class="pill withdrawal">withdrawal</span></td>
+              <td>8 500 FCFA</td>
+              <td><span class="pill pending">pending</span></td>
+              <td>13 juin 2026</td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10022')">Voir</button>
+                  <button class="btn btn-success" type="button">Approuver</button>
+                  <button class="btn btn-danger" type="button">Rejeter</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>TRX-10023</td>
+              <td>Fils A. Abel<br><small style="color:var(--muted);">+229 94 44 55 66</small></td>
+              <td><span class="pill bet">bet</span></td>
+              <td>3 200 FCFA</td>
+              <td><span class="pill completed">completed</span></td>
+              <td>12 juin 2026</td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10023')">Voir</button>
+                  <button class="btn btn-success" type="button">Approuver</button>
+                  <button class="btn btn-danger" type="button">Rejeter</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>TRX-10024</td>
+              <td>Yvette Saint<br><small style="color:var(--muted);">+229 95 77 88 99</small></td>
+              <td><span class="pill win">win</span></td>
+              <td>18 400 FCFA</td>
+              <td><span class="pill approved">approved</span></td>
+              <td>12 juin 2026</td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10024')">Voir</button>
+                  <button class="btn btn-success" type="button">Approuver</button>
+                  <button class="btn btn-danger" type="button">Rejeter</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>TRX-10025</td>
+              <td>Romain L. Yao<br><small style="color:var(--muted);">+229 90 30 40 50</small></td>
+              <td><span class="pill commission">commission</span></td>
+              <td>1 200 FCFA</td>
+              <td><span class="pill rejected">rejected</span></td>
+              <td>11 juin 2026</td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10025')">Voir</button>
+                  <button class="btn btn-success" type="button">Approuver</button>
+                  <button class="btn btn-danger" type="button">Rejeter</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="footer-note">Prototype statique — aucun appel Supabase ni validation réelle n’est effectué.</p>
+    </section>
+  </main>
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    (async () => {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+      if (!currentUser) {
+        window.location.replace('../login-register/login.html');
+      }
+    })();
+  </script>
+
+  <div class="modal-backdrop" id="transactionModal" aria-hidden="true">
+    <aside class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h2 id="modalTitle">Détail transaction</h2>
+        <button class="btn btn-secondary" type="button" onclick="closeModal()">Fermer</button>
+      </div>
+      <div class="modal-grid">
+        <article class="detail-box"><span>Référence</span><strong>TRX-10021</strong></article>
+        <article class="detail-box"><span>Type</span><strong>Dépot</strong></article>
+        <article class="detail-box"><span>Montant</span><strong>25 000 FCFA</strong></article>
+        <article class="detail-box"><span>Statut</span><strong>Approuvé</strong></article>
+        <article class="detail-box"><span>Client</span><strong>Jean Kouassi</strong></article>
+        <article class="detail-box"><span>Créé par</span><strong>Admin principal</strong></article>
+        <article class="detail-box"><span>Description</span><strong>Dépot utilisateur — prototype d’interface</strong></article>
+        <article class="detail-box"><span>Méthode</span><strong>MonCash</strong></article>
+      </div>
+      <div class="actions" style="margin-top: 12px; justify-content: flex-start;">
+        <button class="btn btn-success" type="button">Approuver</button>
+        <button class="btn btn-danger" type="button">Rejeter</button>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    function openModal(ref) {
+      const modal = document.getElementById('transactionModal');
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.getElementById('modalTitle').textContent = 'Détail transaction - ' + ref;
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('transactionModal');
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    document.getElementById('transactionModal')?.addEventListener('click', function (event) {
+      if (event.target === this) closeModal();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+gain potentiel pa pou tout lo
+Oui. Audit complet du projet nicko.zip :
+
+Verdict général
+
+Le projet est une bonne V1 fonctionnelle, mais pas prêt production. Le plus gros risque n’est pas le design : c’est la sécurité Supabase/RLS/RPC.
+
+Bugs / risques critiques
+
+1. Le dossier .git est dans le zip. À ne jamais livrer/publicer avec le projet.
+2. Le dossier assets/ manque dans le zip. Beaucoup d’images sont référencées mais absentes : logo, hero, jeux, MonCash, NatCash, etc.
+3. apply_transaction() est appelable depuis le frontend dans borlette.html, mariage.html, admin/deposits.html, admin/withdrawals.html. Pour production, il faut remplacer ça par des RPC métiers strictes :
+    * place_borlette_ticket()
+    * place_mariage_ticket()
+    * approve_deposit()
+    * approve_withdrawal()
+4. profiles_update_own permet encore à un utilisateur de modifier son profil complet. Le commentaire dit que role sera protégé plus tard. C’est dangereux.
+5. auth.js peut recréer/mettre à jour profile et wallet côté client. À durcir.
+6. Logs debug encore présents :
+    * BORLETTE DEBUG
+    * RESULT DEBUG
+    * console.log
+7. Des pages admin existent côté HTML seulement. Il faut s’assurer que RLS bloque vraiment un client non-admin.
+
+Bugs fonctionnels
+
+1. dashboard.html affiche encore des stats faibles/statiques :
+    * tickets actifs = 0
+    * gains = 0
+    * texte “Placeholder…”
+2. admin/transactions.html est encore prototype.
+3. agent/dashboard.html est une page de préparation seulement.
+4. Beaucoup de liens href="#" dans index.html : footer, sports, résultats, aide, FAQ, jeux, etc.
+5. admin/dashboard.html et agent/dashboard.html pointent vers ../login.html, mais ton login réel est dans login-register/login.html.
+6. login-register/register.html contient encore des alert() et un message “Inscription non activée pour l’instant.”
+7. schema-tickets.sql et schema-results.sql sont dépassés par des fichiers ALTER. Il faut consolider les schémas avant production.
+
+Structure
+
+Le projet est encore très “fichier par fichier” :
+
+HTML + JS inline
+SQL séparé
+Auth globale dans js/auth.js
+Pas de build system
+Pas de tests automatisés
+Pas de dossier assets dans le zip
+
+Pour V1 locale, ça passe. Pour production, il faut mieux organiser :
+
+/js
+/css
+/assets
+/supabase
+/docs
+/admin
+/pages
+
+Et sortir les gros scripts inline des pages.
+
+Sécurité à corriger avant production
+
+Priorité haute :
+
+1. Supprimer .git du livrable
+2. Ajouter .gitignore
+3. Protéger role/status dans profiles
+4. Remplacer les appels directs apply_transaction côté frontend
+5. Créer des RPC métiers sécurisées
+6. Retirer logs debug
+7. Vérifier toutes les RLS admin
+8. Corriger les liens login admin/agent
+
+État des modules
+
+Auth : fonctionnel mais à durcir
+Wallet : fonctionnel mais RPC trop exposée
+Transactions : bon début
+Borlette : avancé, règle 3 lots en cours/à retester
+Mariage : fonctionnel mais à auditer séparément
+Dépôts/retraits : fonctionnels selon toi, mais à sécuriser côté RPC
+Historique : bon début, à enrichir
+Dashboard : pas encore au niveau
+Admin résultats : fonctionnel mais logs/debug à retirer
+Admin transactions : prototype
+Agents : pas développé
+Lotto 3/4/5 : pas développé
+
+Avant mise en production
+
+Checklist courte :
+
+Sécurité Supabase
+↓
+Nettoyage prototype
+↓
+Assets manquants
+↓
+Dashboard dynamique
+↓
+Historique complet
+↓
+Tests Borlette 3 lots
+↓
+Tests dépôt/retrait
+↓
+Tests admin/client RLS
+↓
+Responsive final
+
+Conclusion : très bon projet en construction, mais actuellement je le classerais :
+
+V1 dev/test : oui
+Production client réel : pas encore
+
+3)gain du jour pas fonctionnel
+4)grille lotto et exemple lotto 3

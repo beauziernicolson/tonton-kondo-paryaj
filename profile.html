@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Profil</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:rgba(8,24,43,.92);
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      min-height:100vh;
+      font-family:"Segoe UI", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 80% 0%, rgba(255,210,31,.10), transparent 18%),
+        radial-gradient(circle at 15% 8%, rgba(57,168,255,.12), transparent 22%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+      line-height:1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .app { width:min(100%, 1100px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background: rgba(255,255,255,.04); padding:6px; }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.03em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+
+    .shell { display:grid; grid-template-columns: 1fr .9fr; gap:18px; }
+    .panel { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .badge-tag { display:inline-flex; align-items:center; gap:8px; width:fit-content; border-radius:999px; padding:8px 10px; background: rgba(255,210,31,.08); color:var(--gold); text-transform:uppercase; letter-spacing:.2em; font-size:11px; font-weight:900; border:1px solid rgba(255,210,31,.15); }
+
+    .panel h1 { margin:10px 0 6px; font-size: clamp(28px, 6vw, 36px); line-height:1.05; }
+    .panel p { color: var(--muted); margin-top:0; }
+
+    .profile-card { border:1px solid var(--line); border-radius:22px; padding:14px; background: rgba(255,255,255,.03); display:grid; gap:10px; }
+    .profile-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .avatar { width:56px; height:56px; border-radius:50%; display:grid; place-items:center; background: linear-gradient(135deg, rgba(255,210,31,.18), rgba(57,168,255,.18)); color: var(--gold); font-weight:900; font-size:18px; }
+
+    .info-grid { display:grid; gap:10px; margin-top:14px; }
+    .info-item { border:1px solid var(--line); border-radius:18px; padding:12px; background: rgba(255,255,255,.03); }
+    .info-item span { display:block; color: var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.14em; }
+    .info-item strong { display:block; color:#fff; font-size:15px; margin-top:3px; }
+
+    .status { border:1px solid rgba(70,227,111,.22); border-radius:16px; padding:10px; background: rgba(70,227,111,.08); color:#d8ffe6; font-weight:700; }
+
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:0; padding:12px 14px; font-weight:900; cursor:pointer; margin-top:10px; }
+    .btn-primary { background: linear-gradient(180deg, var(--gold), var(--gold-2)); color:#111; box-shadow:0 10px 28px rgba(255,210,31,.22); }
+    .btn-secondary { background: rgba(255,255,255,.04); border:1px solid var(--line); color:#fff; }
+
+    .mini-note { color: var(--muted); font-size:13px; margin-top:10px; }
+
+    @media (max-width: 980px) { .shell { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .panel { border-radius:22px; padding:16px; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+    </header>
+
+    <section class="shell">
+      <article class="panel">
+        <span class="badge-tag">Profil joueur</span>
+        <h1>Informations personnelles</h1>
+        <p>Consultez les données principales du compte et préparez la prochaine étape de personnalisation.</p>
+
+        <div class="profile-card">
+          <div class="profile-row">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <img data-profile-avatar src="assets/logo.png" alt="Avatar" class="avatar" style="object-fit: cover; width: 56px; height: 56px;" />
+              <div>
+                <strong data-profile-name style="display:block; color:#fff;">Chargement…</strong>
+                <span data-profile-role-tag style="color:var(--muted); font-size:13px; text-transform: uppercase;">CLIENT</span>
+              </div>
+            </div>
+            <span class="status" data-profile-account-status>Statut : Actif</span>
+          </div>
+          <p class="mini-note">Profil lu uniquement depuis Supabase Auth, profiles et wallets. Aucun changement de rôle ou de solde n’est autorisé depuis cette page.</p>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item"><span>Nom complet</span><strong data-profile-name-full>Chargement…</strong></div>
+          <div class="info-item"><span>Prénom</span><strong data-profile-first-name>Chargement…</strong></div>
+          <div class="info-item"><span>Nom</span><strong data-profile-last-name>Chargement…</strong></div>
+          <div class="info-item"><span>Téléphone</span><strong data-profile-phone>Chargement…</strong></div>
+          <div class="info-item"><span>Email</span><strong data-profile-email>Chargement…</strong></div>
+          <div class="info-item"><span>Rôle</span><strong data-profile-role>Chargement…</strong></div>
+          <div class="info-item"><span>Statut du compte</span><strong data-profile-status>Chargement…</strong></div>
+        </div>
+
+        <button id="logoutBtn" class="btn btn-primary" type="button">Déconnexion</button>
+        <a class="btn btn-secondary" href="dashboard.html">Retour au tableau de bord</a>
+      </article>
+
+      <article class="panel">
+        <span class="badge-tag">Portefeuille</span>
+        <h1>Vue d’ensemble</h1>
+        <p>Les données de solde et de rôle sont affichées en lecture seule. Elles ne peuvent pas être modifiées depuis cette page.</p>
+        <div class="info-grid">
+          <div class="info-item"><span>Solde disponible</span><strong data-profile-balance>Chargement…</strong></div>
+          <div class="info-item"><span>Devise</span><strong data-profile-currency>Chargement…</strong></div>
+          <div class="info-item"><span>Statut du wallet</span><strong data-profile-wallet-status>Chargement…</strong></div>
+          <div class="info-item"><span>Provider</span><strong data-profile-provider>Chargement…</strong></div>
+          <div class="info-item"><span>Date de création</span><strong data-profile-created-at>Chargement…</strong></div>
+          <div class="info-item"><span>Avatar</span><strong data-profile-avatar-note>Image Google ou initiale locale</strong></div>
+        </div>
+
+        <div class="profile-card" style="margin-top: 12px;">
+          <strong style="color:#fff;">Historique rapide</strong>
+          <p class="mini-note">Placeholder de sécurité et d’activité. Les opérations financières restent gérées côté backend.</p>
+          <div class="info-grid">
+            <div class="info-item"><span>Dernière mise à jour</span><strong>Chargement…</strong></div>
+            <div class="info-item"><span>Type d’accès</span><strong data-profile-provider-sub>Chargement…</strong></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (async () => {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+      if (!currentUser) {
+        const target = window.location.pathname.split('/').filter(Boolean).slice(-2).join('/') || 'profile.html';
+        window.saveRedirectTarget?.(target);
+        window.location.replace('login-register/login.html');
+        return;
+      }
+
+      const data = await (window.getAuthenticatedProfile ? window.getAuthenticatedProfile() : null);
+      if (window.renderProfilePage) {
+        window.renderProfilePage(data);
+      }
+
+      const logoutBtn = document.getElementById('logoutBtn');
+      logoutBtn?.addEventListener('click', async () => {
+        const result = await window.logoutUser?.();
+        if (result?.ok) {
+          window.location.replace('login-register/login.html');
+        } else {
+          window.alert(result?.message || 'Déconnexion impossible.');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Jeux</title>
+  <style>
+    :root {
+      --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0;
+      --gold:#ffd21f; --gold-2:#ffb900; --blue:#39a8ff; --green:#46e36f; --purple:#b28cff; --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius-xl:28px; --radius-md:18px;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background:radial-gradient(circle at 82% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 10% 8%, rgba(57,168,255,.13), transparent 24%), linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%); }
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; cursor:pointer; }
+    .app { width:min(100%, 1180px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .hero-card { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; margin-bottom:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
+    .hero-card h1 { margin:0 0 8px; font-size:clamp(28px, 5vw, 38px); line-height:1.04; letter-spacing:-.03em; }
+    .hero-card p { margin:0; color:var(--muted); font-size:15px; max-width:760px; }
+    .grid { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+    .panel { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:16px; }
+    .panel h2 { margin:0 0 6px; font-size:18px; }
+    .panel p { margin:0 0 12px; color:var(--muted); font-size:13px; }
+    .game-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; }
+    .game-card { border:1px solid var(--line); border-radius:20px; padding:14px; background:linear-gradient(180deg, rgba(9,26,45,.96), rgba(5,16,28,.96)); box-shadow:inset 0 -1px 0 rgba(255,255,255,.04); display:flex; flex-direction:column; gap:10px; }
+    .game-card .tag { display:inline-flex; align-items:center; gap:8px; padding:6px 8px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#edf4ff; font-size:11px; text-transform:uppercase; letter-spacing:.12em; font-weight:900; }
+    .game-card strong { display:block; font-size:18px; }
+    .game-card .desc { color:var(--muted); font-size:13px; min-height:42px; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:12px; padding:9px 11px; border:1px solid var(--line); font-weight:900; color:#fff; background:rgba(255,255,255,.04); font-size:13px; }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#121212; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .btn-secondary { background:rgba(255,255,255,.03); }
+    .disabled { opacity:.65; cursor:not-allowed; }
+    .help-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+    .mini-card { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(255,255,255,.03); }
+    .mini-card strong { display:block; margin-bottom:4px; font-size:15px; }
+    .mini-card p { font-size:13px; color:var(--muted); margin-bottom:8px; }
+    @media (max-width: 980px) { .grid { grid-template-columns:1fr; } .game-grid { grid-template-columns:1fr; } }
+    @media (max-width: 640px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+      <span class="pill">Jeux disponibles</span>
+    </header>
+
+    <section class="hero-card">
+      <div class="eyebrow">Catalogue</div>
+      <h1>Jeux disponibles</h1>
+      <p>Accédez rapidement à Borlette, Mariage, Lotto 3 et aux aides associées. Les jeux en cours de préparation restent visibles comme “bientôt”.</p>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>Jeux principaux</h2>
+        <p>Les jeux actifs et leurs raccourcis de jeu.</p>
+        <div class="game-grid">
+          <article class="game-card">
+            <span class="tag">Borlette</span>
+            <strong>Borlette</strong>
+            <p class="desc">Choisissez vos boules, votre tirage et validez votre ticket Borlette.</p>
+            <div class="actions"><a class="btn btn-primary" href="../borlette.html">Jouer</a><a class="btn btn-secondary" href="../help-borlette.html">Comprendre</a></div>
+          </article>
+          <article class="game-card">
+            <span class="tag">Mariage</span>
+            <strong>Mariage</strong>
+            <p class="desc">Jouez deux numéros avec les 3 lots Borlette du même tirage.</p>
+            <div class="actions"><a class="btn btn-primary" href="../mariage.html">Jouer</a><a class="btn btn-secondary" href="../help-mariage.html">Comprendre</a></div>
+          </article>
+          <article class="game-card">
+            <span class="tag">Lotto 3</span>
+            <strong>Lotto 3</strong>
+            <p class="desc">Choisissez un numéro 000 à 999. Le gain V1 est basé sur le premier lot complet Borlette.</p>
+            <div class="actions"><a class="btn btn-primary" href="../lotto3.html">Jouer</a><a class="btn btn-secondary" href="../help-lotto3.html">Comprendre</a></div>
+          </article>
+          <article class="game-card disabled">
+            <span class="tag">Lotto 4</span>
+            <strong>Lotto 4</strong>
+            <p class="desc">Bientôt disponible. La page reste désactivée pour maintenir la stabilité des jeux existants.</p>
+            <div class="actions"><button class="btn btn-secondary" type="button" disabled>Bientôt</button></div>
+          </article>
+          <article class="game-card disabled">
+            <span class="tag">Lotto 5</span>
+            <strong>Lotto 5</strong>
+            <p class="desc">Bientôt disponible. Les règles seront ajoutées dans une prochaine phase.</p>
+            <div class="actions"><button class="btn btn-secondary" type="button" disabled>Bientôt</button></div>
+          </article>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Comprendre les règles</h2>
+        <p>Accédez aux aides de chaque jeu pour vérifier la logique et les règles de base.</p>
+        <div class="help-grid">
+          <article class="mini-card"><strong>Règles Borlette</strong><p>3 lots, multiplicateurs x60 / x20 / x10, résultat calculé à partir du tirage publié.</p><a class="btn btn-secondary" href="../help-borlette.html">Ouvrir</a></article>
+          <article class="mini-card"><strong>Règles Mariage</strong><p>Combinaison de deux numéros, ordre non important, gain x5000 sur les 3 lots Borlette.</p><a class="btn btn-secondary" href="../help-mariage.html">Ouvrir</a></article>
+          <article class="mini-card"><strong>Règles Lotto 3</strong><p>Numéro 000 à 999, ordre exact obligatoire, gain V1 = mise × 500.</p><a class="btn btn-secondary" href="../help-lotto3.html">Ouvrir</a></article>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

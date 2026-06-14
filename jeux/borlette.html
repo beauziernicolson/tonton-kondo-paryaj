@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Interface Borlette — sélection de numéros, montant et validation de tickets en ligne." />
+  <title>Tonton Kondo — Borlette</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --bg-2:#061426;
+      --panel:rgba(8,24,43,.94);
+      --panel-2:rgba(10,30,52,.92);
+      --line:rgba(255,255,255,.12);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --red:#ff5d6c;
+      --blue:#39a8ff;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 80% 0%, rgba(255,210,31,.11), transparent 18%),
+        radial-gradient(circle at 12% 8%, rgba(57,168,255,.14), transparent 24%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+      line-height: 1.45;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .app {
+      width: min(100%, 1180px);
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+    .brand img {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      object-fit: contain;
+      background: rgba(255,255,255,.04);
+      padding: 6px;
+      border: 1px solid var(--line);
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: .04em;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .35em;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(8,24,43,.92);
+      color: #fff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96));
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.04;
+      letter-spacing: -.03em;
+    }
+
+    .lede {
+      color: var(--muted);
+      margin: 0;
+      max-width: 620px;
+      font-size: 15px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .mini-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: #edf4ff;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .mini-chip strong { color: var(--gold); }
+
+    .panel-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .panel-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .chip-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,210,31,.18);
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: rgba(255,210,31,.08);
+      color: #fff7da;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .field-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      margin-bottom: 6px;
+    }
+
+    .value-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px;
+      padding: 6px 8px;
+      background: rgba(255,255,255,.04);
+      color: #edf4ff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .num-btn {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      min-height: 42px;
+      background: linear-gradient(180deg, rgba(11,32,56,.95), rgba(6,19,34,.95));
+      color: #fff;
+      font-weight: 900;
+      transition: transform .12s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .num-btn:hover { transform: translateY(-1px); border-color: rgba(255,210,31,.35); }
+    .num-btn.active {
+      background: linear-gradient(180deg, rgba(255,210,31,.16), rgba(255,185,0,.14));
+      border-color: rgba(255,210,31,.45);
+      color: var(--gold);
+      box-shadow: 0 10px 24px rgba(255,210,31,.12);
+    }
+
+    .amount-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .amount-row input {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,.04);
+      color: #fff;
+      min-height: 48px;
+    }
+
+    .amount-row input:focus {
+      outline: 2px solid rgba(255,210,31,.35);
+      border-color: rgba(255,210,31,.45);
+      background: rgba(255,255,255,.06);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      font-weight: 900;
+      color: #fff;
+      background: rgba(255,255,255,.04);
+      transition: transform .12s ease, background .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: linear-gradient(180deg, var(--gold), var(--gold-2));
+      color: #121212;
+      border-color: transparent;
+      box-shadow: 0 10px 28px rgba(255,210,31,.18);
+    }
+
+    .btn-secondary { background: rgba(255,255,255,.04); }
+
+    .btn-danger {
+      background: rgba(255,93,108,.10);
+      color: #ffdfe3;
+      border-color: rgba(255,93,108,.18);
+    }
+
+    .coupon-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .coupon-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(9,26,45,.96), rgba(5,16,28,.96));
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,.04);
+    }
+
+    .coupon-left strong {
+      display: block;
+      font-size: 17px;
+      color: #fff;
+      letter-spacing: .03em;
+    }
+
+    .coupon-left span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .coupon-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .coupon-amount {
+      font-weight: 900;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      border: 1px dashed rgba(255,255,255,.14);
+      border-radius: 18px;
+      padding: 14px;
+      color: var(--muted);
+      background: rgba(255,255,255,.02);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .summary {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      display: grid;
+      gap: 8px;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: #edf4ff;
+      font-size: 13px;
+    }
+
+    .summary-row strong { color: #fff; font-size: 15px; }
+
+    .summary-total {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 8px;
+      margin-top: 4px;
+      color: var(--gold);
+      font-weight: 900;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .helper-text {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .feedback {
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      color: #edf4ff;
+      font-size: 13px;
+      min-height: 44px;
+    }
+
+    .feedback.success { border-color: rgba(70,227,111,.18); color: #e8fff0; background: rgba(70,227,111,.08); }
+    .feedback.warn { border-color: rgba(255,210,31,.18); color: #fff7da; background: rgba(255,210,31,.08); }
+
+    .footer-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1020px) {
+      .layout-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 740px) {
+      .app { padding: 12px 12px 28px; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .amount-row { flex-direction: column; }
+      .number-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .coupon-item { grid-template-columns: 1fr; }
+      .coupon-right { justify-content: space-between; }
+    }
+
+    @media (max-width: 480px) {
+      .number-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .pill { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <span class="pill">Borlette</span>
+    </header>
+
+    <section class="card" style="margin-bottom:18px;">
+      <div class="eyebrow">Borlette</div>
+      <h1>Borlette</h1>
+      <p class="lede">Choisissez votre numéro, saisissez un montant, ajoutez plusieurs lignes au coupon, consultez le total et validez votre ticket.</p>
+      <div class="hero-meta">
+        <span class="mini-chip">📅 Tirages actifs depuis Supabase</span>
+        <span class="mini-chip">💳 Validation en ligne</span>
+        <span class="mini-chip">🔐 Accès joueur connecté</span>
+        <a class="mini-chip" href="help-borlette.html" style="border-color: rgba(255,210,31,.22); background: rgba(255,210,31,.08); color: #fff7da;">📘 Comprendre les règles</a>
+      </div>
+    </section>
+
+    <section class="layout-grid">
+      <article class="card">
+        <div class="panel-title">
+          <div>
+            <h2>Choix du numéro et montant</h2>
+            <p>Sélectionnez un numéro de 00 à 99, puis ajoutez une ligne au coupon.</p>
+          </div>
+          <span class="chip-note">Sélection</span>
+        </div>
+
+        <div class="field-grid">
+          <article class="field-card">
+            <div class="label">
+              <span>Tirage</span>
+              <span class="value-pill">Obligatoire</span>
+            </div>
+            <select id="draw-name-select" class="btn" style="width:100%; text-align:left; background:rgba(255,255,255,.04); border:1px solid var(--line); color:#fff;" aria-label="Choisir un tirage Borlette">
+              <option value="">Chargement des tirages…</option>
+            </select>
+            <p class="helper-text">Le tirage choisi est associé au ticket pour la vérification et le suivi des résultats.</p>
+          </article>
+
+          <article class="field-card">
+            <div class="label">
+              <span>Numéro sélectionné</span>
+              <span class="value-pill" id="selected-number-pill">00</span>
+            </div>
+            <div class="number-grid" id="number-grid" aria-label="Sélection des numéros de 00 à 99"></div>
+          </article>
+
+          <article class="field-card">
+            <div class="label">
+              <span>Montant</span>
+              <span class="value-pill">HTG</span>
+            </div>
+            <div class="amount-row">
+              <input id="amount-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Montant du ticket" />
+              <button id="add-line-btn" class="btn btn-primary" type="button">Ajouter au coupon</button>
+            </div>
+            <p class="helper-text">Le montant saisi est ajouté au coupon avant validation du ticket.</p>
+          </article>
+        </div>
+
+        <div id="feedback-box" class="feedback warn">Choisissez un numéro, saisissez un montant puis ajoutez la ligne au coupon.</div>
+      </article>
+
+      <article class="card">
+        <div class="panel-title">
+          <div>
+            <h2>Coupon en cours</h2>
+            <p>Validation et suivi du coupon</p>
+          </div>
+          <span class="chip-note">Total à afficher</span>
+        </div>
+
+        <div class="summary">
+          <div class="summary-row"><span>Nombre de lignes</span><strong id="line-count">0</strong></div>
+          <div class="summary-row"><span>Montant total</span><strong id="total-amount">0 HTG</strong></div>
+          <div class="summary-total"><span>Total du ticket</span><strong id="total-display">0 HTG</strong></div>
+        </div>
+
+        <div id="coupon-list" class="coupon-list" aria-live="polite"></div>
+
+        <div class="field-grid" style="margin-top:14px;">
+          <article class="field-card">
+            <div class="label">
+              <span>Validation</span>
+              <span class="value-pill">En ligne</span>
+            </div>
+            <button id="validate-btn" class="btn btn-primary" type="button" style="width:100%;">Valider le ticket</button>
+            <p class="footer-note">La validation utilise le wallet connecté et la création réelle de tickets dans Supabase.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    (function () {
+      const numberGrid = document.getElementById('number-grid');
+      const selectedNumberPill = document.getElementById('selected-number-pill');
+      const amountInput = document.getElementById('amount-input');
+      const addLineBtn = document.getElementById('add-line-btn');
+      const couponList = document.getElementById('coupon-list');
+      const lineCount = document.getElementById('line-count');
+      const totalAmount = document.getElementById('total-amount');
+      const totalDisplay = document.getElementById('total-display');
+      const feedbackBox = document.getElementById('feedback-box');
+      const validateBtn = document.getElementById('validate-btn');
+      const drawNameSelect = document.getElementById('draw-name-select');
+
+      let selectedNumber = '00';
+      let selectedDrawName = 'New York Midday';
+      let couponLines = [];
+      let currentUser = null;
+
+      function formatNumber(value) {
+        return String(value).padStart(2, '0');
+      }
+
+      function formatCurrency(value) {
+        return `${Number(value || 0).toLocaleString('fr-FR')} HTG`;
+      }
+
+      function generateTicketNumber() {
+        const now = new Date();
+        const stamp = [
+          now.getFullYear(),
+          String(now.getMonth() + 1).padStart(2, '0'),
+          String(now.getDate()).padStart(2, '0'),
+          String(now.getHours()).padStart(2, '0'),
+          String(now.getMinutes()).padStart(2, '0'),
+          String(now.getSeconds()).padStart(2, '0'),
+        ].join('');
+
+        const randomPart = Math.floor(Math.random() * 9000 + 1000);
+        return `TKB-${stamp}-${randomPart}`;
+      }
+
+      function setFeedback(message, type) {
+        feedbackBox.textContent = message;
+        feedbackBox.className = 'feedback';
+        if (type === 'success') feedbackBox.classList.add('success');
+        if (type === 'warn') feedbackBox.classList.add('warn');
+      }
+
+      async function waitForSupabaseClient(maxAttempts = 12, delayMs = 250) {
+        for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+          const client = window.supabaseClient || null;
+          if (client && typeof client.from === 'function') {
+            return client;
+          }
+
+          await new Promise((resolve) => setTimeout(resolve, delayMs));
+        }
+
+        return window.supabaseClient || null;
+      }
+
+      async function loadDrawSchedules() {
+        try {
+          drawNameSelect.innerHTML = '<option value="">Chargement des tirages…</option>';
+
+          const client = await waitForSupabaseClient();
+          if (!client || typeof client.from !== 'function') {
+            drawNameSelect.innerHTML = '<option value="">Connexion Supabase indisponible</option>';
+            setFeedback('La connexion Supabase n’est pas encore disponible. Rechargez la page si nécessaire.', 'warn');
+            return;
+          }
+
+          const { data, error } = await client
+            .from('draw_schedules')
+            .select('draw_name, display_name')
+            .eq('game_type', 'borlette')
+            .eq('is_active', true)
+            .order('sort_order', { ascending: true })
+            .order('draw_name', { ascending: true });
+
+          if (error) {
+            console.error('Erreur chargement tirages Borlette', error);
+            drawNameSelect.innerHTML = '<option value="">Erreur de chargement des tirages</option>';
+            setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'warn');
+            return;
+          }
+
+          const schedules = Array.isArray(data) ? data : [];
+          drawNameSelect.innerHTML = '';
+
+          if (!schedules.length) {
+            drawNameSelect.innerHTML = '<option value="">Aucun tirage actif disponible</option>';
+            selectedDrawName = '';
+            setFeedback('Aucun tirage actif disponible pour Borlette.', 'warn');
+            return;
+          }
+
+          schedules.forEach((draw) => {
+            const option = document.createElement('option');
+            option.value = draw.draw_name;
+            option.textContent = draw.display_name || draw.draw_name;
+            drawNameSelect.appendChild(option);
+          });
+
+          selectedDrawName = drawNameSelect.value || schedules[0].draw_name;
+          drawNameSelect.value = selectedDrawName;
+          setFeedback(`Tirages Borlette chargés : ${schedules.length} tirage(s) disponible(s).`, 'success');
+        } catch (error) {
+          console.error('Erreur chargement tirages Borlette', error);
+          drawNameSelect.innerHTML = '<option value="">Erreur de chargement des tirages</option>';
+          setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'warn');
+        }
+      }
+
+      function renderNumbers() {
+        numberGrid.innerHTML = '';
+
+        for (let index = 0; index < 100; index += 1) {
+          const value = formatNumber(index);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'num-btn' + (value === selectedNumber ? ' active' : '');
+          btn.textContent = value;
+          btn.setAttribute('aria-pressed', String(value === selectedNumber));
+          btn.addEventListener('click', () => {
+            selectedNumber = value;
+            selectedNumberPill.textContent = value;
+            renderNumbers();
+            setFeedback(`Numéro ${value} sélectionné. Vous pouvez ajuster le montant puis ajouter la ligne.`, 'warn');
+          });
+          numberGrid.appendChild(btn);
+        }
+
+        selectedNumberPill.textContent = selectedNumber;
+      }
+
+      function renderCoupon() {
+        couponList.innerHTML = '';
+        if (!couponLines.length) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-state';
+          empty.textContent = 'Votre coupon est vide. Ajoutez une ou plusieurs lignes pour commencer.';
+          couponList.appendChild(empty);
+        } else {
+          couponLines.forEach((line) => {
+            const item = document.createElement('article');
+            item.className = 'coupon-item';
+
+            const left = document.createElement('div');
+            left.className = 'coupon-left';
+            left.innerHTML = `<strong>Numéro ${line.number}</strong><span>Ajouté le ${new Date(line.createdAt).toLocaleString('fr-FR')}</span>`;
+
+            const right = document.createElement('div');
+            right.className = 'coupon-right';
+
+            const amount = document.createElement('span');
+            amount.className = 'coupon-amount';
+            amount.textContent = formatCurrency(line.amount);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'btn btn-danger';
+            deleteBtn.textContent = 'Supprimer';
+            deleteBtn.addEventListener('click', () => {
+              couponLines = couponLines.filter((entry) => entry.id !== line.id);
+              renderCoupon();
+              setFeedback(`La ligne ${line.number} a été supprimée du coupon.`, 'warn');
+            });
+
+            right.appendChild(amount);
+            right.appendChild(deleteBtn);
+            item.appendChild(left);
+            item.appendChild(right);
+            couponList.appendChild(item);
+          });
+        }
+
+        const total = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);
+        lineCount.textContent = String(couponLines.length);
+        totalAmount.textContent = formatCurrency(total);
+        totalDisplay.textContent = formatCurrency(total);
+      }
+
+      function addLineToCoupon() {
+        const rawAmount = Number(amountInput.value);
+        selectedDrawName = drawNameSelect.value || 'New York Midday';
+
+        if (!selectedDrawName) {
+          setFeedback('Choisissez un tirage avant d’ajouter une ligne.', 'warn');
+          drawNameSelect.focus();
+          return;
+        }
+
+        if (!Number.isFinite(rawAmount) || rawAmount <= 0) {
+          setFeedback('Entrez un montant valide supérieur à 0 avant d’ajouter une ligne.', 'warn');
+          amountInput.focus();
+          return;
+        }
+
+        const newLine = {
+          id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+          number: selectedNumber,
+          amount: rawAmount,
+          createdAt: new Date().toISOString(),
+        };
+
+        couponLines = [newLine, ...couponLines];
+        renderCoupon();
+        setFeedback(`Ligne ${newLine.number} ajoutée au coupon avec ${formatCurrency(newLine.amount)}.`, 'success');
+      }
+
+      addLineBtn.addEventListener('click', addLineToCoupon);
+      amountInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          addLineToCoupon();
+        }
+      });
+
+      validateBtn.addEventListener('click', async () => {
+        if (!currentUser) {
+          setFeedback('Vous devez être connecté pour valider un ticket.', 'warn');
+          if (window.saveRedirectTarget) {
+            window.saveRedirectTarget('../borlette.html');
+          }
+          window.location.replace('../login-register/login.html');
+          return;
+        }
+
+        selectedDrawName = drawNameSelect.value || 'New York Midday';
+
+        if (!selectedDrawName) {
+          setFeedback('Choisissez un tirage avant de valider le ticket.', 'warn');
+          drawNameSelect.focus();
+          return;
+        }
+
+        if (!couponLines.length) {
+          setFeedback('Aucune ligne à valider. Ajoutez au moins un numéro au coupon.', 'warn');
+          return;
+        }
+
+        const client = window.supabaseClient || null;
+        if (!client || typeof client.from !== 'function') {
+          setFeedback('La connexion Supabase n’est pas encore disponible. Rechargez la page et réessayez.', 'warn');
+          return;
+        }
+
+        const userId = currentUser.id || currentUser.user_id || null;
+        const totalAmountValue = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);
+        let createdTicketId = null;
+
+        console.log('BORLETTE DEBUG - clic validation', {
+          currentUserId: userId,
+          totalAmount: totalAmountValue,
+          step: 'début validation',
+        });
+
+        validateBtn.disabled = true;
+        validateBtn.textContent = 'Validation…';
+        setFeedback('Validation du ticket en cours…', 'warn');
+
+        try {
+          console.log('BORLETTE DEBUG - étape wallet', {
+            currentUserId: userId,
+            step: 'lecture wallet',
+          });
+
+          const { data: walletData, error: walletError } = await client
+            .from('wallets')
+            .select('id, balance, currency, status')
+            .eq('user_id', userId)
+            .single();
+
+          console.log('BORLETTE DEBUG - wallet trouvé', {
+            walletFound: Boolean(walletData),
+            wallet: walletData,
+            walletBalance: walletData?.balance ?? null,
+            walletError,
+            step: 'wallet chargé',
+          });
+
+          if (walletError || !walletData) {
+            const message = walletError?.message || 'Wallet introuvable pour ce compte.';
+            setFeedback(walletError?.code === 'PGRST116' ? 'Wallet introuvable pour ce compte.' : `Erreur wallet : ${message}`, 'warn');
+            console.error('BORLETTE DEBUG - erreur wallet', walletError || new Error('Wallet introuvable pour ce compte.'));
+            return;
+          }
+
+          const currentBalance = Number(walletData?.balance || 0);
+          if (currentBalance < totalAmountValue) {
+            setFeedback(`Solde insuffisant. Solde actuel : ${formatCurrency(currentBalance)}. Total ticket : ${formatCurrency(totalAmountValue)}.`, 'warn');
+            console.warn('BORLETTE DEBUG - solde insuffisant', {
+              currentBalance,
+              totalAmount: totalAmountValue,
+              step: 'vérification solde',
+            });
+            return;
+          }
+
+          const ticketNumber = generateTicketNumber();
+          // STABILITY LOCK:
+          // Do not remove draw_name.
+          // Borlette/Mariage result processing depends on tickets.draw_name.
+          console.log('BORLETTE DEBUG - ticketNumber', {
+            ticketNumber,
+            currentBalance,
+            totalAmount: totalAmountValue,
+            step: 'préparation ticket',
+          });
+
+          console.log('BORLETTE DEBUG - étape création ticket', {
+            userId,
+            ticketNumber,
+            totalAmount: totalAmountValue,
+            drawName: selectedDrawName,
+            step: 'insertion ticket',
+          });
+
+          const baseTicketPayload = {
+            ticket_number: ticketNumber,
+            user_id: userId,
+            game_type: 'borlette',
+            draw_name: selectedDrawName,
+            total_amount: totalAmountValue,
+            currency: 'HTG',
+            status: 'pending',
+          };
+
+          const ticketPayload = baseTicketPayload;
+
+          let ticketData = null;
+          let ticketError = null;
+
+          try {
+            const insertResult = await client
+              .from('tickets')
+              .insert(ticketPayload)
+              .select('id')
+              .single();
+
+            ticketData = insertResult.data;
+            ticketError = insertResult.error;
+          } catch (insertError) {
+            ticketError = insertError;
+          }
+
+          if (ticketError && (ticketError.message?.includes('draw_name') || ticketError.message?.includes('column') || ticketError.code === '42703' || ticketError.code === 'PGRST116')) {
+            console.warn('BORLETTE DEBUG - fallback sans draw_name', ticketError);
+            const fallbackResult = await client
+              .from('tickets')
+              .insert(baseTicketPayload)
+              .select('id')
+              .single();
+
+            ticketData = fallbackResult.data;
+            ticketError = fallbackResult.error;
+          }
+
+          createdTicketId = ticketData?.id || null;
+
+          if (ticketError) {
+            const detail = ticketError?.message || 'Erreur inconnue lors de la création du ticket.';
+            setFeedback(`Erreur ticket : ${detail}`, 'warn');
+            throw ticketError;
+          }
+
+          const ticketItems = couponLines.map((line) => ({
+            ticket_id: ticketData.id,
+            number_played: line.number,
+            amount: Number(line.amount || 0),
+            potential_win: null,
+            status: 'pending',
+          }));
+
+          console.log('BORLETTE DEBUG - étape création lignes', {
+            ticketId: ticketData?.id || null,
+            linesCount: ticketItems.length,
+            step: 'insertion ticket_items',
+          });
+
+          const { error: itemsError } = await client
+            .from('ticket_items')
+            .insert(ticketItems);
+
+          if (itemsError) {
+            throw itemsError;
+          }
+
+          console.log('BORLETTE DEBUG - appel apply_transaction', {
+            p_user_id: userId,
+            p_type: 'bet',
+            p_amount: totalAmountValue,
+            p_reference: ticketNumber,
+            p_description: 'Mise Borlette',
+            p_metadata: {
+              game_type: 'borlette',
+              ticket_number: ticketNumber,
+            },
+            step: 'rpc apply_transaction',
+          });
+
+          const { data: transactionData, error: transactionError } = await client
+            .rpc('apply_transaction', {
+              p_user_id: userId,
+              p_type: 'bet',
+              p_amount: totalAmountValue,
+              p_reference: ticketNumber,
+              p_description: 'Mise Borlette',
+              p_metadata: {
+                game_type: 'borlette',
+                ticket_number: ticketNumber,
+              },
+            });
+
+          if (transactionError) {
+            console.error('BORLETTE DEBUG - erreur apply_transaction', transactionError);
+            setFeedback(`Erreur apply_transaction : ${transactionError.message || 'Erreur inconnue lors du débit du wallet.'}`, 'warn');
+            throw transactionError;
+          }
+
+          couponLines = [];
+          renderCoupon();
+          setFeedback(`Ticket validé : ${ticketNumber}. Débit de ${formatCurrency(totalAmountValue)} effectué.`, 'success');
+          console.info('Transaction Borlette appliquée', transactionData);
+        } catch (error) {
+          if (createdTicketId) {
+            try {
+              await client.from('ticket_items').delete().eq('ticket_id', createdTicketId);
+              await client.from('tickets').delete().eq('id', createdTicketId);
+            } catch (rollbackError) {
+              console.error('Échec du rollback Borlette', rollbackError);
+            }
+          }
+
+          console.error('Erreur lors de la validation du ticket Borlette', error);
+          const message = error?.message || 'Impossible d’enregistrer le ticket pour le moment.';
+          setFeedback(`Erreur de validation : ${message}`, 'warn');
+        } finally {
+          validateBtn.disabled = false;
+          validateBtn.textContent = 'Valider le ticket';
+        }
+      });
+
+      renderNumbers();
+      renderCoupon();
+      loadDrawSchedules();
+
+      (async function protectPage() {
+        if (!window.getCurrentUserAsync) {
+          setFeedback('Le système d’authentification est indisponible sur cette page.', 'warn');
+          return;
+        }
+
+        currentUser = await window.getCurrentUserAsync();
+        if (!currentUser) {
+          if (window.saveRedirectTarget) {
+            window.saveRedirectTarget('../borlette.html');
+          }
+          window.location.replace('../login-register/login.html');
+          return;
+        }
+
+        const userLabel = document.createElement('span');
+        userLabel.className = 'mini-chip';
+        userLabel.innerHTML = '👤 Connecté : <strong>' + (currentUser.full_name || currentUser.email || 'Joueur') + '</strong>';
+        document.querySelector('.hero-meta').appendChild(userLabel);
+      })();
+    })();
+  </script>
+</body>
+</html>

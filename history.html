@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Historique</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:#07182b;
+      --panel-2:#0d223a;
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --green:#46e36f;
+      --red:#ff5d6c;
+      --radius-xl:28px;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 70% 0%, rgba(255,210,31,.10), transparent 22%),
+        radial-gradient(circle at 10% 8%, rgba(57,168,255,.12), transparent 28%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .page { width: min(100%, 1180px); margin: 0 auto; padding: 18px 16px 56px; }
+    .card { border: 1px solid var(--line); border-radius: var(--radius-xl); background: rgba(7, 24, 43, .92); box-shadow: var(--shadow); padding: 18px; margin-bottom: 18px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
+    .eyebrow { display:flex; align-items:center; gap:8px; color: var(--gold); text-transform: uppercase; letter-spacing: .18em; font-size: 11px; font-weight: 800; }
+    h1 { margin: 4px 0 6px; font-size: clamp(28px, 6vw, 38px); line-height: 1.02; }
+    p { color: var(--muted); margin: 0; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border-radius:999px; background: rgba(255,255,255,.04); border:1px solid var(--line); padding:8px 10px; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .grid { display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; }
+    .mini-card { border:1px solid var(--line); border-radius:18px; background: linear-gradient(180deg, rgba(13,34,58,.98), rgba(7,19,35,.98)); padding: 14px; }
+    .stat { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .stat:last-child { border-bottom: 0; }
+    .stat small { display:block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+    .stat strong { display:block; color: #fff; font-size: 16px; margin-top: 2px; }
+    .badge { display:inline-flex; align-items:center; justify-content:center; min-width: 84px; border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 800; background: rgba(70,227,111,.12); color: var(--green); border: 1px solid rgba(70,227,111,.26); }
+    .history-item { border:1px solid var(--line); border-radius:18px; padding:12px; background: rgba(6,18,31,.9); display:grid; gap:4px; margin-bottom: 10px; }
+    .history-item strong { font-size: 15px; }
+    .history-item span { color: var(--muted); font-size: 13px; }
+    .history-item em { color: var(--gold); font-style: normal; font-weight: 800; font-size: 13px; }
+    .filters { display:flex; flex-wrap:wrap; gap:8px; margin: 10px 0 14px; }
+    .filter-btn { border:1px solid var(--line); border-radius:999px; background: rgba(255,255,255,.04); color:#edf4ff; padding:8px 10px; font-size:12px; font-weight:800; cursor:pointer; }
+    .filter-btn.active { background: linear-gradient(180deg, rgba(255,210,31,.18), rgba(255,185,0,.12)); color: #fff7da; border-color: rgba(255,210,31,.24); }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:1px solid var(--line); background: rgba(255,255,255,.04); color: #fff; padding:10px 12px; font-weight:800; }
+    .empty-state { border:1px dashed rgba(255,255,255,.14); border-radius:18px; padding:14px; background: rgba(255,255,255,.03); color: var(--muted); font-size: 13px; }
+    .state-box { border:1px solid var(--line); border-radius:18px; padding:12px; background: rgba(255,255,255,.03); color: var(--muted); font-size: 13px; }
+    .tag { display:inline-flex; align-items:center; gap:6px; border-radius:999px; border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); color:#edf4ff; padding:6px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
+    .hint { color: var(--muted); font-size: 13px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">Historique</div>
+          <h1>Vos dernières activités</h1>
+          <p>Vue protégée et en lecture seule, alimentée par vos tickets, transactions et solde Supabase.</p>
+        </div>
+        <a class="btn" href="index.html">Retour à l’accueil</a>
+      </div>
+      <div class="pill" id="history-pill">Connexion requise • Auth front-end</div>
+    </section>
+
+    <section class="grid">
+      <article class="card mini-card">
+        <h2 style="margin: 0 0 10px; font-size: 20px;">Résumé</h2>
+        <div class="stat"><div><small>Tickets enregistrés</small><strong id="summary-tickets">0</strong></div><span class="badge" id="summary-status">Chargement</span></div>
+        <div class="stat"><div><small>Montant total</small><strong id="summary-amount">0 HTG</strong></div><span class="badge" id="summary-balance-label">Wallet</span></div>
+        <div class="stat"><div><small>Solde disponible</small><strong id="summary-balance">0 HTG</strong></div><span class="badge" id="summary-role">Client</span></div>
+      </article>
+
+      <article class="card mini-card">
+        <h2 style="margin: 0 0 10px; font-size: 20px;">Historique détaillé</h2>
+        <div class="filters" id="history-filters">
+          <button class="filter-btn active" data-filter="all" type="button">Tous</button>
+          <button class="filter-btn" data-filter="tickets" type="button">Tickets</button>
+          <button class="filter-btn" data-filter="transactions" type="button">Transactions</button>
+          <button class="filter-btn" data-filter="gains" type="button">Gains</button>
+          <button class="filter-btn" data-filter="pertes" type="button">Pertes</button>
+          <button class="filter-btn" data-filter="depots" type="button">Dépôts</button>
+          <button class="filter-btn" data-filter="retraits" type="button">Retraits</button>
+        </div>
+        <div id="history-feed" class="history-feed"></div>
+        <p class="hint" style="margin-top: 8px;">Les paiements et gains restent en lecture seule dans cette page.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (async function initHistoryPage() {
+      const historyFeed = document.getElementById('history-feed');
+      const summaryTickets = document.getElementById('summary-tickets');
+      const summaryAmount = document.getElementById('summary-amount');
+      const summaryBalance = document.getElementById('summary-balance');
+      const summaryStatus = document.getElementById('summary-status');
+      const summaryBalanceLabel = document.getElementById('summary-balance-label');
+      const summaryRole = document.getElementById('summary-role');
+      const historyPill = document.getElementById('history-pill');
+      const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
+
+      function formatCurrency(value, currency = 'HTG') {
+        return `${Number(value || 0).toLocaleString('fr-FR')} ${currency}`;
+      }
+
+      function statusLabel(status) {
+        return String(status || 'pending').toLowerCase();
+      }
+
+      function typeLabel(type) {
+        const map = {
+          bet: 'Mise',
+          win: 'Gain',
+          deposit: 'Dépôt',
+          withdrawal: 'Retrait',
+          refund: 'Remboursement',
+          adjustment: 'Ajustement',
+        };
+        return map[String(type || '').toLowerCase()] || String(type || 'Transaction');
+      }
+
+      const user = await window.getCurrentUserAsync?.();
+      if (!user) {
+        if (window.saveRedirectTarget) window.saveRedirectTarget('history.html');
+        window.location.replace('login-register/login.html');
+        return;
+      }
+
+      const client = window.supabaseClient || null;
+      if (!client || typeof client.from !== 'function') {
+        historyFeed.innerHTML = '<div class="empty-state">Connexion Supabase indisponible.</div>';
+        return;
+      }
+
+      try {
+        historyFeed.innerHTML = '<div class="state-box">Chargement de l’historique…</div>';
+
+        const [ticketsResponse, transactionsResponse, walletResponse] = await Promise.all([
+          client
+            .from('tickets')
+            .select('id, ticket_number, game_type, draw_name, total_amount, status, created_at')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false }),
+          client
+            .from('transactions')
+            .select('id, type, amount, status, reference, description, created_at')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false }),
+          client
+            .from('wallets')
+            .select('balance, currency, status')
+            .eq('user_id', user.id)
+            .maybeSingle()
+        ]);
+
+        if (ticketsResponse.error) throw ticketsResponse.error;
+        if (transactionsResponse.error) throw transactionsResponse.error;
+        if (walletResponse.error) throw walletResponse.error;
+
+        const tickets = ticketsResponse.data || [];
+        const transactions = transactionsResponse.data || [];
+        const wallet = walletResponse.data;
+
+        const ticketItemsResponse = await client
+          .from('ticket_items')
+          .select('ticket_id, amount, status, potential_win')
+          .in('ticket_id', tickets.map((ticket) => ticket.id));
+
+        if (ticketItemsResponse.error) throw ticketItemsResponse.error;
+
+        const ticketItems = ticketItemsResponse.data || [];
+        const itemsByTicket = ticketItems.reduce((map, item) => {
+          if (!map[item.ticket_id]) map[item.ticket_id] = [];
+          map[item.ticket_id].push(item);
+          return map;
+        }, {});
+
+        const totalAmount = tickets.reduce((sum, item) => sum + Number(item.total_amount || 0), 0);
+        const totalWon = tickets.reduce((sum, ticket) => {
+          const lines = itemsByTicket[ticket.id] || [];
+          const realGain = lines.reduce((lineSum, item) => {
+            const status = statusLabel(item.status);
+            if (status === 'paid' || status === 'won') {
+              return lineSum + Number(item.potential_win || 0);
+            }
+            return lineSum;
+          }, 0);
+          return sum + realGain;
+        }, 0);
+        const totalLost = tickets.reduce((sum, ticket) => {
+          const status = statusLabel(ticket.status);
+          return status === 'lost' ? sum + Number(ticket.total_amount || 0) : sum;
+        }, 0);
+        const balance = wallet?.balance != null ? Number(wallet.balance) : 0;
+        const currency = wallet?.currency || 'HTG';
+        const wonTickets = tickets.filter((ticket) => ['won', 'paid'].includes(statusLabel(ticket.status))).length;
+        const lostTickets = tickets.filter((ticket) => statusLabel(ticket.status) === 'lost').length;
+        const pendingTickets = tickets.filter((ticket) => statusLabel(ticket.status) === 'pending').length;
+
+        summaryTickets.textContent = String(tickets.length);
+        summaryAmount.textContent = formatCurrency(totalAmount, currency);
+        summaryBalance.textContent = formatCurrency(balance, currency);
+        summaryStatus.textContent = `${wonTickets} gagnés • ${lostTickets} perdus`;
+        summaryBalanceLabel.textContent = `${pendingTickets} en attente`;
+        summaryRole.textContent = String(user.role || 'client').toUpperCase();
+        historyPill.textContent = `Connecté : ${user.full_name || user.email || 'Joueur'} • ${currency}`;
+
+        const feedItems = [
+          ...tickets.map((ticket) => {
+            const lines = itemsByTicket[ticket.id] || [];
+            const realGain = lines.reduce((sum, item) => (['won', 'paid'].includes(statusLabel(item.status)) ? sum + Number(item.potential_win || 0) : sum), 0);
+            const net = statusLabel(ticket.status) === 'pending'
+              ? 'En attente'
+              : statusLabel(ticket.status) === 'lost'
+                ? `-${formatCurrency(ticket.total_amount, currency)}`
+                : `${formatCurrency(realGain - Number(ticket.total_amount || 0), currency)}`;
+            return {
+              kind: 'ticket',
+              filter: 'tickets',
+              tag: 'Ticket',
+              title: `${ticket.ticket_number || 'Ticket'} — ${ticket.game_type || 'Borlette'}`,
+              meta: `${new Date(ticket.created_at).toLocaleString('fr-FR')} • ${ticket.draw_name || 'Tirage non renseigné'}`,
+              amount: `${formatCurrency(Number(ticket.total_amount || 0), currency)}`,
+              gain: `Gain réel : ${formatCurrency(realGain, currency)}`,
+              result: `Résultat net : ${net}`,
+              status: ticket.status,
+            };
+          }),
+          ...transactions.map((item) => ({
+            kind: 'transaction',
+            filter: String(item.type || '').toLowerCase() === 'bet' ? 'pertes' : String(item.type || '').toLowerCase() === 'win' ? 'gains' : String(item.type || '').toLowerCase() === 'deposit' ? 'depots' : String(item.type || '').toLowerCase() === 'withdrawal' ? 'retraits' : 'transactions',
+            tag: typeLabel(item.type),
+            title: `${typeLabel(item.type)} — ${item.reference || item.description || 'Mouvement'}`,
+            meta: `${new Date(item.created_at).toLocaleString('fr-FR')} • ${item.status || 'completed'}`,
+            amount: `${Number(item.amount || 0) >= 0 ? '+' : '-'} ${formatCurrency(Math.abs(Number(item.amount || 0)), currency)}`,
+            gain: item.description || 'Mouvement wallet',
+            result: `Référence : ${item.reference || '—'}`,
+            status: item.status,
+          }))
+        ];
+
+        function renderFeed(filter = 'all') {
+          const visible = feedItems.filter((item) => {
+            if (filter === 'all') return true;
+            if (filter === 'tickets') return item.kind === 'ticket';
+            if (filter === 'transactions') return item.kind === 'transaction';
+            if (filter === 'gains') return item.kind === 'transaction' ? ['win'].includes(String(item.status || '').toLowerCase()) || (item.tag === 'Gain') : false;
+            if (filter === 'pertes') return item.kind === 'ticket' ? statusLabel(item.status) === 'lost' : ['bet'].includes(String(item.status || '').toLowerCase()) || (item.tag === 'Mise');
+            if (filter === 'depots') return item.kind === 'transaction' && ['deposit'].includes(String(item.type || '').toLowerCase());
+            if (filter === 'retraits') return item.kind === 'transaction' && ['withdrawal'].includes(String(item.type || '').toLowerCase());
+            return true;
+          });
+
+          if (!visible.length) {
+            historyFeed.innerHTML = '<div class="empty-state">Aucun historique ne correspond à ce filtre.</div>';
+            return;
+          }
+
+          historyFeed.innerHTML = visible.map((item) => `
+            <article class="history-item">
+              <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                <strong>${item.title}</strong>
+                <span class="tag">${item.tag}</span>
+              </div>
+              <span>${item.meta}</span>
+              <em>${item.amount}</em>
+              <span>${item.gain}</span>
+              <span>${item.result}</span>
+            </article>
+          `).join('');
+        }
+
+        renderFeed('all');
+        filterButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            filterButtons.forEach((entry) => entry.classList.remove('active'));
+            button.classList.add('active');
+            renderFeed(button.dataset.filter || 'all');
+          });
+        });
+      } catch (error) {
+        console.error('Erreur chargement historique.', error);
+        historyFeed.innerHTML = `<div class="empty-state">Erreur Supabase : ${error.message || 'Impossible de charger l’historique.'}</div>`;
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Historique des tickets Borlette — lecture Supabase pour les clients connectés." />
+  <title>Tonton Kondo — Tickets</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:rgba(8,24,43,.96);
+      --panel-2:rgba(10,30,52,.94);
+      --line:rgba(255,255,255,.12);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --red:#ff5d6c;
+      --blue:#39a8ff;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      min-height:100vh;
+      font-family:"Segoe UI", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 82% 0%, rgba(255,210,31,.10), transparent 18%),
+        radial-gradient(circle at 10% 8%, rgba(57,168,255,.13), transparent 24%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+      line-height:1.45;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .app { width:min(100%, 1180px); margin:0 auto; padding:18px 16px 40px; }
+
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+
+    .hero-card {
+      border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow);
+      padding:18px; display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; margin-bottom:18px;
+    }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
+    .hero-card h1 { margin:0 0 8px; font-size:clamp(28px, 5vw, 38px); line-height:1.04; letter-spacing:-.03em; }
+    .hero-card p { margin:0; color:var(--muted); font-size:15px; }
+
+    .mini-chip { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#edf4ff; font-weight:700; font-size:12px; margin-top:12px; }
+    .mini-chip strong { color:var(--gold); }
+
+    .summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .summary-card { border:1px solid var(--line); border-radius:20px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:14px; min-height:110px; }
+    .summary-card small { display:block; color:var(--muted); text-transform:uppercase; letter-spacing:.16em; font-size:11px; }
+    .summary-card strong { display:block; font-size:22px; margin-top:4px; color:#fff; }
+    .summary-card span { display:block; color:#dfe6f2; font-size:13px; margin-top:4px; }
+    .summary-icon { display:inline-flex; width:38px; height:38px; border-radius:12px; align-items:center; justify-content:center; background:rgba(255,255,255,.03); color:var(--gold); margin-bottom:8px; }
+
+    .content-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:18px; }
+    .panel { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:16px; }
+    .panel-head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:12px; }
+    .panel-head h2 { margin:0; font-size:18px; letter-spacing:-.02em; }
+    .panel-head p { margin:4px 0 0; color:var(--muted); font-size:13px; }
+
+    .state-box, .empty-state, .error-state { border:1px dashed rgba(255,255,255,.14); border-radius:18px; padding:14px; background:rgba(255,255,255,.02); color:var(--muted); font-size:13px; }
+    .error-state { border-color:rgba(255,93,108,.18); background:rgba(255,93,108,.08); color:#ffe7eb; }
+
+    .ticket-list { display:grid; gap:10px; }
+    .ticket-card { border:1px solid var(--line); border-radius:18px; padding:14px; background:linear-gradient(180deg, rgba(9,26,45,.96), rgba(5,16,28,.96)); box-shadow:inset 0 -1px 0 rgba(255,255,255,.04); }
+    .ticket-row { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .ticket-title { display:flex; flex-direction:column; gap:4px; }
+    .ticket-code { font-weight:900; color:#fff; letter-spacing:.03em; font-size:15px; }
+    .ticket-meta { color:var(--muted); font-size:12px; }
+    .ticket-pill { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:999px; padding:6px 8px; background:rgba(255,255,255,.03); color:#edf4ff; font-size:12px; font-weight:800; white-space:nowrap; }
+    .ticket-total { color:var(--gold); font-size:18px; font-weight:900; }
+    .ticket-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:10px; }
+
+    .badge { display:inline-flex; align-items:center; justify-content:center; padding:6px 8px; border-radius:999px; font-size:11px; text-transform:uppercase; letter-spacing:.14em; font-weight:900; border:1px solid transparent; }
+    .badge.pending { background:rgba(255,210,31,.10); color:#fff5c6; border-color:rgba(255,210,31,.18); }
+    .badge.confirmed { background:rgba(70,227,111,.10); color:#e7fff0; border-color:rgba(70,227,111,.18); }
+    .badge.lost { background:rgba(255,93,108,.10); color:#ffe7eb; border-color:rgba(255,93,108,.18); }
+    .badge.won { background:rgba(57,168,255,.14); color:#e7f5ff; border-color:rgba(57,168,255,.18); }
+    .badge.paid { background:rgba(255,210,31,.14); color:#fff7d9; border-color:rgba(255,210,31,.20); }
+    .badge.cancelled { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
+
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:10px 12px; border:1px solid var(--line); font-weight:900; color:#fff; background:rgba(255,255,255,.04); }
+    .btn:hover { transform:translateY(-1px); }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#121212; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+
+    .details-panel { display:grid; gap:10px; }
+    .details-card { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(255,255,255,.03); }
+    .details-card h3 { margin:0 0 6px; font-size:14px; color:#fff; }
+    .details-card p { margin:0; color:var(--muted); font-size:13px; }
+    .details-list { display:grid; gap:8px; margin-top:8px; }
+    .detail-item { border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:10px; background:rgba(255,255,255,.03); display:grid; gap:4px; }
+    .detail-item strong { color:#fff; font-size:14px; }
+    .detail-item span { color:var(--muted); font-size:12px; }
+
+    @media (max-width: 1080px) { .hero-card, .content-grid { grid-template-columns:1fr; } }
+    @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .summary-grid { grid-template-columns:1fr; } .ticket-row, .ticket-actions { flex-direction:column; align-items:flex-start; } }
+    @media (max-width: 520px) { .pill { display:none; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <span class="pill">Tickets Borlette</span>
+    </header>
+
+    <section class="hero-card">
+      <article>
+        <div class="eyebrow">Historique</div>
+        <h1>Vos tickets Borlette</h1>
+        <p>Consultez vos tickets enregistrés dans Supabase, avec leurs lignes et leurs statuts. L’interface reste en lecture simple pour la phase actuelle.</p>
+        <div id="user-chip" class="mini-chip">👤 Connecté</div>
+      </article>
+      <article class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-icon">🎟️</div>
+          <small>Tickets</small>
+          <strong id="ticket-count">0</strong>
+          <span>Enregistrés dans Supabase</span>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">💰</div>
+          <small>Montant total</small>
+          <strong id="ticket-total">0 HTG</strong>
+          <span>Somme des tickets affichés</span>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">📌</div>
+          <small>Statut</small>
+          <strong id="status-summary">—</strong>
+          <span>Dernier état visible</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Liste des tickets</h2>
+            <p>Lecture Supabase — aucun gain ni tirage n’est encore calculé.</p>
+          </div>
+          <button id="refresh-tickets-btn" class="btn btn-primary" type="button">Rafraîchir mes tickets</button>
+        </div>
+        <div id="ticket-state" class="state-box">Chargement des tickets…</div>
+        <div id="ticket-list" class="ticket-list" aria-live="polite"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Détails du ticket</h2>
+            <p>Sélectionnez un ticket pour voir ses lignes.</p>
+          </div>
+        </div>
+        <div id="details-panel" class="details-panel">
+          <div class="details-card">
+            <h3>Aucun ticket sélectionné</h3>
+            <p>Choisissez “Voir détails” dans la liste pour afficher les numéros joués et leurs montants.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (function () {
+      const ticketList = document.getElementById('ticket-list');
+      const ticketState = document.getElementById('ticket-state');
+      const detailsPanel = document.getElementById('details-panel');
+      const ticketCount = document.getElementById('ticket-count');
+      const ticketTotal = document.getElementById('ticket-total');
+      const statusSummary = document.getElementById('status-summary');
+      const userChip = document.getElementById('user-chip');
+      const refreshTicketsBtn = document.getElementById('refresh-tickets-btn');
+
+      let currentUser = null;
+      let tickets = [];
+      let selectedTicketId = null;
+
+      function formatCurrency(value) {
+        return `${Number(value || 0).toLocaleString('fr-FR')} HTG`;
+      }
+
+      function formatGameLabel(gameType) {
+        return String(gameType || '').toLowerCase() === 'mariage' ? 'Mariage' : 'Borlette';
+      }
+
+      function formatSignedCurrency(value) {
+        const amount = Number(value || 0);
+        return `${amount >= 0 ? '+' : '-'} ${formatCurrency(Math.abs(amount))}`;
+      }
+
+      function formatDate(value) {
+        return new Date(value).toLocaleString('fr-FR');
+      }
+
+      function statusLabel(status) {
+        return String(status || 'pending').toLowerCase();
+      }
+
+      function resolveStatusLabel(status) {
+        const normalized = statusLabel(status);
+        if (normalized === 'won') return 'Gagné';
+        if (normalized === 'lost') return 'Perdu';
+        if (normalized === 'paid') return 'Payé';
+        if (normalized === 'confirmed') return 'Confirmé';
+        return 'En attente';
+      }
+
+      function computeLinePotential(item, gameType) {
+        const amount = Number(item.amount || 0);
+        if (String(gameType || '').toLowerCase() === 'mariage') {
+          return {
+            theoretical: amount * 5000,
+            real: item.potential_win != null ? Number(item.potential_win || 0) : 0,
+          };
+        }
+
+        return {
+          theoretical: {
+            first: amount * 60,
+            second: amount * 20,
+            third: amount * 10,
+          },
+          real: item.potential_win != null ? Number(item.potential_win || 0) : 0,
+        };
+      }
+
+      function renderStatusBadge(status) {
+        const normalized = statusLabel(status);
+        return `<span class="badge ${normalized}">${normalized}</span>`;
+      }
+
+      function setState(message, type) {
+        ticketState.className = 'state-box';
+        if (type === 'error') ticketState.className = 'error-state';
+        ticketState.textContent = message;
+      }
+
+      function setSummary() {
+        const total = tickets.reduce((sum, ticket) => sum + Number(ticket.total_amount || 0), 0);
+        ticketCount.textContent = String(tickets.length);
+        ticketTotal.textContent = formatCurrency(total);
+        statusSummary.textContent = tickets.length ? tickets[0].status || '—' : '—';
+      }
+
+      function renderTickets() {
+        ticketList.innerHTML = '';
+
+        if (!tickets.length) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-state';
+          empty.textContent = 'Aucun ticket Borlette trouvé pour cet utilisateur.';
+          ticketList.appendChild(empty);
+          setSummary();
+          return;
+        }
+
+        tickets.forEach((ticket) => {
+          const card = document.createElement('article');
+          card.className = 'ticket-card';
+          card.innerHTML = `
+            <div class="ticket-row">
+              <div class="ticket-title">
+                <span class="ticket-code">${ticket.ticket_number || 'Ticket'}</span>
+                <span class="ticket-meta">Jeu : ${formatGameLabel(ticket.game_type)} • ${formatDate(ticket.created_at)}</span>
+              </div>
+              <span class="ticket-pill">${ticket.currency || 'HTG'}</span>
+            </div>
+            <div class="ticket-row" style="margin-top:8px;">
+              <div class="ticket-title">
+                <span class="ticket-meta">Total du ticket</span>
+                <span class="ticket-total">${formatCurrency(ticket.total_amount)}</span>
+              </div>
+              ${renderStatusBadge(ticket.status)}
+            </div>
+            <div class="ticket-actions">
+              <span class="ticket-meta">ID ticket : ${ticket.id}</span>
+              <button class="btn btn-primary" type="button" data-ticket-id="${ticket.id}">Voir détails</button>
+            </div>
+          `;
+
+          const btn = card.querySelector('button');
+          btn.addEventListener('click', () => showTicketDetails(ticket.id));
+          ticketList.appendChild(card);
+        });
+
+        setSummary();
+      }
+
+      function renderDetails(items, ticket) {
+        detailsPanel.innerHTML = '';
+
+        if (!ticket) {
+          detailsPanel.innerHTML = '<div class="details-card"><h3>Aucun ticket sélectionné</h3><p>Choisissez un ticket pour afficher les détails.</p></div>';
+          return;
+        }
+
+        const ticketStatus = statusLabel(ticket.status);
+        const capitalJoue = Number(ticket.total_amount || 0);
+        const itemLabel = String(ticket.game_type || '').toLowerCase() === 'borlette' ? 'Boule jouée' : 'Combinaison jouée';
+        const isBorlette = String(ticket.game_type || '').toLowerCase() === 'borlette';
+        const relevantItems = items;
+        const gainPotentiel = relevantItems.reduce((sum, item) => {
+          const computed = computeLinePotential(item, ticket.game_type);
+          return sum + (computed.real || (isBorlette ? computed.theoretical.first : computed.theoretical));
+        }, 0);
+        const beneficePotentiel = gainPotentiel - capitalJoue;
+        const perte = ticketStatus === 'lost' ? capitalJoue : 0;
+        const drawName = ticket.draw_name || '—';
+        const source = drawName.toLowerCase().includes('florida') ? 'Florida' : 'New York';
+        const session = drawName.toLowerCase().includes('evening') ? 'Evening' : 'Midday';
+
+        const resultLabel = ticketStatus === 'pending'
+          ? 'En attente'
+          : ticketStatus === 'won'
+            ? formatCurrency(gainPotentiel)
+            : ticketStatus === 'lost'
+              ? `-${formatCurrency(capitalJoue)}`
+              : ticketStatus === 'paid'
+                ? `Payé : ${formatCurrency(gainPotentiel)}`
+                : '—';
+
+        detailsPanel.innerHTML = `
+          <div class="details-card">
+            <h3>${ticket.ticket_number || 'Ticket'}</h3>
+            <p>Jeu : ${formatGameLabel(ticket.game_type)} • Statut : ${ticketStatus} • Créé le ${formatDate(ticket.created_at)}</p>
+          </div>
+          <div class="details-card">
+            <h3>Résumé du ticket</h3>
+            <div class="details-list">
+              <article class="detail-item"><strong>Ticket</strong><span>${ticket.ticket_number || '—'}</span></article>
+              <article class="detail-item"><strong>Jeu</strong><span>${formatGameLabel(ticket.game_type)}</span></article>
+              <article class="detail-item"><strong>Tirage</strong><span>${drawName}</span></article>
+              <article class="detail-item"><strong>Lieu / source</strong><span>${source}</span></article>
+              <article class="detail-item"><strong>Session</strong><span>${session}</span></article>
+              <article class="detail-item"><strong>Montant total</strong><span>${formatCurrency(ticket.total_amount)}</span></article>
+              <article class="detail-item"><strong>Devise</strong><span>${ticket.currency || 'HTG'}</span></article>
+              <article class="detail-item"><strong>Statut</strong><span>${ticketStatus}</span></article>
+              <article class="detail-item"><strong>Capital joué</strong><span>${formatCurrency(capitalJoue)}</span></article>
+              <article class="detail-item"><strong>Gain potentiel</strong><span>${formatCurrency(gainPotentiel)}</span></article>
+              <article class="detail-item"><strong>Bénéfice potentiel</strong><span>${formatSignedCurrency(beneficePotentiel)}</span></article>
+              <article class="detail-item"><strong>Perte</strong><span>${ticketStatus === 'lost' ? formatCurrency(perte) : '0 HTG'}</span></article>
+              <article class="detail-item"><strong>Résultat net</strong><span>${resultLabel}</span></article>
+            </div>
+          </div>
+          <div class="details-card">
+            <h3>Lignes du ticket</h3>
+            <p>Affichage des numéros joués, montants, statut et gain potentiel lié à la ligne.</p>
+          </div>
+        `;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'details-list';
+
+        items.forEach((item) => {
+          const lineStatus = statusLabel(item.status);
+          const lineStatusLabel = resolveStatusLabel(item.status);
+          const linePotential = computeLinePotential(item, ticket.game_type);
+          const lineCard = document.createElement('article');
+          lineCard.className = 'detail-item';
+          const borletteText = `
+            <span>Gain potentiel : 1er lot ${formatCurrency(linePotential.theoretical.first)} • 2e lot ${formatCurrency(linePotential.theoretical.second)} • 3e lot ${formatCurrency(linePotential.theoretical.third)}</span>
+            <span>Gain réel : ${formatCurrency(linePotential.real)}</span>
+          `;
+          const mariageText = `
+            <span>Combinaison jouée : ${item.number_played || '—'}</span>
+            <span>Mise : ${formatCurrency(item.amount)}</span>
+            <span>Gain potentiel : ${formatCurrency(linePotential.theoretical)} (mise × 5000)</span>
+            <span>Gain réel : ${formatCurrency(linePotential.real)}</span>
+            <span>Règle : les deux numéros doivent sortir parmi les 3 lots Borlette du tirage.</span>
+          `;
+          lineCard.innerHTML = `
+            <strong>${itemLabel} : ${item.number_played}</strong>
+            <span>Mise : ${formatCurrency(item.amount)}</span>
+            <span>Statut : ${lineStatusLabel}</span>
+            ${String(ticket.game_type || '').toLowerCase() === 'borlette' ? borletteText : mariageText}
+          `;
+          wrapper.appendChild(lineCard);
+        });
+
+        detailsPanel.appendChild(wrapper);
+      }
+
+      async function showTicketDetails(ticketId) {
+        selectedTicketId = ticketId;
+        const ticket = tickets.find((entry) => entry.id === ticketId);
+        if (!ticket) return;
+
+        try {
+          const client = window.supabaseClient || null;
+          if (!client || typeof client.from !== 'function') {
+            throw new Error('La connexion Supabase est indisponible pour l’affichage des détails.');
+          }
+
+          const { data: itemsData, error: itemsError } = await client
+            .from('ticket_items')
+            .select('id, number_played, amount, status, potential_win, created_at')
+            .eq('ticket_id', ticketId)
+            .order('created_at', { ascending: true });
+
+          if (itemsError) throw itemsError;
+
+          renderDetails(itemsData || [], ticket);
+        } catch (error) {
+          console.error('Erreur chargement tickets:', error);
+          console.error('Erreur lors du chargement des détails du ticket.', error);
+          detailsPanel.innerHTML = `<div class="error-state">Erreur lors du chargement des lignes : ${error.message || 'Inconnue'}</div>`;
+        }
+      }
+
+      async function loadTickets() {
+        try {
+          setState('Chargement des tickets en cours…', 'info');
+
+          const client = window.supabaseClient || null;
+          if (!client || typeof client.from !== 'function') {
+            throw new Error('La connexion Supabase est indisponible.');
+          }
+
+          const { data, error } = await client
+            .from('tickets')
+            .select('id, ticket_number, game_type, total_amount, currency, status, created_at')
+            .eq('user_id', currentUser.id || currentUser.user_id)
+            .order('created_at', { ascending: false });
+
+          if (error) {
+            throw error;
+          }
+
+          tickets = data || [];
+          renderTickets();
+
+          if (!tickets.length) {
+            setState('Aucun ticket Borlette n’a encore été enregistré pour ce compte.', 'info');
+          } else {
+            setState(`Chargement terminé : ${tickets.length} ticket(s) affiché(s).`, 'info');
+          }
+        } catch (error) {
+          console.error('Erreur chargement tickets:', error);
+          console.error('Erreur lors du chargement des tickets.', error);
+          setState(`Erreur Supabase : ${error.message || 'Impossible de charger les tickets.'}`, 'error');
+        }
+      }
+
+      if (refreshTicketsBtn) {
+        refreshTicketsBtn.addEventListener('click', async () => {
+          if (!currentUser) {
+            setState('Vous devez être connecté pour rafraîchir vos tickets.', 'error');
+            return;
+          }
+          await loadTickets();
+        });
+      }
+
+      (async function init() {
+        try {
+          if (!window.getCurrentUserAsync) {
+            setState('Le système d’authentification est indisponible sur cette page.', 'error');
+            return;
+          }
+
+          currentUser = await window.getCurrentUserAsync();
+          if (!currentUser) {
+            if (window.saveRedirectTarget) {
+              window.saveRedirectTarget('tickets.html');
+            }
+            window.location.replace('login-register/login.html');
+            return;
+          }
+
+          const name = currentUser.full_name || currentUser.email || 'Joueur';
+          userChip.innerHTML = '👤 Connecté : <strong>' + name + '</strong>';
+          await loadTickets();
+        } catch (error) {
+          console.error('Erreur d’initialisation.', error);
+          setState('Impossible d’initialiser la page des tickets.', 'error');
+        }
+      })();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Retraits admin</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:rgba(8,24,43,.96);
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --red:#ff6b6b;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 80% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 15% 8%, rgba(57,168,255,.12), transparent 22%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
+    .app { width:min(100%, 1280px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background: rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.03em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .hero-card, .layout-grid { display:grid; gap:18px; }
+    .hero-card { grid-template-columns:1.2fr .8fr; }
+    .layout-grid { grid-template-columns:1fr; }
+    .panel { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:900; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 36px); line-height:1.05; }
+    p { color:var(--muted); margin-top:0; }
+    .mini-chip { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:#edf4ff; font-size:12px; }
+    .table-card { border:1px solid var(--line); border-radius:18px; overflow:hidden; background:rgba(255,255,255,.02); }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th, td { border-bottom:1px solid rgba(255,255,255,.08); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { color:var(--muted); text-transform:uppercase; letter-spacing:.12em; font-size:11px; background:rgba(255,255,255,.03); }
+    td { color:#edf4ff; }
+    .badge { display:inline-flex; align-items:center; justify-content:center; padding:6px 8px; border-radius:999px; font-size:11px; text-transform:uppercase; letter-spacing:.14em; font-weight:900; border:1px solid transparent; }
+    .badge.pending { background:rgba(255,210,31,.10); color:#fff5c6; border-color:rgba(255,210,31,.18); }
+    .badge.approved { background:rgba(70,227,111,.10); color:#e7fff0; border-color:rgba(70,227,111,.18); }
+    .badge.rejected { background:rgba(255,107,107,.10); color:#fff2f2; border-color:rgba(255,107,107,.18); }
+    .badge.cancelled { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
+    .field-grid { display:grid; gap:12px; }
+    .field-card { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(255,255,255,.03); }
+    .label { display:flex; justify-content:space-between; align-items:center; gap:8px; color:#edf4ff; font-weight:700; font-size:13px; margin-bottom:8px; }
+    .muted { color:var(--muted); }
+    input, textarea { width:100%; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.04); color:var(--text); padding:12px 12px; font:inherit; }
+    textarea { min-height:68px; resize:vertical; }
+    input:focus, textarea:focus { outline:2px solid rgba(255,210,31,.18); border-color:rgba(255,210,31,.35); }
+    .btn-row { display:flex; flex-wrap:wrap; gap:10px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:10px 12px; font-weight:900; border:1px solid var(--line); color:#fff; background:rgba(255,255,255,.04); cursor:pointer; }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#111; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .btn-danger { background:rgba(255,107,107,.10); color:#fff2f2; border-color:rgba(255,107,107,.22); }
+    .feedback { border-radius:14px; border:1px solid var(--line); padding:10px 12px; background:rgba(255,255,255,.03); color:#edf4ff; font-size:13px; }
+    .feedback.success { border-color:rgba(70,227,111,.25); background:rgba(70,227,111,.08); color:#effff3; }
+    .feedback.error { border-color:rgba(255,107,107,.25); background:rgba(255,107,107,.08); color:#fff2f2; }
+    .feedback.warn { border-color:rgba(255,210,31,.25); background:rgba(255,210,31,.08); color:#fff8de; }
+    .access-box { border:1px solid rgba(255,107,107,.24); border-radius:18px; padding:14px; background:rgba(255,107,107,.08); color:#fff2f2; }
+    @media (max-width: 1080px) { .hero-card { grid-template-columns:1fr; } }
+    @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } table { display:block; overflow-x:auto; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <span class="pill">Admin — Retraits</span>
+    </header>
+
+    <section class="hero-card">
+      <article class="panel">
+        <div class="eyebrow">Phase 3.3</div>
+        <h1>Gestion des retraits</h1>
+        <p>Consultez les demandes de retrait en attente et approuvez ou refusez-les. Le wallet ne sera pas modifié directement depuis cette page.</p>
+        <span class="mini-chip">🔐 Accès admin / super_admin</span>
+        <span class="mini-chip">💸 Vérification du solde</span>
+      </article>
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>État</h2>
+            <p>Validation des demandes de retrait.</p>
+          </div>
+        </div>
+        <div id="feedback-box" class="feedback warn">Chargement des demandes…</div>
+        <div id="access-denied" class="access-box" hidden>Accès refusé. Cette page est réservée aux admins et super_admin.</div>
+      </article>
+    </section>
+
+    <section class="layout-grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Demandes de retrait</h2>
+            <p>Liste des demandes avec client, méthode et actions admin.</p>
+          </div>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Email</th>
+                <th>Montant</th>
+                <th>Méthode</th>
+                <th>Téléphone</th>
+                <th>Statut</th>
+                <th>Date</th>
+                <th>Note admin</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawals-table-body"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    const feedbackBox = document.getElementById('feedback-box');
+    const accessDeniedBox = document.getElementById('access-denied');
+    const withdrawalsBody = document.getElementById('withdrawals-table-body');
+
+    function setFeedback(message, type) {
+      feedbackBox.className = 'feedback';
+      if (type === 'success') feedbackBox.classList.add('success');
+      if (type === 'warn') feedbackBox.classList.add('warn');
+      if (type === 'error') feedbackBox.classList.add('error');
+      feedbackBox.textContent = message;
+    }
+
+    function formatCurrency(value) {
+      return `${Number(value || 0).toLocaleString('fr-FR')} HTG`;
+    }
+
+    function formatDate(value) {
+      try { return new Date(value).toLocaleString('fr-FR'); } catch { return '—'; }
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    async function ensureAdminAccess() {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+      if (!currentUser) {
+        window.saveRedirectTarget?.('admin/withdrawals.html');
+        window.location.replace('../login-register/login.html');
+        return null;
+      }
+      if (!['admin', 'super_admin'].includes(String(currentUser.role || '').toLowerCase())) {
+        accessDeniedBox.hidden = false;
+        setFeedback('Accès refusé : seuls les admins et super_admin peuvent consulter cette page.', 'error');
+        return null;
+      }
+      return currentUser;
+    }
+
+    async function loadWithdrawals() {
+      const currentUser = await ensureAdminAccess();
+      if (!currentUser) return;
+
+      const client = window.supabaseClient || null;
+      if (!client || typeof client.from !== 'function') {
+        setFeedback('Connexion Supabase indisponible.', 'error');
+        return;
+      }
+
+      try {
+        const { data, error } = await client
+          .from('withdrawal_requests')
+          .select('id, user_id, amount, currency, method, phone, status, admin_note, created_at, profiles!user_id(full_name, email)')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || !data.length) {
+          withdrawalsBody.innerHTML = '<tr><td colspan="9" class="muted">Aucune demande de retrait.</td></tr>';
+          setFeedback('Aucune demande de retrait à traiter.', 'warn');
+          return;
+        }
+
+        withdrawalsBody.innerHTML = data.map((item) => {
+          const profile = item.profiles || {};
+          return `
+            <tr>
+              <td>${escapeHtml(profile.full_name || 'Client')}</td>
+              <td>${escapeHtml(profile.email || '—')}</td>
+              <td>${formatCurrency(item.amount)}</td>
+              <td>${escapeHtml(String(item.method || '—').toUpperCase())}</td>
+              <td>${escapeHtml(item.phone || '—')}</td>
+              <td><span class="badge ${String(item.status || 'pending').toLowerCase()}">${escapeHtml(item.status || 'pending')}</span></td>
+              <td>${formatDate(item.created_at)}</td>
+              <td><textarea data-withdrawal-note="${item.id}" rows="2" placeholder="Note admin">${escapeHtml(item.admin_note || '')}</textarea></td>
+              <td>
+                <div class="btn-row">
+                  <button class="btn btn-primary" type="button" data-action="approve" data-id="${item.id}">Approuver</button>
+                  <button class="btn btn-danger" type="button" data-action="reject" data-id="${item.id}">Refuser</button>
+                </div>
+              </td>
+            </tr>`;
+        }).join('');
+
+        setFeedback('Demandes de retrait chargées.', 'success');
+      } catch (error) {
+        console.error('Erreur chargement retraits admin.', error);
+        setFeedback(error.message || 'Impossible de charger les demandes de retrait.', 'error');
+      }
+    }
+
+    async function updateWithdrawalStatus(id, action) {
+      const currentUser = await ensureAdminAccess();
+      if (!currentUser) return;
+
+      const client = window.supabaseClient || null;
+      if (!client || typeof client.from !== 'function') {
+        setFeedback('Connexion Supabase indisponible.', 'error');
+        return;
+      }
+
+      const noteField = document.querySelector(`[data-withdrawal-note="${id}"]`);
+      const note = noteField ? noteField.value.trim() : '';
+
+      try {
+        const { data: requestData, error: requestError } = await client
+          .from('withdrawal_requests')
+          .select('id, user_id, amount, status')
+          .eq('id', id)
+          .single();
+
+        if (requestError) throw requestError;
+        if (!requestData || String(requestData.status || '').toLowerCase() !== 'pending') {
+          setFeedback('Cette demande n’est plus en attente.', 'error');
+          return;
+        }
+
+        if (action === 'approve') {
+          const { data: walletData, error: walletError } = await client
+            .from('wallets')
+            .select('balance')
+            .eq('user_id', requestData.user_id)
+            .single();
+
+          if (walletError) throw walletError;
+          const balance = Number(walletData?.balance || 0);
+          if (balance < Number(requestData.amount || 0)) {
+            setFeedback('Solde insuffisant pour approuver ce retrait.', 'error');
+            return;
+          }
+
+          const { error: rpcError } = await client.rpc('apply_transaction', {
+            p_user_id: requestData.user_id,
+            p_type: 'withdrawal',
+            p_amount: Number(requestData.amount),
+            p_reference: `WIT-${requestData.id}`,
+            p_description: 'Retrait approuvé'
+          });
+
+          if (rpcError) {
+            throw rpcError;
+          }
+        }
+
+        const { error: updateError } = await client
+          .from('withdrawal_requests')
+          .update({
+            status: action === 'approve' ? 'approved' : 'rejected',
+            reviewed_by: currentUser.id,
+            reviewed_at: new Date().toISOString(),
+            admin_note: note || null
+          })
+          .eq('id', id)
+          .eq('status', 'pending');
+
+        if (updateError) throw updateError;
+
+        setFeedback(action === 'approve' ? 'Retrait approuvé avec succès.' : 'Retrait refusé.', 'success');
+        await loadWithdrawals();
+      } catch (error) {
+        console.error('Erreur traitement retrait admin.', error);
+        setFeedback(error.message || 'Impossible de traiter cette demande.', 'error');
+      }
+    }
+
+    withdrawalsBody?.addEventListener('click', async (event) => {
+      const target = event.target.closest('button[data-action]');
+      if (!target) return;
+      await updateWithdrawalStatus(target.dataset.id, target.dataset.action);
+    });
+
+    loadWithdrawals();
+  </script>
+</body>
+</html>

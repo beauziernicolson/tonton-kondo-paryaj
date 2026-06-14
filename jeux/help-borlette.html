@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guide simple et clair pour comprendre les règles de la Borlette sur Tonton Kondo." />
+  <title>Tonton Kondo — Help Borlette</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:rgba(8,24,43,.96);
+      --panel-2:rgba(10,30,52,.94);
+      --line:rgba(255,255,255,.12);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --red:#ff5d6c;
+      --blue:#39a8ff;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 82% 0%, rgba(255,210,31,.10), transparent 18%),
+        radial-gradient(circle at 10% 8%, rgba(57,168,255,.13), transparent 24%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+      line-height: 1.45;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+
+    .app { width: min(100%, 1080px); margin: 0 auto; padding: 18px 16px 40px; }
+
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+
+    .hero-card, .card {
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96));
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    .hero-card { margin-bottom:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
+    h1 { margin: 0 0 8px; font-size: clamp(28px, 5vw, 38px); line-height:1.04; letter-spacing:-.03em; }
+    .lede { margin:0; color:var(--muted); font-size:15px; max-width:800px; }
+
+    .action-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#fff; padding:10px 12px; font-weight:800; }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#121212; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .btn-secondary { background:rgba(255,255,255,.03); }
+
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:16px; }
+    .panel { border:1px solid var(--line); border-radius:var(--radius-lg); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); padding:16px; }
+    .panel h2 { margin: 0 0 8px; font-size: 18px; color:#fff; }
+    .panel p, .panel li { color: var(--muted); font-size: 14px; }
+    .panel ul { margin: 8px 0 0 16px; padding: 0; }
+    .panel li { margin-bottom: 6px; }
+
+    .highlight { display:block; border:1px solid rgba(255,210,31,.18); border-radius:16px; padding:12px; background:rgba(255,210,31,.08); color:#fff8da; font-weight:800; margin-top:8px; }
+
+    .example-box { border:1px solid rgba(57,168,255,.18); border-radius:18px; padding:12px; background:rgba(57,168,255,.08); }
+    .example-box strong { color:#fff; display:block; margin-bottom:6px; }
+    .example-grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; margin-top:10px; }
+    .mini-card { border:1px solid var(--line); border-radius:16px; padding:12px; background:rgba(255,255,255,.03); }
+    .mini-card strong { display:block; color:#fff; font-size:14px; }
+    .mini-card span { color:var(--muted); font-size:13px; }
+
+    .status-list { display:grid; gap:10px; }
+    .status-item { border:1px solid var(--line); border-radius:16px; padding:10px; background:rgba(255,255,255,.03); }
+    .status-item strong { display:block; color:#fff; font-size:14px; }
+    .status-item span { color:var(--muted); font-size:13px; }
+
+    .note { color:var(--muted); font-size:13px; border-top:1px solid var(--line); padding-top:10px; margin-top:10px; }
+
+    @media (max-width: 980px) { .grid { grid-template-columns:1fr; } }
+    @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .example-grid { grid-template-columns:1fr; } }
+    @media (max-width: 520px) { .pill { display:none; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <span class="pill">Guide Borlette</span>
+    </header>
+
+    <section class="hero-card">
+      <div class="eyebrow">Aide</div>
+      <h1>Comment jouer à la Borlette ?</h1>
+      <p class="lede">La Borlette est simple à comprendre. Voici un guide clair, étape par étape, comme si on l’expliquait à un enfant de 12 ans.</p>
+      <div class="action-row">
+        <a class="btn btn-primary" href="borlette.html">Retour à Borlette</a>
+        <a class="btn btn-secondary" href="tickets.html">Voir mes tickets</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>1. C’est quoi la Borlette ?</h2>
+        <p>La Borlette est un jeu où le joueur choisit une boule entre 00 et 99. Le tirage est publié ensuite, et si la boule que tu as choisie sort parmi les 3 lots gagnants, tu peux gagner.</p>
+        <span class="highlight">Une boule = une chance de gagner.</span>
+      </article>
+
+      <article class="panel">
+        <h2>2. Comment jouer ?</h2>
+        <ul>
+          <li>Choisir un tirage.</li>
+          <li>Choisir une boule entre 00 et 99.</li>
+          <li>Choisir une mise, par exemple 10 HTG.</li>
+          <li>Valider le ticket pour l’enregistrer.</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h2>3. Les 3 lots gagnants</h2>
+        <p>À chaque tirage, il y a 3 boules gagnantes :</p>
+        <ul>
+          <li>1er lot</li>
+          <li>2e lot</li>
+          <li>3e lot</li>
+        </ul>
+        <p>La boule que tu as jouée peut donc gagner selon sa place dans ces 3 résultats.</p>
+      </article>
+
+      <article class="panel">
+        <h2>4. Combien on gagne ?</h2>
+        <ul>
+          <li>1er lot = 60 fois la mise</li>
+          <li>2e lot = 20 fois la mise</li>
+          <li>3e lot = 10 fois la mise</li>
+        </ul>
+        <p>Exemple simple : si tu joues 10 HTG sur la boule 26 :</p>
+        <div class="example-grid">
+          <div class="mini-card"><strong>26 au 1er lot</strong><span>10 × 60 = 600 HTG</span></div>
+          <div class="mini-card"><strong>26 au 2e lot</strong><span>10 × 20 = 200 HTG</span></div>
+          <div class="mini-card"><strong>26 au 3e lot</strong><span>10 × 10 = 100 HTG</span></div>
+          <div class="mini-card"><strong>26 absent</strong><span>Tu perds ta mise de 10 HTG</span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top:18px;">
+      <h2 style="margin-top:0; font-size:20px;">5. Exemple complet</h2>
+      <div class="example-box">
+        <strong>Wallet avant : 500 HTG</strong>
+        <p>Tu joues la boule 26 avec une mise de 10 HTG.</p>
+        <p>Après validation : Wallet = 490 HTG</p>
+        <p>Résultat du tirage :</p>
+        <ul>
+          <li>1er lot = 26</li>
+          <li>2e lot = 14</li>
+          <li>3e lot = 89</li>
+        </ul>
+        <p>Comme 26 est 1er lot, ton gain est de 600 HTG.</p>
+        <p>Wallet final = 490 + 600 = 1090 HTG.</p>
+      </div>
+    </section>
+
+    <section class="grid" style="margin-top:18px;">
+      <article class="panel">
+        <h2>6. Important à comprendre</h2>
+        <ul>
+          <li>La mise est retirée au moment où tu valides le ticket.</li>
+          <li>Si tu gagnes, le gain est ajouté automatiquement.</li>
+          <li>Si tu perds, tu ne récupères pas la mise.</li>
+          <li>Un ticket en attente veut dire que le résultat n’est pas encore publié.</li>
+          <li>Un ticket payé veut dire que le gain a déjà été ajouté au wallet.</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h2>7. Statuts des tickets</h2>
+        <div class="status-list">
+          <div class="status-item"><strong>En attente</strong><span>Le résultat n’est pas encore publié.</span></div>
+          <div class="status-item"><strong>Gagné</strong><span>Le ticket a gagné un lot.</span></div>
+          <div class="status-item"><strong>Perdu</strong><span>Le ticket n’a pas gagné.</span></div>
+          <div class="status-item"><strong>Payé</strong><span>Le gain a déjà été ajouté au wallet.</span></div>
+        </div>
+      </article>
+
+      <article class="panel" style="grid-column: 1 / -1;">
+        <h2>8. Jeu responsable</h2>
+        <p>Joue seulement avec l’argent que tu peux te permettre de perdre.</p>
+        <p class="note">Cette page explique uniquement les règles. La logique métier, le wallet et les résultats restent inchangés.</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

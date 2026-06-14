@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Portefeuille</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:rgba(8,24,43,.96);
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 80% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 15% 8%, rgba(57,168,255,.12), transparent 22%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
+    .app { width:min(100%, 1120px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background: rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.03em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .grid { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+    .panel { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:900; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 36px); line-height:1.05; }
+    p { color:var(--muted); margin-top:0; }
+    .stat-grid { display:grid; gap:12px; }
+    .stat-card { border:1px solid var(--line); border-radius:20px; padding:14px; background:rgba(255,255,255,.03); }
+    .stat-card small { display:block; color:var(--muted); text-transform:uppercase; letter-spacing:.14em; font-size:11px; }
+    .stat-card strong { display:block; font-size:24px; color:#fff; margin-top:4px; }
+    .stat-card span { color:#dfe6f2; font-size:13px; }
+    .action-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:12px 14px; font-weight:900; border:1px solid var(--line); color:#fff; background:rgba(255,255,255,.04); }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#111; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .list { display:grid; gap:10px; }
+    .item { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(255,255,255,.03); }
+    .item strong { display:block; color:#fff; font-size:14px; }
+    .item span { display:block; color:var(--muted); font-size:12px; margin-top:4px; }
+    .muted { color:var(--muted); font-size:13px; }
+    @media (max-width: 980px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <span class="pill">Portefeuille — lecture seule</span>
+    </header>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="eyebrow">Portefeuille</div>
+        <h1>Solde actuel</h1>
+        <p>Consultez votre solde et votre devise depuis Supabase. Les opérations de dépôt/retrait restent hors de cette phase.</p>
+        <div class="stat-grid">
+          <div class="stat-card"><small>Solde disponible</small><strong id="wallet-balance">Chargement…</strong><span id="wallet-caption">Lecture Supabase</span></div>
+          <div class="stat-card"><small>Devise</small><strong id="wallet-currency">HTG</strong><span>Monnaie du wallet</span></div>
+          <div class="stat-card"><small>Statut</small><strong id="wallet-status">active</strong><span>État du portefeuille</span></div>
+        </div>
+        <div class="action-row">
+          <button id="refresh-wallet-btn" class="btn btn-primary" type="button">Rafraîchir le solde</button>
+          <a class="btn btn-secondary" href="deposit.html">Dépôt</a>
+          <a class="btn btn-secondary" href="withdraw.html">Retrait</a>
+          <a class="btn btn-secondary" href="dashboard.html">Retour au tableau de bord</a>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="eyebrow">Transactions</div>
+        <h1>Derniers mouvements</h1>
+        <p>Les transactions sont lues depuis public.transactions. Aucune modification financière n’est effectuée ici.</p>
+        <div id="transactions-list" class="list">
+          <div class="item"><strong>Chargement…</strong><span>Récupération des transactions…</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    const refreshWalletBtn = document.getElementById('refresh-wallet-btn');
+
+    async function loadWalletData() {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+      if (!currentUser) {
+        window.saveRedirectTarget?.('wallet.html');
+        window.location.replace('login-register/login.html');
+        return;
+      }
+
+      const wallet = await (window.getAuthenticatedWallet ? window.getAuthenticatedWallet() : null);
+      const balance = wallet?.balance != null ? Number(wallet.balance) : 0;
+      const currency = wallet?.currency || 'HTG';
+      document.getElementById('wallet-balance').textContent = `${balance.toLocaleString('fr-FR')} ${currency}`;
+      document.getElementById('wallet-currency').textContent = currency;
+      document.getElementById('wallet-status').textContent = wallet?.status || 'active';
+      document.getElementById('wallet-caption').textContent = 'Solde disponible, lecture seule';
+
+      try {
+        const client = window.supabaseClient || null;
+        if (!client || typeof client.from !== 'function') {
+          throw new Error('Connexion Supabase indisponible.');
+        }
+
+        const { data, error } = await client
+          .from('transactions')
+          .select('id, type, amount, status, reference, description, created_at')
+          .eq('user_id', currentUser.id)
+          .order('created_at', { ascending: false })
+          .limit(8);
+
+        if (error) throw error;
+
+        const list = document.getElementById('transactions-list');
+        if (!data || !data.length) {
+          list.innerHTML = '<div class="item"><strong>Aucune transaction récente</strong><span>Les opérations financières apparaîtront ici.</span></div>';
+          return;
+        }
+
+        list.innerHTML = data.map((item) => `
+          <article class="item">
+            <strong>${String(item.type || 'transaction').toUpperCase()}</strong>
+            <span>${new Date(item.created_at).toLocaleString('fr-FR')} • ${item.status || 'pending'}</span>
+            <span class="muted">Réf. : ${item.reference || '—'}</span>
+            <span class="muted">${item.description || 'Mouvement wallet'}</span>
+            <strong style="margin-top:6px; color: var(--gold);">${Number(item.amount || 0).toLocaleString('fr-FR')} ${currency}</strong>
+          </article>
+        `).join('');
+      } catch (error) {
+        console.error('Erreur chargement transactions wallet.', error);
+        document.getElementById('transactions-list').innerHTML = `<div class="item"><strong>Erreur</strong><span>${error.message || 'Impossible de charger les transactions.'}</span></div>`;
+      }
+    }
+
+    refreshWalletBtn?.addEventListener('click', async () => {
+      await loadWalletData();
+    });
+
+    loadWalletData();
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Paramètres</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:#07182b;
+      --panel-2:#0d223a;
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --radius-xl:28px;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 70% 0%, rgba(255,210,31,.10), transparent 22%),
+        radial-gradient(circle at 10% 8%, rgba(57,168,255,.12), transparent 28%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .page { width: min(100%, 1080px); margin: 0 auto; padding: 18px 16px 56px; }
+    .card {
+      border: 1px solid var(--line); border-radius: var(--radius-xl); background: rgba(7, 24, 43, .92);
+      box-shadow: var(--shadow); padding: 18px; margin-bottom: 20px;
+    }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 12px; }
+    .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: .18em; font-size: 11px; font-weight: 800; }
+    h1 { margin: 4px 0 6px; font-size: clamp(28px, 6vw, 38px); line-height: 1.02; }
+    p { color: var(--muted); margin: 0; }
+    .grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:18px; }
+    .item { border: 1px solid var(--line); border-radius:18px; background: linear-gradient(180deg, rgba(13,34,58,.98), rgba(7,19,35,.98)); padding:14px; }
+    .item h2 { font-size: 18px; margin: 0 0 6px; }
+    .item p { font-size: 14px; }
+    .chip { display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; background: rgba(255,255,255,.04); border:1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 700; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:1px solid var(--line); background: rgba(255,255,255,.04); color: #fff; padding:10px 12px; font-weight:800; }
+    .btn-primary { background: linear-gradient(180deg, var(--gold), #ffb900); color: #111; border-color: transparent; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">Paramètres</div>
+          <h1>Préférences du compte</h1>
+          <p>Page statique protégée, prête à recevoir les vrais réglages de profil.</p>
+        </div>
+        <a class="btn" href="index.html">Retour à l’accueil</a>
+      </div>
+      <span class="chip">Connexion requise • Auth front-end</span>
+    </section>
+
+    <section class="grid">
+      <article class="card item">
+        <h2>Notifications</h2>
+        <p>Recevoir les mises à jour des paris, promotions et alertes de sécurité.</p>
+      </article>
+      <article class="card item">
+        <h2>Confidentialité</h2>
+        <p>Gérer les préférences de données et les options de connexion Google.</p>
+      </article>
+      <article class="card item">
+        <h2>Sécurité</h2>
+        <p>Mot de passe, double authentification et sessions actives.</p>
+      </article>
+      <article class="card item">
+        <h2>Langue</h2>
+        <p>Interface en français, sélection prête pour les futures options internationales.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (async function protectSettingsPage() {
+      const user = await window.getCurrentUserAsync?.();
+      if (!user) {
+        if (window.saveRedirectTarget) window.saveRedirectTarget('settings.html');
+        window.location.replace('login-register/login.html');
+        return;
+      }
+    })();
+  </script>
+</body>
+</html>

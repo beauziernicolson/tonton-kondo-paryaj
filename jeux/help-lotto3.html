@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Aide Lotto 3</title>
+  <style>
+    :root { --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.10); --text:#f5f7fb; --muted:#aebbd0; --gold:#ffd21f; --shadow:0 24px 60px rgba(0,0,0,.45); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 80% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 15% 8%, rgba(57,168,255,.12), transparent 22%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
+    .app { width:min(100%, 1080px); margin:0 auto; padding:18px 16px 40px; }
+    .card { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:900; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 36px); line-height:1.05; }
+    p { color:var(--muted); }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+    .panel { border:1px solid var(--line); border-radius:22px; padding:14px; background:rgba(255,255,255,.03); }
+    .panel h2 { margin-top:0; font-size:18px; }
+    ul { color:var(--muted); padding-left:18px; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#fff; padding:8px 10px; font-size:13px; }
+    .back-link { display:inline-flex; margin-top:12px; color:var(--gold); text-decoration:underline; }
+    @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="card">
+      <div class="eyebrow">Aide</div>
+      <h1>Lotto 3 — règles V1</h1>
+      <p>Le Lotto 3 V1 est un jeu à numéro unique de 000 à 999. Le ticket est gagnant uniquement si le numéro complet correspond exactement au 1er lot complet du tirage Borlette.</p>
+      <a class="back-link" href="lotto3.html">← Retour à la page Lotto 3</a>
+      <div class="grid">
+        <article class="panel">
+          <h2>Comment jouer</h2>
+          <ul>
+            <li>Choisissez un tirage disponible.</li>
+            <li>Saisissez un numéro à 3 chiffres : 000 à 999.</li>
+            <li>Indiquez votre mise et validez le ticket.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h2>Règle de gain</h2>
+          <ul>
+            <li>Gain V1 = mise × 500.</li>
+            <li>Le numéro doit être identique au 1er lot complet officiel du tirage Borlette.</li>
+            <li>Ordre exact obligatoire : 742 gagne, 247 perd.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h2>Exemples concrets</h2>
+          <ul>
+            <li>Vous jouez 742 pour 10 HTG. Si le 1er lot complet officiel est 742, vous gagnez 10 × 500 = 5000 HTG.</li>
+            <li>Vous jouez 742, mais le 1er lot officiel est 247. Vous perdez, même si les chiffres sont les mêmes : l’ordre exact compte.</li>
+            <li>Vous jouez 741, le 1er lot est 742. C’est un quasi-gagnant mais pas un gain : un seul chiffre d’écart suffit à perdre.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h2>Stabilité</h2>
+          <p>Le jeu Lotto 3 reste indépendant et n’altère pas Borlette, Mariage, wallet, transactions ou auth.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

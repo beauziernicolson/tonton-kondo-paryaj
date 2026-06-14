@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Tirages</title>
+  <style>
+    :root { --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0; --gold:#ffd21f; --green:#46e36f; --red:#ff6677; --shadow:0 24px 60px rgba(0,0,0,.45); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 85% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 10% 8%, rgba(57,168,255,.12), transparent 24%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
+    button, input, select { font:inherit; }
+    .app { width:min(100%, 1240px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .hero, .panel { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .hero { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-bottom:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 40px); line-height:1.04; }
+    .lede { color:var(--muted); max-width:700px; }
+    .mini-chip { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#edf4ff; font-size:12px; font-weight:700; margin-top:12px; }
+    .field-grid { display:grid; gap:10px; }
+    .field-card { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(255,255,255,.03); }
+    .label { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.16em; margin-bottom:6px; }
+    input, select { width:100%; border:1px solid var(--line); border-radius:14px; padding:12px 14px; background:rgba(255,255,255,.04); color:#fff; min-height:44px; }
+    input:focus, select:focus { outline:2px solid rgba(255,210,31,.35); border-color:rgba(255,210,31,.45); background:rgba(255,255,255,.06); }
+    .btn-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:10px 12px; border:1px solid var(--line); font-weight:900; color:#fff; background:rgba(255,255,255,.04); cursor:pointer; }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), #ffb900); color:#121212; border-color:transparent; }
+    .feedback { border-radius:14px; padding:10px 12px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); color:#edf4ff; font-size:13px; min-height:44px; }
+    .feedback.success { border-color:rgba(70,227,111,.18); color:#e8fff0; background:rgba(70,227,111,.08); }
+    .feedback.warn { border-color:rgba(255,210,31,.18); color:#fff7da; background:rgba(255,210,31,.08); }
+    .feedback.error { border-color:rgba(255,93,108,.18); color:#ffe7eb; background:rgba(255,93,108,.08); }
+    .table-card { border:1px solid var(--line); border-radius:18px; overflow:hidden; background:rgba(255,255,255,.02); }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th, td { border-bottom:1px solid rgba(255,255,255,.08); padding:10px 12px; text-align:left; vertical-align:top; }
+    th { color:var(--muted); text-transform:uppercase; letter-spacing:.12em; font-size:11px; background:rgba(255,255,255,.03); }
+    td { color:#edf4ff; }
+    .badge { display:inline-flex; align-items:center; justify-content:center; padding:6px 8px; border-radius:999px; font-size:11px; text-transform:uppercase; letter-spacing:.14em; font-weight:900; border:1px solid transparent; }
+    .badge.active { background:rgba(70,227,111,.10); color:#e8fff0; border-color:rgba(70,227,111,.18); }
+    .badge.inactive { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
+    .inline-btn { border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.04); color:#fff; padding:6px 8px; font-size:12px; cursor:pointer; margin-right:6px; }
+    .inline-btn.primary { background:rgba(255,210,31,.10); color:#fff7da; border-color:rgba(255,210,31,.18); }
+    .inline-btn.danger { background:rgba(255,102,119,.10); color:#ffe7eb; border-color:rgba(255,102,119,.18); }
+    @media (max-width: 1080px){ .hero{grid-template-columns:1fr;} }
+    @media (max-width: 760px){ .app{padding:12px 12px 28px;} .topbar{flex-direction:column; align-items:flex-start;} table{display:block; overflow-x:auto;} }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+      <span class="pill">Admin — tirages centralisés</span>
+    </header>
+
+    <section class="hero">
+      <article>
+        <div class="eyebrow">Phase 5.1</div>
+        <h1>Gestion centralisée des tirages</h1>
+        <p class="lede">Gérez les tirages disponibles pour les jeux depuis une seule source. Les pages Borlette, Mariage et Résultats pourront ensuite les lire dynamiquement.</p>
+        <span class="mini-chip">🧩 <strong>Supabase</strong> — table draw_schedules</span>
+      </article>
+      <article class="panel" style="padding:14px;">
+        <div class="field-grid">
+          <div class="field-card">
+            <div class="label"><span>Jeu</span></div>
+            <select id="game-type-filter">
+              <option value="all">Tous les jeux</option>
+              <option value="borlette">Borlette</option>
+              <option value="mariage">Mariage</option>
+              <option value="lotto3">Lotto 3</option>
+              <option value="lotto4">Lotto 4</option>
+              <option value="lotto5">Lotto 5</option>
+            </select>
+          </div>
+          <div class="field-card">
+            <div class="label"><span>Nom du tirage</span></div>
+            <input id="draw-name-input" type="text" placeholder="Ex. New York Midday" />
+          </div>
+          <div class="field-card">
+            <div class="label"><span>Libellé affiché</span></div>
+            <input id="display-name-input" type="text" placeholder="Ex. New York Midday" />
+          </div>
+          <div class="field-card">
+            <div class="label"><span>Jeu</span></div>
+            <select id="new-game-type-input">
+              <option value="borlette">Borlette</option>
+              <option value="mariage">Mariage</option>
+              <option value="lotto3">Lotto 3</option>
+              <option value="lotto4">Lotto 4</option>
+              <option value="lotto5">Lotto 5</option>
+            </select>
+          </div>
+          <div class="field-card">
+            <div class="label"><span>Heure</span></div>
+            <input id="draw-time-input" type="time" />
+          </div>
+          <div class="field-card">
+            <div class="label"><span>Ordre</span></div>
+            <input id="sort-order-input" type="number" value="0" />
+          </div>
+          <div class="btn-row">
+            <button id="save-btn" class="btn btn-primary" type="button">Ajouter / modifier</button>
+            <button id="refresh-btn" class="btn" type="button">Actualiser</button>
+          </div>
+          <div id="feedback-box" class="feedback warn">Chargement des tirages…</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="field-grid">
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Jeu</th>
+                <th>Tirage</th>
+                <th>Affichage</th>
+                <th>Heure</th>
+                <th>Ordre</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="draw-schedules-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    (function () {
+      const feedbackBox = document.getElementById('feedback-box');
+      const body = document.getElementById('draw-schedules-body');
+      const filter = document.getElementById('game-type-filter');
+      const gameTypeInput = document.getElementById('new-game-type-input');
+      const drawNameInput = document.getElementById('draw-name-input');
+      const displayNameInput = document.getElementById('display-name-input');
+      const drawTimeInput = document.getElementById('draw-time-input');
+      const sortOrderInput = document.getElementById('sort-order-input');
+      const saveBtn = document.getElementById('save-btn');
+      const refreshBtn = document.getElementById('refresh-btn');
+
+      let schedules = [];
+      let currentUser = null;
+      let activeEditId = null;
+
+      function setFeedback(message, type) {
+        feedbackBox.className = 'feedback';
+        if (type === 'success') feedbackBox.classList.add('success');
+        if (type === 'warn') feedbackBox.classList.add('warn');
+        if (type === 'error') feedbackBox.classList.add('error');
+        feedbackBox.textContent = message;
+      }
+
+      function renderSchedules() {
+        const selected = filter.value;
+        const rows = schedules.filter((item) => selected === 'all' || item.game_type === selected);
+        body.innerHTML = '';
+        if (!rows.length) {
+          body.innerHTML = '<tr><td colspan="7" style="color:#aebbd0;">Aucun tirage trouvé.</td></tr>';
+          return;
+        }
+
+        rows.forEach((item) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${item.game_type || '—'}</td>
+            <td>${item.draw_name || '—'}</td>
+            <td>${item.display_name || item.draw_name || '—'}</td>
+            <td>${item.draw_time || '—'}</td>
+            <td>${item.sort_order ?? 0}</td>
+            <td><span class="badge ${item.is_active ? 'active' : 'inactive'}">${item.is_active ? 'Actif' : 'Inactif'}</span></td>
+            <td>
+              <button class="inline-btn primary" type="button" data-action="edit" data-id="${item.id}">Modifier</button>
+              <button class="inline-btn" type="button" data-action="toggle" data-id="${item.id}">${item.is_active ? 'Désactiver' : 'Activer'}</button>
+            </td>`;
+          body.appendChild(tr);
+        });
+      }
+
+      async function loadSchedules() {
+        try {
+          const client = window.supabaseClient || null;
+          if (!client || typeof client.from !== 'function') throw new Error('Connexion Supabase indisponible.');
+          const { data, error } = await client
+            .from('draw_schedules')
+            .select('id, game_type, draw_name, display_name, draw_time, timezone, is_active, sort_order, created_at, updated_at')
+            .order('game_type', { ascending: true })
+            .order('sort_order', { ascending: true })
+            .order('draw_name', { ascending: true });
+          if (error) throw error;
+          schedules = data || [];
+          renderSchedules();
+          setFeedback(`Affichage de ${schedules.length} tirage(s).`, 'warn');
+        } catch (error) {
+          console.error('Erreur chargement tirages', error);
+          setFeedback(`Erreur Supabase : ${error.message || 'Impossible de charger les tirages.'}`, 'error');
+        }
+      }
+
+      function resetForm() {
+        activeEditId = null;
+        gameTypeInput.value = 'borlette';
+        drawNameInput.value = '';
+        displayNameInput.value = '';
+        drawTimeInput.value = '';
+        sortOrderInput.value = '0';
+        setFeedback('Formulaire prêt à créer un tirage.', 'warn');
+      }
+
+      async function saveSchedule() {
+        if (!currentUser) {
+          setFeedback('Vous devez être connecté en tant qu’admin.', 'error');
+          return;
+        }
+        const drawName = drawNameInput.value.trim();
+        const displayName = displayNameInput.value.trim() || drawName;
+        const gameType = gameTypeInput.value || 'borlette';
+        const drawTime = drawTimeInput.value || null;
+        const sortOrder = Number(sortOrderInput.value || 0);
+
+        if (!drawName) {
+          setFeedback('Renseignez un nom de tirage avant de sauvegarder.', 'warn');
+          return;
+        }
+
+        try {
+          const client = window.supabaseClient || null;
+          if (!client || typeof client.from !== 'function') throw new Error('Connexion Supabase indisponible.');
+
+          const payload = { game_type: gameType, draw_name: drawName, display_name: displayName, draw_time: drawTime, timezone: 'America/New_York', is_active: true, sort_order: sortOrder, created_by: currentUser.id || currentUser.user_id || null };
+
+          if (activeEditId) {
+            const { error } = await client.from('draw_schedules').update({ game_type: gameType, draw_name: drawName, display_name: displayName, draw_time: drawTime, sort_order: sortOrder, updated_at: new Date().toISOString() }).eq('id', activeEditId);
+            if (error) throw error;
+            setFeedback('Tirage mis à jour.', 'success');
+          } else {
+            const { error } = await client.from('draw_schedules').insert(payload);
+            if (error) throw error;
+            setFeedback('Tirage créé.', 'success');
+          }
+          await loadSchedules();
+          resetForm();
+        } catch (error) {
+          console.error('Erreur sauvegarde tirage', error);
+          setFeedback(`Erreur : ${error.message || 'Impossible d’enregistrer le tirage.'}`, 'error');
+        }
+      }
+
+      async function toggleSchedule(id) {
+        const entry = schedules.find((item) => item.id === id);
+        if (!entry) return;
+        try {
+          const client = window.supabaseClient || null;
+          if (!client || typeof client.from !== 'function') throw new Error('Connexion Supabase indisponible.');
+          const { error } = await client.from('draw_schedules').update({ is_active: !entry.is_active, updated_at: new Date().toISOString() }).eq('id', id);
+          if (error) throw error;
+          await loadSchedules();
+          setFeedback(`Tirage ${entry.is_active ? 'désactivé' : 'activé'}.`, 'success');
+        } catch (error) {
+          console.error('Erreur activation/désactivation', error);
+          setFeedback(`Erreur : ${error.message || 'Impossible de modifier le tirage.'}`, 'error');
+        }
+      }
+
+      async function editSchedule(id) {
+        const entry = schedules.find((item) => item.id === id);
+        if (!entry) return;
+        activeEditId = id;
+        gameTypeInput.value = entry.game_type || 'borlette';
+        drawNameInput.value = entry.draw_name || '';
+        displayNameInput.value = entry.display_name || entry.draw_name || '';
+        drawTimeInput.value = entry.draw_time || '';
+        sortOrderInput.value = entry.sort_order ?? 0;
+        setFeedback('Tirage chargé dans le formulaire. Modifiez puis validez.', 'warn');
+      }
+
+      body.addEventListener('click', async (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+        const action = button.getAttribute('data-action');
+        const id = button.getAttribute('data-id');
+        if (action === 'toggle') await toggleSchedule(id);
+        if (action === 'edit') await editSchedule(id);
+      });
+
+      filter.addEventListener('change', renderSchedules);
+      saveBtn.addEventListener('click', saveSchedule);
+      refreshBtn.addEventListener('click', loadSchedules);
+
+      (async function init() {
+        if (!window.getCurrentUserAsync) { setFeedback('Le système d’authentification est indisponible.', 'error'); return; }
+        currentUser = await window.getCurrentUserAsync();
+        if (!currentUser) { if (window.saveRedirectTarget) window.saveRedirectTarget('admin/draw-schedules.html'); window.location.replace('../login-register/login.html'); return; }
+        resetForm();
+        await loadSchedules();
+      })();
+    })();
+  </script>
+</body>
+</html>

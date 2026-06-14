@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Mariage</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:rgba(8,24,43,.96);
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 80% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 15% 8%, rgba(57,168,255,.12), transparent 22%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
+    .app { width:min(100%, 1180px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.03em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .card { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:900; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 36px); line-height:1.05; }
+    .lede { color:var(--muted); max-width:700px; }
+    .hero-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .mini-chip { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:#edf4ff; font-size:12px; }
+    .layout-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-top:18px; }
+    .panel-title { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; margin-bottom:12px; }
+    .panel-title h2 { margin:0 0 4px; font-size:18px; }
+    .panel-title p { margin:0; color:var(--muted); font-size:13px; }
+    .field-grid { display:grid; gap:12px; }
+    .field-card { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(255,255,255,.03); }
+    .label { display:flex; justify-content:space-between; align-items:center; gap:8px; color:#edf4ff; font-weight:700; font-size:13px; margin-bottom:8px; }
+    .value-pill { display:inline-flex; align-items:center; gap:8px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.04); padding:6px 8px; font-size:11px; text-transform:uppercase; letter-spacing:.12em; }
+    .chip-note { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.18em; }
+    select, input { width:100%; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.04); color:var(--text); padding:12px 12px; font:inherit; }
+    select:focus, input:focus { outline:2px solid rgba(255,210,31,.18); border-color:rgba(255,210,31,.35); }
+    .amount-row { display:flex; gap:10px; }
+    .number-grid { display:grid; grid-template-columns:repeat(10, 1fr); gap:8px; }
+    .num-btn { border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.03); color:#fff; min-height:36px; cursor:pointer; font-weight:800; }
+    .num-btn.active { background:linear-gradient(180deg, rgba(255,210,31,.18), rgba(255,210,31,.08)); border-color:rgba(255,210,31,.35); }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#fff; padding:10px 12px; cursor:pointer; font-weight:900; }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#111; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .btn-danger { background:rgba(255,107,107,.10); color:#fff2f2; border-color:rgba(255,107,107,.22); }
+    .summary { border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.03); padding:10px; display:grid; gap:6px; }
+    .summary-row { display:flex; justify-content:space-between; align-items:center; gap:12px; color:#edf4ff; font-size:13px; }
+    .summary-total { display:flex; justify-content:space-between; align-items:center; gap:12px; padding-top:8px; border-top:1px solid rgba(255,255,255,.08); color:#fff; font-size:15px; font-weight:900; }
+    .feedback { margin-top:12px; border-radius:14px; border:1px solid var(--line); padding:10px 12px; background:rgba(255,255,255,.03); color:#edf4ff; font-size:13px; }
+    .feedback.success { border-color:rgba(70,227,111,.25); background:rgba(70,227,111,.08); color:#effff3; }
+    .feedback.warn { border-color:rgba(255,210,31,.25); background:rgba(255,210,31,.08); color:#fff8de; }
+    .feedback.error { border-color:rgba(255,107,107,.25); background:rgba(255,107,107,.08); color:#fff2f2; }
+    .coupon-list { display:grid; gap:10px; margin-top:12px; }
+    .coupon-item { display:flex; justify-content:space-between; align-items:center; gap:10px; border:1px solid var(--line); border-radius:18px; padding:10px; background:rgba(255,255,255,.03); }
+    .coupon-left strong { display:block; color:#fff; font-size:14px; }
+    .coupon-left span { display:block; color:var(--muted); font-size:12px; margin-top:3px; }
+    .coupon-right { display:flex; align-items:center; gap:8px; }
+    .coupon-amount { color:#fff; font-weight:900; font-size:13px; }
+    .empty-state { border:1px dashed var(--line); border-radius:18px; padding:12px; color:var(--muted); text-align:center; }
+    .footer-note { color:var(--muted); font-size:12px; margin-top:6px; }
+    .helper-text { color:var(--muted); font-size:12px; margin-top:6px; }
+    @media (max-width: 980px) { .layout-grid { grid-template-columns:1fr; } }
+    @media (max-width: 740px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .amount-row { flex-direction:column; } .number-grid { grid-template-columns:repeat(5, minmax(0,1fr)); } .coupon-item { flex-direction:column; align-items:flex-start; } }
+    @media (max-width: 480px) { .number-grid { grid-template-columns:repeat(4, minmax(0,1fr)); } .pill { display:none; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <span class="pill">Mariage — tickets en direct</span>
+    </header>
+
+    <section class="card" style="margin-bottom:18px;">
+      <div class="eyebrow">Jeu</div>
+      <h1>Mariage</h1>
+      <p class="lede">Choisissez un tirage, deux numéros, saisissez un montant, ajoutez vos combinaisons au coupon, puis validez votre ticket. Le Mariage dépend des 3 lots Borlette du tirage choisi, l’ordre des numéros ne compte pas, et le gain potentiel est de mise × 5000.</p>
+      <div class="hero-meta">
+        <span class="mini-chip">🎯 <strong>Mariage</strong> = combinaison de deux numéros</span>
+        <span class="mini-chip">🧩 Les deux numéros doivent figurer parmi les 3 lots Borlette</span>
+        <span class="mini-chip">💰 Gain potentiel = mise × 5000</span>
+        <span class="mini-chip">🔐 Débit du wallet au moment de la validation</span>
+      </div>
+    </section>
+
+    <section class="layout-grid">
+      <article class="card">
+        <div class="panel-title">
+          <div>
+            <h2>Choix du tirage et des numéros</h2>
+            <p>Choisissez un tirage, deux numéros et un montant pour chaque ligne.</p>
+          </div>
+          <span class="chip-note">Coupon</span>
+        </div>
+
+        <div class="field-grid">
+          <article class="field-card">
+            <div class="label"><span>Tirage</span><span class="value-pill">Obligatoire</span></div>
+            <select id="draw-name-select" aria-label="Choisir un tirage Mariage">
+              <option value="">Chargement des tirages…</option>
+            </select>
+            <p class="helper-text">Le tirage choisi sera enregistré avec la combinaison pour la vérification future sur les 3 lots Borlette.</p>
+            <p class="helper-text"><a href="help-mariage.html" style="color:#ffd21f; text-decoration:underline;">Comprendre les règles</a></p>
+          </article>
+
+          <article class="field-card">
+            <div class="label"><span>Premier numéro</span><span class="value-pill" id="first-number-pill">00</span></div>
+            <div class="number-grid" id="first-number-grid" aria-label="Premier numéro"></div>
+          </article>
+
+          <article class="field-card">
+            <div class="label"><span>Deuxième numéro</span><span class="value-pill" id="second-number-pill">00</span></div>
+            <div class="number-grid" id="second-number-grid" aria-label="Deuxième numéro"></div>
+          </article>
+
+          <article class="field-card">
+            <div class="label"><span>Montant</span><span class="value-pill">HTG</span></div>
+            <div class="amount-row">
+              <input id="amount-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Montant du ticket" />
+              <button id="add-line-btn" class="btn btn-primary" type="button">Ajouter au coupon</button>
+            </div>
+            <p class="helper-text">Chaque combinaison est ajoutée en une seule ligne avec son tirage et son montant.</p>
+          </article>
+        </div>
+
+        <div id="feedback-box" class="feedback warn">Choisissez deux numéros, définissez votre mise puis ajoutez la ligne au coupon.</div>
+      </article>
+
+      <article class="card">
+        <div class="panel-title">
+          <div>
+            <h2>Coupon en cours</h2>
+            <p>Visualisez vos combinaisons, le tirage et le total à valider.</p>
+          </div>
+          <span class="chip-note">Total</span>
+        </div>
+
+        <div class="summary">
+          <div class="summary-row"><span>Nombre de lignes</span><strong id="line-count">0</strong></div>
+          <div class="summary-row"><span>Montant total</span><strong id="total-amount">0 HTG</strong></div>
+          <div class="summary-total"><span>Total du ticket</span><strong id="total-display">0 HTG</strong></div>
+        </div>
+
+        <div id="coupon-list" class="coupon-list" aria-live="polite"></div>
+
+        <div class="field-grid" style="margin-top:14px;">
+          <article class="field-card">
+            <div class="label"><span>Validation</span><span class="value-pill">Débit wallet</span></div>
+            <button id="validate-btn" class="btn btn-primary" type="button" style="width:100%;">Valider le ticket</button>
+            <p class="footer-note">Le ticket est créé dans Supabase et le wallet est débité lors de la validation.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    (function () {
+      const STORAGE_KEY = 'tonton-kondo-mariage-coupon';
+      const firstNumberGrid = document.getElementById('first-number-grid');
+      const secondNumberGrid = document.getElementById('second-number-grid');
+      const firstNumberPill = document.getElementById('first-number-pill');
+      const secondNumberPill = document.getElementById('second-number-pill');
+      const amountInput = document.getElementById('amount-input');
+      const addLineBtn = document.getElementById('add-line-btn');
+      const couponList = document.getElementById('coupon-list');
+      const lineCount = document.getElementById('line-count');
+      const totalAmount = document.getElementById('total-amount');
+      const totalDisplay = document.getElementById('total-display');
+      const feedbackBox = document.getElementById('feedback-box');
+      const validateBtn = document.getElementById('validate-btn');
+      const drawNameSelect = document.getElementById('draw-name-select');
+
+      let selectedFirst = '00';
+      let selectedSecond = '01';
+      let selectedDrawName = 'New York Midday';
+      let couponLines = loadCoupon();
+      let currentUser = null;
+
+      function loadCoupon() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
+      }
+      function saveCoupon(lines) { localStorage.setItem(STORAGE_KEY, JSON.stringify(lines)); }
+      function formatNumber(value) { return String(value).padStart(2, '0'); }
+      function formatCurrency(value) { return `${Number(value || 0).toLocaleString('fr-FR')} HTG`; }
+      function generateTicketNumber() {
+        const now = new Date();
+        const stamp = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0'), String(now.getHours()).padStart(2, '0'), String(now.getMinutes()).padStart(2, '0'), String(now.getSeconds()).padStart(2, '0')].join('');
+        const randomPart = Math.floor(Math.random() * 9000 + 1000);
+        return `TKM-${stamp}-${randomPart}`;
+      }
+      function setFeedback(message, type) {
+        feedbackBox.textContent = message;
+        feedbackBox.className = 'feedback';
+        if (type === 'success') feedbackBox.classList.add('success');
+        if (type === 'warn') feedbackBox.classList.add('warn');
+        if (type === 'error') feedbackBox.classList.add('error');
+      }
+
+      async function waitForSupabaseClient(maxAttempts = 12, delayMs = 250) {
+        for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+          const client = window.supabaseClient || null;
+          if (client && typeof client.from === 'function') {
+            return client;
+          }
+
+          await new Promise((resolve) => setTimeout(resolve, delayMs));
+        }
+
+        return window.supabaseClient || null;
+      }
+
+      async function loadDrawSchedules() {
+        try {
+          drawNameSelect.innerHTML = '<option value="">Chargement des tirages…</option>';
+
+          const client = await waitForSupabaseClient();
+          if (!client || typeof client.from !== 'function') {
+            drawNameSelect.innerHTML = '<option value="">Connexion Supabase indisponible</option>';
+            setFeedback('La connexion Supabase n’est pas encore disponible. Rechargez la page si nécessaire.', 'error');
+            return;
+          }
+
+          const { data, error } = await client
+            .from('draw_schedules')
+            .select('draw_name, display_name')
+            .eq('game_type', 'mariage')
+            .eq('is_active', true)
+            .order('sort_order', { ascending: true })
+            .order('draw_name', { ascending: true });
+
+          if (error) {
+            console.error('Erreur chargement tirages Mariage', error);
+            drawNameSelect.innerHTML = '<option value="">Erreur de chargement des tirages</option>';
+            setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'error');
+            return;
+          }
+
+          const schedules = Array.isArray(data) ? data : [];
+          drawNameSelect.innerHTML = '';
+
+          if (!schedules.length) {
+            drawNameSelect.innerHTML = '<option value="">Aucun tirage actif disponible</option>';
+            selectedDrawName = '';
+            setFeedback('Aucun tirage actif disponible pour Mariage.', 'warn');
+            return;
+          }
+
+          schedules.forEach((draw) => {
+            const option = document.createElement('option');
+            option.value = draw.draw_name;
+            option.textContent = draw.display_name || draw.draw_name;
+            drawNameSelect.appendChild(option);
+          });
+
+          selectedDrawName = drawNameSelect.value || schedules[0].draw_name;
+          drawNameSelect.value = selectedDrawName;
+          setFeedback(`Tirages Mariage chargés : ${schedules.length} tirage(s) disponible(s).`, 'success');
+        } catch (error) {
+          console.error('Erreur chargement tirages Mariage', error);
+          drawNameSelect.innerHTML = '<option value="">Erreur de chargement des tirages</option>';
+          setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'error');
+        }
+      }
+
+      function renderNumberGrid(container, selectedValue, onSelect) {
+        container.innerHTML = '';
+        for (let index = 0; index < 100; index += 1) {
+          const value = formatNumber(index);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'num-btn' + (value === selectedValue ? ' active' : '');
+          btn.textContent = value;
+          btn.setAttribute('aria-pressed', String(value === selectedValue));
+          btn.addEventListener('click', () => onSelect(value));
+          container.appendChild(btn);
+        }
+      }
+
+      function renderNumbers() {
+        renderNumberGrid(firstNumberGrid, selectedFirst, (value) => {
+          selectedFirst = value;
+          firstNumberPill.textContent = value;
+          renderNumbers();
+          setFeedback(`Premier numéro ${value} sélectionné.`, 'warn');
+        });
+        renderNumberGrid(secondNumberGrid, selectedSecond, (value) => {
+          selectedSecond = value;
+          secondNumberPill.textContent = value;
+          renderNumbers();
+          setFeedback(`Deuxième numéro ${value} sélectionné.`, 'warn');
+        });
+        firstNumberPill.textContent = selectedFirst;
+        secondNumberPill.textContent = selectedSecond;
+      }
+
+      function renderCoupon() {
+        couponList.innerHTML = '';
+        if (!couponLines.length) {
+          couponList.innerHTML = '<div class="empty-state">Votre coupon est vide. Ajoutez une ou plusieurs combinaisons pour commencer.</div>';
+        } else {
+          couponLines.forEach((line) => {
+            const item = document.createElement('article');
+            item.className = 'coupon-item';
+            const left = document.createElement('div');
+            left.className = 'coupon-left';
+            left.innerHTML = `<strong>Combinaison ${line.numberPlayed}</strong><span>${line.drawName}</span>`;
+            const right = document.createElement('div');
+            right.className = 'coupon-right';
+            const amount = document.createElement('span');
+            amount.className = 'coupon-amount';
+            amount.textContent = formatCurrency(line.amount);
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'btn btn-danger';
+            deleteBtn.textContent = 'Supprimer';
+            deleteBtn.addEventListener('click', () => {
+              couponLines = couponLines.filter((entry) => entry.id !== line.id);
+              saveCoupon(couponLines);
+              renderCoupon();
+              setFeedback(`La combinaison ${line.numberPlayed} a été supprimée du coupon.`, 'warn');
+            });
+            right.appendChild(amount);
+            right.appendChild(deleteBtn);
+            item.appendChild(left);
+            item.appendChild(right);
+            couponList.appendChild(item);
+          });
+        }
+        const total = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);
+        lineCount.textContent = String(couponLines.length);
+        totalAmount.textContent = formatCurrency(total);
+        totalDisplay.textContent = formatCurrency(total);
+      }
+
+      function addLineToCoupon() {
+        selectedDrawName = drawNameSelect.value || 'New York Midday';
+        const rawAmount = Number(amountInput.value);
+        if (!selectedDrawName) { setFeedback('Choisissez un tirage avant d’ajouter une combinaison.', 'warn'); return; }
+        if (!Number.isFinite(rawAmount) || rawAmount <= 0) { setFeedback('Entrez un montant valide supérieur à 0.', 'warn'); amountInput.focus(); return; }
+        const numberPlayed = `${selectedFirst}-${selectedSecond}`;
+        const newLine = { id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`, numberPlayed, drawName: selectedDrawName, amount: rawAmount, createdAt: new Date().toISOString() };
+        couponLines = [newLine, ...couponLines];
+        saveCoupon(couponLines);
+        renderCoupon();
+        setFeedback(`Combinaison ${numberPlayed} ajoutée au coupon pour ${formatCurrency(rawAmount)}.`, 'success');
+      }
+
+      addLineBtn.addEventListener('click', addLineToCoupon);
+      amountInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') { event.preventDefault(); addLineToCoupon(); }
+      });
+
+      validateBtn.addEventListener('click', async () => {
+        if (!currentUser) {
+          setFeedback('Vous devez être connecté pour valider un ticket.', 'warn');
+          if (window.saveRedirectTarget) window.saveRedirectTarget('../mariage.html');
+          window.location.replace('../login-register/login.html');
+          return;
+        }
+
+        selectedDrawName = drawNameSelect.value || 'New York Midday';
+        if (!couponLines.length) { setFeedback('Aucune combinaison à valider. Ajoutez au moins une ligne au coupon.', 'warn'); return; }
+
+        const client = window.supabaseClient || null;
+        if (!client || typeof client.from !== 'function') { setFeedback('La connexion Supabase n’est pas disponible. Rechargez la page puis réessayez.', 'error'); return; }
+
+        const userId = currentUser.id || currentUser.user_id || null;
+        const totalAmountValue = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);
+        let createdTicketId = null;
+
+        validateBtn.disabled = true;
+        validateBtn.textContent = 'Validation…';
+        setFeedback('Validation du ticket en cours…', 'warn');
+
+        try {
+          const { data: walletData, error: walletError } = await client
+            .from('wallets')
+            .select('id, balance, currency, status')
+            .eq('user_id', userId)
+            .single();
+
+          if (walletError || !walletData) {
+            throw new Error(walletError?.message || 'Wallet introuvable pour ce compte.');
+          }
+
+          const currentBalance = Number(walletData?.balance || 0);
+          if (currentBalance < totalAmountValue) {
+            setFeedback(`Solde insuffisant. Solde actuel : ${formatCurrency(currentBalance)}. Total ticket : ${formatCurrency(totalAmountValue)}.`, 'error');
+            return;
+          }
+
+          const ticketNumber = generateTicketNumber();
+          // STABILITY LOCK:
+          // Do not remove draw_name.
+          // Borlette/Mariage result processing depends on tickets.draw_name.
+          const baseTicketPayload = {
+            ticket_number: ticketNumber,
+            user_id: userId,
+            game_type: 'mariage',
+            draw_name: selectedDrawName,
+            total_amount: totalAmountValue,
+            currency: 'HTG',
+            status: 'pending'
+          };
+
+          const ticketPayload = baseTicketPayload;
+
+          let ticketData = null;
+          let ticketError = null;
+
+          try {
+            const insertResult = await client
+              .from('tickets')
+              .insert(ticketPayload)
+              .select('id')
+              .single();
+
+            ticketData = insertResult.data;
+            ticketError = insertResult.error;
+          } catch (insertError) {
+            ticketError = insertError;
+          }
+
+          if (ticketError) {
+            throw ticketError;
+          }
+
+          createdTicketId = ticketData?.id || null;
+
+          const ticketItems = couponLines.map((line) => ({
+            ticket_id: ticketData.id,
+            number_played: line.numberPlayed,
+            amount: Number(line.amount || 0),
+            potential_win: null,
+            status: 'pending'
+          }));
+
+          const { error: itemsError } = await client
+            .from('ticket_items')
+            .insert(ticketItems);
+
+          if (itemsError) throw itemsError;
+
+          const { error: transactionError } = await client.rpc('apply_transaction', {
+            p_user_id: userId,
+            p_type: 'bet',
+            p_amount: totalAmountValue,
+            p_reference: ticketNumber,
+            p_description: 'Mise Mariage',
+            p_metadata: {
+              game_type: 'mariage',
+              source_game_type: 'borlette',
+              ticket_number: ticketNumber,
+              draw_name: selectedDrawName
+            }
+          });
+
+          if (transactionError) throw transactionError;
+
+          localStorage.removeItem(STORAGE_KEY);
+          couponLines = [];
+          renderCoupon();
+          setFeedback(`Ticket validé : ${ticketNumber}. Débit de ${formatCurrency(totalAmountValue)} effectué.`, 'success');
+        } catch (error) {
+          if (createdTicketId) {
+            try {
+              await client.from('ticket_items').delete().eq('ticket_id', createdTicketId);
+              await client.from('tickets').delete().eq('id', createdTicketId);
+            } catch (rollbackError) {
+              console.error('Rollback Mariage error', rollbackError);
+            }
+          }
+          const message = error?.message || 'Impossible de valider le ticket pour le moment.';
+          setFeedback(`Erreur de validation : ${message}`, 'error');
+        } finally {
+          validateBtn.disabled = false;
+          validateBtn.textContent = 'Valider le ticket';
+        }
+      });
+
+      renderNumbers();
+      renderCoupon();
+
+      (async function protectPage() {
+        if (!window.getCurrentUserAsync) {
+          setFeedback('Le système d’authentification est indisponible sur cette page.', 'warn');
+          return;
+        }
+
+        currentUser = await window.getCurrentUserAsync();
+        if (!currentUser) {
+          if (window.saveRedirectTarget) window.saveRedirectTarget('../mariage.html');
+          window.location.replace('../login-register/login.html');
+          return;
+        }
+
+        const meta = document.querySelector('.hero-meta');
+        const userLabel = document.createElement('span');
+        userLabel.className = 'mini-chip';
+        userLabel.innerHTML = '👤 Connecté : <strong>' + (currentUser.full_name || currentUser.email || 'Joueur') + '</strong>';
+        meta.appendChild(userLabel);
+
+        await loadDrawSchedules();
+      })();
+    })();
+  </script>
+</body>
+</html>

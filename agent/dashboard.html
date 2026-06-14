@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Agent</title>
+  <style>
+    body { margin:0; min-height:100vh; font-family:Segoe UI, Arial, sans-serif; color:#f5f7fb; background: linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%); }
+    .card { width:min(100%, 900px); margin:32px auto; border:1px solid rgba(255,255,255,.10); border-radius:24px; padding:24px; background:rgba(8,24,43,.94); box-shadow:0 24px 60px rgba(0,0,0,.45); }
+    h1 { margin-top:0; color:#ffd21f; }
+    p { color:#aebbd0; }
+    a { color:#ffd21f; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Tableau de bord agent</h1>
+    <p>Page de préparation pour les futurs accès Agent. Le rôle sera connecté à Supabase plus tard.</p>
+    <p><a href="../login.html">Retour à la connexion</a></p>
+  </main>
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    (async () => {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+      if (!currentUser) {
+        window.location.replace('../login-register/login.html');
+      }
+    })();
+  </script>
+</body>
+</html>

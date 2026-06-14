@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo | Connexion / Inscription</title>
+
+  <style>
+    :root {
+      --bg-dark: #050814;
+      --navy: #071225;
+      --navy-2: #0b1830;
+      --gold: #d6a84f;
+      --gold-light: #f6d889;
+      --text: #ffffff;
+      --muted: #b8c0d4;
+      --border: rgba(214, 168, 79, 0.35);
+      --glass: rgba(5, 10, 24, 0.72);
+      --input: rgba(9, 18, 38, 0.82);
+      --danger: #ff6b6b;
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--bg-dark);
+      overflow-x: hidden;
+    }
+
+    .auth-page {
+      min-height: 100vh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      justify-items: center;
+      padding: 38px clamp(18px, 5vw, 90px) 95px;
+      background:
+        linear-gradient(90deg, rgba(2, 7, 20, 0.96) 0%, rgba(4, 9, 22, 0.85) 33%, rgba(4, 8, 18, 0.35) 62%, rgba(3, 5, 10, 0.2) 100%),
+        url("../assets/back.png") center / cover no-repeat;
+    }
+
+    .auth-page::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(214, 168, 79, 0.12), transparent 30%),
+        radial-gradient(circle at 75% 15%, rgba(255, 220, 140, 0.10), transparent 28%);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      padding: clamp(26px, 4vw, 48px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(6, 13, 29, 0.88), rgba(7, 15, 33, 0.66));
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:26px; color:var(--gold-light); }
+    .brand-mark {
+      width:58px; height:58px; border:2px solid var(--gold); border-radius:18px; display:grid; place-items:center;
+      position:relative; font-weight:900; font-size:23px; letter-spacing:-1px; color:var(--gold-light);
+    }
+    .brand-mark::before { content:"♛"; position:absolute; top:-22px; font-size:24px; color:var(--gold-light); }
+    .brand-text { line-height:0.95; text-transform:uppercase; letter-spacing:4px; font-family:Georgia, "Times New Roman", serif; font-size:clamp(30px, 4vw, 44px); color:var(--gold-light); text-shadow:0 0 20px rgba(214, 168, 79, 0.18); }
+
+    .tabs { width:100%; height:58px; padding:4px; display:grid; grid-template-columns:1fr 1fr; border:1px solid rgba(214, 168, 79, 0.26); border-radius:12px; background:rgba(8, 16, 34, 0.76); margin-bottom:34px; overflow:hidden; }
+    .tab { border:none; outline:none; cursor:pointer; border-radius:9px; background:transparent; color:#e5e9f4; font-size:16px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:10px; transition:.25s ease; }
+    .tab.active { color:var(--gold-light); background:linear-gradient(135deg, rgba(214, 168, 79, 0.28), rgba(214, 168, 79, 0.08)); box-shadow:inset 0 0 0 1px rgba(246, 216, 137, 0.18); }
+
+    .auth-title { font-size:clamp(25px, 3vw, 34px); font-weight:900; margin-bottom:10px; color:#fff; }
+    .auth-subtitle { color:var(--muted); font-size:16px; line-height:1.55; margin-bottom:28px; }
+
+    .form-group { margin-bottom:18px; }
+    .form-label { display:block; font-weight:700; font-size:15px; margin-bottom:9px; color:#fff; }
+    .input-wrap { position:relative; }
+    .input-icon, .password-toggle { position:absolute; top:50%; transform:translateY(-50%); color:#c8cfdf; opacity:.9; }
+    .input-icon { left:18px; font-size:20px; }
+    .password-toggle { right:18px; cursor:pointer; background:none; border:none; font-size:19px; }
+    .form-input { width:100%; height:58px; border:1px solid rgba(255,255,255,.14); outline:none; border-radius:11px; background:var(--input); color:#fff; padding:0 52px; font-size:15.5px; transition:.25s ease; }
+    .form-input::placeholder { color:rgba(230,235,248,.68); }
+    .form-input:focus { border-color:rgba(246,216,137,.7); box-shadow:0 0 0 4px rgba(214,168,79,.12); }
+
+    .forgot { display:flex; justify-content:flex-end; margin-top:-4px; margin-bottom:22px; }
+    .forgot a { color:var(--gold-light); text-decoration:none; font-weight:700; font-size:14px; }
+    .forgot a:hover { text-decoration:underline; }
+
+    .primary-btn { width:100%; height:60px; border:none; border-radius:11px; cursor:pointer; background:linear-gradient(135deg, #f5d27a, #d7a142, #b77d27); color:#0c0b07; font-size:18px; font-weight:900; box-shadow:0 16px 30px rgba(214, 168, 79, 0.22), inset 0 1px 0 rgba(255,255,255,.45); transition:.25s ease; }
+    .primary-btn:hover { transform:translateY(-2px); box-shadow:0 20px 38px rgba(214, 168, 79, 0.34), inset 0 1px 0 rgba(255,255,255,.55); }
+    .primary-btn:disabled { opacity:.7; cursor:not-allowed; transform:none; }
+
+    .divider { display:flex; align-items:center; gap:18px; margin:24px 0; color:var(--muted); font-size:14px; }
+    .divider::before, .divider::after { content:""; height:1px; flex:1; background:rgba(214,168,79,.35); }
+
+    .google-btn { width:100%; height:58px; border-radius:11px; border:1px solid rgba(214,168,79,.34); background:rgba(7,15,33,.76); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:13px; font-size:16px; font-weight:700; transition:.25s ease; }
+    .google-btn:hover { background:rgba(12,24,50,.92); border-color:rgba(246,216,137,.6); }
+    .google-btn:disabled { opacity:.75; cursor:not-allowed; }
+
+    .google-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(255,255,255,.08);
+      display: grid;
+      place-items: center;
+      flex: 0 0 34px;
+    }
+    .google-icon svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .switch-text { margin-top:28px; text-align:center; color:var(--muted); font-size:15px; }
+    .switch-text a { color:var(--gold-light); text-decoration:none; font-weight:900; margin-left:4px; }
+    .switch-text a:hover { text-decoration:underline; }
+
+    .signup-only { display:none; }
+    body.signup-mode .signup-only { display:block; }
+    body.signup-mode .forgot { display:none; }
+
+    .trust-bar { position:absolute; z-index:3; left:0; right:0; bottom:0; min-height:82px; padding:18px clamp(18px, 6vw, 120px); display:grid; grid-template-columns:repeat(3,1fr); gap:22px; background:linear-gradient(180deg, rgba(5, 9, 20, 0.65), rgba(3, 7, 16, 0.98)); border-top:1px solid rgba(214, 168, 79, 0.18); backdrop-filter:blur(12px); }
+    .trust-item { display:flex; align-items:center; justify-content:center; gap:14px; color:#fff; }
+    .trust-icon { width:42px; height:42px; border:1px solid rgba(246, 216, 137, 0.45); border-radius:14px; display:grid; place-items:center; color:var(--gold-light); font-size:22px; flex:0 0 auto; }
+    .trust-title { font-size:15px; font-weight:800; margin-bottom:4px; }
+    .trust-desc { font-size:13px; color:var(--muted); }
+
+    .form-message { margin-top:6px; display:none; color:var(--gold-light); font-size:13px; font-weight:700; }
+    .form-message.error { color:var(--danger); }
+
+    @media (max-width:1024px) {
+      .auth-page { padding:30px 22px 120px; justify-content:center; background:linear-gradient(180deg, rgba(2, 7, 20, 0.92), rgba(2, 7, 20, 0.72), rgba(2, 7, 20, 0.92)), url("../assets/back.png") center / cover no-repeat; }
+      .auth-card { width:min(100%, 590px); }
+      .trust-bar { grid-template-columns:1fr; position:relative; margin-top:-90px; padding:20px; }
+      .trust-item { justify-content:flex-start; }
+    }
+
+    @media (max-width:520px) {
+      .auth-page { align-items:flex-start; padding:20px 14px 28px; }
+      .auth-card { border-radius:22px; padding:24px 18px; }
+      .brand { gap:12px; margin-bottom:22px; }
+      .brand-mark { width:48px; height:48px; border-radius:15px; font-size:19px; }
+      .brand-text { font-size:25px; letter-spacing:3px; }
+      .tabs { height:54px; margin-bottom:28px; }
+      .tab { font-size:14px; }
+      .auth-title { font-size:24px; }
+      .auth-subtitle { font-size:14.5px; }
+      .form-input, .primary-btn, .google-btn { height:54px; }
+      .trust-bar { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-card">
+      <div class="brand">
+        <div class="brand-mark">TK</div>
+        <div class="brand-text">
+          <div>Tonton</div>
+          <div>Kondo</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" id="loginTab" type="button"><span>↪</span>Connexion</button>
+        <button class="tab" id="signupTab" type="button"><span>👤+</span>Inscription</button>
+      </div>
+
+      <h2 class="auth-title" id="formTitle">Bienvenue sur Tonton Kondo</h2>
+      <p class="auth-subtitle" id="formSubtitle">Connectez-vous ou créez votre compte pour continuer</p>
+
+      <form id="authForm" novalidate>
+        <div class="form-group signup-only">
+          <label class="form-label" for="fullname">Nom complet</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input class="form-input" type="text" id="fullname" name="full_name" placeholder="Entrez votre nom complet" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">E-mail</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉</span>
+            <input class="form-input" type="email" id="email" name="email" placeholder="Entrez votre e-mail" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Mot de passe</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input class="form-input" type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required />
+            <button class="password-toggle" type="button" id="togglePassword" aria-label="Afficher ou masquer le mot de passe">⌧</button>
+          </div>
+        </div>
+
+        <div class="forgot">
+          <a href="forgot-password.html">Mot de passe oublié ?</a>
+        </div>
+
+        <button class="primary-btn" type="submit" id="submitBtn">Se connecter →</button>
+        <div class="form-message" id="formMessage"></div>
+
+        <div class="divider">ou</div>
+
+        <button class="google-btn" type="button" id="googleBtn">
+          <span class="google-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false">
+              <path fill="#4285F4" d="M21.805 10.023H12v4.03h5.383c-.23 1.22-.94 2.26-2.01 2.96l3.25 2.52c1.9-1.74 3.0-4.31 3.0-7.37 0-.66-.06-1.3-.18-1.91z"/>
+              <path fill="#34A853" d="M12 22c2.7 0 4.96-.89 6.62-2.42l-3.25-2.52c-.9.61-2.04.98-3.37.98-2.59 0-4.79-1.75-5.58-4.11L2.98 14.5A9.985 9.985 0 0 0 12 22z"/>
+              <path fill="#FBBC05" d="M6.42 13.93A6.01 6.01 0 0 1 6.42 10.07L2.98 7.5A10.006 10.006 0 0 0 2 12c0 1.64.4 3.19 1.1 4.5l3.32-2.57z"/>
+              <path fill="#EA4335" d="M12 6.04c1.46 0 2.77.5 3.8 1.49l2.83-2.83C16.95 3.18 14.69 2 12 2 7.82 2 4.08 4.46 2.98 7.5l3.44 2.57C6.78 7.98 9.01 6.04 12 6.04z"/>
+            </svg>
+          </span>
+          Continuer avec Google
+        </button>
+
+        <p class="switch-text" id="switchText">Vous n’avez pas de compte ? <a href="#" id="switchLink">Inscrivez-vous</a></p>
+      </form>
+    </section>
+
+    <section class="trust-bar">
+      <div class="trust-item"><div class="trust-icon">🛡</div><div><p class="trust-title">Sécurisé et fiable</p><p class="trust-desc">Vos données sont protégées</p></div></div>
+      <div class="trust-item"><div class="trust-icon">🏆</div><div><p class="trust-title">Expérience premium</p><p class="trust-desc">Jeux et tirages exclusifs</p></div></div>
+      <div class="trust-item"><div class="trust-icon">🎧</div><div><p class="trust-title">Support 24/7</p><p class="trust-desc">Notre équipe est là pour vous</p></div></div>
+    </section>
+  </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    const body = document.body;
+    const loginTab = document.getElementById('loginTab');
+    const signupTab = document.getElementById('signupTab');
+    const formTitle = document.getElementById('formTitle');
+    const formSubtitle = document.getElementById('formSubtitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const switchText = document.getElementById('switchText');
+    const switchLink = document.getElementById('switchLink');
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const form = document.getElementById('authForm');
+    const googleBtn = document.getElementById('googleBtn');
+    const formMessage = document.getElementById('formMessage');
+    const fullnameInput = document.getElementById('fullname');
+    const emailInput = document.getElementById('email');
+
+    let mode = 'login';
+
+    function setMessage(text, isError) {
+      formMessage.textContent = text || '';
+      formMessage.style.display = text ? 'block' : 'none';
+      formMessage.classList.toggle('error', Boolean(isError));
+    }
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      const isSignup = mode === 'signup';
+      body.classList.toggle('signup-mode', isSignup);
+      loginTab.classList.toggle('active', !isSignup);
+      signupTab.classList.toggle('active', isSignup);
+
+      formTitle.textContent = isSignup ? 'Créez votre compte' : 'Bienvenue sur Tonton Kondo';
+      formSubtitle.textContent = isSignup ? 'Inscrivez-vous pour accéder aux jeux et aux tirages' : 'Connectez-vous ou créez votre compte pour continuer';
+      submitBtn.textContent = isSignup ? 'Créer mon compte →' : 'Se connecter →';
+      switchText.innerHTML = isSignup
+        ? 'Vous avez déjà un compte ? <a href="#" id="switchLink">Connectez-vous</a>'
+        : 'Vous n’avez pas de compte ? <a href="#" id="switchLink">Inscrivez-vous</a>';
+
+      const newLink = document.getElementById('switchLink');
+      newLink?.addEventListener('click', (event) => {
+        event.preventDefault();
+        setMode(isSignup ? 'login' : 'signup');
+      });
+    }
+
+    function resetButton(label) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = label;
+    }
+
+    function resolveRedirectTarget(result) {
+      if (result?.redirectTo) {
+        return window.resolveRedirectUrl?.(result.redirectTo) || result.redirectTo;
+      }
+      return window.resolveRedirectUrl?.(window.resolveRoleDestination?.(result?.role) || 'dashboard.html') || window.resolveRoleDestination?.(result?.role) || 'dashboard.html';
+    }
+
+    loginTab.addEventListener('click', () => setMode('login'));
+    signupTab.addEventListener('click', () => setMode('signup'));
+    togglePassword.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      togglePassword.textContent = isPassword ? '👁' : '⌧';
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setMessage('');
+
+      const email = String(emailInput.value || '').trim();
+      const password = String(passwordInput.value || '');
+      const fullname = String(fullnameInput.value || '').trim();
+
+      if (!email || !password) {
+        setMessage('Veuillez saisir votre email et votre mot de passe.', true);
+        return;
+      }
+
+      if (mode === 'signup' && !fullname) {
+        setMessage('Veuillez saisir votre nom complet pour créer votre compte.', true);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = mode === 'signup' ? 'Création du compte...' : 'Connexion...';
+
+      try {
+        const result = mode === 'signup'
+          ? await window.registerUser({ full_name: fullname, email, password })
+          : await window.loginUser({ email, password });
+
+        if (result?.ok) {
+          const redirectTarget = resolveRedirectTarget(result);
+          window.location.href = redirectTarget;
+          return;
+        }
+
+        setMessage(result?.message || 'Une erreur est survenue.', true);
+      } catch (error) {
+        setMessage(error?.message || 'Impossible d’établir la connexion.', true);
+      } finally {
+        resetButton(mode === 'signup' ? 'Créer mon compte →' : 'Se connecter →');
+      }
+    });
+
+    googleBtn.addEventListener('click', async () => {
+      if (googleBtn.disabled) return;
+      googleBtn.disabled = true;
+      googleBtn.textContent = 'Connexion Google...';
+      setMessage('');
+
+      try {
+        const result = await window.loginWithGoogle?.();
+        if (result && !result.ok) {
+          setMessage(result.message || 'La connexion Google n’a pas pu être lancée.', true);
+        }
+      } catch (error) {
+        setMessage(error?.message || 'La connexion Google n’a pas pu être lancée.', true);
+      } finally {
+        googleBtn.disabled = false;
+        googleBtn.textContent = 'Continuer avec Google';
+      }
+    });
+
+    setMode('login');
+  </script>
+</body>
+</html>

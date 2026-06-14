@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Retrait</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:rgba(8,24,43,.96);
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --red:#ff6b6b;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 80% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 15% 8%, rgba(57,168,255,.12), transparent 22%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
+    .app { width:min(100%, 1120px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background: rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.03em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .panel { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:900; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 36px); line-height:1.05; }
+    p { color:var(--muted); margin-top:0; }
+    .field-grid { display:grid; gap:12px; }
+    .field-card { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(255,255,255,.03); }
+    .label { display:flex; justify-content:space-between; align-items:center; gap:8px; color:#edf4ff; font-weight:700; font-size:13px; margin-bottom:8px; }
+    .muted { color:var(--muted); font-size:12px; }
+    input, select { width:100%; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.04); color:var(--text); padding:12px 12px; font:inherit; }
+    input:focus, select:focus { outline:2px solid rgba(255,210,31,.18); border-color:rgba(255,210,31,.35); }
+    .btn-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:12px 14px; font-weight:900; border:1px solid var(--line); color:#fff; background:rgba(255,255,255,.04); text-decoration:none; cursor:pointer; }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#111; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .btn-secondary { background:rgba(255,255,255,.04); }
+    .feedback { margin-top:10px; border-radius:14px; border:1px solid var(--line); padding:10px 12px; background:rgba(255,255,255,.03); color:#edf4ff; font-size:13px; }
+    .feedback.success { border-color:rgba(70,227,111,.25); background:rgba(70,227,111,.08); color:#effff3; }
+    .feedback.error { border-color:rgba(255,107,107,.25); background:rgba(255,107,107,.08); color:#fff2f2; }
+    .feedback.warn { border-color:rgba(255,210,31,.25); background:rgba(255,210,31,.08); color:#fff8de; }
+    .history-list { display:grid; gap:10px; }
+    .card-item { border:1px solid var(--line); border-radius:18px; padding:12px; background:rgba(255,255,255,.03); }
+    .card-item strong { display:block; color:#fff; font-size:14px; }
+    .card-item span { display:block; color:var(--muted); font-size:12px; margin-top:4px; }
+    .badge { display:inline-flex; align-items:center; border-radius:999px; padding:5px 8px; font-size:11px; text-transform:uppercase; letter-spacing:.12em; font-weight:900; border:1px solid transparent; }
+    .badge.pending { background:rgba(255,210,31,.10); color:#fff5c6; border-color:rgba(255,210,31,.18); }
+    .badge.approved { background:rgba(70,227,111,.10); color:#e7fff0; border-color:rgba(70,227,111,.18); }
+    .badge.rejected { background:rgba(255,107,107,.10); color:#fff2f2; border-color:rgba(255,107,107,.18); }
+    .badge.cancelled { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
+    @media (max-width: 980px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <span class="pill">Retrait • lecture / saisie</span>
+    </header>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="eyebrow">Retrait</div>
+        <h1>Demander un retrait</h1>
+        <p>Enregistrez votre demande de retrait. Le solde est vérifié avant validation et aucune opération wallet n’est effectuée dans cette phase.</p>
+        <div class="field-grid">
+          <div class="field-card">
+            <div class="label"><span>Montant</span><span class="muted">HTG</span></div>
+            <input id="amount-input" type="number" min="1" step="1" placeholder="Ex. 2500" />
+          </div>
+          <div class="field-card">
+            <div class="label"><span>Téléphone</span></div>
+            <input id="phone-input" type="text" placeholder="Ex. +509 33xxxxxx" />
+          </div>
+          <div class="field-card">
+            <div class="label"><span>Méthode</span></div>
+            <select id="method-input">
+              <option value="moncash">MonCash</option>
+              <option value="natcash">NatCash</option>
+            </select>
+          </div>
+          <div class="btn-row">
+            <button id="submit-btn" class="btn btn-primary" type="button">Demander un retrait</button>
+            <a class="btn btn-secondary" href="wallet.html">Retour au portefeuille</a>
+          </div>
+          <div id="feedback-box" class="feedback warn">Le solde sera vérifié avant création de la demande.</div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="eyebrow">Historique</div>
+        <h1>Mes retraits</h1>
+        <p>Consultez vos demandes de retrait avec leur statut actuel.</p>
+        <div id="history-list" class="history-list">
+          <div class="card-item"><strong>Chargement…</strong><span>Récupération des demandes en cours.</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    const feedbackBox = document.getElementById('feedback-box');
+    const historyList = document.getElementById('history-list');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function setFeedback(message, type) {
+      feedbackBox.className = 'feedback';
+      if (type === 'success') feedbackBox.classList.add('success');
+      if (type === 'warn') feedbackBox.classList.add('warn');
+      if (type === 'error') feedbackBox.classList.add('error');
+      feedbackBox.textContent = message;
+    }
+
+    function formatCurrency(value) {
+      return `${Number(value || 0).toLocaleString('fr-FR')} HTG`;
+    }
+
+    function badgeClass(status) {
+      return String(status || 'pending').toLowerCase();
+    }
+
+    async function ensureSession() {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+      if (!currentUser) {
+        window.saveRedirectTarget?.('withdraw.html');
+        window.location.replace('login-register/login.html');
+        return null;
+      }
+      return currentUser;
+    }
+
+    async function loadWithdrawalHistory() {
+      const currentUser = await ensureSession();
+      if (!currentUser) return;
+
+      const client = window.supabaseClient || null;
+      if (!client || typeof client.from !== 'function') {
+        historyList.innerHTML = '<div class="card-item"><strong>Connexion indisponible</strong><span>Rechargez la page puis réessayez.</span></div>';
+        return;
+      }
+
+      try {
+        const { data, error } = await client
+          .from('withdrawal_requests')
+          .select('id, amount, currency, method, status, created_at')
+          .eq('user_id', currentUser.id)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || !data.length) {
+          historyList.innerHTML = '<div class="card-item"><strong>Aucune demande de retrait</strong><span>Les demandes soumises apparaîtront ici.</span></div>';
+          return;
+        }
+
+        historyList.innerHTML = data.map((item) => `
+          <article class="card-item">
+            <strong>${new Date(item.created_at).toLocaleDateString('fr-FR')}</strong>
+            <span>${formatCurrency(item.amount)} • ${String(item.method || '').toUpperCase()}</span>
+            <span style="margin-top:8px;"><span class="badge ${badgeClass(item.status)}">${item.status || 'pending'}</span></span>
+          </article>
+        `).join('');
+      } catch (error) {
+        console.error('Erreur chargement demandes retrait.', error);
+        historyList.innerHTML = `<div class="card-item"><strong>Erreur</strong><span>${error.message || 'Impossible de charger l’historique.'}</span></div>`;
+      }
+    }
+
+    submitBtn?.addEventListener('click', async () => {
+      const currentUser = await ensureSession();
+      if (!currentUser) return;
+
+      const client = window.supabaseClient || null;
+      if (!client || typeof client.from !== 'function') {
+        setFeedback('Connexion Supabase indisponible. Rechargez la page puis réessayez.', 'error');
+        return;
+      }
+
+      const amount = Number(document.getElementById('amount-input').value);
+      const phone = document.getElementById('phone-input').value.trim();
+      const method = document.getElementById('method-input').value;
+
+      if (!Number.isFinite(amount) || amount <= 0) {
+        setFeedback('Indiquez un montant valide supérieur à 0.', 'error');
+        return;
+      }
+
+      if (!phone) {
+        setFeedback('Indiquez un numéro de téléphone pour le retrait.', 'error');
+        return;
+      }
+
+      try {
+        const wallet = await (window.getAuthenticatedWallet ? window.getAuthenticatedWallet() : null);
+        const balance = wallet?.balance != null ? Number(wallet.balance) : 0;
+
+        if (balance < amount) {
+          setFeedback('Solde insuffisant.', 'error');
+          return;
+        }
+
+        const { error } = await client
+          .from('withdrawal_requests')
+          .insert([{
+            user_id: currentUser.id,
+            amount,
+            currency: 'HTG',
+            method,
+            phone,
+            status: 'pending'
+          }]);
+
+        if (error) throw error;
+
+        setFeedback('Demande de retrait enregistrée avec le statut pending.', 'success');
+        document.getElementById('amount-input').value = '';
+        document.getElementById('phone-input').value = '';
+        await loadWithdrawalHistory();
+      } catch (error) {
+        console.error('Erreur création demande retrait.', error);
+        setFeedback(error.message || 'Impossible d’enregistrer la demande de retrait.', 'error');
+      }
+    });
+
+    loadWithdrawalHistory();
+  </script>
+</body>
+</html>

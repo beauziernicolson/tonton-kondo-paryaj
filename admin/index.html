@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Tableau de bord admin</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --panel:rgba(8,24,43,.96);
+      --line:rgba(255,255,255,.12);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --gold:#ffd21f;
+      --green:#46e36f;
+      --blue:#39a8ff;
+      --red:#ff5d6c;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      min-height:100vh;
+      font-family:"Segoe UI", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 85% 0%, rgba(255,210,31,.10), transparent 18%),
+        radial-gradient(circle at 10% 8%, rgba(57,168,255,.12), transparent 24%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+      line-height:1.45;
+    }
+
+    a { color:inherit; text-decoration:none; }
+    .app { width:min(100%, 1200px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.03em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+
+    .hero-card, .panel { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .hero-card { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-bottom:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 5vw, 38px); line-height:1.04; }
+    .lede { color:var(--muted); max-width:700px; margin:0; }
+
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .stat-card { border:1px solid var(--line); border-radius:20px; background:rgba(255,255,255,.03); padding:14px; min-height:110px; }
+    .stat-card small { display:block; color:var(--muted); text-transform:uppercase; letter-spacing:.16em; font-size:11px; }
+    .stat-card strong { display:block; font-size:22px; margin-top:6px; color:#fff; }
+    .stat-card span { display:block; color:#dfe6f2; font-size:13px; margin-top:4px; }
+
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:18px; }
+    .nav-card { border:1px solid var(--line); border-radius:22px; background:linear-gradient(180deg, rgba(9,26,45,.96), rgba(5,16,28,.96)); padding:14px; display:flex; flex-direction:column; gap:8px; min-height:120px; transition:transform .15s ease, border-color .15s ease; }
+    .nav-card:hover { transform:translateY(-1px); border-color:rgba(255,210,31,.35); }
+    .nav-card strong { font-size:16px; color:#fff; }
+    .nav-card span { color:var(--muted); font-size:13px; }
+    .nav-card .meta { margin-top:auto; color:var(--gold); font-size:12px; text-transform:uppercase; letter-spacing:.18em; }
+
+    .note { border:1px dashed var(--line); border-radius:18px; padding:12px; color:var(--muted); background:rgba(255,255,255,.02); font-size:13px; }
+    .text-small { color:var(--muted); font-size:12px; }
+
+    @media (max-width:1024px) { .hero-card { grid-template-columns:1fr; } .stats-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .stats-grid, .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Administration</span>
+        </span>
+      </a>
+      <span class="pill">Tableau de bord admin</span>
+    </header>
+
+    <section class="hero-card">
+      <article>
+        <div class="eyebrow">Espace privé</div>
+        <h1>Tableau de bord admin</h1>
+        <p class="lede">Accédez rapidement aux modules de gestion de la plateforme. Les actions sensibles restent réservées aux profils admin et super_admin.</p>
+      </article>
+      <article class="panel">
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><small>Dépôts en attente</small><strong id="pending-deposits">—</strong><span>Demandes à valider</span></div>
+          <div class="stat-card"><small>Retraits en attente</small><strong id="pending-withdrawals">—</strong><span>Demandes à traiter</span></div>
+          <div class="stat-card"><small>Tickets en attente</small><strong id="pending-tickets">—</strong><span>Tickets ouverts / à analyser</span></div>
+          <div class="stat-card"><small>Résultats publiés aujourd’hui</small><strong id="published-results">—</strong><span>Résultats Borlette validés</span></div>
+        </div>
+        <p class="text-small" style="margin-top:10px;">Les statistiques sont chargées si les tables de gestion sont disponibles ; sinon, la page affiche uniquement les liens de navigation.</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="eyebrow">Navigation</div>
+      <div class="grid">
+        <a class="nav-card" href="results.html"><strong>Résultats</strong><span>Publier et gérer les résultats Borlette.</span><span class="meta">Admin résultats</span></a>
+        <a class="nav-card" href="draw-schedules.html"><strong>Tirages</strong><span>Gérer les tirages actifs par jeu.</span><span class="meta">Planning des tirages</span></a>
+        <a class="nav-card" href="deposits.html"><strong>Dépôts</strong><span>Valider les demandes de dépôt.</span><span class="meta">Finance</span></a>
+        <a class="nav-card" href="withdrawals.html"><strong>Retraits</strong><span>Suivre et approuver les retraits.</span><span class="meta">Finance</span></a>
+        <a class="nav-card" href="transactions.html"><strong>Transactions</strong><span>Consulter les flux de paiement et de gain.</span><span class="meta">Audit</span></a>
+        <a class="nav-card" href="../tickets.html"><strong>Tickets</strong><span>Consulter les tickets des joueurs.</span><span class="meta">Support</span></a>
+        <a class="nav-card" href="../index.html"><strong>Retour accueil</strong><span>Revenir au site public.</span><span class="meta">Front office</span></a>
+      </div>
+      <p class="note" style="margin-top:14px;">Si certaines pages ne sont pas disponibles dans votre instance, les liens restants restent accessibles.</p>
+    </section>
+  </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    (async function init() {
+      const pendingDepositsEl = document.getElementById('pending-deposits');
+      const pendingWithdrawalsEl = document.getElementById('pending-withdrawals');
+      const pendingTicketsEl = document.getElementById('pending-tickets');
+      const publishedResultsEl = document.getElementById('published-results');
+
+      function setFallback() {
+        if (pendingDepositsEl) pendingDepositsEl.textContent = '—';
+        if (pendingWithdrawalsEl) pendingWithdrawalsEl.textContent = '—';
+        if (pendingTicketsEl) pendingTicketsEl.textContent = '—';
+        if (publishedResultsEl) publishedResultsEl.textContent = '—';
+      }
+
+      try {
+        const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+        if (!currentUser) {
+          window.location.replace('../login-register/login.html');
+          return;
+        }
+
+        const role = String((currentUser.role || currentUser.user_metadata?.role || currentUser.app_metadata?.role || '')).toLowerCase();
+        const isAdmin = role === 'admin' || role === 'super_admin' || role === 'administrator';
+        if (!isAdmin) {
+          window.location.replace('../dashboard.html');
+          return;
+        }
+
+        const client = window.supabaseClient || null;
+        if (!client || typeof client.from !== 'function') {
+          setFallback();
+          return;
+        }
+
+        const today = new Date();
+        const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const endOfDay = new Date(startOfDay);
+        endOfDay.setDate(endOfDay.getDate() + 1);
+
+        const [depositsRes, withdrawalsRes, ticketsRes, resultsRes] = await Promise.all([
+          client.from('finance_requests').select('*', { count: 'exact' }).eq('type', 'deposit').eq('status', 'pending'),
+          client.from('finance_requests').select('*', { count: 'exact' }).eq('type', 'withdraw').eq('status', 'pending'),
+          client.from('tickets').select('*', { count: 'exact' }).eq('status', 'pending'),
+          client.from('draw_results').select('*', { count: 'exact' }).eq('status', 'published').gte('draw_date', startOfDay.toISOString().slice(0, 10)).lt('draw_date', endOfDay.toISOString().slice(0, 10))
+        ]);
+
+        if (pendingDepositsEl) pendingDepositsEl.textContent = String(depositsRes.count || 0);
+        if (pendingWithdrawalsEl) pendingWithdrawalsEl.textContent = String(withdrawalsRes.count || 0);
+        if (pendingTicketsEl) pendingTicketsEl.textContent = String(ticketsRes.count || 0);
+        if (publishedResultsEl) publishedResultsEl.textContent = String(resultsRes.count || 0);
+      } catch (error) {
+        console.error('Erreur chargement tableau de bord admin.', error);
+        setFallback();
+      }
+    })();
+  </script>
+</body>
+</html>
