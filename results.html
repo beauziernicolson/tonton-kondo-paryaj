@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Résultats</title>
+  <style>
+    :root {
+      --bg: #020813;
+      --panel: #07182b;
+      --line: rgba(255, 255, 255, .10);
+      --text: #f5f7fb;
+      --muted: #aebbd0;
+      --gold: #ffd21f;
+      --green: #46e36f;
+      --shadow: 0 24px 60px rgba(0, 0, 0, .45);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 70% 0%, rgba(255, 210, 31, .10), transparent 22%),
+        radial-gradient(circle at 10% 8%, rgba(57, 168, 255, .12), transparent 28%),
+        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .page { width: min(100%, 1180px); margin: 0 auto; padding: 18px 16px 56px; }
+    .card { border: 1px solid var(--line); border-radius: 28px; background: rgba(7, 24, 43, .92); box-shadow: var(--shadow); padding: 18px; margin-bottom: 18px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .eyebrow { display: flex; align-items: center; gap: 8px; color: var(--gold); text-transform: uppercase; letter-spacing: .18em; font-size: 11px; font-weight: 800; }
+    h1 { margin: 4px 0 6px; font-size: clamp(28px, 6vw, 38px); line-height: 1.02; }
+    p { color: var(--muted); margin: 0; }
+    .pill { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; background: rgba(255, 255, 255, .04); border: 1px solid var(--line); color: var(--muted); padding: 10px 14px; font-size: 12px; font-weight: 700; }
+    .filters { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+    .filter-btn { border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, .04); color: #edf4ff; padding: 10px 14px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .filter-btn.active { background: linear-gradient(180deg, rgba(255, 210, 31, .18), rgba(255, 185, 0, .12)); color: #fff7da; border-color: rgba(255, 210, 31, .24); }
+    .result-card { border: 1px solid rgba(255, 255, 255, .08); border-radius: 22px; padding: 18px; background: rgba(255, 255, 255, .02); margin-bottom: 16px; display: grid; gap: 12px; }
+    .result-row { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: start; }
+    .result-meta { display: grid; gap: 6px; }
+    .result-meta strong { display: block; color: #fff; font-size: 16px; }
+    .result-meta span { display: block; color: var(--muted); font-size: 13px; }
+    .badge { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; }
+    .badge.game { background: rgba(255, 210, 31, .10); color: var(--gold); border: 1px solid rgba(255, 210, 31, .18); }
+    .badge.status { background: rgba(70, 227, 111, .10); color: #e7fff0; border: 1px solid rgba(70, 227, 111, .18); }
+    .badge.source { background: rgba(57, 168, 255, .10); color: #b8e0ff; border: 1px solid rgba(57, 168, 255, .18); }
+    .result-body { display: grid; gap: 10px; }
+    .result-line { display: grid; gap: 6px; }
+    .result-line label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+    .result-line strong { color: #fff; font-size: 15px; }
+    .empty-state, .state-box { border: 1px dashed rgba(255, 255, 255, .14); border-radius: 18px; padding: 16px; background: rgba(255, 255, 255, .03); color: var(--muted); font-size: 14px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255, 255, 255, .04); color: #fff; padding: 10px 14px; font-weight: 800; }
+    @media (max-width: 900px) { .topbar { flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">Résultats officiels</div>
+          <h1>Tous les tirages publiés</h1>
+          <p>Affiche les résultats de tirages publiés pour les jeux compatibles.</p>
+        </div>
+        <a class="btn" href="dashboard.html">Retour</a>
+      </div>
+
+      <div class="pill" id="results-pill">Connexion requise • Auth front-end</div>
+      <div class="filters" id="results-filters">
+        <button class="filter-btn active" type="button" data-filter="all">Tous</button>
+        <button class="filter-btn" type="button" data-filter="borlette">Lotto 3</button>
+        <button class="filter-btn" type="button" data-filter="mariage">Mariage</button>
+      </div>
+      <div id="results-list"></div>
+    </section>
+  </main>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (async function initResultsPage() {
+      const resultsList = document.getElementById('results-list');
+      const resultsPill = document.getElementById('results-pill');
+      const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
+
+      function formatDate(value) {
+        if (!value) return 'Date inconnue';
+        return new Date(value).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      }
+
+      function renderItem(item) {
+        const gameLabel = item.game_type === 'borlette' ? 'Lotto 3' : 'Mariage';
+        const winningNumber = item.winning_number || '—';
+        const firstPrize = item.first_prize_full_number || '—';
+        const secondPrize = item.second_prize_number || '—';
+        const thirdPrize = item.third_prize_number || '—';
+        const drawDate = formatDate(item.draw_date);
+        const source = item.source || 'manual';
+
+        return `
+          <article class="result-card">
+            <div class="result-row">
+              <div class="result-meta">
+                <strong>${item.draw_name || 'Tirage inconnu'}</strong>
+                <span>${drawDate} • ${gameLabel}</span>
+              </div>
+              <div style="display:grid;gap:8px;justify-content:end;align-items:start;">
+                <span class="badge game">${gameLabel}</span>
+                <span class="badge source">${source}</span>
+                <span class="badge status">Publié</span>
+              </div>
+            </div>
+            <div class="result-body">
+              <div class="result-line"><label>Numéro gagnant</label><strong>${winningNumber}</strong></div>
+              ${item.game_type === 'borlette' ? `
+                <div class="result-line"><label>1er lot complet</label><strong>${firstPrize}</strong></div>
+                <div class="result-line"><label>2e lot</label><strong>${secondPrize}</strong></div>
+                <div class="result-line"><label>3e lot</label><strong>${thirdPrize}</strong></div>
+              ` : ''}
+            </div>
+          </article>
+        `;
+      }
+
+      function renderResults(items, filter = 'all') {
+        const filtered = items.filter((item) => {
+          if (filter === 'all') return true;
+          return String(item.game_type || '').toLowerCase() === String(filter).toLowerCase();
+        });
+
+        if (!filtered.length) {
+          resultsList.innerHTML = '<div class="empty-state">Aucun résultat trouvé pour ce filtre.</div>';
+          return;
+        }
+
+        resultsList.innerHTML = filtered.map(renderItem).join('');
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          filterButtons.forEach((btn) => btn.classList.remove('active'));
+          button.classList.add('active');
+          renderResults(window.__drawResults || [], button.dataset.filter || 'all');
+        });
+      });
+
+      const user = await window.getCurrentUserAsync?.();
+      if (!user) {
+        if (window.saveRedirectTarget) window.saveRedirectTarget('results.html');
+        window.location.replace('login-register/login.html');
+        return;
+      }
+
+      resultsPill.textContent = `Connecté · ${user.full_name || user.email || 'Joueur'}`;
+      resultsList.innerHTML = '<div class="state-box">Chargement des résultats publiés…</div>';
+
+      try {
+        const client = window.supabaseClient || null;
+        if (!client || typeof client.from !== 'function') {
+          throw new Error('Connexion Supabase indisponible.');
+        }
+
+        const { data, error } = await client
+          .from('draw_results')
+          .select('id, game_type, draw_name, draw_date, winning_number, first_prize_full_number, second_prize_number, third_prize_number, source')
+          .eq('status', 'published')
+          .order('draw_date', { ascending: false })
+          .limit(50);
+
+        if (error) {
+          throw error;
+        }
+
+        window.__drawResults = data || [];
+        renderResults(window.__drawResults, 'all');
+        resultsPill.textContent = `Connecté · ${user.full_name || user.email || 'Joueur'} • ${window.__drawResults.length} résultat(s)`;
+      } catch (error) {
+        console.error('Erreur chargement résultats.', error);
+        resultsList.innerHTML = `<div class="state-box">Erreur Supabase : ${error.message || 'Impossible de charger les résultats.'}</div>`;
+      }
+    })();
+  </script>
+</body>
+</html>

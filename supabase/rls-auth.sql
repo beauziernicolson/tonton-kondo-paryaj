@@ -11,6 +11,8 @@
 CREATE OR REPLACE FUNCTION public.has_admin_access()
 RETURNS boolean
 LANGUAGE sql
+SECURITY DEFINER
+SET row_security = off
 STABLE
 AS $$
   SELECT EXISTS (
@@ -27,6 +29,8 @@ COMMENT ON FUNCTION public.has_admin_access() IS
 CREATE OR REPLACE FUNCTION public.is_admin()
 RETURNS boolean
 LANGUAGE sql
+SECURITY DEFINER
+SET row_security = off
 STABLE
 AS $$
   SELECT EXISTS (
@@ -43,6 +47,8 @@ COMMENT ON FUNCTION public.is_admin() IS
 CREATE OR REPLACE FUNCTION public.is_super_admin()
 RETURNS boolean
 LANGUAGE sql
+SECURITY DEFINER
+SET row_security = off
 STABLE
 AS $$
   SELECT EXISTS (
