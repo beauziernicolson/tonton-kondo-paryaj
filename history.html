@@ -56,6 +56,26 @@
     .state-box { border:1px solid var(--line); border-radius:18px; padding:12px; background: rgba(255,255,255,.03); color: var(--muted); font-size: 13px; }
     .tag { display:inline-flex; align-items:center; gap:6px; border-radius:999px; border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); color:#edf4ff; padding:6px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
     .hint { color: var(--muted); font-size: 13px; }
+    .keno-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 10px; }
+    .keno-section { border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 10px; background: rgba(255,255,255,.02); }
+    .keno-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--gold); font-weight: 800; margin-bottom: 6px; }
+    .numbers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(24px, 1fr)); gap: 4px; }
+    .number { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 4px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: #aebbd0; font-size: 11px; font-weight: 700; }
+    .number.matched { background: rgba(70, 227, 111, .25); border-color: rgba(70, 227, 111, .5); color: var(--green); }
+    .keno-stat { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .keno-stat-item { display: flex; flex-direction: column; }
+    .keno-stat-item-label { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 700; }
+    .keno-stat-item-value { font-size: 14px; font-weight: 800; color: #fff; margin-top: 3px; }
+    .keno-stat-item-value.won { color: var(--green); }
+    .keno-stat-item-value.lost { color: var(--red); }
+    .detail-grid { display:grid; gap:8px; margin-top:8px; }
+    .detail-card { border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:10px; background:rgba(255,255,255,.03); }
+    .detail-card-title { font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--gold); font-weight:800; margin-bottom:6px; }
+    .detail-row { display:flex; justify-content:space-between; gap:10px; font-size:13px; color:#dfe6f2; padding:2px 0; }
+    .detail-row span:last-child { color:#fff; font-weight:700; text-align:right; }
+    .bet-list { display:grid; gap:6px; margin-top:8px; }
+    .bet-item { border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:8px; background:rgba(255,255,255,.02); font-size:12px; color:#dfe6f2; }
+    .bet-item strong { color:#fff; }
     @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -112,8 +132,38 @@
       const historyPill = document.getElementById('history-pill');
       const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
 
+      const GAME_LABELS = {
+        borlette: 'Borlette',
+        mariage: 'Mariage',
+        lotto3: 'Lotto3',
+        lotto4: 'Lotto4',
+        lotto5: 'Lotto5',
+        keno: 'Keno',
+        roulette: 'Roulette',
+      };
+
+      const STATUS_LABELS = {
+        pending: 'En attente',
+        won: 'Gagné',
+        lost: 'Perdu',
+        paid: 'Payé',
+        completed: 'Terminé',
+        cancelled: 'Annulé',
+        confirmed: 'Confirmé',
+      };
+
       function formatCurrency(value, currency = 'HTG') {
         return `${Number(value || 0).toLocaleString('fr-FR')} ${currency}`;
+      }
+
+      function formatGameLabel(gameType) {
+        const normalized = String(gameType || '').toLowerCase();
+        return GAME_LABELS[normalized] || 'Jeu inconnu';
+      }
+
+      function formatStatusLabel(status) {
+        const normalized = String(status || '').toLowerCase();
+        return STATUS_LABELS[normalized] || String(status || 'Inconnu');
       }
 
       function statusLabel(status) {
@@ -176,7 +226,7 @@
 
         const ticketItemsResponse = await client
           .from('ticket_items')
-          .select('ticket_id, amount, status, potential_win')
+          .select('ticket_id, number_played, amount, status, potential_win')
           .in('ticket_id', tickets.map((ticket) => ticket.id));
 
         if (ticketItemsResponse.error) throw ticketItemsResponse.error;
@@ -187,6 +237,68 @@
           map[item.ticket_id].push(item);
           return map;
         }, {});
+
+        const kenoTickets = tickets.filter((t) => String(t.game_type || '').toLowerCase() === 'keno').map((t) => t.id);
+        let kenoRoundsByTicket = {};
+        if (kenoTickets.length > 0) {
+          try {
+            const kenoResponse = await client
+              .from('keno_rounds')
+              .select('id, ticket_id, selected_numbers, drawn_numbers, matches_count, payout_multiplier, bet_amount, win_amount, status, created_at')
+              .in('ticket_id', kenoTickets);
+
+            if (kenoResponse.error) {
+              console.warn('Erreur récupération keno_rounds:', kenoResponse.error);
+            } else {
+              kenoRoundsByTicket = (kenoResponse.data || []).reduce((map, round) => {
+                if (!map[round.ticket_id]) map[round.ticket_id] = [];
+                map[round.ticket_id].push(round);
+                return map;
+              }, {});
+            }
+          } catch (kenoError) {
+            console.warn('Erreur chargement keno_rounds:', kenoError);
+          }
+        }
+
+        const rouletteTickets = tickets.filter((t) => String(t.game_type || '').toLowerCase() === 'roulette').map((t) => t.id);
+        let rouletteRoundsByTicket = {};
+        let rouletteBetsByTicket = {};
+        if (rouletteTickets.length > 0) {
+          try {
+            const rouletteRoundsResponse = await client
+              .from('roulette_rounds')
+              .select('id, ticket_id, winning_number, winning_color, total_bet_amount, total_win_amount, status, metadata, created_at')
+              .in('ticket_id', rouletteTickets);
+
+            if (rouletteRoundsResponse.error) {
+              console.warn('Erreur récupération roulette_rounds:', rouletteRoundsResponse.error);
+            } else {
+              rouletteRoundsByTicket = (rouletteRoundsResponse.data || []).reduce((map, round) => {
+                if (!map[round.ticket_id]) map[round.ticket_id] = [];
+                map[round.ticket_id].push(round);
+                return map;
+              }, {});
+            }
+
+            const rouletteBetsResponse = await client
+              .from('roulette_bets')
+              .select('id, ticket_id, round_id, bet_key, bet_label, bet_type, bet_value, amount, payout_multiplier, outcome, win_amount, created_at')
+              .in('ticket_id', rouletteTickets);
+
+            if (rouletteBetsResponse.error) {
+              console.warn('Erreur récupération roulette_bets:', rouletteBetsResponse.error);
+            } else {
+              rouletteBetsByTicket = (rouletteBetsResponse.data || []).reduce((map, bet) => {
+                if (!map[bet.ticket_id]) map[bet.ticket_id] = [];
+                map[bet.ticket_id].push(bet);
+                return map;
+              }, {});
+            }
+          } catch (rouletteError) {
+            console.warn('Erreur chargement roulette data:', rouletteError);
+          }
+        }
 
         const totalAmount = tickets.reduce((sum, item) => sum + Number(item.total_amount || 0), 0);
         const totalWon = tickets.reduce((sum, ticket) => {
@@ -227,16 +339,35 @@
               : statusLabel(ticket.status) === 'lost'
                 ? `-${formatCurrency(ticket.total_amount, currency)}`
                 : `${formatCurrency(realGain - Number(ticket.total_amount || 0), currency)}`;
+
+            const gameKey = String(ticket.game_type || '').toLowerCase();
+            const isKeno = gameKey === 'keno';
+            const isRoulette = gameKey === 'roulette';
+            const kenoData = isKeno ? (kenoRoundsByTicket[ticket.id] || []) : [];
+            const rouletteRound = isRoulette ? (rouletteRoundsByTicket[ticket.id] || [])[0] || null : null;
+            const rouletteBets = isRoulette ? (rouletteBetsByTicket[ticket.id] || []) : [];
+
             return {
               kind: 'ticket',
               filter: 'tickets',
               tag: 'Ticket',
-              title: `${ticket.ticket_number || 'Ticket'} — ${ticket.game_type || 'Borlette'}`,
+              title: `${ticket.ticket_number || 'Ticket'} — ${formatGameLabel(ticket.game_type)}`,
               meta: `${new Date(ticket.created_at).toLocaleString('fr-FR')} • ${ticket.draw_name || 'Tirage non renseigné'}`,
               amount: `${formatCurrency(Number(ticket.total_amount || 0), currency)}`,
               gain: `Gain réel : ${formatCurrency(realGain, currency)}`,
               result: `Résultat net : ${net}`,
               status: ticket.status,
+              isKeno,
+              isRoulette,
+              kenoData,
+              rouletteRound,
+              rouletteBets,
+              gameType: ticket.game_type,
+              gameLabel: formatGameLabel(ticket.game_type),
+              ticketId: ticket.id,
+              currency,
+              lines,
+              drawName: ticket.draw_name || '—',
             };
           }),
           ...transactions.map((item) => ({
@@ -269,18 +400,135 @@
             return;
           }
 
-          historyFeed.innerHTML = visible.map((item) => `
-            <article class="history-item">
-              <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
-                <strong>${item.title}</strong>
-                <span class="tag">${item.tag}</span>
-              </div>
-              <span>${item.meta}</span>
-              <em>${item.amount}</em>
-              <span>${item.gain}</span>
-              <span>${item.result}</span>
-            </article>
-          `).join('');
+          historyFeed.innerHTML = visible.map((item) => {
+            const gameKey = String(item.gameType || '').toLowerCase();
+            const statusDisplay = formatStatusLabel(item.status);
+
+            if (gameKey === 'keno') {
+              const keno = (item.kenoData && item.kenoData[0]) || null;
+              if (keno) {
+                const selectedNums = Array.isArray(keno.selected_numbers) ? keno.selected_numbers : [];
+                const drawnNums = Array.isArray(keno.drawn_numbers) ? keno.drawn_numbers : [];
+                const matchedNums = selectedNums.filter((n) => drawnNums.includes(n));
+                return `
+                  <article class="history-item">
+                    <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                      <strong>${item.title}</strong>
+                      <span class="tag">${statusDisplay}</span>
+                    </div>
+                    <span>${item.meta}</span>
+                    <em>${item.amount}</em>
+                    <div class="detail-grid">
+                      <div class="detail-card">
+                        <div class="detail-card-title">Détails Keno</div>
+                        <div class="detail-row"><span>Numéros choisis</span><span>${selectedNums.length ? selectedNums.join(', ') : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Numéros tirés</span><span>${drawnNums.length ? drawnNums.join(', ') : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Matchs</span><span>${keno.matches_count != null ? `${keno.matches_count} / ${selectedNums.length}` : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Multiplicateur</span><span>${keno.payout_multiplier != null ? `${keno.payout_multiplier}x` : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Mise</span><span>${keno.bet_amount != null ? formatCurrency(keno.bet_amount, item.currency) : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Gain</span><span>${keno.win_amount != null ? formatCurrency(keno.win_amount, item.currency) : 'Détails indisponibles'}</span></div>
+                      </div>
+                    </div>
+                    <span>${item.gain}</span>
+                    <span>${item.result}</span>
+                  </article>
+                `;
+              }
+              return `
+                <article class="history-item">
+                  <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                    <strong>${item.title}</strong>
+                    <span class="tag">${statusDisplay}</span>
+                  </div>
+                  <span>${item.meta}</span>
+                  <em>${item.amount}</em>
+                  <span style="color: var(--muted); font-size: 13px;">Détails Keno indisponibles.</span>
+                  <span>${item.gain}</span>
+                  <span>${item.result}</span>
+                </article>
+              `;
+            }
+
+            if (gameKey === 'roulette') {
+              const round = item.rouletteRound || null;
+              const bets = Array.isArray(item.rouletteBets) ? item.rouletteBets : [];
+              if (round || bets.length) {
+                return `
+                  <article class="history-item">
+                    <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                      <strong>${item.title}</strong>
+                      <span class="tag">${statusDisplay}</span>
+                    </div>
+                    <span>${item.meta}</span>
+                    <em>${item.amount}</em>
+                    <div class="detail-grid">
+                      <div class="detail-card">
+                        <div class="detail-card-title">Détails Roulette</div>
+                        <div class="detail-row"><span>Numéro gagnant</span><span>${round?.winning_number != null ? round.winning_number : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Couleur gagnante</span><span>${round?.winning_color || 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Total misé</span><span>${round?.total_bet_amount != null ? formatCurrency(round.total_bet_amount, item.currency) : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Gain total</span><span>${round?.total_win_amount != null ? formatCurrency(round.total_win_amount, item.currency) : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Statut</span><span>${round?.status ? formatStatusLabel(round.status) : statusDisplay}</span></div>
+                      </div>
+                      ${bets.length ? `<div class="detail-card"><div class="detail-card-title">Détail des mises</div><div class="bet-list">${bets.map((bet) => `<div class="bet-item"><strong>${bet.bet_label || bet.bet_key || 'Mise'}</strong><div>${formatCurrency(bet.amount || 0, item.currency)}</div><div>Multiplicateur : ${bet.payout_multiplier != null ? bet.payout_multiplier : '—'}</div><div>Issue : ${bet.outcome || '—'}</div><div>Gain : ${bet.win_amount != null ? formatCurrency(bet.win_amount, item.currency) : '—'}</div></div>`).join('')}</div></div>` : '<div class="detail-card"><div class="detail-card-title">Détail des mises</div><div style="font-size:13px;color:var(--muted);">Détails indisponibles.</div></div>'}
+                    </div>
+                    <span>${item.gain}</span>
+                    <span>${item.result}</span>
+                  </article>
+                `;
+              }
+              return `
+                <article class="history-item">
+                  <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                    <strong>${item.title}</strong>
+                    <span class="tag">${statusDisplay}</span>
+                  </div>
+                  <span>${item.meta}</span>
+                  <em>${item.amount}</em>
+                  <span style="color: var(--muted); font-size: 13px;">Détails Roulette indisponibles.</span>
+                  <span>${item.gain}</span>
+                  <span>${item.result}</span>
+                </article>
+              `;
+            }
+
+            const gameLabel = item.gameLabel || formatGameLabel(item.gameType);
+            const linesMarkup = (item.lines || []).slice(0, 3).map((line) => {
+              const lineStatus = formatStatusLabel(line.status);
+              const lineNumber = line.number_played || '—';
+              const lineAmount = formatCurrency(line.amount || 0, item.currency);
+              const lineGain = line.potential_win != null ? formatCurrency(line.potential_win || 0, item.currency) : 'Détails indisponibles';
+              if (gameKey === 'borlette') {
+                return `<div class="detail-row"><span>${lineNumber}</span><span>${lineAmount} • ${lineGain} • ${lineStatus}</span></div>`;
+              }
+              if (gameKey === 'mariage') {
+                return `<div class="detail-row"><span>${lineNumber}</span><span>${lineAmount} • ${lineGain} • ${lineStatus}</span></div>`;
+              }
+              if (gameKey.startsWith('lotto')) {
+                return `<div class="detail-row"><span>${lineNumber}</span><span>${lineAmount} • ${lineGain} • ${lineStatus}</span></div>`;
+              }
+              return `<div class="detail-row"><span>${lineNumber}</span><span>${lineAmount} • ${lineGain} • ${lineStatus}</span></div>`;
+            }).join('');
+
+            return `
+              <article class="history-item">
+                <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                  <strong>${item.title}</strong>
+                  <span class="tag">${statusDisplay}</span>
+                </div>
+                <span>${item.meta}</span>
+                <em>${item.amount}</em>
+                <div class="detail-grid">
+                  <div class="detail-card">
+                    <div class="detail-card-title">Détails ${gameLabel}</div>
+                    ${linesMarkup || '<div class="detail-row"><span>Détails</span><span>Détails indisponibles</span></div>'}
+                  </div>
+                </div>
+                <span>${item.gain}</span>
+                <span>${item.result}</span>
+              </article>
+            `;
+          }).join('');
         }
 
         renderFeed('all');

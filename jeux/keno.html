@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Keno</title>
+  <style>
+    :root {
+      --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0;
+      --gold:#ffd21f; --gold-2:#ffb900; --green:#46e36f; --red:#ff5d6c; --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius-xl:28px; --radius-md:18px;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background:radial-gradient(circle at 82% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 10% 8%, rgba(57,168,255,.13), transparent 24%), linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%); overflow-x:hidden; overflow-x:hidden; }
+    a { color:inherit; text-decoration:none; }
+    button, input, select { font:inherit; }
+    button { cursor:pointer; }
+    .app { width:min(100%, 1140px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .hero-card { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-bottom:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
+    .hero-card h1 { margin:0 0 8px; font-size:clamp(28px, 5vw, 38px); line-height:1.04; letter-spacing:-.03em; }
+    .hero-card p { margin:0; color:var(--muted); font-size:15px; }
+    .mini-chip { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#edf4ff; font-weight:700; font-size:12px; margin-top:12px; }
+    .mini-chip strong { color:var(--gold); }
+    .content-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:18px; }
+    .panel { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:16px; }
+    .panel-head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:12px; }
+    .panel-head h2 { margin:0; font-size:18px; letter-spacing:-.02em; }
+    .panel-head p { margin:4px 0 0; color:var(--muted); font-size:13px; }
+    .field-grid { display:grid; gap:12px; }
+    .field-card { border:1px solid var(--line); border-radius:var(--radius-md); padding:14px; background:rgba(255,255,255,.03); }
+    .field-card label { display:block; color:#edf4ff; font-size:13px; font-weight:800; margin-bottom:8px; }
+    .field-card input { width:100%; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.04); color:#fff; padding:12px 14px; }
+    .field-card .note { color:var(--muted); font-size:12px; margin-top:6px; }
+    .grid-info { display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .grid-info strong { font-size:14px; color:var(--gold); }
+    .grid-cell { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:8px; }
+    .number-btn { border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.04); color:#fff; padding:12px 0; font-size:13px; font-weight:800; transition:transform .15s ease, background .15s ease, border-color .15s ease; }
+    .number-btn:hover { transform:translateY(-1px); background:rgba(255,255,255,.08); }
+    .number-btn.active { border-color:rgba(255,210,31,.65); background:rgba(255,210,31,.16); color:#fff; box-shadow:0 0 0 1px rgba(255,210,31,.12) inset; }
+    .button-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:12px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:12px 16px; border:1px solid var(--line); font-weight:900; color:#fff; background:rgba(255,255,255,.04); }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#121212; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .feedback { border:1px dashed rgba(255,255,255,.16); border-radius:14px; padding:12px 14px; background:rgba(255,255,255,.03); color:var(--muted); font-size:14px; margin-top:12px; min-height:54px; }
+    .feedback.success { color:#eafff1; border-color:rgba(70,227,111,.22); background:rgba(70,227,111,.08); }
+    .feedback.warn { color:#fff4d7; border-color:rgba(255,210,31,.18); background:rgba(255,210,31,.08); }
+    .feedback.error { color:#ffe7eb; border-color:rgba(255,93,108,.18); background:rgba(255,93,108,.08); }
+    .result-card { display:grid; gap:10px; }
+    .result-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.04); }
+    .result-row strong { color:var(--gold); }
+    .drawn-number { display:inline-flex; min-width:30px; align-items:center; justify-content:center; margin-right:4px; padding:6px 8px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); font-size:13px; }
+    .drawn-number.match { border-color:rgba(70,227,111,.35); background:rgba(70,227,111,.12); color:var(--green); }
+    .payout-table { width:100%; border-collapse:collapse; margin-top:12px; }
+    .payout-table th, .payout-table td { padding:10px 12px; text-align:left; border-bottom:1px solid rgba(255,255,255,.08); font-size:13px; }
+    .payout-table th { color:var(--gold); font-weight:800; }
+    .payout-table td { color:var(--muted); }
+    .panel-note { color:var(--muted); font-size:13px; margin-top:10px; }
+    .highlight { color:var(--gold); }
+    .drawing-machine { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; margin-bottom:18px; }
+    .drawing-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .drawing-header h2 { margin:0; font-size:18px; letter-spacing:-.02em; }
+    .match-counter { display:inline-flex; align-items:center; justify-content:center; min-width:120px; border-radius:12px; border:2px solid rgba(255,210,31,.35); background:rgba(255,210,31,.08); padding:12px 16px; color:var(--gold); font-size:16px; font-weight:900; }
+    .drawing-zone { display:grid; grid-template-columns:repeat(auto-fit, minmax(48px, 1fr)); gap:10px; min-height:280px; padding:16px; border:1px dashed rgba(255,255,255,.08); border-radius:14px; background:rgba(255,255,255,.02); align-content:start; }
+    .ball { display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:50%; border:2px solid rgba(255,255,255,.18); background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); color:#fff; font-size:16px; font-weight:900; opacity:0; animation:ballPop .35s cubic-bezier(.68, -.55, .265, 1.55) forwards; transition:background .2s ease, border-color .2s ease; }
+    @keyframes ballPop { from { opacity:0; transform:scale(0) rotate(-180deg); } to { opacity:1; transform:scale(1) rotate(0deg); } }
+    .ball.match { border-color:rgba(70,227,111,.45); background:linear-gradient(135deg, rgba(70,227,111,.18), rgba(70,227,111,.08)); color:var(--green); box-shadow:0 0 12px rgba(70,227,111,.25); }
+    @media (max-width: 1080px) {
+      .hero-card, .content-grid { grid-template-columns:1fr; }
+      .grid-cell { grid-template-columns:repeat(8,minmax(0,1fr)); }
+      .drawing-zone { grid-template-columns:repeat(auto-fit, minmax(42px, 1fr)); }
+      .ball { width:42px; height:42px; font-size:14px; }
+    }
+    @media (max-width: 760px) {
+      .app { padding:12px 12px 28px; }
+      .topbar { flex-direction:column; align-items:flex-start; }
+      .hero-card, .content-grid { gap:14px; }
+      .field-card input, .btn { min-height:46px; }
+      .grid-cell { grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; }
+      .number-btn { min-height:44px; padding:10px 0; font-size:12px; }
+      .button-row { flex-direction:column; }
+      .btn, .btn-primary { width:100%; }
+      .drawing-zone { grid-template-columns:repeat(8,minmax(0,1fr)); gap:8px; min-height:auto; padding:12px; }
+      .ball { width:40px; height:40px; font-size:13px; }
+      .result-row { flex-wrap:wrap; gap:6px; }
+    }
+    @media (max-width: 480px) {
+      .app { padding:10px 8px 24px; }
+      .hero-card { padding:14px; }
+      .panel, .drawing-machine { padding:14px; }
+      .grid-cell { grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
+      .number-btn { min-height:40px; padding:8px 0; font-size:12px; border-radius:10px; }
+      .drawing-zone { grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px; }
+      .ball { width:36px; height:36px; font-size:12px; }
+      .drawing-header { flex-direction:column; align-items:flex-start; gap:8px; }
+      .match-counter { min-width:auto; width:100%; justify-content:center; }
+      .pill { width:100%; justify-content:center; }
+      .brand img { width:48px; height:48px; }
+      .brand-text strong { font-size:16px; }
+    }
+    @media (max-width: 360px) {
+      .grid-cell { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .drawing-zone { grid-template-columns:repeat(5,minmax(0,1fr)); }
+      .ball { width:34px; height:34px; font-size:11px; }
+      .number-btn { padding:8px 0; }
+   
+      .number-btn { min-height:44px; padding:10px 0; font-size:12px; }
+      .button-row { flex-direction:column; }
+      .btn, .btn-primary { width:100%; }
+      .drawing-zone { grid-template-columns:repeat(8,minmax(0,1fr)); gap:8px; min-height:auto; padding:12px; }
+      .ball { width:40px; height:40px; font-size:13px; }
+      .result-row { flex-wrap:wrap; gap:6px; }
+    }
+    @media (max-width: 480px) {
+      .app { padding:10px 8px 24px; }
+      .hero-card { padding:14px; }
+      .panel, .drawing-machine { padding:14px; }
+      .grid-cell { grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
+      .number-btn { min-height:40px; padding:8px 0; font-size:12px; }
+      .drawing-zone { grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px; }
+      .ball { width:36px; height:36px; font-size:12px; }
+      .drawing-header { flex-direction:column; align-items:flex-start; gap:8px; }
+      .match-counter { min-width:auto; width:100%; justify-content:center; }
+    }
+    @media (max-width: 360px) {
+      .grid-cell { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .drawing-zone { grid-template-columns:repeat(5,minmax(0,1fr)); }
+      .ball { width:34px; height:34px; font-size:11px; }
+      .pill { width:100%; justify-content:center; }
+      .brand-text strong { font-size:16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+      <span class="pill">Keno V1</span>
+    </header>
+
+    <section class="hero-card">
+      <article>
+        <div class="eyebrow">Nouveau jeu</div>
+        <h1>Keno</h1>
+        <p>Choisissez vos numéros, placez votre mise et tentez votre chance instantanément.</p>
+        <div class="mini-chip">Sélectionnez entre 5 et 10 numéros</div>
+      </article>
+      <article class="field-grid">
+        <div class="field-card">
+          <label>Numéros choisis</label>
+          <div class="grid-info"><strong id="selected-count">0 / 10</strong><span id="warning-text"></span></div>
+          <div id="number-grid" class="grid-cell"></div>
+        </div>
+        <div class="field-card">
+          <label for="stake-input">Montant de la mise</label>
+          <input id="stake-input" type="number" min="1" placeholder="Montant de la mise" />
+          <div class="button-row">
+            <button id="quick-pick-btn" class="btn" type="button">Quick Pick</button>
+            <button id="clear-btn" class="btn" type="button">Effacer</button>
+            <button id="play-btn" class="btn btn-primary" type="button">Jouer</button>
+          </div>
+          <div id="feedback-box" class="feedback">Sélectionnez vos numéros puis validez.</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="drawing-machine" id="drawing-machine" style="display:none;">
+      <div class="drawing-header">
+        <h2>Machine de tirage</h2>
+        <div class="match-counter" id="live-match-counter">Matchs : 0</div>
+      </div>
+      <div class="drawing-zone" id="drawing-zone"></div>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel result-card">
+        <div class="panel-head"><div><h2>Résultat Keno</h2><p>Affichage temporaire de l’interface.</p></div></div>
+        <div class="result-row"><span>Numéros choisis</span><strong id="chosen-numbers">Aucun</strong></div>
+        <div class="result-row"><span>Numéros tirés</span><strong id="drawn-numbers">En attente du backend</strong></div>
+        <div class="result-row"><span>Matchs</span><strong id="matches-count">-</strong></div>
+        <div class="result-row"><span>Gain</span><strong id="gain-amount">-</strong></div>
+        <div class="result-row"><span>Ticket</span><strong id="ticket-number">-</strong></div>
+        <div class="result-row"><span>Mise</span><strong id="bet-amount">-</strong></div>
+        <div class="result-row"><span>Multiplicateur</span><strong id="payout-multiplier">-</strong></div>
+        <div class="result-row"><span>Statut</span><strong id="status-text">-</strong></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div><h2>Table de paiement V1</h2><p>Les gains sont affichés ici pour la version d’interface.</p></div></div>
+        <table class="payout-table">
+          <thead><tr><th>Numéros choisis</th><th>Matchs</th><th>Gain</th></tr></thead>
+          <tbody>
+            <tr><td>5</td><td>3</td><td>mise × 2</td></tr>
+            <tr><td>5</td><td>4</td><td>mise × 10</td></tr>
+            <tr><td>5</td><td>5</td><td>mise × 50</td></tr>
+            <tr><td>6</td><td>3</td><td>mise × 1</td></tr>
+            <tr><td>6</td><td>4</td><td>mise × 5</td></tr>
+            <tr><td>6</td><td>5</td><td>mise × 25</td></tr>
+            <tr><td>6</td><td>6</td><td>mise × 100</td></tr>
+            <tr><td>7</td><td>4</td><td>mise × 3</td></tr>
+            <tr><td>7</td><td>5</td><td>mise × 15</td></tr>
+            <tr><td>7</td><td>6</td><td>mise × 75</td></tr>
+            <tr><td>7</td><td>7</td><td>mise × 250</td></tr>
+            <tr><td>8</td><td>4</td><td>mise × 2</td></tr>
+            <tr><td>8</td><td>5</td><td>mise × 10</td></tr>
+            <tr><td>8</td><td>6</td><td>mise × 50</td></tr>
+            <tr><td>8</td><td>7</td><td>mise × 200</td></tr>
+            <tr><td>8</td><td>8</td><td>mise × 500</td></tr>
+            <tr><td>9</td><td>5</td><td>mise × 5</td></tr>
+            <tr><td>9</td><td>6</td><td>mise × 25</td></tr>
+            <tr><td>9</td><td>7</td><td>mise × 100</td></tr>
+            <tr><td>9</td><td>8</td><td>mise × 500</td></tr>
+            <tr><td>9</td><td>9</td><td>mise × 1000</td></tr>
+            <tr><td>10</td><td>5</td><td>mise × 2</td></tr>
+            <tr><td>10</td><td>6</td><td>mise × 10</td></tr>
+            <tr><td>10</td><td>7</td><td>mise × 50</td></tr>
+            <tr><td>10</td><td>8</td><td>mise × 250</td></tr>
+            <tr><td>10</td><td>9</td><td>mise × 1000</td></tr>
+            <tr><td>10</td><td>10</td><td>mise × 5000</td></tr>
+          </tbody>
+        </table>
+        <div class="panel-note">Le tirage réel sera effectué plus tard côté Supabase pour éviter la triche.</div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    const selectedNumbers = [];
+    const numberGrid = document.getElementById('number-grid');
+    const selectedCount = document.getElementById('selected-count');
+    const warningText = document.getElementById('warning-text');
+    const stakeInput = document.getElementById('stake-input');
+    const feedbackBox = document.getElementById('feedback-box');
+    const chosenNumbersEl = document.getElementById('chosen-numbers');
+    const drawnNumbersEl = document.getElementById('drawn-numbers');
+    const matchesCount = document.getElementById('matches-count');
+    const ticketNumberEl = document.getElementById('ticket-number');
+    const betAmountEl = document.getElementById('bet-amount');
+    const payoutMultiplierEl = document.getElementById('payout-multiplier');
+    const statusTextEl = document.getElementById('status-text');
+    const gainAmount = document.getElementById('gain-amount');
+    const quickPickBtn = document.getElementById('quick-pick-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const playBtn = document.getElementById('play-btn');
+    const drawingMachine = document.getElementById('drawing-machine');
+    const drawingZone = document.getElementById('drawing-zone');
+    const liveMatchCounter = document.getElementById('live-match-counter');
+
+    function setFeedback(message, type) {
+      feedbackBox.className = 'feedback';
+      if (type === 'success') feedbackBox.classList.add('success');
+      if (type === 'warn') feedbackBox.classList.add('warn');
+      if (type === 'error') feedbackBox.classList.add('error');
+      feedbackBox.textContent = message;
+    }
+
+    function renderGrid() {
+      const buttons = [];
+      for (let i = 1; i <= 80; i += 1) {
+        const active = selectedNumbers.includes(i) ? ' active' : '';
+        buttons.push(`<button type="button" class="number-btn${active}" data-number="${i}">${i}</button>`);
+      }
+      numberGrid.innerHTML = buttons.join('');
+    }
+
+    function updateSelectedNumbers() {
+      selectedNumbers.sort((a, b) => a - b);
+      selectedCount.textContent = `${selectedNumbers.length} / 10`;
+      warningText.textContent = selectedNumbers.length > 10 ? 'Maximum 10 numéros.' : '';
+      chosenNumbersEl.textContent = selectedNumbers.length ? selectedNumbers.join(', ') : 'Aucun';
+      renderGrid();
+    }
+
+    function toggleNumber(number) {
+      const index = selectedNumbers.indexOf(number);
+      if (index >= 0) {
+        selectedNumbers.splice(index, 1);
+        setFeedback('Numéro retiré de la sélection.', '');
+      } else {
+        if (selectedNumbers.length >= 10) {
+          setFeedback('Vous ne pouvez pas choisir plus de 10 numéros.', 'warn');
+          return;
+        }
+        selectedNumbers.push(number);
+        setFeedback('Numéro ajouté.', '');
+      }
+      updateSelectedNumbers();
+    }
+
+    function quickPick() {
+      selectedNumbers.length = 0;
+      const pool = Array.from({ length: 80 }, (_, index) => index + 1);
+      while (selectedNumbers.length < 5) {
+        const randomIndex = Math.floor(Math.random() * pool.length);
+        const [number] = pool.splice(randomIndex, 1);
+        selectedNumbers.push(number);
+      }
+      updateSelectedNumbers();
+      setFeedback('Quick Pick : 5 numéros choisis automatiquement.', 'success');
+    }
+
+    function clearSelection() {
+      selectedNumbers.length = 0;
+      updateSelectedNumbers();
+      drawnNumbersEl.textContent = 'En attente du backend';
+      matchesCount.textContent = '-';
+      gainAmount.textContent = '-';
+      stakeInput.value = '';
+      setFeedback('Sélection effacée.', '');
+    }
+
+    function validateKenoForm() {
+      const stake = Number(stakeInput.value);
+      if (selectedNumbers.length < 5) {
+        setFeedback('Choisissez au moins 5 numéros pour jouer.', 'error');
+        return false;
+      }
+      if (selectedNumbers.length > 10) {
+        setFeedback('Vous ne pouvez pas choisir plus de 10 numéros.', 'error');
+        return false;
+      }
+      if (!stake || stake < 1) {
+        setFeedback('Entrez un montant de mise valide supérieur à 0.', 'error');
+        return false;
+      }
+      return true;
+    }
+
+    function wait(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    async function waitForSupabaseClient() {
+      if (window.supabaseClient && typeof window.supabaseClient.rpc === 'function') {
+        return window.supabaseClient;
+      }
+      if (window.getCurrentUserAsync) {
+        await window.getCurrentUserAsync();
+      }
+      if (window.supabaseClient && typeof window.supabaseClient.rpc === 'function') {
+        return window.supabaseClient;
+      }
+      throw new Error('Connexion Supabase indisponible. Rechargez la page puis réessayez.');
+    }
+
+    async function getCurrentPlayer() {
+      if (window.getCurrentUserAsync) {
+        return await window.getCurrentUserAsync();
+      }
+      return window.getCurrentUser ? window.getCurrentUser() : null;
+    }
+
+    function resetKenoResult() {
+      chosenNumbersEl.textContent = selectedNumbers.length ? selectedNumbers.join(', ') : 'Aucun';
+      drawnNumbersEl.textContent = 'En attente du backend';
+      matchesCount.textContent = '-';
+      gainAmount.textContent = '-';
+      ticketNumberEl.textContent = '-';
+      betAmountEl.textContent = '-';
+      payoutMultiplierEl.textContent = '-';
+      statusTextEl.textContent = '-';
+      drawingMachine.style.display = 'none';
+      drawingZone.innerHTML = '';
+      liveMatchCounter.textContent = 'Matchs : 0';
+    }
+
+    function renderBall(number, isMatch) {
+      return `<div class="ball${isMatch ? ' match' : ''}">${number}</div>`;
+    }
+
+    function renderDrawnNumber(number, isMatch) {
+      return `<span class="drawn-number${isMatch ? ' match' : ''}">${number}</span>`;
+    }
+
+    async function animateKenoDraw(result) {
+      const drawnNumbers = Array.isArray(result.drawn_numbers) ? result.drawn_numbers : [];
+      const selectedSet = new Set(result.selected_numbers || []);
+      let matchedCount = 0;
+
+      console.log('Keno drawn numbers:', drawnNumbers);
+      console.log('Keno selected numbers:', result.selected_numbers);
+
+      if (!drawnNumbers.length) {
+        setFeedback('Aucun numéro tiré reçu du backend.', 'error');
+        return;
+      }
+
+      // Afficher la machine de tirage
+      drawingMachine.style.display = 'block';
+      drawingZone.innerHTML = '';
+      liveMatchCounter.textContent = 'Matchs : 0';
+      setFeedback('Tirage en cours...', 'warn');
+      matchesCount.textContent = '0';
+      ticketNumberEl.textContent = result.ticket_number || '-';
+      betAmountEl.textContent = `${Number(result.bet_amount || 0).toLocaleString('fr-FR')} HTG`;
+      payoutMultiplierEl.textContent = result.payout_multiplier != null ? `× ${result.payout_multiplier}` : '-';
+      statusTextEl.textContent = result.status || '-';
+
+      // Animer les boules une par une
+      for (let i = 0; i < drawnNumbers.length; i += 1) {
+        const number = drawnNumbers[i];
+        const isMatch = selectedSet.has(number);
+        if (isMatch) {
+          matchedCount += 1;
+        }
+
+        // Créer l'élément boule dans la machine de tirage
+        const ballHtml = renderBall(number, isMatch);
+        drawingZone.insertAdjacentHTML('beforeend', ballHtml);
+
+        // Mettre à jour les compteurs
+        matchesCount.textContent = String(matchedCount);
+        liveMatchCounter.textContent = `Matchs : ${matchedCount}`;
+
+        // Délai avant la boule suivante
+        const delay = 120 + Math.random() * 80; // Entre 120 et 200ms
+        await wait(delay);
+      }
+
+      // Afficher la résultat final dans la section résultat
+      gainAmount.textContent = `${Number(result.win_amount || 0).toLocaleString('fr-FR')} HTG`;
+      chosenNumbersEl.textContent = result.selected_numbers ? result.selected_numbers.join(', ') : 'Aucun';
+      
+      // Afficher les numéros tirés dans le format "Résultat Keno"
+      drawnNumbersEl.innerHTML = drawnNumbers.map((n) => {
+        const isMatch = selectedSet.has(n);
+        return renderDrawnNumber(n, isMatch);
+      }).join('');
+
+      // Message final
+      const finalMessage = result.win_amount > 0 
+        ? `Félicitations, vous avez gagné ${Number(result.win_amount).toLocaleString('fr-FR')} HTG` 
+        : 'Pas de gain cette fois. Réessayez.';
+      setFeedback(finalMessage, result.win_amount > 0 ? 'success' : 'warn');
+    }
+
+    async function playKeno() {
+      if (!validateKenoForm()) {
+        return;
+      }
+
+      const currentUser = await getCurrentPlayer();
+      if (!currentUser || !currentUser.id) {
+        setFeedback('Vous devez être connecté pour jouer au Keno.', 'error');
+        return;
+      }
+
+      let client;
+      try {
+        client = await waitForSupabaseClient();
+      } catch (error) {
+        setFeedback(error.message || 'Connexion Supabase indisponible.', 'error');
+        return;
+      }
+
+      const amount = Number(stakeInput.value);
+      const selectedNumbersCopy = [...selectedNumbers].sort((a, b) => a - b);
+
+      setFeedback('Envoi de la mise...', 'warn');
+      playBtn.disabled = true;
+      playBtn.textContent = 'En cours...';
+
+      try {
+        const { data, error } = await client.rpc('play_keno', {
+          p_user_id: currentUser.id,
+          p_selected_numbers: selectedNumbersCopy,
+          p_amount: amount
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        console.log('Keno RPC raw data:', data);
+        const result = Array.isArray(data) ? data[0] : data;
+
+        if (!result) {
+          throw new Error('Aucun résultat Keno reçu du backend.');
+        }
+
+        if (!Array.isArray(result.drawn_numbers) || result.drawn_numbers.length === 0) {
+          console.error('Résultat Keno incomplet:', result);
+          throw new Error('Aucun numéro tiré reçu du backend.');
+        }
+
+        await animateKenoDraw(result);
+      } catch (error) {
+        console.error('Erreur play_keno:', error);
+        const message = error?.message || 'Erreur lors de l’appel Supabase. Réessayez.';
+        setFeedback(message, 'error');
+      } finally {
+        playBtn.disabled = false;
+        playBtn.textContent = 'Jouer';
+      }
+    }
+
+    function playKenoPlaceholder() {
+      if (!validateKenoForm()) {
+        return;
+      }
+      drawnNumbersEl.textContent = 'En attente du backend';
+      matchesCount.textContent = '-';
+      gainAmount.textContent = '-';
+      setFeedback('Interface Keno prête. Le backend Supabase sera branché à l’étape suivante.', 'success');
+    }
+
+    numberGrid.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-number]');
+      if (!button) return;
+      const number = Number(button.dataset.number);
+      toggleNumber(number);
+    });
+
+    quickPickBtn.addEventListener('click', quickPick);
+    clearBtn.addEventListener('click', clearSelection);
+    playBtn.addEventListener('click', playKeno);
+
+    renderGrid();
+    resetKenoResult();
+  </script>
+</body>
+</html>

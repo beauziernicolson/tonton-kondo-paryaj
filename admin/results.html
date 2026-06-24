@@ -76,6 +76,7 @@
     .feedback.success { border-color:rgba(70,227,111,.18); color:#e8fff0; background:rgba(70,227,111,.08); }
     .feedback.warn { border-color:rgba(255,210,31,.18); color:#fff7da; background:rgba(255,210,31,.08); }
     .feedback.error { border-color:rgba(255,93,108,.18); color:#ffe7eb; background:rgba(255,93,108,.08); }
+    .hidden { display: none; }
 
     .table-card { border:1px solid var(--line); border-radius:18px; overflow:hidden; background:rgba(255,255,255,.02); }
     table { width:100%; border-collapse:collapse; font-size:13px; }
@@ -122,11 +123,13 @@
         </div>
         <div class="field-grid">
           <div class="field-card">
-            <div class="label"><span>Jeu</span><span class="muted">Borlette uniquement</span></div>
-            <select id="game-type-input" disabled>
+            <div class="label"><span>Jeu</span><span class="muted">Borlette, Lotto 4 ou Lotto 5</span></div>
+            <select id="game-type-input">
               <option value="borlette">Borlette</option>
+              <option value="lotto4">Lotto 4</option>
+              <option value="lotto5">Lotto 5</option>
             </select>
-            <p class="muted" style="margin-top:8px; font-size:12px;">Le Mariage est vérifié automatiquement à partir des 3 lots Borlette du même tirage. Aucun résultat Mariage séparé n’est nécessaire.</p>
+            <p class="muted" style="margin-top:8px; font-size:12px;">Le Mariage est vérifié automatiquement à partir des 3 lots Borlette du même tirage. Lotto 4 publie des lots 2 chiffres distincts. Lotto 5 publie 3 lots (3-2-2 chiffres) avec aperçu des options.</p>
           </div>
           <div class="field-card">
             <div class="label"><span>Nom du tirage</span></div>
@@ -138,22 +141,36 @@
             <div class="label"><span>Date du tirage</span></div>
             <input id="draw-date-input" type="date" />
           </div>
-          <div class="field-card">
+          <div class="field-card borlette-field">
             <div class="label"><span>1er lot complet Lotto 3</span></div>
             <input id="first-prize-full-input" type="text" maxlength="3" placeholder="Ex. 742" />
             <p class="muted" style="margin-top:8px; font-size:12px;">Saisissez 742 pour que le 1er lot Borlette soit auto-rempli avec 42.</p>
           </div>
-          <div class="field-card">
+          <div class="field-card borlette-field">
             <div class="label"><span>1er lot Borlette</span></div>
             <input id="winning-number-input" type="text" maxlength="16" placeholder="Ex. 42" />
           </div>
-          <div class="field-card">
-            <div class="label"><span>2e lot</span></div>
-            <input id="second-prize-input" type="text" maxlength="16" placeholder="Ex. 14" />
+          <div class="field-card lotto4-field hidden">
+            <div class="label"><span>1er lot Lotto 4</span></div>
+            <input id="lotto4-first-prize-input" type="text" maxlength="2" placeholder="Ex. 71" />
+            <p class="muted" style="margin-top:8px; font-size:12px;">Saisissez exactement 2 chiffres pour le 1er lot.</p>
           </div>
-          <div class="field-card">
+          <div class="field-card lotto5-field hidden">
+            <div class="label"><span>1er lot Lotto 5</span></div>
+            <input id="lotto5-first-prize-input" type="text" maxlength="3" placeholder="Ex. 711" />
+            <p class="muted" style="margin-top:8px; font-size:12px;">Saisissez exactement 3 chiffres pour le 1er lot Lotto 5.</p>
+          </div>
+          <div class="field-card borlette-field lotto4-field lotto5-field common-two-digit-field">
+            <div class="label"><span>2e lot</span></div>
+            <input id="second-prize-input" type="text" maxlength="2" placeholder="Ex. 08" />
+          </div>
+          <div class="field-card borlette-field lotto4-field lotto5-field common-two-digit-field">
             <div class="label"><span>3e lot</span></div>
-            <input id="third-prize-input" type="text" maxlength="16" placeholder="Ex. 83" />
+            <input id="third-prize-input" type="text" maxlength="2" placeholder="Ex. 87" />
+          </div>
+          <div class="field-card lotto4-field lotto5-field hidden">
+            <div class="label"><span>Aperçu des options Lotto 4 / Lotto 5</span></div>
+            <div id="lotto4-preview-box" class="feedback">Les options Lotto seront affichées ici.</div>
           </div>
           <div class="field-card">
             <div class="label"><span>Statut</span></div>
@@ -227,8 +244,11 @@
       const drawDateInput = document.getElementById('draw-date-input');
       const firstPrizeFullInput = document.getElementById('first-prize-full-input');
       const winningNumberInput = document.getElementById('winning-number-input');
+      const lotto4FirstPrizeInput = document.getElementById('lotto4-first-prize-input');
+      const lotto5FirstPrizeInput = document.getElementById('lotto5-first-prize-input');
       const secondPrizeInput = document.getElementById('second-prize-input');
       const thirdPrizeInput = document.getElementById('third-prize-input');
+      const lotto4PreviewBox = document.getElementById('lotto4-preview-box');
       const statusInput = document.getElementById('status-input');
 
       let currentUser = null;
@@ -244,6 +264,57 @@
 
       function formatDate(value) {
         try { return new Date(value).toLocaleDateString('fr-FR'); } catch { return value; }
+      }
+
+      function updateLottoPreview() {
+        const gameType = gameTypeInput.value;
+        const first = gameType === 'lotto4' ? lotto4FirstPrizeInput.value.trim() : lotto5FirstPrizeInput.value.trim();
+        const second = secondPrizeInput.value.trim();
+        const third = thirdPrizeInput.value.trim();
+
+        if (gameType === 'lotto4') {
+          if (!/^[0-9]{2}$/.test(first) || !/^[0-9]{2}$/.test(second) || !/^[0-9]{2}$/.test(third)) {
+            lotto4PreviewBox.textContent = 'Entrez trois lots de 2 chiffres pour voir l’aperçu Lotto 4.';
+            return;
+          }
+          const option1 = second + third;
+          const option2 = first + second;
+          const option3 = first + third;
+          lotto4PreviewBox.textContent = `Lotto 4 → Option 1 = ${option1} • Option 2 = ${option2} • Option 3 = ${option3}`;
+          return;
+        }
+
+        if (gameType === 'lotto5') {
+          if (!/^[0-9]{3}$/.test(first) || !/^[0-9]{2}$/.test(second) || !/^[0-9]{2}$/.test(third)) {
+            lotto4PreviewBox.textContent = 'Entrez 3 chiffres pour le 1er lot et 2 chiffres pour les 2e/3e lots.';
+            return;
+          }
+          const option1 = first + second;
+          const option2 = first + third;
+          const option3 = `${first.slice(-1)}${second}${third}`;
+          lotto4PreviewBox.textContent = `Lotto 5 → Option 1 = ${option1} • Option 2 = ${option2} • Option 3 = ${option3}`;
+          return;
+        }
+
+        lotto4PreviewBox.textContent = 'Les options Lotto seront affichées ici.';
+      }
+
+      function setFieldVisibility() {
+        const value = gameTypeInput.value;
+        const isBorlette = value === 'borlette';
+        const isLotto4 = value === 'lotto4';
+        const isLotto5 = value === 'lotto5';
+
+        document.querySelectorAll('.borlette-field').forEach((el) => el.classList.toggle('hidden', !isBorlette));
+        document.querySelectorAll('.lotto4-field').forEach((el) => el.classList.toggle('hidden', !isLotto4));
+        document.querySelectorAll('.lotto5-field').forEach((el) => el.classList.toggle('hidden', !isLotto5));
+        document.querySelectorAll('.common-two-digit-field').forEach((el) => el.classList.toggle('hidden', !(isBorlette || isLotto4 || isLotto5)));
+
+        if (isLotto4 || isLotto5) {
+          updateLottoPreview();
+        } else {
+          lotto4PreviewBox.textContent = 'Les options Lotto seront affichées ici.';
+        }
       }
 
       async function loadDrawSchedulesForGame(gameType) {
@@ -297,9 +368,15 @@
 
         results.forEach((item) => {
           const tr = document.createElement('tr');
-          const resultLabel = String(item.game_type || '').toLowerCase() === 'borlette'
-            ? `Lotto 3 : ${item.first_prize_full_number || '—'} • 1er lot ${item.first_prize_number || '—'} • 2e lot ${item.second_prize_number || '—'} • 3e lot ${item.third_prize_number || '—'}`
-            : `Combinaison gagnante : ${item.winning_number || '—'}`;
+          let resultLabel = `Combinaison gagnante : ${item.winning_number || '—'}`;
+          if (String(item.game_type || '').toLowerCase() === 'borlette') {
+            resultLabel = `Lotto 3 : ${item.first_prize_full_number || '—'} • 1er lot ${item.first_prize_number || '—'} • 2e lot ${item.second_prize_number || '—'} • 3e lot ${item.third_prize_number || '—'}`;
+          } else if (String(item.game_type || '').toLowerCase() === 'lotto4') {
+            resultLabel = `Lotto 4 : 1er lot ${item.first_prize_number || '—'} • 2e lot ${item.second_prize_number || '—'} • 3e lot ${item.third_prize_number || '—'}`;
+          } else if (String(item.game_type || '').toLowerCase() === 'lotto5') {
+            resultLabel = `Lotto 5 : ${item.winning_number || '—'}`;
+          }
+
           tr.innerHTML = `
             <td>${item.draw_name || '—'}</td>
             <td>${formatDate(item.draw_date)}</td>
@@ -348,9 +425,12 @@
         drawDateInput.value = new Date().toISOString().slice(0, 10);
         firstPrizeFullInput.value = '';
         winningNumberInput.value = '';
+        lotto4FirstPrizeInput.value = '';
+        lotto5FirstPrizeInput.value = '';
         secondPrizeInput.value = '';
         thirdPrizeInput.value = '';
         statusInput.value = 'published';
+        setFieldVisibility();
         setFeedback('Le formulaire a été réinitialisé.', 'warn');
       }
 
@@ -360,51 +440,111 @@
           return;
         }
 
-        // STABILITY LOCK:
-        // Results publication must only insert Borlette draw_results.
-        // Automatic triggers handle Borlette and Mariage processing.
-        const gameType = 'borlette';
+        const gameType = gameTypeInput.value || 'borlette';
         const firstPrizeFull = firstPrizeFullInput.value.trim();
         let firstPrize = winningNumberInput.value.trim();
+        const lotto4FirstPrize = lotto4FirstPrizeInput.value.trim();
         const secondPrize = secondPrizeInput.value.trim();
         const thirdPrize = thirdPrizeInput.value.trim();
         const payload = {
           game_type: gameType,
           draw_name: drawNameInput.value.trim(),
           draw_date: drawDateInput.value,
-          winning_number: firstPrize,
           source: 'manual',
           status: statusInput.value || 'published',
           created_by: currentUser.id || currentUser.user_id || null,
         };
 
-        if (!/^\d{3}$/.test(firstPrizeFull)) {
-          setFeedback('Le 1er lot complet Lotto 3 doit être un nombre à 3 chiffres.', 'warn');
-          firstPrizeFullInput.focus();
-          return;
-        }
+        if (gameType === 'lotto4') {
+          if (!/^[0-9]{2}$/.test(lotto4FirstPrize)) {
+            setFeedback('Le 1er lot Lotto 4 doit contenir exactement 2 chiffres.', 'warn');
+            lotto4FirstPrizeInput.focus();
+            return;
+          }
+          if (!/^[0-9]{2}$/.test(secondPrize)) {
+            setFeedback('Le 2e lot Lotto 4 doit contenir exactement 2 chiffres.', 'warn');
+            secondPrizeInput.focus();
+            return;
+          }
+          if (!/^[0-9]{2}$/.test(thirdPrize)) {
+            setFeedback('Le 3e lot Lotto 4 doit contenir exactement 2 chiffres.', 'warn');
+            thirdPrizeInput.focus();
+            return;
+          }
 
-        const autoBorletteFirstPrize = firstPrizeFull.slice(-2);
-        if (!firstPrize || firstPrize !== autoBorletteFirstPrize) {
-          winningNumberInput.value = autoBorletteFirstPrize;
-          firstPrize = autoBorletteFirstPrize;
-        }
+          payload.first_prize_number = lotto4FirstPrize;
+          payload.second_prize_number = secondPrize;
+          payload.third_prize_number = thirdPrize;
+          payload.winning_number = lotto4FirstPrize;
 
-        if (!firstPrize || !secondPrize || !thirdPrize) {
-          setFeedback('Veuillez saisir les 3 lots Borlette.', 'warn');
-          return;
-        }
+          if (!payload.draw_name || !payload.draw_date) {
+            setFeedback('Remplissez le tirage et la date avant de publier.', 'warn');
+            return;
+          }
+        } else if (gameType === 'lotto5') {
+          const lotto5FirstPrize = lotto5FirstPrizeInput.value.trim();
+          if (!/^[0-9]{3}$/.test(lotto5FirstPrize)) {
+            setFeedback('Le 1er lot Lotto 5 doit contenir exactement 3 chiffres.', 'warn');
+            lotto5FirstPrizeInput.focus();
+            return;
+          }
+          if (!/^[0-9]{2}$/.test(secondPrize)) {
+            setFeedback('Le 2e lot Lotto 5 doit contenir exactement 2 chiffres.', 'warn');
+            secondPrizeInput.focus();
+            return;
+          }
+          if (!/^[0-9]{2}$/.test(thirdPrize)) {
+            setFeedback('Le 3e lot Lotto 5 doit contenir exactement 2 chiffres.', 'warn');
+            thirdPrizeInput.focus();
+            return;
+          }
 
-        payload.game_type = 'borlette';
-        payload.first_prize_full_number = firstPrizeFull;
-        payload.first_prize_number = firstPrize;
-        payload.second_prize_number = secondPrize;
-        payload.third_prize_number = thirdPrize;
-        payload.winning_number = firstPrize;
+          const option1Result = lotto5FirstPrize + secondPrize;
+          const option2Result = lotto5FirstPrize + thirdPrize;
+          const option3Result = `${lotto5FirstPrize.slice(-1)}${secondPrize}${thirdPrize}`;
 
-        if (!payload.draw_name || !payload.draw_date || !payload.first_prize_full_number || !payload.first_prize_number || !payload.second_prize_number || !payload.third_prize_number) {
-          setFeedback('Remplissez le tirage, la date et la combinaison / numéro gagnant avant de publier.', 'warn');
-          return;
+          payload.first_prize_number = lotto5FirstPrize;
+          payload.second_prize_number = secondPrize;
+          payload.third_prize_number = thirdPrize;
+          payload.winning_number = option1Result;
+          payload.result_data = {
+            option1_result: option1Result,
+            option2_result: option2Result,
+            option3_result: option3Result,
+          };
+
+          if (!payload.draw_name || !payload.draw_date) {
+            setFeedback('Remplissez le tirage et la date avant de publier.', 'warn');
+            return;
+          }
+        } else {
+          if (!/^\d{3}$/.test(firstPrizeFull)) {
+            setFeedback('Le 1er lot complet Lotto 3 doit être un nombre à 3 chiffres.', 'warn');
+            firstPrizeFullInput.focus();
+            return;
+          }
+
+          const autoBorletteFirstPrize = firstPrizeFull.slice(-2);
+          if (!firstPrize || firstPrize !== autoBorletteFirstPrize) {
+            winningNumberInput.value = autoBorletteFirstPrize;
+            firstPrize = autoBorletteFirstPrize;
+          }
+
+          if (!firstPrize || !secondPrize || !thirdPrize) {
+            setFeedback('Veuillez saisir les 3 lots Borlette.', 'warn');
+            return;
+          }
+
+          payload.first_prize_full_number = firstPrizeFull;
+          payload.first_prize_number = firstPrize;
+          payload.second_prize_number = secondPrize;
+          payload.third_prize_number = thirdPrize;
+          payload.winning_number = firstPrize;
+
+          if (!payload.draw_name || !payload.draw_date || !payload.first_prize_full_number || !payload.first_prize_number || !payload.second_prize_number || !payload.third_prize_number) {
+            setFeedback('Remplissez le tirage, la date et la combinaison / numéro gagnant avant de publier.', 'warn');
+            return;
+          }
         }
 
 
@@ -414,14 +554,40 @@
             throw new Error('Connexion Supabase indisponible.');
           }
 
-          const { data: createdResult, error: insertError } = await client
-            .from('draw_results')
-            .insert(payload)
-            .select('id')
-            .single();
+          let insertPayload = { ...payload };
+          let createdResult = null;
+          let insertError = null;
 
-          if (insertError) {
-            throw insertError;
+          try {
+            ({ data: createdResult, error: insertError } = await client
+              .from('draw_results')
+              .insert(insertPayload)
+              .select('id')
+              .single());
+
+            if (insertError) {
+              throw insertError;
+            }
+          } catch (error) {
+            const message = String(error.message || '').toLowerCase();
+            if (gameType === 'lotto5' && message.includes('column') && (message.includes('result_data') || message.includes('metadata'))) {
+              delete insertPayload.result_data;
+              delete insertPayload.metadata;
+              const retry = await client
+                .from('draw_results')
+                .insert(insertPayload)
+                .select('id')
+                .single();
+              createdResult = retry.data;
+              insertError = retry.error;
+            }
+            if (insertError) {
+              throw insertError;
+            }
+          }
+
+          if (!createdResult || !createdResult.id) {
+            throw new Error('Le résultat a été enregistré mais l’identifiant n’a pas pu être récupéré.');
           }
 
           if (!createdResult || !createdResult.id) {
@@ -431,8 +597,7 @@
           console.log('RESULT DEBUG - résultat créé', createdResult);
 
           setFeedback(
-            'Résultat publié. Les tickets Borlette et Mariage liés à ce tirage sont traités automatiquement.',
-            'success'
+            'Résultat publié avec succès.'
           );
 
           await loadResults();
@@ -472,11 +637,33 @@
           if (!item) return;
           drawNameInput.value = item.draw_name || 'New York Midday';
           drawDateInput.value = item.draw_date || '';
-          winningNumberInput.value = item.first_prize_number || item.winning_number || '';
-          secondPrizeInput.value = item.second_prize_number || '';
-          thirdPrizeInput.value = item.third_prize_number || '';
           statusInput.value = item.status || 'published';
-          gameTypeInput.value = 'borlette';
+          gameTypeInput.value = item.game_type || 'borlette';
+
+          if (item.game_type === 'lotto4') {
+            lotto4FirstPrizeInput.value = item.first_prize_number || '';
+            secondPrizeInput.value = item.second_prize_number || '';
+            thirdPrizeInput.value = item.third_prize_number || '';
+            winningNumberInput.value = '';
+            lotto5FirstPrizeInput.value = '';
+            firstPrizeFullInput.value = '';
+          } else if (item.game_type === 'lotto5') {
+            lotto5FirstPrizeInput.value = item.first_prize_number || '';
+            secondPrizeInput.value = item.second_prize_number || '';
+            thirdPrizeInput.value = item.third_prize_number || '';
+            lotto4FirstPrizeInput.value = '';
+            winningNumberInput.value = '';
+            firstPrizeFullInput.value = '';
+          } else {
+            firstPrizeFullInput.value = item.first_prize_full_number || '';
+            winningNumberInput.value = item.first_prize_number || item.winning_number || '';
+            lotto4FirstPrizeInput.value = '';
+            lotto5FirstPrizeInput.value = '';
+            secondPrizeInput.value = item.second_prize_number || '';
+            thirdPrizeInput.value = item.third_prize_number || '';
+          }
+
+          setFieldVisibility();
           setFeedback('Formulaire rempli avec le tirage sélectionné. Modifiez les champs puis publiez à nouveau.', 'warn');
         }
       }
@@ -503,6 +690,11 @@
 
       saveBtn.addEventListener('click', saveResult);
       resetBtn.addEventListener('click', resetForm);
+      gameTypeInput.addEventListener('change', async () => {
+        setFieldVisibility();
+        await loadDrawSchedulesForGame(gameTypeInput.value);
+      });
+      [lotto4FirstPrizeInput, lotto5FirstPrizeInput, secondPrizeInput, thirdPrizeInput].forEach((el) => el.addEventListener('input', updateLottoPreview));
       resultsBody.addEventListener('click', handleTableAction);
     })();
   </script>

@@ -95,6 +95,8 @@
     .badge.won { background:rgba(57,168,255,.14); color:#e7f5ff; border-color:rgba(57,168,255,.18); }
     .badge.paid { background:rgba(255,210,31,.14); color:#fff7d9; border-color:rgba(255,210,31,.20); }
     .badge.cancelled { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
+    .badge.completed { background:rgba(70,227,111,.10); color:#e7fff0; border-color:rgba(70,227,111,.18); }
+    .badge.unknown { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
 
     .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:10px 12px; border:1px solid var(--line); font-weight:900; color:#fff; background:rgba(255,255,255,.04); }
     .btn:hover { transform:translateY(-1px); }
@@ -124,13 +126,13 @@
           <span>Paryaj</span>
         </span>
       </a>
-      <span class="pill">Tickets Borlette</span>
+      <span class="pill">Tickets</span>
     </header>
 
     <section class="hero-card">
       <article>
         <div class="eyebrow">Historique</div>
-        <h1>Vos tickets Borlette</h1>
+        <h1>Vos tickets</h1>
         <p>Consultez vos tickets enregistrés dans Supabase, avec leurs lignes et leurs statuts. L’interface reste en lecture simple pour la phase actuelle.</p>
         <div id="user-chip" class="mini-chip">👤 Connecté</div>
       </article>
@@ -203,12 +205,38 @@
       let tickets = [];
       let selectedTicketId = null;
 
+      const GAME_LABELS = {
+        borlette: 'Borlette',
+        mariage: 'Mariage',
+        lotto3: 'Lotto3',
+        lotto4: 'Lotto4',
+        lotto5: 'Lotto5',
+        keno: 'Keno',
+        roulette: 'Roulette',
+      };
+
+      const STATUS_LABELS = {
+        pending: 'En attente',
+        won: 'Gagné',
+        lost: 'Perdu',
+        paid: 'Payé',
+        completed: 'Terminé',
+        cancelled: 'Annulé',
+        confirmed: 'Confirmé',
+      };
+
       function formatCurrency(value) {
         return `${Number(value || 0).toLocaleString('fr-FR')} HTG`;
       }
 
       function formatGameLabel(gameType) {
-        return String(gameType || '').toLowerCase() === 'mariage' ? 'Mariage' : 'Borlette';
+        const normalized = String(gameType || '').toLowerCase();
+        return GAME_LABELS[normalized] || 'Jeu inconnu';
+      }
+
+      function formatStatusLabel(status) {
+        const normalized = String(status || '').toLowerCase();
+        return STATUS_LABELS[normalized] || String(status || 'Inconnu');
       }
 
       function formatSignedCurrency(value) {
@@ -224,37 +252,46 @@
         return String(status || 'pending').toLowerCase();
       }
 
-      function resolveStatusLabel(status) {
+      function getStatusClass(status) {
         const normalized = statusLabel(status);
-        if (normalized === 'won') return 'Gagné';
-        if (normalized === 'lost') return 'Perdu';
-        if (normalized === 'paid') return 'Payé';
-        if (normalized === 'confirmed') return 'Confirmé';
-        return 'En attente';
+        return ['won', 'lost', 'paid', 'pending', 'confirmed', 'cancelled', 'completed'].includes(normalized)
+          ? normalized
+          : 'unknown';
       }
 
       function computeLinePotential(item, gameType) {
         const amount = Number(item.amount || 0);
-        if (String(gameType || '').toLowerCase() === 'mariage') {
+        const normalized = String(gameType || '').toLowerCase();
+        const real = item.potential_win != null ? Number(item.potential_win || 0) : 0;
+
+        if (normalized === 'mariage') {
           return {
             theoretical: amount * 5000,
-            real: item.potential_win != null ? Number(item.potential_win || 0) : 0,
+            real,
+          };
+        }
+
+        if (normalized === 'borlette') {
+          return {
+            theoretical: {
+              first: amount * 60,
+              second: amount * 20,
+              third: amount * 10,
+            },
+            real,
           };
         }
 
         return {
-          theoretical: {
-            first: amount * 60,
-            second: amount * 20,
-            third: amount * 10,
-          },
-          real: item.potential_win != null ? Number(item.potential_win || 0) : 0,
+          theoretical: null,
+          real,
         };
       }
 
       function renderStatusBadge(status) {
-        const normalized = statusLabel(status);
-        return `<span class="badge ${normalized}">${normalized}</span>`;
+        const label = formatStatusLabel(status);
+        const cssClass = getStatusClass(status);
+        return `<span class="badge ${cssClass}">${label}</span>`;
       }
 
       function setState(message, type) {
@@ -267,7 +304,7 @@
         const total = tickets.reduce((sum, ticket) => sum + Number(ticket.total_amount || 0), 0);
         ticketCount.textContent = String(tickets.length);
         ticketTotal.textContent = formatCurrency(total);
-        statusSummary.textContent = tickets.length ? tickets[0].status || '—' : '—';
+        statusSummary.textContent = tickets.length ? formatStatusLabel(tickets[0].status) : '—';
       }
 
       function renderTickets() {
@@ -276,7 +313,7 @@
         if (!tickets.length) {
           const empty = document.createElement('div');
           empty.className = 'empty-state';
-          empty.textContent = 'Aucun ticket Borlette trouvé pour cet utilisateur.';
+          empty.textContent = 'Aucun ticket trouvé pour cet utilisateur.';
           ticketList.appendChild(empty);
           setSummary();
           return;
@@ -322,21 +359,29 @@
           return;
         }
 
+        const gameKey = String(ticket.game_type || '').toLowerCase();
         const ticketStatus = statusLabel(ticket.status);
+        const ticketStatusLabel = formatStatusLabel(ticket.status);
         const capitalJoue = Number(ticket.total_amount || 0);
-        const itemLabel = String(ticket.game_type || '').toLowerCase() === 'borlette' ? 'Boule jouée' : 'Combinaison jouée';
-        const isBorlette = String(ticket.game_type || '').toLowerCase() === 'borlette';
         const relevantItems = items;
         const gainPotentiel = relevantItems.reduce((sum, item) => {
           const computed = computeLinePotential(item, ticket.game_type);
-          return sum + (computed.real || (isBorlette ? computed.theoretical.first : computed.theoretical));
+          return sum + Number(computed.real || 0);
         }, 0);
         const beneficePotentiel = gainPotentiel - capitalJoue;
         const perte = ticketStatus === 'lost' ? capitalJoue : 0;
         const drawName = ticket.draw_name || '—';
-        const source = drawName.toLowerCase().includes('florida') ? 'Florida' : 'New York';
-        const session = drawName.toLowerCase().includes('evening') ? 'Evening' : 'Midday';
-
+        const detailLabel = gameKey === 'mariage'
+          ? 'Combinaison jouée'
+          : gameKey === 'borlette'
+            ? 'Numéro joué'
+            : gameKey.startsWith('lotto')
+              ? 'Numéro joué'
+              : gameKey === 'keno'
+                ? 'Sélection Keno'
+                : gameKey === 'roulette'
+                  ? 'Mise Roulette'
+                  : 'Donnée jouée';
         const resultLabel = ticketStatus === 'pending'
           ? 'En attente'
           : ticketStatus === 'won'
@@ -350,7 +395,7 @@
         detailsPanel.innerHTML = `
           <div class="details-card">
             <h3>${ticket.ticket_number || 'Ticket'}</h3>
-            <p>Jeu : ${formatGameLabel(ticket.game_type)} • Statut : ${ticketStatus} • Créé le ${formatDate(ticket.created_at)}</p>
+            <p>Jeu : ${formatGameLabel(ticket.game_type)} • Statut : ${ticketStatusLabel} • Créé le ${formatDate(ticket.created_at)}</p>
           </div>
           <div class="details-card">
             <h3>Résumé du ticket</h3>
@@ -358,11 +403,9 @@
               <article class="detail-item"><strong>Ticket</strong><span>${ticket.ticket_number || '—'}</span></article>
               <article class="detail-item"><strong>Jeu</strong><span>${formatGameLabel(ticket.game_type)}</span></article>
               <article class="detail-item"><strong>Tirage</strong><span>${drawName}</span></article>
-              <article class="detail-item"><strong>Lieu / source</strong><span>${source}</span></article>
-              <article class="detail-item"><strong>Session</strong><span>${session}</span></article>
               <article class="detail-item"><strong>Montant total</strong><span>${formatCurrency(ticket.total_amount)}</span></article>
               <article class="detail-item"><strong>Devise</strong><span>${ticket.currency || 'HTG'}</span></article>
-              <article class="detail-item"><strong>Statut</strong><span>${ticketStatus}</span></article>
+              <article class="detail-item"><strong>Statut</strong><span>${ticketStatusLabel}</span></article>
               <article class="detail-item"><strong>Capital joué</strong><span>${formatCurrency(capitalJoue)}</span></article>
               <article class="detail-item"><strong>Gain potentiel</strong><span>${formatCurrency(gainPotentiel)}</span></article>
               <article class="detail-item"><strong>Bénéfice potentiel</strong><span>${formatSignedCurrency(beneficePotentiel)}</span></article>
@@ -372,7 +415,7 @@
           </div>
           <div class="details-card">
             <h3>Lignes du ticket</h3>
-            <p>Affichage des numéros joués, montants, statut et gain potentiel lié à la ligne.</p>
+            <p>Affichage adapté au type de ticket sélectionné.</p>
           </div>
         `;
 
@@ -381,27 +424,58 @@
 
         items.forEach((item) => {
           const lineStatus = statusLabel(item.status);
-          const lineStatusLabel = resolveStatusLabel(item.status);
+          const lineStatusLabel = formatStatusLabel(item.status);
           const linePotential = computeLinePotential(item, ticket.game_type);
           const lineCard = document.createElement('article');
           lineCard.className = 'detail-item';
-          const borletteText = `
-            <span>Gain potentiel : 1er lot ${formatCurrency(linePotential.theoretical.first)} • 2e lot ${formatCurrency(linePotential.theoretical.second)} • 3e lot ${formatCurrency(linePotential.theoretical.third)}</span>
-            <span>Gain réel : ${formatCurrency(linePotential.real)}</span>
-          `;
-          const mariageText = `
-            <span>Combinaison jouée : ${item.number_played || '—'}</span>
-            <span>Mise : ${formatCurrency(item.amount)}</span>
-            <span>Gain potentiel : ${formatCurrency(linePotential.theoretical)} (mise × 5000)</span>
-            <span>Gain réel : ${formatCurrency(linePotential.real)}</span>
-            <span>Règle : les deux numéros doivent sortir parmi les 3 lots Borlette du tirage.</span>
-          `;
-          lineCard.innerHTML = `
-            <strong>${itemLabel} : ${item.number_played}</strong>
-            <span>Mise : ${formatCurrency(item.amount)}</span>
-            <span>Statut : ${lineStatusLabel}</span>
-            ${String(ticket.game_type || '').toLowerCase() === 'borlette' ? borletteText : mariageText}
-          `;
+          const gameKey = String(ticket.game_type || '').toLowerCase();
+
+          if (gameKey === 'borlette') {
+            lineCard.innerHTML = `
+              <strong>${detailLabel} : ${item.number_played || '—'}</strong>
+              <span>Mise : ${formatCurrency(item.amount)}</span>
+              <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
+              <span>Statut : ${lineStatusLabel}</span>
+            `;
+          } else if (gameKey === 'mariage') {
+            lineCard.innerHTML = `
+              <strong>${detailLabel} : ${item.number_played || '—'}</strong>
+              <span>Mise : ${formatCurrency(item.amount)}</span>
+              <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
+              <span>Statut : ${lineStatusLabel}</span>
+            `;
+          } else if (gameKey.startsWith('lotto')) {
+            lineCard.innerHTML = `
+              <strong>${detailLabel} : ${item.number_played || '—'}</strong>
+              <span>Option : ${item.option_type || 'non disponible dans cette vue'}</span>
+              <span>Mise : ${formatCurrency(item.amount)}</span>
+              <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
+              <span>Statut : ${lineStatusLabel}</span>
+            `;
+          } else if (gameKey === 'keno') {
+            lineCard.innerHTML = `
+              <strong>Ticket Keno</strong>
+              <span>Détails Keno disponibles dans l’historique.</span>
+              <span>Mise : ${formatCurrency(item.amount)}</span>
+              <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
+              <span>Statut : ${lineStatusLabel}</span>
+            `;
+          } else if (gameKey === 'roulette') {
+            lineCard.innerHTML = `
+              <strong>Ticket Roulette</strong>
+              <span>Détails Roulette disponibles dans l’historique.</span>
+              <span>Mise : ${formatCurrency(item.amount)}</span>
+              <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
+              <span>Statut : ${lineStatusLabel}</span>
+            `;
+          } else {
+            lineCard.innerHTML = `
+              <strong>${detailLabel} : ${item.number_played || '—'}</strong>
+              <span>Mise : ${formatCurrency(item.amount)}</span>
+              <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
+              <span>Statut : ${lineStatusLabel}</span>
+            `;
+          }
           wrapper.appendChild(lineCard);
         });
 
@@ -446,7 +520,7 @@
 
           const { data, error } = await client
             .from('tickets')
-            .select('id, ticket_number, game_type, total_amount, currency, status, created_at')
+            .select('id, ticket_number, game_type, draw_name, total_amount, currency, status, created_at')
             .eq('user_id', currentUser.id || currentUser.user_id)
             .order('created_at', { ascending: false });
 

@@ -221,8 +221,15 @@
     .see-all{display:flex;align-items:center;gap:6px;color:#f3f7ff;text-decoration:none;font-size:14px}
 
     /* Jeux populaires : carrousel horizontal mobile-first. */
-    .games-row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin-inline:-2px}
+    .games-carousel{position:relative}
+    .games-row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 10px;margin-inline:-2px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
     .games-row::-webkit-scrollbar{display:none}
+    .games-nav{display:none;position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);justify-content:space-between;pointer-events:none;padding:0 2px;z-index:2}
+    .games-nav-btn{pointer-events:auto;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:rgba(3,13,24,.92);color:#fff;display:grid;place-items:center;box-shadow:var(--shadow);font-size:22px}
+    .games-nav-btn:disabled{opacity:.35;cursor:not-allowed}
+    .games-dots{display:flex;justify-content:center;gap:8px;margin:8px 0 24px}
+    .games-dot{width:9px;height:9px;border-radius:999px;background:rgba(255,255,255,.22)}
+    .games-dot.active{background:var(--gold)}
     .game-card{
       flex:0 0 138px;height:150px;scroll-snap-align:start;border-radius:16px;
       border:1px solid rgba(255,255,255,.14);background:linear-gradient(135deg,#071b38,#0b2443);
@@ -233,7 +240,12 @@
     .game-card.green{background:linear-gradient(135deg,#052c18,#106225)}
     .game-card.blue{background:linear-gradient(135deg,#06294d,#064a86)}
     .game-card.red{background:linear-gradient(135deg,#421014,#8f161c)}
+    .game-card.yellow{background:linear-gradient(135deg,#5f5200,#b88400)}
+    .game-card.orange{background:linear-gradient(135deg,#4c2114,#9a4c16)}
     .game-card strong{font-size:16px;text-align:center;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+    .game-badge{position:absolute;top:10px;right:10px;z-index:2;display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:rgba(255,210,31,.16);border:1px solid rgba(255,210,31,.30);color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+    .game-emoji{font-size:30px;line-height:1;margin-bottom:8px;z-index:1}
+    .game-card .game-desc{font-size:12px;color:#e7edf6;text-align:center;line-height:1.35;margin-top:6px;z-index:1;max-width:100%}
 
     .game-art,
     .hero-image,
@@ -257,6 +269,16 @@
 
     .game-card:hover .game-art{
       transform:scale(1.05);
+    }
+
+    @media (min-width: 901px) {
+      .games-nav{display:flex}
+      .games-row{padding:4px 48px 12px}
+    }
+
+    @media (max-width: 900px) {
+      .games-nav{display:none}
+      .games-row{scroll-snap-stop:always}
     }
 
     /* Paris sportifs. */
@@ -528,18 +550,30 @@
 
     <section aria-labelledby="popular-games-title">
       <div class="section-head"><h2 class="section-title" id="popular-games-title"><svg class="section-icon"><use href="#i-star"/></svg>Jeux populaires</h2><a class="see-all" href="jeux/games.html">Voir tous <span>›</span></a></div>
-      <div class="games-row">
-        <!-- Le fichier assets/borlette.png n’est pas présent dans le dossier assets ; l’image disponible utilisée ici est assets/Lotterie.png. -->
-        <a class="game-card" href="jeux/borlette.html">
-          <img src="assets/Lotterie.png" alt="Borlette" class="game-art" />
-          <strong>Borlette</strong>
-        </a>
-        <article class="game-card purple"><a href="jeux/mariage.html" style="display:block; color:inherit; text-decoration:none;"><img src="assets/mariage.png" alt="Mariage" class="game-art" /><strong>Mariage</strong></a></article>
-        <a class="game-card green" href="jeux/lotto3.html"><img src="assets/lo3.png" alt="Lotto 3" class="game-art" /><strong>Lotto 3</strong></a>
-        <article class="game-card blue"><img src="assets/lo4.png" alt="Lotto 4" class="game-art" /><strong>Lotto 4</strong></article>
-        <article class="game-card red"><img src="assets/lo5.png" alt="Lotto 5" class="game-art" /><strong>Lotto 5</strong></article>
+      <div class="games-carousel" data-games-carousel>
+        <div class="games-nav" aria-hidden="true">
+          <button class="games-nav-btn" type="button" data-games-prev aria-label="Jeux précédents">‹</button>
+          <button class="games-nav-btn" type="button" data-games-next aria-label="Jeux suivants">›</button>
+        </div>
+        <div class="games-row" id="popularGamesRow">
+          <a class="game-card" href="jeux/borlette.html">
+            <img src="assets/Lotterie.png" alt="Borlette" class="game-art" />
+            <strong>Borlette</strong>
+          </a>
+          <article class="game-card purple"><a href="jeux/mariage.html" style="display:block; color:inherit; text-decoration:none;"><img src="assets/mariage.png" alt="Mariage" class="game-art" /><strong>Mariage</strong></a></article>
+          <article class="game-card green" href="jeux/lotto3.html"><img src="assets/lo3.png" alt="Lotto 3" class="game-art" /><strong>Lotto 3</strong></article>
+          <article class="game-card blue"><a href="jeux/lotto4.html"><img src="assets/lo4.png" alt="Lotto 4" class="game-art" /><strong>Lotto 4</strong></a></article>
+          <article class="game-card red"><a href="jeux/lotto5.html"><img src="assets/lo5.png" alt="Lotto 5" class="game-art" /><strong>Lotto 5</strong></a></article>
+          <article class="game-card yellow"><a href="jeux/keno.html"><img src="assets/lo5.png" alt="Keno" class="game-art" /><strong>Keno</strong></a></article>
+          <a class="game-card orange" href="jeux/roulette.html">
+            <span class="game-badge">Nouveau</span>
+            <span class="game-emoji" aria-hidden="true">🎡</span>
+            <strong>Roulette</strong>
+            <span class="game-desc">Misez sur vos numéros, couleurs ou combinaisons et tentez de gagner gros.</span>
+          </a>
+        </div>
       </div>
-      <div class="slider-dots" aria-hidden="true"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="games-dots" aria-hidden="true" data-games-dots></div>
     </section>
 
     <section aria-labelledby="sports-title">
@@ -873,6 +907,79 @@
     const walletLabelEl = document.getElementById('wallet-label');
     const indexWalletBalanceEl = document.getElementById('index-wallet-balance');
     const indexWalletCaptionEl = document.getElementById('index-wallet-caption');
+
+    function initPopularGamesCarousel() {
+      const carousel = document.querySelector('[data-games-carousel]');
+      const row = document.getElementById('popularGamesRow');
+      const dotsContainer = document.querySelector('[data-games-dots]');
+      const prevBtn = document.querySelector('[data-games-prev]');
+      const nextBtn = document.querySelector('[data-games-next]');
+      if (!carousel || !row || !dotsContainer || !prevBtn || !nextBtn) return;
+
+      const cards = Array.from(row.children).filter((child) => child.classList.contains('game-card'));
+      if (!cards.length) return;
+
+      let currentIndex = 0;
+
+      const updateDots = () => {
+        dotsContainer.innerHTML = '';
+        cards.forEach((_, index) => {
+          const dot = document.createElement('span');
+          dot.className = `games-dot${index === currentIndex ? ' active' : ''}`;
+          dotsContainer.appendChild(dot);
+        });
+      };
+
+      const getScrollAmount = () => {
+        const firstCard = cards[0];
+        const gap = parseFloat(getComputedStyle(row).columnGap || getComputedStyle(row).gap || '12');
+        return firstCard.getBoundingClientRect().width + gap;
+      };
+
+      const scrollToIndex = (index) => {
+        currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+        const targetCard = cards[currentIndex];
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === cards.length - 1;
+        updateDots();
+      };
+
+      prevBtn.addEventListener('click', () => scrollToIndex(currentIndex - 1));
+      nextBtn.addEventListener('click', () => scrollToIndex(currentIndex + 1));
+
+      let touchStartX = 0;
+      row.addEventListener('touchstart', (event) => {
+        touchStartX = event.touches[0].clientX;
+      }, { passive: true });
+
+      row.addEventListener('touchend', (event) => {
+        const touchEndX = event.changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX;
+        if (deltaX > 50) {
+          scrollToIndex(currentIndex - 1);
+        } else if (deltaX < -50) {
+          scrollToIndex(currentIndex + 1);
+        }
+      }, { passive: true });
+
+      row.addEventListener('scroll', () => {
+        const cardWidth = getScrollAmount();
+        const scrollLeft = row.scrollLeft;
+        const index = Math.round(scrollLeft / cardWidth);
+        if (Number.isFinite(index) && index !== currentIndex) {
+          currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+          prevBtn.disabled = currentIndex === 0;
+          nextBtn.disabled = currentIndex === cards.length - 1;
+          updateDots();
+        }
+      });
+
+      updateDots();
+      scrollToIndex(0);
+    }
+
+    initPopularGamesCarousel();
 
     async function refreshWalletDisplay() {
       try {
