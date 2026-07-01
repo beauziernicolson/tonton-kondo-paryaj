@@ -199,12 +199,13 @@
   .runner,
   .horse-runner {
     position: absolute; left: 38px; top: 50%; transform: translate(0, -50%);
-    width: 58px; height: 36px; transition: left 0.2s linear;
+    width: 58px; height: 36px; transition: none;
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)); z-index: 1;
   }
   .runner.is-leading,
   .horse-runner.is-leading {
-    transform: translate(0, -50%) scale(1.04);
+    box-shadow: 0 8px 30px rgba(245,197,24,0.08);
+    z-index: 3;
   }
   .runner__inner,
   .horse-runner__inner {
@@ -369,8 +370,6 @@
       const partStates = participants.map((p, i) => {
         const oddsInfluence = Math.max(0.6, Math.min(1.4, 1 / (p.odds / 4)));
         const baseSpeed = 0.65 + Math.random() * 0.25; // baseline
-        // earlyCap prevents horses reaching the line too early (used during first 80% of time)
-        const earlyCap = 0.78 + Math.random() * 0.07; // 0.78 - 0.85
         return {
           id: p.id,
           name: p.name,
@@ -384,7 +383,6 @@
           stamina: 0.86 + Math.random() * 0.14,
           burstPower: 0.9 + Math.random() * 0.6,
           finalTarget: p.id === winnerId ? 1 : 0.84 + Math.random() * 0.12, // others 0.84 - 0.96
-          earlyCap,
           progress: 0,
         };
       });
@@ -460,16 +458,21 @@
         // incremental progress
         const increment = speed * 0.02 * (1 + p.acceleration * (Math.random() * 1.8));
 
-        if (t < 0.8) {
-          // during first 80% of time, cap progress so horses don't reach the line
-          p.progress = Math.min(p.earlyCap, p.progress + increment);
-        } else {
-          // final 20% release: allow progress toward finalTarget / finish
-          p.progress = Math.min(1, p.progress + increment);
-        }
+        const target = p.id === this.plan.winnerId ? 1 : p.finalTarget;
+      const curve = t < 0.92
+        ? 0.22 + Math.pow(t, 1.85) * 0.78
+        : 0.92 + (t - 0.92) * 0.9;
+      const targetProgress = target * curve;
+      const chase = Math.max(0, targetProgress - p.progress);
+      const smoothing = 0.12 + Math.random() * 0.08;
+      p.progress += chase * smoothing + increment * 0.015;
+      if (p.id === this.plan.winnerId && t > 0.8) {
+        p.progress += increment * 0.01;
+      }
+      p.progress = Math.min(target, p.progress);
 
-        // small random slowdown mid-race for realism
-        if (Math.random() < 0.006 && t < 0.7) p.progress = Math.max(0.02, p.progress - Math.random() * 0.01);
+      // small random slowdown mid-race for realism
+      if (Math.random() < 0.006 && t < 0.7) p.progress = Math.max(0.02, p.progress - Math.random() * 0.01);
       });
     }
 
@@ -660,11 +663,12 @@
     document.querySelectorAll(".runner").forEach((r) => {
       r.style.transition = "none";
       r.style.left = "38px";
+      r.style.transform = "translate(0, -50%)";
     });
     document.querySelectorAll(".lane").forEach((lane) => lane.classList.remove("winner"));
     void $track.offsetWidth;
     document.querySelectorAll(".runner").forEach((r) => {
-      r.style.transition = "left 0.25s linear";
+      r.style.transition = "none";
     });
   }
 
@@ -695,8 +699,11 @@
         participants.forEach((p) => {
           const runner = runners[p.id];
           if (!runner) return;
-          const leftPx = 38 + Math.min(1, p.progress) * (maxLeft - 38);
-          runner.style.left = leftPx + 'px';
+          const progress = Math.min(1, p.progress);
+          const xOffset = Math.round(progress * (maxLeft - 38));
+          const isLeader = p.id === leader;
+          runner.classList.toggle('is-leading', isLeader);
+          runner.style.transform = `translate(${xOffset}px, -50%) scale(${isLeader ? 1.04 : 1})`;
           // dust & speed indicator
           const prev = prevProgress[p.id] || 0;
           const delta = p.progress - prev;
@@ -704,7 +711,6 @@
           prevProgress[p.id] = p.progress;
         });
         // leader highlight + badge
-        document.querySelectorAll('.runner').forEach((r) => r.classList.toggle('is-leading', r.dataset.horse === leader));
         const leaderBadge = document.getElementById('leader-badge');
         if (leaderBadge) leaderBadge.textContent = `En tête : ${HORSES.find(h=>h.id===leader)?.name || '—'}`;
         // timer: show remaining real time or 'Kous la ap fèt...' when in final stretch
