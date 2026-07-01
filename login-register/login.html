@@ -140,6 +140,7 @@
 
     .form-message { margin-top:6px; display:none; color:var(--gold-light); font-size:13px; font-weight:700; }
     .form-message.error { color:var(--danger); }
+    .hint { color:var(--muted); font-size:13px; margin-top:6px; }
 
     @media (max-width:1024px) {
       .auth-page { padding:30px 22px 120px; justify-content:center; background:linear-gradient(180deg, rgba(2, 7, 20, 0.92), rgba(2, 7, 20, 0.72), rgba(2, 7, 20, 0.92)), url("../assets/back.png") center / cover no-repeat; }
@@ -183,7 +184,17 @@
       <p class="auth-subtitle" id="formSubtitle">Connectez-vous ou créez votre compte pour continuer</p>
 
       <form id="authForm" novalidate>
-        <div class="form-group signup-only">
+        <div class="form-group" id="phoneGroup">
+          <label class="form-label" for="phone">Téléphone</label>
+          <div class="input-wrap">
+            <span class="input-icon">📱</span>
+            <input class="form-input" type="tel" id="phone" name="phone" placeholder="50933123456 ou 33123456" />
+          </div>
+          <p class="hint">Par défaut, utilisez votre téléphone pour vous connecter.</p>
+          <p class="hint" id="emailToggleWrapper"><a href="#" id="emailToggleLink">Se connecter avec email</a></p>
+        </div>
+
+        <div class="form-group signup-only" id="fullnameGroup" style="display:none;">
           <label class="form-label" for="fullname">Nom complet</label>
           <div class="input-wrap">
             <span class="input-icon">👤</span>
@@ -191,12 +202,13 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="email">E-mail</label>
+        <div class="form-group form-group-alt" id="emailGroup" style="display:none;">
+          <label class="form-label" for="email">Email</label>
           <div class="input-wrap">
             <span class="input-icon">✉</span>
-            <input class="form-input" type="email" id="email" name="email" placeholder="Entrez votre e-mail" required />
+            <input class="form-input" type="email" id="email" name="email" placeholder="Entrez votre e-mail" />
           </div>
+          <p class="hint" id="emailHint">Optionnel : utilisez votre email si vous ne vous connectez pas avec un téléphone.</p>
         </div>
 
         <div class="form-group">
@@ -257,7 +269,13 @@
     const googleBtn = document.getElementById('googleBtn');
     const formMessage = document.getElementById('formMessage');
     const fullnameInput = document.getElementById('fullname');
+    const phoneInput = document.getElementById('phone');
     const emailInput = document.getElementById('email');
+    const phoneGroup = document.getElementById('phoneGroup');
+    const emailGroup = document.getElementById('emailGroup');
+    const fullnameGroup = document.getElementById('fullnameGroup');
+    const emailToggleWrapper = document.getElementById('emailToggleWrapper');
+    const emailToggleLink = document.getElementById('emailToggleLink');
 
     let mode = 'login';
 
@@ -281,6 +299,11 @@
         ? 'Vous avez déjà un compte ? <a href="#" id="switchLink">Connectez-vous</a>'
         : 'Vous n’avez pas de compte ? <a href="#" id="switchLink">Inscrivez-vous</a>';
 
+      phoneGroup.style.display = 'block';
+      emailGroup.style.display = isSignup ? 'block' : 'none';
+      fullnameGroup.style.display = isSignup ? 'block' : 'none';
+      emailToggleWrapper.style.display = isSignup ? 'none' : 'block';
+
       const newLink = document.getElementById('switchLink');
       newLink?.addEventListener('click', (event) => {
         event.preventDefault();
@@ -302,6 +325,12 @@
 
     loginTab.addEventListener('click', () => setMode('login'));
     signupTab.addEventListener('click', () => setMode('signup'));
+    emailToggleLink?.addEventListener('click', (event) => {
+      event.preventDefault();
+      emailGroup.style.display = 'block';
+      emailToggleWrapper.style.display = 'none';
+      emailInput.focus();
+    });
     togglePassword.addEventListener('click', () => {
       const isPassword = passwordInput.type === 'password';
       passwordInput.type = isPassword ? 'text' : 'password';
@@ -312,12 +341,18 @@
       event.preventDefault();
       setMessage('');
 
+      const phone = String(phoneInput.value || '').trim();
       const email = String(emailInput.value || '').trim();
       const password = String(passwordInput.value || '');
       const fullname = String(fullnameInput.value || '').trim();
 
-      if (!email || !password) {
-        setMessage('Veuillez saisir votre email et votre mot de passe.', true);
+      if (!phone && !email) {
+        setMessage('Numéro de téléphone requis.', true);
+        return;
+      }
+
+      if (!password) {
+        setMessage('Mot de passe requis.', true);
         return;
       }
 
@@ -331,8 +366,8 @@
 
       try {
         const result = mode === 'signup'
-          ? await window.registerUser({ full_name: fullname, email, password })
-          : await window.loginUser({ email, password });
+          ? await window.registerUser({ full_name: fullname, phone, email, password })
+          : await window.loginUser({ phone: phone || email, password });
 
         if (result?.ok) {
           const redirectTarget = resolveRedirectTarget(result);
@@ -347,7 +382,6 @@
         resetButton(mode === 'signup' ? 'Créer mon compte →' : 'Se connecter →');
       }
     });
-
     googleBtn.addEventListener('click', async () => {
       if (googleBtn.disabled) return;
       googleBtn.disabled = true;

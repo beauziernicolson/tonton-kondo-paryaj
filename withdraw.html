@@ -89,6 +89,7 @@
             <select id="method-input">
               <option value="moncash">MonCash</option>
               <option value="natcash">NatCash</option>
+              <option value="cash_paw">Cash Paw</option>
             </select>
           </div>
           <div class="btn-row">
@@ -117,6 +118,13 @@
     const historyList = document.getElementById('history-list');
     const submitBtn = document.getElementById('submit-btn');
 
+    const PAYMENT_METHOD_LABELS = {
+      moncash: 'MonCash',
+      natcash: 'NatCash',
+      cash_paw: 'Cash Paw',
+      manual: 'Manuel'
+    };
+
     function setFeedback(message, type) {
       feedbackBox.className = 'feedback';
       if (type === 'success') feedbackBox.classList.add('success');
@@ -127,6 +135,10 @@
 
     function formatCurrency(value) {
       return `${Number(value || 0).toLocaleString('fr-FR')} HTG`;
+    }
+
+    function formatPaymentMethod(value) {
+      return PAYMENT_METHOD_LABELS[String(value || '').toLowerCase()] || String(value || '—');
     }
 
     function badgeClass(status) {
@@ -170,7 +182,7 @@
         historyList.innerHTML = data.map((item) => `
           <article class="card-item">
             <strong>${new Date(item.created_at).toLocaleDateString('fr-FR')}</strong>
-            <span>${formatCurrency(item.amount)} • ${String(item.method || '').toUpperCase()}</span>
+            <span>${formatCurrency(item.amount)} • ${formatPaymentMethod(item.method)}</span>
             <span style="margin-top:8px;"><span class="badge ${badgeClass(item.status)}">${item.status || 'pending'}</span></span>
           </article>
         `).join('');

@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Penalty — Tonton Kondo</title>
+<style>
+  /* =========================================================
+     PENALTY — Tonton Kondo / ParyajPam
+     Style: casino sombre, sportif, premium, glassmorphism léger
+     ========================================================= */
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-deep: #061226;
+    --bg-night: #0b1f3a;
+    --bg-card: rgba(255, 255, 255, 0.06);
+    --bg-card-strong: rgba(255, 255, 255, 0.1);
+    --border-glass: rgba(255, 255, 255, 0.12);
+    --field-green: #0f6b3c;
+    --field-green-2: #14894c;
+    --gold: #f5c518;
+    --gold-2: #ffd84d;
+    --blue-light: #38bdf8;
+    --blue-bright: #1d8dd6;
+    --white: #ffffff;
+    --text-dim: #a8b6cf;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.45);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at 20% -10%, rgba(29, 141, 214, 0.25), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(245, 197, 24, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-deep), var(--bg-night));
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #penalty-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* ---------- Header ---------- */
+  .pk-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-md);
+  }
+  .pk-brand {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; letter-spacing: 0.5px;
+  }
+  .pk-logo {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold), #c8961a);
+    display: grid; place-items: center; color: #1a1a1a;
+    box-shadow: 0 6px 16px rgba(245,197,24,0.35);
+    font-size: 18px;
+  }
+  .pk-title { font-size: 16px; }
+  .pk-sub { font-size: 11px; color: var(--text-dim); font-weight: 500; }
+
+  .pk-balance {
+    display: flex; flex-direction: column; align-items: flex-end;
+    font-size: 12px; color: var(--text-dim);
+  }
+  .pk-balance strong { color: var(--gold); font-size: 16px; }
+
+  /* ---------- Layout ---------- */
+  .pk-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 16px;
+  }
+
+  @media (max-width: 980px) {
+    .pk-layout { grid-template-columns: 1fr; }
+  }
+
+  .pk-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-md);
+    padding: 16px;
+  }
+
+  /* ---------- Goal / Cage ---------- */
+  .pk-stadium {
+    position: relative;
+    padding: 20px 16px 24px;
+    background:
+      radial-gradient(ellipse at 50% 120%, rgba(20,137,76,0.55), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  }
+
+  .pk-goal {
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border: 6px solid #f4f6fb;
+    border-radius: 16px 16px 8px 8px;
+    padding: 14px;
+    box-shadow:
+      inset 0 0 0 2px rgba(0,0,0,0.25),
+      0 25px 50px rgba(0,0,0,0.5);
+  }
+
+  /* net pattern */
+  .pk-goal::before {
+    content: "";
+    position: absolute; inset: 8px;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 18px 18px;
+    border-radius: 10px;
+    pointer-events: none;
+  }
+
+  #penalty-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 6px;
+    aspect-ratio: 8 / 3.2;
+  }
+
+  .pk-sector {
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: linear-gradient(180deg, rgba(29,141,214,0.85), rgba(13,90,150,0.85));
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .12s ease, box-shadow .15s ease, filter .15s ease;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4px;
+    min-height: 44px;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+  }
+  .pk-sector.yellow {
+    background: linear-gradient(180deg, rgba(245,197,24,0.95), rgba(196,150,12,0.95));
+    color: #1a1a1a;
+    text-shadow: none;
+  }
+  .pk-sector:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  .pk-sector:active { transform: translateY(0); }
+  .pk-sector.selected {
+    box-shadow: 0 0 0 3px var(--gold), 0 8px 20px rgba(245,197,24,0.35);
+  }
+  .pk-sector.winner {
+    animation: pulseWin 1.2s ease infinite;
+    box-shadow: 0 0 0 3px var(--success), 0 8px 24px rgba(34,197,94,0.45);
+  }
+  @keyframes pulseWin {
+    0%,100% { filter: brightness(1.1); }
+    50% { filter: brightness(1.45); }
+  }
+  .pk-sector .num {
+    font-weight: 800; font-size: 14px; line-height: 1;
+  }
+  .pk-sector .amt {
+    margin-top: 2px;
+    font-size: 10px; font-weight: 700;
+    background: rgba(0,0,0,0.35);
+    color: var(--gold-2);
+    padding: 1px 6px; border-radius: 999px;
+    min-width: 22px; text-align: center;
+  }
+  .pk-sector.yellow .amt { background: rgba(0,0,0,0.55); color: var(--gold-2); }
+  .pk-sector .amt.zero { opacity: 0.55; }
+
+  /* Ball animation */
+  .pk-ball {
+    position: absolute;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #cfd6e0 70%, #8c95a4);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.6), inset -2px -2px 6px rgba(0,0,0,0.3);
+    left: 50%; bottom: -50px;
+    transform: translate(-50%, 0) scale(1);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .pk-ball.shoot {
+    animation: shootBall 0.9s cubic-bezier(.2,.7,.3,1) forwards;
+  }
+
+  /* posts area */
+  .pk-posts {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .pk-post-zone {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-dim);
+    padding: 6px;
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 8px;
+  }
+
+  /* ---------- Bet controls ---------- */
+  .pk-controls { margin-top: 16px; }
+  .pk-controls h3 {
+    font-size: 13px; color: var(--text-dim); text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 10px; font-weight: 700;
+  }
+
+  .pk-amount-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .pk-amount-input {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid var(--border-glass);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 16px; font-weight: 700;
+    width: 100%;
+    outline: none;
+  }
+  .pk-amount-input:focus { border-color: var(--gold); }
+  .pk-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--border-glass);
+    color: #fff; font-weight: 700;
+    border-radius: var(--radius-sm);
+    padding: 0 14px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background .15s;
+  }
+  .pk-chip:hover { background: rgba(255,255,255,0.16); }
+
+  .pk-quick {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .pk-quick .pk-chip { padding: 10px 0; }
+
+  .pk-groups {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  @media (max-width: 560px) {
+    .pk-groups { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .pk-bet-btn {
+    padding: 12px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-glass);
+    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+    color: #fff;
+    font-weight: 700; font-size: 13px;
+    cursor: pointer;
+    transition: transform .12s, filter .15s;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .pk-bet-btn small { display: block; font-size: 10px; color: var(--text-dim); margin-top: 2px; font-weight: 600;}
+  .pk-bet-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .pk-bet-btn.yellow { background: linear-gradient(180deg, var(--gold), #c8961a); color: #1a1a1a; }
+  .pk-bet-btn.blue   { background: linear-gradient(180deg, var(--blue-light), var(--blue-bright)); }
+  .pk-bet-btn.green  { background: linear-gradient(180deg, var(--field-green-2), var(--field-green)); }
+  .pk-bet-btn.red    { background: linear-gradient(180deg, #ef4444, #b91c1c); }
+  .pk-bet-btn.purple { background: linear-gradient(180deg, #8b5cf6, #6d28d9); }
+
+  /* ---------- Action buttons ---------- */
+  .pk-actions {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+  }
+  .pk-btn {
+    border: none; border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-weight: 800; font-size: 15px;
+    cursor: pointer;
+    transition: transform .12s, filter .15s, opacity .15s;
+    letter-spacing: .3px;
+  }
+  .pk-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  .pk-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+  .pk-btn-clear {
+    background: rgba(239,68,68,0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(239,68,68,0.4);
+  }
+  .pk-btn-draw {
+    background: linear-gradient(135deg, var(--gold), #c8961a);
+    color: #1a1a1a;
+    box-shadow: 0 10px 24px rgba(245,197,24,0.35);
+  }
+
+  /* ---------- Summary panel ---------- */
+  .pk-summary h2 {
+    font-size: 16px; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pk-summary h2::before {
+    content: ""; width: 4px; height: 18px; border-radius: 2px;
+    background: var(--gold);
+  }
+  #bets-summary {
+    max-height: 320px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    padding-right: 4px;
+  }
+  #bets-summary::-webkit-scrollbar { width: 6px; }
+  #bets-summary::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15); border-radius: 3px;
+  }
+  .pk-bet-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .pk-bet-row .label { font-weight: 600; }
+  .pk-bet-row .amount { color: var(--gold); font-weight: 800; }
+  .pk-bet-row .remove {
+    background: none; border: none; color: var(--danger);
+    cursor: pointer; font-size: 18px; padding: 0 0 0 8px; line-height: 1;
+  }
+  .pk-empty {
+    text-align: center; padding: 24px 12px;
+    color: var(--text-dim); font-size: 13px;
+  }
+
+  .pk-total {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, rgba(245,197,24,0.18), rgba(245,197,24,0.06));
+    border: 1px solid rgba(245,197,24,0.4);
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+  }
+  .pk-total span { font-size: 13px; color: var(--text-dim); }
+  .pk-total strong { font-size: 20px; color: var(--gold); }
+
+  /* ---------- Result panel ---------- */
+  #result-panel {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: var(--radius);
+    background: rgba(0,0,0,0.35);
+    border: 1px solid var(--border-glass);
+    display: none;
+  }
+  #result-panel.show { display: block; animation: slideIn .35s ease; }
+  #result-panel.win  { border-color: rgba(34,197,94,0.5); background: rgba(34,197,94,0.12); }
+  #result-panel.lose { border-color: rgba(239,68,68,0.5); background: rgba(239,68,68,0.10); }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .pk-result-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+  }
+  .pk-result-head h3 { font-size: 15px; }
+  .pk-result-status {
+    font-size: 12px; font-weight: 800; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; letter-spacing: 0.5px;
+  }
+  .pk-result-status.win  { background: var(--success); color: #06281b; }
+  .pk-result-status.lose { background: var(--danger);  color: #fff; }
+  .pk-result-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+    margin-top: 8px;
+  }
+  .pk-result-cell {
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-sm);
+    padding: 10px; text-align: center;
+  }
+  .pk-result-cell .k { font-size: 10px; color: var(--text-dim); text-transform: uppercase; }
+  .pk-result-cell .v { font-size: 16px; font-weight: 800; margin-top: 2px; }
+  .pk-result-cell .v.gold { color: var(--gold); }
+
+  #feedback-message {
+    text-align: center;
+    font-size: 13px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: var(--radius-sm);
+    min-height: 0;
+    display: none;
+  }
+  #feedback-message.show { display: block; }
+  #feedback-message.info  { background: rgba(56,189,248,0.15); color: #7dd3fc; }
+  #feedback-message.warn  { background: rgba(245,197,24,0.15); color: var(--gold-2); }
+  #feedback-message.error { background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+  @keyframes shootBall {
+    0%   { opacity: 1; bottom: -50px; transform: translate(-50%, 0) scale(1); }
+    60%  { opacity: 1; bottom: 50%; transform: translate(calc(-50% + var(--tx,0px)), 0) scale(0.7); }
+    100% { opacity: 1; bottom: var(--by, 50%); left: var(--bx, 50%); transform: translate(-50%, 50%) scale(0.5); }
+  }
+
+  /* Small screens tightening */
+  @media (max-width: 480px) {
+    .pk-sector .num { font-size: 12px; }
+    .pk-sector .amt { font-size: 9px; padding: 1px 5px; }
+    .pk-quick { grid-template-columns: repeat(2, 1fr); }
+    .pk-amount-row { grid-template-columns: 1fr auto; }
+    .pk-amount-row .pk-chip:last-child { grid-column: span 2; }
+  }
+</style>
+</head>
+<body>
+<main id="penalty-page">
+
+  <!-- ============ HEADER ============ -->
+  <header class="pk-header">
+    <div class="pk-brand">
+      <div class="pk-logo">⚽</div>
+      <div>
+        <div class="pk-title">Penalty</div>
+        <div class="pk-sub">Tonton Kondo</div>
+      </div>
+    </div>
+    <div class="pk-balance">
+      <span>Solde</span>
+      <strong id="user-balance">Solde en cours...</strong>
+    </div>
+  </header>
+
+  <!-- ============ LAYOUT ============ -->
+  <div class="pk-layout">
+
+    <!-- LEFT: Goal + controls -->
+    <section class="pk-card pk-stadium">
+      <div class="pk-goal">
+        <div id="penalty-grid" aria-label="Grille de tir penalty"></div>
+        <div class="pk-ball" id="pk-ball"></div>
+      </div>
+
+      <div class="pk-posts">
+        <div class="pk-post-zone">↘ Poto (poteau)</div>
+        <div class="pk-post-zone">✗ Rate / Kenbe</div>
+      </div>
+
+      <!-- Bet controls -->
+      <div class="pk-controls">
+        <h3>Montant de la mise</h3>
+        <div class="pk-amount-row">
+          <input id="bet-amount" class="pk-amount-input" type="number" min="1" value="50" inputmode="numeric" />
+          <button class="pk-chip" data-amount-action="dec">−</button>
+          <button class="pk-chip" data-amount-action="inc">+</button>
+        </div>
+
+        <div class="pk-quick">
+          <button class="pk-chip" data-amount-set="25">25</button>
+          <button class="pk-chip" data-amount-set="50">50</button>
+          <button class="pk-chip" data-amount-set="100">100</button>
+          <button class="pk-chip" data-amount-set="500">500</button>
+        </div>
+
+        <h3>Mises spéciales</h3>
+        <div class="pk-groups">
+          <button class="pk-bet-btn green" data-bet-type="range" data-bet-value="1-8">
+            1 – 8 <small>x2.5</small>
+          </button>
+          <button class="pk-bet-btn green" data-bet-type="range" data-bet-value="9-16">
+            9 – 16 <small>x2.5</small>
+          </button>
+          <button class="pk-bet-btn green" data-bet-type="range" data-bet-value="17-24">
+            17 – 24 <small>x2.5</small>
+          </button>
+          <button class="pk-bet-btn purple" data-bet-type="random" data-bet-value="random">
+            Hasard <small>x1.5</small>
+          </button>
+          <button class="pk-bet-btn yellow" data-bet-type="color" data-bet-value="yellow">
+            Jòn <small>x1.8</small>
+          </button>
+          <button class="pk-bet-btn blue" data-bet-type="color" data-bet-value="blue">
+            Blu <small>x1.8</small>
+          </button>
+          <button class="pk-bet-btn red" data-bet-type="event" data-bet-value="post">
+            Poto <small>x5</small>
+          </button>
+          <button class="pk-bet-btn red" data-bet-type="event" data-bet-value="miss">
+            Rate / Kenbe <small>x3</small>
+          </button>
+        </div>
+
+        <div class="pk-actions">
+          <button id="clear-bets-btn" class="pk-btn pk-btn-clear">Effacer</button>
+          <button id="draw-btn" class="pk-btn pk-btn-draw">⚽ Tirage</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Summary -->
+    <aside class="pk-card pk-summary">
+      <h2>Résumé des mises</h2>
+      <div id="bets-summary">
+        <div class="pk-empty">Aucune mise pour l'instant.<br/>Clique sur un secteur ou un bouton.</div>
+      </div>
+      <div class="pk-total">
+        <span>Total misé</span>
+        <strong id="total-bet">0 HTG</strong>
+      </div>
+
+      <div id="result-panel"></div>
+      <div id="feedback-message"></div>
+    </aside>
+
+  </div>
+</main>
+
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+/* =========================================================================
+   PENALTY — Logique frontend (placeholder, prêt pour Supabase)
+   ========================================================================= */
+
+/* ---------- State ---------- */
+const penaltyState = {
+  bets: [],
+  lastResult: null,
+  isPlaying: false
+};
+
+/* Table de paiement placeholder (côté UI) */
+const PAYOUTS = {
+  sector: 20,
+  range:  2.5,
+  color:  1.8,
+  post:   5,
+  miss:   3,
+  random: 1.5
+};
+
+/* Couleurs Jòn / Blu : on définit ici quels secteurs sont jaunes (yellow)
+   et lesquels sont bleus (blue). Pattern damier inspiré de l'image. */
+const YELLOW_SECTORS = new Set([
+  2, 4, 6, 8,
+  9, 11, 13, 15,
+  18, 20, 22, 24
+]);
+
+/* ---------- DOM refs ---------- */
+const $grid       = document.getElementById('penalty-grid');
+const $amount     = document.getElementById('bet-amount');
+const $summary    = document.getElementById('bets-summary');
+const $total      = document.getElementById('total-bet');
+const $clearBtn   = document.getElementById('clear-bets-btn');
+const $drawBtn    = document.getElementById('draw-btn');
+const $resultPnl  = document.getElementById('result-panel');
+const $feedback   = document.getElementById('feedback-message');
+const $ball       = document.getElementById('pk-ball');
+
+/* ===========================================================
+   INIT
+   =========================================================== */
+async function initPenalty() {
+  renderPenaltyGrid();
+  const client = window.supabaseClient || null;
+  const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+  penaltyState.client = client;
+  penaltyState.currentUser = currentUser;
+  // Boutons de mise spéciale (range / color / event / random)
+  document.querySelectorAll('.pk-bet-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type  = btn.dataset.betType;
+      const value = btn.dataset.betValue;
+      const label = btn.textContent.trim().split('\n')[0].trim();
+      addPenaltyBet(type, value, label);
+    });
+  });
+
+  // Montant : +/- et raccourcis
+  document.querySelectorAll('[data-amount-action]').forEach(b => {
+    b.addEventListener('click', () => {
+      const step = 25;
+      let v = parseInt($amount.value, 10) || 0;
+      v = b.dataset.amountAction === 'inc' ? v + step : Math.max(1, v - step);
+      $amount.value = v;
+    });
+  });
+  document.querySelectorAll('[data-amount-set]').forEach(b => {
+    b.addEventListener('click', () => { $amount.value = b.dataset.amountSet; });
+  });
+
+  $clearBtn.addEventListener('click', clearPenaltyBets);
+  $drawBtn.addEventListener('click', playPenalty);
+
+  await refreshPenaltyBalance();
+  updatePenaltySummary();
+}
+
+/* ===========================================================
+   GRID — 24 secteurs (8 colonnes × 3 lignes)
+   =========================================================== */
+function renderPenaltyGrid() {
+  $grid.innerHTML = '';
+  for (let i = 1; i <= 24; i++) {
+    const cell = document.createElement('button');
+    cell.type = 'button';
+    cell.className = 'pk-sector' + (YELLOW_SECTORS.has(i) ? ' yellow' : '');
+    cell.dataset.betType  = 'sector';
+    cell.dataset.betValue = String(i);
+
+    cell.innerHTML = `
+      <span class="num">${i}</span>
+      <span class="amt zero" data-sector-amt="${i}">0</span>
+    `;
+
+    cell.addEventListener('click', () => {
+      addPenaltyBet('sector', String(i), `Secteur ${i}`);
+    });
+
+    $grid.appendChild(cell);
+  }
+}
+
+/* ===========================================================
+   BETS
+   =========================================================== */
+function addPenaltyBet(type, value, label) {
+  if (penaltyState.isPlaying) return;
+
+  const amount = parseInt($amount.value, 10);
+  if (!amount || amount <= 0) {
+    showFeedback('Entre un montant valide.', 'warn');
+    return;
+  }
+
+  penaltyState.bets.push({ type, value, label, amount });
+  hideResult();
+  updatePenaltySummary();
+  showFeedback(`Mise ajoutée : ${label} — ${amount} HTG`, 'info');
+}
+
+function clearPenaltyBets() {
+  if (penaltyState.isPlaying) return;
+  penaltyState.bets = [];
+  hideResult();
+  updatePenaltySummary();
+  showFeedback('Toutes les mises ont été effacées.', 'warn');
+}
+
+function removePenaltyBet(index) {
+  if (penaltyState.isPlaying) return;
+  penaltyState.bets.splice(index, 1);
+  updatePenaltySummary();
+}
+
+/* ===========================================================
+   SUMMARY
+   =========================================================== */
+function updatePenaltySummary() {
+  // Reset sector amounts
+  document.querySelectorAll('[data-sector-amt]').forEach(el => {
+    el.textContent = '0';
+    el.classList.add('zero');
+  });
+  document.querySelectorAll('.pk-sector.selected').forEach(s => s.classList.remove('selected'));
+
+  // Render bet rows
+  if (penaltyState.bets.length === 0) {
+    $summary.innerHTML = `<div class="pk-empty">Aucune mise pour l'instant.<br/>Clique sur un secteur ou un bouton.</div>`;
+  } else {
+    $summary.innerHTML = '';
+    penaltyState.bets.forEach((b, idx) => {
+      const row = document.createElement('div');
+      row.className = 'pk-bet-row';
+      row.innerHTML = `
+        <span class="label">${b.label}</span>
+        <span class="amount">${b.amount} HTG</span>
+        <button class="remove" title="Retirer">×</button>
+      `;
+      row.querySelector('.remove').addEventListener('click', () => removePenaltyBet(idx));
+      $summary.appendChild(row);
+    });
+  }
+
+  // Sector overlay amounts
+  const sectorTotals = {};
+  penaltyState.bets.forEach(b => {
+    if (b.type === 'sector') {
+      sectorTotals[b.value] = (sectorTotals[b.value] || 0) + b.amount;
+    }
+  });
+  Object.entries(sectorTotals).forEach(([num, amt]) => {
+    const el = document.querySelector(`[data-sector-amt="${num}"]`);
+    if (el) {
+      el.textContent = amt;
+      el.classList.remove('zero');
+      el.parentElement.classList.add('selected');
+    }
+  });
+
+  const total = penaltyState.bets.reduce((s, b) => s + b.amount, 0);
+  $total.textContent = `${total} HTG`;
+}
+
+/* ===========================================================
+   PLACEHOLDER RESULT (à remplacer par Supabase plus tard)
+   =========================================================== */
+function generatePenaltyPlaceholderResult() {
+  // Démo seulement — le vrai résultat vient de Supabase public.play_penalty()
+  const r = Math.random();
+  if (r < 0.10) return { kind: 'post', label: 'Poto (poteau)' };
+  if (r < 0.20) return { kind: 'miss', label: 'Rate / Kenbe' };
+  const sector = 1 + Math.floor(Math.random() * 24);
+  return {
+    kind: 'sector',
+    sector,
+    label: `Secteur ${sector}`,
+    color: YELLOW_SECTORS.has(sector) ? 'yellow' : 'blue'
+  };
+}
+
+/* ===========================================================
+   ANIMATION
+   =========================================================== */
+function animatePenaltyShot(result) {
+  return new Promise(resolve => {
+    const kind = result.kind || result.type;
+    const value = result.sector || result.value;
+    let bx = 50, by = 50; // percent
+
+    if (kind === 'sector') {
+      const idx = Number(value) - 1;
+      const col = idx % 8;
+      const row = Math.floor(idx / 8);
+      bx = ((col + 0.5) / 8) * 100;
+      by = ((row + 0.5) / 3) * 100;
+      by = 100 - by; // bottom-based
+    } else if (kind === 'post' || (kind === 'event' && String(value) === 'post')) {
+      bx = Math.random() < 0.5 ? 4 : 96;
+      by = 60;
+    } else {
+      bx = Math.random() < 0.5 ? -10 : 110;
+      by = 110;
+    }
+
+    $ball.style.setProperty('--bx', bx + '%');
+    $ball.style.setProperty('--by', by + '%');
+    $ball.style.setProperty('--tx', ((bx - 50) * 0.6) + 'px');
+    $ball.classList.remove('shoot');
+    // restart animation
+    void $ball.offsetWidth;
+    $ball.classList.add('shoot');
+
+    setTimeout(() => {
+      if (kind === 'sector') {
+        const sectorEl = $grid.children[Number(value) - 1];
+        if (sectorEl) sectorEl.classList.add('winner');
+      }
+      resolve();
+    }, 900);
+  });
+}
+
+/* ===========================================================
+   PAYOUT — calcul placeholder
+   =========================================================== */
+function computePenaltyWin(result) {
+  let win = 0;
+  const winningBets = [];
+
+  penaltyState.bets.forEach(b => {
+    let isWin = false;
+
+    if (b.type === 'sector' && result.kind === 'sector' && String(result.sector) === b.value) {
+      isWin = true;
+    } else if (b.type === 'range' && result.kind === 'sector') {
+      const [lo, hi] = b.value.split('-').map(Number);
+      if (result.sector >= lo && result.sector <= hi) isWin = true;
+    } else if (b.type === 'color' && result.kind === 'sector' && result.color === b.value) {
+      isWin = true;
+    } else if (b.type === 'event' && b.value === 'post' && result.kind === 'post') {
+      isWin = true;
+    } else if (b.type === 'event' && b.value === 'miss' && result.kind === 'miss') {
+      isWin = true;
+    } else if (b.type === 'random') {
+      // Hasard : gagne si résultat est un secteur
+      if (result.kind === 'sector') isWin = true;
+    }
+
+    if (isWin) {
+      const mult = b.type === 'event'
+        ? (b.value === 'post' ? PAYOUTS.post : PAYOUTS.miss)
+        : PAYOUTS[b.type];
+      const payout = Math.round(b.amount * mult);
+      win += payout;
+      winningBets.push({ ...b, payout });
+    }
+  });
+
+  return { win, winningBets };
+}
+
+/* ===========================================================
+   SHOW RESULT
+   =========================================================== */
+function showPenaltyResult(result) {
+  const isBackend = result && typeof result === 'object' && typeof result.result_type === 'string';
+  const total = isBackend ? Number(result.total_bet_amount || 0) : penaltyState.bets.reduce((s, b) => s + b.amount, 0);
+  const winAmount = isBackend ? Number(result.total_win_amount || 0) : computePenaltyWin(result).win;
+  const statusLabel = isBackend ? (String(result.status).toLowerCase() === 'paid' ? 'Gagné' : 'Perdu') : (winAmount > 0 ? 'Gagné' : 'Perdu');
+  const statusClass = isBackend ? (String(result.status).toLowerCase() === 'paid' ? 'win' : 'lose') : (winAmount > 0 ? 'win' : 'lose');
+  const resultLabel = isBackend ? (result.result_label || result.result?.label || 'Résultat inconnu') : result.label;
+  const ticketNumber = isBackend ? (result.ticket_number || '—') : null;
+  const bets = isBackend ? (Array.isArray(result.bets) ? result.bets : []) : [];
+
+  const betsDetail = bets.length ? `
+      <div style="margin-top:10px;font-size:12px;color:var(--text-dim);">
+        Détail des mises : ${bets.map(b => `<strong style="color:#fff">${b.bet_label || b.label || b.type}</strong> ${b.amount || b.bet_amount || ''} HTG${b.win_amount != null ? ` (+${b.win_amount} HTG)` : ''}`).join(', ')}
+      </div>` : '';
+
+  $resultPnl.className = 'show ' + statusClass;
+  $resultPnl.innerHTML = `
+    <div class="pk-result-head">
+      <h3>Résultat : ${resultLabel}</h3>
+      <span class="pk-result-status ${statusClass}">${statusLabel}</span>
+    </div>
+    <div class="pk-result-grid">
+      <div class="pk-result-cell">
+        <div class="k">Total misé</div>
+        <div class="v">${total} HTG</div>
+      </div>
+      <div class="pk-result-cell">
+        <div class="k">Gain</div>
+        <div class="v gold">${winAmount} HTG</div>
+      </div>
+      <div class="pk-result-cell">
+        <div class="k">Net</div>
+        <div class="v ${winAmount - total >= 0 ? 'gold' : ''}">${winAmount - total} HTG</div>
+      </div>
+      ${ticketNumber ? `
+      <div class="pk-result-cell">
+        <div class="k">Ticket</div>
+        <div class="v">${ticketNumber}</div>
+      </div>` : ''}
+    </div>
+    ${betsDetail}
+  `;
+}
+
+function hideResult() {
+  $resultPnl.className = '';
+  $resultPnl.innerHTML = '';
+  document.querySelectorAll('.pk-sector.winner').forEach(s => s.classList.remove('winner'));
+}
+
+async function refreshPenaltyBalance() {
+  const balanceEl = document.getElementById('user-balance');
+  if (!balanceEl) return null;
+
+  balanceEl.textContent = 'Solde en cours...';
+
+  const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+  if (!currentUser || !currentUser.id) {
+    balanceEl.textContent = 'Connectez-vous pour voir votre solde';
+    return null;
+  }
+
+  const client = window.supabaseClient || null;
+  if (!client || typeof client.from !== 'function') {
+    balanceEl.textContent = 'Solde indisponible';
+    return null;
+  }
+
+  try {
+    let balance = null;
+    let currency = 'HTG';
+
+    if (typeof window.getAuthenticatedWallet === 'function') {
+      const wallet = await window.getAuthenticatedWallet();
+      if (wallet && wallet.balance != null) {
+        balance = wallet.balance;
+        currency = wallet.currency || currency;
+      }
+    }
+
+    if (balance == null) {
+      const { data, error } = await client
+        .from('wallets')
+        .select('balance,currency')
+        .eq('user_id', currentUser.id)
+        .single();
+
+      if (error || !data) {
+        throw error || new Error('Wallet introuvable');
+      }
+
+      balance = data.balance;
+      currency = data.currency || currency;
+    }
+
+    if (balance == null) {
+      throw new Error('Solde indisponible');
+    }
+
+    balanceEl.textContent = `${Number(balance).toLocaleString('fr-FR')} ${currency || 'HTG'}`;
+    return { balance, currency };
+  } catch (error) {
+    console.error('refreshPenaltyBalance', error);
+    balanceEl.textContent = 'Solde indisponible';
+    return null;
+  }
+}
+
+/* ===========================================================
+   PLAY (placeholder)
+   =========================================================== */
+async function playPenaltyPlaceholder() {
+  if (penaltyState.isPlaying) return;
+  if (penaltyState.bets.length === 0) {
+    showFeedback('Ajoute au moins une mise avant le tirage.', 'warn');
+    return;
+  }
+
+  // Démo seulement — le vrai résultat vient de Supabase public.play_penalty()
+  penaltyState.isPlaying = true;
+  $drawBtn.disabled = true;
+  $clearBtn.disabled = true;
+  hideResult();
+
+  const result = generatePenaltyPlaceholderResult();
+  penaltyState.lastResult = result;
+
+  await animatePenaltyShot(result);
+  showPenaltyResult(result);
+
+  penaltyState.isPlaying = false;
+  $drawBtn.disabled = false;
+  $clearBtn.disabled = false;
+}
+
+/* ===========================================================
+   BACKEND (Supabase RPC)
+   =========================================================== */
+async function playPenalty() {
+  if (penaltyState.isPlaying) return;
+
+  if (!penaltyState.bets.length) {
+    showFeedback('Ajoute au moins une mise avant le tirage.', 'warn');
+    return;
+  }
+
+  if (penaltyState.bets.some(b => !Number.isFinite(b.amount) || b.amount <= 0)) {
+    showFeedback('Toutes les mises doivent avoir un montant supérieur à 0.', 'warn');
+    return;
+  }
+
+  const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
+  if (!currentUser || !currentUser.id) {
+    showFeedback('Vous devez être connecté pour jouer.', 'error');
+    return;
+  }
+
+  const client = window.supabaseClient || null;
+  if (!client || typeof client.rpc !== 'function') {
+    showFeedback('Connexion Supabase indisponible. Rechargez la page puis réessayez.', 'error');
+    return;
+  }
+
+  penaltyState.isPlaying = true;
+  $drawBtn.disabled = true;
+  $clearBtn.disabled = true;
+  hideResult();
+
+  try {
+    const { data, error } = await client.rpc('play_penalty', {
+      p_user_id: currentUser.id,
+      p_bets: buildPenaltyPayload()
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    const result = Array.isArray(data) ? data[0] : data;
+    if (!result || !result.result) {
+      throw new Error('Résultat invalide reçu du backend.');
+    }
+
+    penaltyState.lastResult = result.result;
+    await animatePenaltyShot(result.result);
+    showPenaltyResult(result);
+    await refreshPenaltyBalance();
+    showFeedback('Solde mis à jour après transaction.', 'success');
+  } catch (error) {
+    showFeedback(String(error?.message || error || 'Erreur lors du tirage Penalty.'), 'error');
+  } finally {
+    penaltyState.isPlaying = false;
+    $drawBtn.disabled = false;
+    $clearBtn.disabled = false;
+  }
+}
+
+/* Construit le payload prêt pour Supabase RPC */
+function buildPenaltyPayload() {
+  return {
+    bets: penaltyState.bets.map(b => ({
+      type:   b.type,
+      value:  b.value,
+      amount: b.amount
+    }))
+  };
+}
+
+/* ===========================================================
+   FEEDBACK util
+   =========================================================== */
+let feedbackTimer = null;
+function showFeedback(msg, level = 'info') {
+  $feedback.textContent = msg;
+  $feedback.className = 'show ' + level;
+  clearTimeout(feedbackTimer);
+  feedbackTimer = setTimeout(() => {
+    $feedback.className = '';
+  }, 2600);
+}
+
+/* ===========================================================
+   BOOT
+   =========================================================== */
+document.addEventListener('DOMContentLoaded', initPenalty);
+</script>
+</body>
+</html>

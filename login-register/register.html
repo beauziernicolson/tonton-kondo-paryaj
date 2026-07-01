@@ -61,6 +61,7 @@
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
     .field { display:grid; gap:6px; }
     .field label { color:#edf2f8; font-weight:700; font-size:14px; }
+    .field .hint { color: var(--muted); font-size:13px; line-height:1.4; }
     .field input { width:100%; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.03); color:#fff; padding:12px 14px; outline:none; }
     .field input:focus { border-color: rgba(255,210,31,.5); background: rgba(255,255,255,.05); }
 
@@ -114,12 +115,12 @@
 
         <form id="registerForm" novalidate>
           <div class="grid">
+            <div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" type="tel" placeholder="50933123456 ou 33123456" required /><span class="hint">Vous utiliserez ce numéro pour vous connecter.</span></div>
             <div class="field"><label for="full-name">Nom complet</label><input id="full-name" name="full_name" type="text" placeholder="Jean Kouassi" /></div>
-            <div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" type="tel" placeholder="+229 97 00 00 00" /></div>
           </div>
-          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="jean@exemple.com" /></div>
+          <div class="field"><label for="email">Email (optionnel)</label><input id="email" name="email" type="email" placeholder="jean@exemple.com" autocomplete="email" /><span class="hint">Laissez ce champ vide si vous souhaitez vous inscrire uniquement avec votre téléphone.</span></div>
           <div class="grid">
-            <div class="field"><label for="password">Mot de passe</label><input id="password" name="password" type="password" placeholder="••••••••" /></div>
+            <div class="field"><label for="password">Mot de passe</label><input id="password" name="password" type="password" placeholder="••••••••" required /></div>
             <div class="field"><label for="confirm-password">Confirmer</label><input id="confirm-password" name="confirm_password" type="password" placeholder="••••••••" /></div>
           </div>
 

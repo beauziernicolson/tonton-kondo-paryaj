@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Course Cheval - Tonton Kondo</title>
+<style>
+  :root {
+    --bg-0: #0a0f14;
+    --bg-1: #101820;
+    --bg-2: #17222c;
+    --stade: #0f5132;
+    --or: #f5c518;
+    --or-2: #ffdd57;
+    --texte: #f5f7fa;
+    --texte-mute: #9aa7b4;
+    --border: rgba(255,255,255,0.08);
+    --danger: #ef4444;
+    --success: #22c55e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(circle at top, #17222c 0%, #0a0f14 60%);
+    color: var(--texte);
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+  header {
+    background: linear-gradient(180deg, #0b1116 0%, #0a0f14 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+  .brand-badge {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--or), #b8860b);
+    display: grid; place-items: center; color: #1a1a1a; font-size: 18px;
+    box-shadow: 0 4px 16px rgba(245,197,24,0.35);
+  }
+  .balance {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 999px;
+    font-weight: 700; color: var(--or-2); font-size: 14px;
+  }
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+  h1.title {
+    text-align: center; font-size: clamp(22px, 4vw, 32px); margin-bottom: 6px;
+    background: linear-gradient(90deg, var(--or), var(--or-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  p.subtitle { text-align: center; color: var(--texte-mute); margin-bottom: 22px; font-size: 14px; }
+  .horse-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px; margin-bottom: 24px;
+  }
+  .horse-card {
+    position: relative;
+    background: linear-gradient(160deg, var(--bg-2), var(--bg-1));
+    border: 1px solid var(--border);
+    border-radius: 18px; padding: 16px; cursor: pointer;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    overflow: hidden;
+  }
+  .horse-card:hover { transform: translateY(-3px); border-color: rgba(245,197,24,0.4); }
+  .horse-card.selected {
+    border-color: var(--or);
+    box-shadow: 0 0 0 2px rgba(245,197,24,0.35), 0 10px 30px rgba(0,0,0,.4);
+  }
+  .horse-card.winner {
+    border-color: rgba(34,197,94,0.8);
+    box-shadow: 0 0 0 2px rgba(34,197,94,0.35), 0 10px 30px rgba(0,0,0,.4);
+  }
+  .horse-card .selection-badge,
+  .horse-card .winner-badge {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 46px;
+    background: rgba(0,0,0,0.6);
+    color: var(--or-2);
+    border: 1px solid rgba(255,255,255,0.12);
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .horse-card.selected .selection-badge { display: inline-flex; }
+  .horse-card.winner .winner-badge { display: inline-flex; color: var(--success); }
+  .horse-num {
+    position: absolute; top: 10px; left: 12px;
+    width: 26px; height: 26px; border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    display: grid; place-items: center; font-size: 13px; font-weight: 800; color: var(--or-2);
+  }
+  .horse-odds {
+    position: absolute; top: 10px; right: 12px;
+    background: linear-gradient(135deg, var(--or), #d4a017);
+    color: #1a1a1a; font-weight: 800; font-size: 12px;
+    padding: 4px 8px; border-radius: 999px;
+  }
+  .horse-visual {
+    height: 90px; border-radius: 12px;
+    display: grid; place-items: center;
+    margin: 16px 0 10px; position: relative; overflow: hidden;
+  }
+  .horse-visual::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), transparent 60%);
+  }
+  .horse-visual img {
+    width: 100%; height: 100%; display: block; object-fit: contain;
+    transform: translateY(0); border-radius: 8px;
+  }
+  .horse-name { text-align: center; font-weight: 800; font-size: 16px; }
+  .horse-color-label { text-align: center; font-size: 11px; color: var(--texte-mute); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
+  .bet-panel {
+    background: linear-gradient(160deg, var(--bg-2), var(--bg-1));
+    border: 1px solid var(--border);
+    border-radius: 18px; padding: 18px;
+    display: grid; gap: 14px; margin-bottom: 20px;
+  }
+  .summary-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 14px; }
+  .summary-row .k { color: var(--texte-mute); }
+  .summary-row .v { font-weight: 700; color: var(--or-2); }
+  .amount-wrap { display: flex; gap: 8px; align-items: center; }
+  .amount-wrap label { font-size: 13px; color: var(--texte-mute); min-width: 90px; }
+  input#bet-amount {
+    flex: 1; min-width: 0;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid var(--border); color: var(--texte);
+    padding: 12px 14px; border-radius: 12px; font-size: 16px; font-weight: 700; outline: none;
+  }
+  input#bet-amount:focus { border-color: var(--or); }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    flex: 1; min-width: 130px; padding: 14px 18px; border-radius: 12px;
+    border: none; cursor: pointer; font-size: 15px; font-weight: 800;
+    letter-spacing: 0.5px; transition: transform .12s ease, opacity .12s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--or), #d4a017);
+    color: #1a1a1a; box-shadow: 0 8px 24px rgba(245,197,24,0.35);
+  }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.06); color: var(--texte); border: 1px solid var(--border);
+  }
+  .feedback { text-align: center; font-size: 14px; min-height: 20px; color: var(--texte-mute); }
+  .feedback.error { color: var(--danger); }
+  .feedback.success { color: var(--success); }
+  .track-wrap {
+    background: linear-gradient(180deg, #0e3a24, #0a2a1a);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 18px; padding: 16px; position: relative; overflow: hidden;
+  }
+  .track-wrap::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 20px, transparent 20px 40px);
+    pointer-events: none;
+  }
+  .track-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px; font-weight: 800; color: var(--or-2);
+  }
+  .leader-badge {
+    margin-top: 8px; display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.12);
+    padding: 6px 10px; border-radius: 999px; font-size: 12px; color: var(--or-2);
+  }
+  .lane {
+    position: relative; height: 44px;
+    background: linear-gradient(180deg, #164a2e, #0f3a24);
+    border-radius: 10px; margin-bottom: 8px; overflow: hidden;
+  }
+  .lane.winner {
+    box-shadow: inset 0 0 0 1px rgba(34,197,94,0.45), 0 0 18px rgba(34,197,94,0.2);
+  }
+  .lane:last-child { margin-bottom: 0; }
+  .lane-num {
+    position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 6px;
+    background: rgba(0,0,0,0.5); color: var(--or-2);
+    display: grid; place-items: center; font-size: 12px; font-weight: 800; z-index: 2;
+  }
+  .finish-line {
+    position: absolute; right: 6px; top: 0; bottom: 0; width: 8px;
+    background: repeating-linear-gradient(0deg, #fff 0 6px, #000 6px 12px);
+    opacity: 0.7;
+  }
+  .runner,
+  .horse-runner {
+    position: absolute; left: 38px; top: 50%; transform: translate(0, -50%);
+    width: 58px; height: 36px; transition: left 0.2s linear;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)); z-index: 1;
+  }
+  .runner.is-leading,
+  .horse-runner.is-leading {
+    transform: translate(0, -50%) scale(1.04);
+  }
+  .runner__inner,
+  .horse-runner__inner {
+    position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    animation: horse-gallop 0.16s steps(2) infinite;
+  }
+  .runner__inner img,
+  .runner__inner .runner__fallback {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+  }
+  .runner__shadow,
+  .horse-runner__shadow {
+    position: absolute; left: 6px; right: 6px; bottom: -4px;
+    height: 8px; background: rgba(0,0,0,0.28); border-radius: 999px; filter: blur(4px);
+  }
+  .runner__label,
+  .horse-runner__label {
+    position: absolute; left: 50%; top: -24px; transform: translateX(-50%);
+    background: rgba(7,12,18,0.85); color: var(--or-2); border: 1px solid rgba(255,255,255,0.12);
+    padding: 3px 8px; border-radius: 999px; font-size: 10px; font-weight: 800; white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+  .runner__fallback,
+  .horse-runner__fallback {
+    border-radius: 999px; background: currentColor; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+    transform: rotate(-8deg);
+  }
+  .runner__fallback::before,
+  .runner__fallback::after {
+    content: ""; position: absolute; background: inherit; border-radius: 999px;
+  }
+  .runner__fallback::before {
+    width: 18px; height: 8px; left: -8px; top: 14px; transform: rotate(-20deg);
+  }
+  .runner__fallback::after {
+    width: 16px; height: 7px; right: -8px; top: 12px; transform: rotate(18deg);
+  }
+  /* Track and visual enhancements */
+  .start-line {
+    position: absolute; left: 34px; top: 0; bottom: 0; width: 4px;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 6px, transparent 6px 12px);
+    opacity: 0.6; z-index: 2;
+  }
+  .lane::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.01) 0 2px, transparent 2px 6px);
+    pointer-events: none; z-index: 0;
+  }
+  .runner .dust,
+  .horse-runner .dust {
+    position: absolute; left: -10px; bottom: 2px; width: 30px; height: 12px; border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(200,160,120,0.28) 0%, rgba(120,80,40,0.12) 60%, transparent 100%);
+    opacity: 0; transform-origin: left center; filter: blur(2px);
+    transition: opacity .12s linear, transform .12s linear;
+    z-index: 0;
+  }
+  .runner.speedy .dust,
+  .horse-runner.speedy .dust { opacity: 0.9; transform: scale(1.05) translateX(-6px); }
+  .runner.is-leading, .horse-runner.is-leading { box-shadow: 0 8px 30px rgba(245,197,24,0.08); z-index: 3; }
+  #race-timer { font-weight: 900; color: var(--or-2); background: rgba(0,0,0,0.22); padding: 6px 8px; border-radius: 8px; font-size: 13px; }
+  /* prepared sprite class for future */
+  .horse-runner.sprite .runner__inner { animation: none; }
+  @keyframes dust-kick { 0% { opacity: 0; transform: scale(.8) translateX(0); } 50% { opacity: .8; transform: scale(1.05) translateX(-6px); } 100% { opacity: 0; transform: scale(1.2) translateX(-12px); } }
+  @keyframes horse-gallop {
+    0% { transform: translateY(0px) rotate(-3deg) scale(1); }
+    50% { transform: translateY(-2px) rotate(2deg) scale(1.02); }
+    100% { transform: translateY(0px) rotate(-3deg) scale(1); }
+  }
+  .race-result {
+    margin-top: 16px; background: rgba(0,0,0,0.35);
+    border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px; text-align: center; display: none;
+  }
+  .race-result.show { display: block; animation: pop .35s ease; }
+  .race-result h3 { color: var(--or-2); margin-bottom: 6px; }
+  .race-result .gain { color: var(--success); font-size: 20px; font-weight: 800; margin-top: 6px; }
+  .race-result .loss { color: var(--danger); font-size: 15px; margin-top: 6px; }
+  @keyframes pop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  @media (max-width: 480px) {
+    .horse-grid { grid-template-columns: repeat(2, 1fr); }
+    .horse-visual { font-size: 42px; height: 78px; }
+    .btn { min-width: 100%; }
+  }
+</style>
+</head>
+<body id="horse-race-page">
+
+<header>
+  <div class="brand">
+    <div class="brand-badge">TK</div>
+    <div>Tonton Kondo</div>
+  </div>
+  <div class="balance">
+    <span>💰</span>
+    <span>Balans:</span>
+    <span id="user-balance">Solde démo</span>
+  </div>
+</header>
+
+<main>
+  <h1 class="title">Chwazi yon chwal</h1>
+  <p class="subtitle">Chwazi chwal ou, mete montan ou, epi kòmanse kous la!</p>
+
+  <div class="horse-grid" id="horse-list"></div>
+
+  <div class="bet-panel">
+    <div class="summary-row">
+      <div><span class="k">Chwal chwazi:</span> <span class="v" id="selected-horse">Okenn</span></div>
+      <div><span class="k">Cote:</span> <span class="v" id="selected-odds">—</span></div>
+    </div>
+    <div class="summary-row">
+      <div><span class="k">Gain potansyèl:</span> <span class="v" id="potential-gain">0 HTG</span></div>
+      <div><span class="k">Status:</span> <span class="v" id="race-status">Pare</span></div>
+    </div>
+    <div class="amount-wrap">
+      <label for="bet-amount">Montan mize</label>
+      <input type="number" id="bet-amount" min="1" placeholder="0" />
+    </div>
+    <div class="actions">
+      <button class="btn btn-secondary" id="clear-race-btn">Efase tout</button>
+      <button class="btn btn-primary" id="start-race-btn">Kòmanse</button>
+    </div>
+    <div class="feedback" id="feedback-message"></div>
+  </div>
+
+  <div class="track-wrap">
+    <div class="track-header">
+      <span>🏁 Piste kous la</span>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span id="race-status-inline">Pare</span>
+        <span id="race-timer">00:10</span>
+      </div>
+    </div>
+    <div class="leader-badge" id="leader-badge">En tête : —</div>
+    <div id="race-track"></div>
+    <div class="race-result" id="race-result"></div>
+  </div>
+</main>
+
+<script>
+  const HORSES = [
+    { id: "zekle", number: 1, name: "Zeklè", color: "noir", colorLabel: "Noir", colorHex: "#1a1a1a", image: "../assets/horses/horse-black-run.jpeg", odds: 5.0 },
+    { id: "lakay", number: 2, name: "Lakay", color: "blanc", colorLabel: "Blanc", colorHex: "#e5e7eb", image: "../assets/horses/horse-white-run.jpeg", odds: 4.2 },
+    { id: "bel_gason", number: 3, name: "Bèl Gason", color: "marron", colorLabel: "Marron", colorHex: "#6b3f1d", image: "../assets/horses/horse-brown-run.jpeg", odds: 6.5 },
+    { id: "mapou", number: 4, name: "Mapou", color: "roux/orangé", colorLabel: "Roux/Orangé", colorHex: "#c2410c", image: "../assets/horses/horse-roux-run.jpeg", odds: 7.5 },
+    { id: "towo", number: 5, name: "Towo", color: "gris", colorLabel: "Gris", colorHex: "#6b7280", image: "../assets/horses/horse-white-run.jpeg", odds: 3.8 },
+  ];
+
+  /* Race engine: reusable, deterministic-ish with controlled randomness for unpredictability */
+  class RaceEngine {
+    constructor() {
+      this.raf = null;
+      this.startTime = 0;
+      this.duration = 10000;
+      this.plan = null;
+      this.onUpdate = null;
+      this.onFinish = null;
+      this._stopped = false;
+    }
+
+    createRacePlan(participants, winnerId = null, duration = 10000) {
+      const partStates = participants.map((p, i) => {
+        const oddsInfluence = Math.max(0.6, Math.min(1.4, 1 / (p.odds / 4)));
+        const baseSpeed = 0.65 + Math.random() * 0.25; // baseline
+        // earlyCap prevents horses reaching the line too early (used during first 80% of time)
+        const earlyCap = 0.78 + Math.random() * 0.07; // 0.78 - 0.85
+        return {
+          id: p.id,
+          name: p.name,
+          number: p.number,
+          odds: p.odds,
+          image: p.image,
+          colorHex: p.colorHex,
+          lane: i,
+          baseSpeed: baseSpeed * oddsInfluence,
+          acceleration: 0.01 + Math.random() * 0.03,
+          stamina: 0.86 + Math.random() * 0.14,
+          burstPower: 0.9 + Math.random() * 0.6,
+          finalTarget: p.id === winnerId ? 1 : 0.84 + Math.random() * 0.12, // others 0.84 - 0.96
+          earlyCap,
+          progress: 0,
+        };
+      });
+      this.plan = { participants: partStates, winnerId, duration };
+      this.duration = duration;
+      return this.plan;
+    }
+
+    startRace(plan, callbacks = {}) {
+      if (!plan) throw new Error("Plan required");
+      this.plan = plan;
+      this.duration = plan.duration || this.duration;
+      this.onUpdate = callbacks.onUpdate || function(){};
+      this.onFinish = callbacks.onFinish || function(){};
+      this.startTime = performance.now();
+      this._stopped = false;
+      return new Promise((resolve) => {
+        const loop = (now) => {
+          if (this._stopped) { resolve(); return; }
+          const elapsed = now - this.startTime;
+          const t = Math.min(1, Math.max(0, elapsed / this.duration));
+          // update progress based on normalized time and elapsed
+          this.updateRaceFrame(t, elapsed);
+          const leader = this.getCurrentLeader();
+          this.onUpdate({ t, participants: this.plan.participants, leader, elapsed, duration: this.duration });
+          // Terminate when winner actually crossed the line (progress >= 1)
+          const winnerState = this.plan.participants.find(p => p.id === this.plan.winnerId);
+          const safetyMax = this.duration * 1.5; // safety to avoid infinite loop
+          if (winnerState && winnerState.progress >= 1) {
+            // finalize positions
+            this.plan.participants.forEach((p) => {
+              if (p.id === this.plan.winnerId) p.progress = 1;
+              else p.progress = Math.max(p.progress, Math.min(0.96, p.finalTarget));
+            });
+            this.onUpdate({ t: 1, participants: this.plan.participants, leader: this.getCurrentLeader(), elapsed: this.duration, duration: this.duration });
+            this.onFinish({ participants: this.plan.participants, winnerId: this.plan.winnerId });
+            resolve({ participants: this.plan.participants, winnerId: this.plan.winnerId });
+            return;
+          }
+          if (elapsed > safetyMax) {
+            // safety fallback: force finish
+            this.plan.participants.forEach((p) => {
+              if (p.id === this.plan.winnerId) p.progress = 1;
+              else p.progress = Math.max(p.progress, Math.min(0.96, p.finalTarget));
+            });
+            this.onFinish({ participants: this.plan.participants, winnerId: this.plan.winnerId });
+            resolve({ participants: this.plan.participants, winnerId: this.plan.winnerId });
+            return;
+          }
+          this.raf = requestAnimationFrame(loop);
+        };
+        this.raf = requestAnimationFrame(loop);
+      });
+    }
+
+    updateRaceFrame(t, elapsed = 0) {
+      // t is normalized 0..1 relative to planned duration
+      // Phases: 0-0.8 controlled progress (earlyCap), 0.8-1 final sprint
+      const phaseMultiplier = (p, tt) => {
+        if (tt < 0.12) return 0.72 + Math.sin((tt + p.lane) * 12) * 0.05; // gentle start
+        if (tt < 0.4) return 0.86 + Math.cos((tt + p.lane) * 7) * 0.06; // build
+        if (tt < 0.8) return 0.9 + Math.sin((tt + p.lane) * 5) * 0.06; // stable overtakes
+        return 0.95 + (tt - 0.8) * 1.8; // final sprint ramp
+      };
+
+      this.plan.participants.forEach((p) => {
+        const noise = (Math.random() - 0.5) * 0.04; // small unpredictability
+        let speed = p.baseSpeed * phaseMultiplier(p, t) * p.stamina + noise;
+        // stronger controlled burst for winner in final phase
+        if (p.id === this.plan.winnerId && t > 0.8) {
+          speed *= (1 + (t - 0.8) * (1.8 * p.burstPower));
+        }
+        // incremental progress
+        const increment = speed * 0.02 * (1 + p.acceleration * (Math.random() * 1.8));
+
+        if (t < 0.8) {
+          // during first 80% of time, cap progress so horses don't reach the line
+          p.progress = Math.min(p.earlyCap, p.progress + increment);
+        } else {
+          // final 20% release: allow progress toward finalTarget / finish
+          p.progress = Math.min(1, p.progress + increment);
+        }
+
+        // small random slowdown mid-race for realism
+        if (Math.random() < 0.006 && t < 0.7) p.progress = Math.max(0.02, p.progress - Math.random() * 0.01);
+      });
+    }
+
+    getCurrentLeader() {
+      let best = { id: null, progress: -1 };
+      this.plan.participants.forEach((p) => {
+        if (p.progress > best.progress) best = { id: p.id, progress: p.progress };
+      });
+      return best.id;
+    }
+
+    resetRace() {
+      if (this.raf) cancelAnimationFrame(this.raf);
+      this.raf = null; this.plan = null; this._stopped = true;
+    }
+  }
+
+  const horseRaceState = {
+    selectedHorse: null,
+    amount: 0,
+    isPlaying: false,
+    lastResult: null,
+  };
+
+  const $horseList     = document.getElementById("horse-list");
+  const $selectedHorse = document.getElementById("selected-horse");
+  const $betAmount     = document.getElementById("bet-amount");
+  const $startBtn      = document.getElementById("start-race-btn");
+  const $clearBtn      = document.getElementById("clear-race-btn");
+  const $track         = document.getElementById("race-track");
+  const $result        = document.getElementById("race-result");
+  const $balance       = document.getElementById("user-balance");
+  const $feedback      = document.getElementById("feedback-message");
+  const $potential     = document.getElementById("potential-gain");
+  const $selectedOdds   = document.getElementById("selected-odds");
+  const $status        = document.getElementById("race-status");
+  const $statusInline   = document.getElementById("race-status-inline");
+
+  function initHorseRace() {
+    renderHorseCards();
+    renderTrack();
+    $betAmount.addEventListener("input", () => {
+      horseRaceState.amount = Number($betAmount.value) || 0;
+      updateHorseSummary();
+    });
+    $clearBtn.addEventListener("click", clearHorseSelection);
+    $startBtn.addEventListener("click", playHorseRacePlaceholder);
+    updateHorseSummary();
+  }
+
+  function shade(hex, percent) {
+    const num = parseInt(hex.replace("#",""), 16);
+    const r = Math.max(0, Math.min(255, (num >> 16) + percent));
+    const g = Math.max(0, Math.min(255, ((num >> 8) & 0xff) + percent));
+    const b = Math.max(0, Math.min(255, (num & 0xff) + percent));
+    return "#" + ((r << 16) | (g << 8) | b).toString(16).padStart(6, "0");
+  }
+
+  function renderHorseSvg(horse) {
+    const body = horse.colorHex;
+    const mane = shade(body, -26);
+    const highlight = shade(body, 28);
+    return `
+      <svg viewBox="0 0 120 80" role="img" aria-label="${horse.name}">
+        <ellipse cx="58" cy="66" rx="30" ry="10" fill="rgba(0,0,0,0.22)" />
+        <path d="M18 54 L33 40 L48 34 L58 25 L77 23 L94 30 L106 46 L96 58 L82 55 L64 59 L44 61 L24 60 Z" fill="${body}" stroke="#111" stroke-width="2.4" />
+        <path d="M46 34 L56 20 L72 22 L61 34 Z" fill="${mane}" stroke="#111" stroke-width="2.2" />
+        <path d="M57 30 C61 24 71 24 76 29" stroke="#111" stroke-width="2.2" fill="none" />
+        <ellipse cx="59" cy="31" rx="7" ry="8" fill="#fff" stroke="#111" stroke-width="2" />
+        <circle cx="60" cy="31" r="3.2" fill="#111" />
+        <path d="M18 54 L8 47" stroke="#111" stroke-width="2.2" fill="none" />
+        <path d="M32 40 L22 32" stroke="#111" stroke-width="2.2" fill="none" />
+        <path d="M52 43 L47 58" stroke="#111" stroke-width="2.2" fill="none" />
+        <path d="M64 43 L61 58" stroke="#111" stroke-width="2.2" fill="none" />
+        <path d="M78 43 L80 58" stroke="#111" stroke-width="2.2" fill="none" />
+        <path d="M96 58 L104 63" stroke="#111" stroke-width="2.2" fill="none" />
+        <path d="M33 41 L22 26" stroke="${highlight}" stroke-width="2.2" fill="none" opacity="0.95" />
+        <circle cx="72" cy="36" r="3" fill="${highlight}" opacity="0.7" />
+      </svg>
+    `;
+  }
+
+
+  function renderHorseRunner(horse, isTrack = false) {
+    const fallbackStyle = `color:${horse.colorHex};`;
+    return `
+      <div class="runner__inner" style="${fallbackStyle}">
+        <div class="runner__shadow"></div>
+        <div class="runner__label">${horse.name}</div>
+        ${horse.image
+          ? `<img src="${horse.image}" alt="${horse.name}" onerror="this.style.display='none'; this.parentElement.querySelector('.runner__fallback').style.display='block';" />`
+          : ''}
+        <div class="runner__fallback" style="display:${horse.image ? 'none' : 'block'};${fallbackStyle}"></div>
+      </div>
+    `;
+  }
+
+  function renderHorseCards() {
+    $horseList.innerHTML = "";
+    HORSES.forEach((h) => {
+      const card = document.createElement("div");
+      card.className = "horse-card";
+      card.dataset.horseId = h.id;
+      card.innerHTML = `
+        <div class="horse-num">#${h.number}</div>
+        <div class="horse-odds">x${h.odds.toFixed(1)}</div>
+        <div class="selection-badge">Choisi</div>
+        <div class="winner-badge">Gagnant</div>
+        <div class="horse-visual" style="background: linear-gradient(160deg, ${h.colorHex}, ${shade(h.colorHex, -25)});">
+          ${h.image ? `<img src="${h.image}" alt="${h.name}" onerror="this.style.display='none'; this.parentElement.querySelector('.horse-visual-fallback').style.display='flex';"/>` : ''}
+          <div class="horse-visual-fallback" style="display:${h.image ? 'none' : 'flex'};width:100%;height:100%;align-items:center;justify-content:center;background:${h.colorHex};border-radius:8px;"></div>
+        </div>
+        <div class="horse-name">${h.name}</div>
+        <div class="horse-color-label">${h.colorLabel}</div>
+      `;
+      card.addEventListener("click", () => selectHorse(h.id));
+      $horseList.appendChild(card);
+    });
+    updateHorseCardState();
+  }
+
+  function selectHorse(horseId) {
+    if (horseRaceState.isPlaying) return;
+    const horse = HORSES.find((h) => h.id === horseId);
+    if (!horse) return;
+    horseRaceState.selectedHorse = horse;
+    updateHorseCardState();
+    updateHorseSummary();
+  }
+
+  function updateHorseCardState() {
+    document.querySelectorAll(".horse-card").forEach((card) => {
+      const horseId = card.dataset.horseId;
+      const isSelected = horseRaceState.selectedHorse && horseRaceState.selectedHorse.id === horseId;
+      const isWinner = horseRaceState.lastResult && horseRaceState.lastResult.winner_id === horseId;
+      card.classList.toggle("selected", isSelected);
+      card.classList.toggle("winner", isWinner);
+    });
+  }
+
+  function clearHorseSelection() {
+    if (horseRaceState.isPlaying) return;
+    horseRaceState.selectedHorse = null;
+    horseRaceState.amount = 0;
+    $betAmount.value = "";
+    updateHorseCardState();
+    $result.classList.remove("show");
+    $result.innerHTML = "";
+    setFeedback("", "");
+    updateHorseSummary();
+  }
+
+  function updateHorseSummary() {
+    const hasSelection = Boolean(horseRaceState.selectedHorse);
+    const amountValid = Number(horseRaceState.amount) > 0;
+    $selectedHorse.textContent = horseRaceState.selectedHorse
+      ? `${horseRaceState.selectedHorse.name}`
+      : "Okenn";
+    $selectedOdds.textContent = horseRaceState.selectedHorse
+      ? `x${horseRaceState.selectedHorse.odds.toFixed(1)}`
+      : "—";
+    const potential = hasSelection && amountValid
+      ? Math.floor(horseRaceState.amount * horseRaceState.selectedHorse.odds)
+      : 0;
+    $potential.textContent = potential + " HTG";
+    $startBtn.disabled = horseRaceState.isPlaying || !hasSelection || !amountValid;
+  }
+
+  function renderTrack() {
+    $track.innerHTML = "";
+    HORSES.forEach((h) => {
+      const lane = document.createElement("div");
+      lane.className = "lane";
+      lane.innerHTML = `
+        <div class="lane-num">#${h.number}</div>
+        <div class="start-line" aria-hidden="true"></div>
+        <div class="finish-line"></div>
+        <div class="runner horse-runner" data-horse="${h.id}">
+          ${renderHorseRunner(h)}
+          <div class="dust" aria-hidden="true"></div>
+        </div>
+      `;
+      $track.appendChild(lane);
+    });
+  }
+
+  function resetRunners() {
+    document.querySelectorAll(".runner").forEach((r) => {
+      r.style.transition = "none";
+      r.style.left = "38px";
+    });
+    document.querySelectorAll(".lane").forEach((lane) => lane.classList.remove("winner"));
+    void $track.offsetWidth;
+    document.querySelectorAll(".runner").forEach((r) => {
+      r.style.transition = "left 0.25s linear";
+    });
+  }
+
+  function generateHorseRacePlaceholderResult() {
+    const weights = HORSES.map((h) => 1 / h.odds);
+    const total = weights.reduce((a, b) => a + b, 0);
+    let r = Math.random() * total;
+    let winner = HORSES[0];
+    for (let i = 0; i < HORSES.length; i++) {
+      r -= weights[i];
+      if (r <= 0) { winner = HORSES[i]; break; }
+    }
+    return { winner_id: winner.id, winner, odds: winner.odds };
+  }
+
+  function animateHorseRace(result) {
+    const engine = new RaceEngine();
+    const duration = Math.floor(6500 + Math.random() * 3000); // 6500ms - 9500ms
+    const plan = engine.createRacePlan(HORSES, result.winner_id, duration);
+    const trackRect = $track.getBoundingClientRect();
+    const maxLeft = Math.max(120, trackRect.width - 70);
+    const runners = {};
+    document.querySelectorAll('.runner').forEach((r) => { runners[r.dataset.horse] = r; });
+    const prevProgress = {};
+
+    return engine.startRace(plan, {
+      onUpdate: ({ t, participants, leader, elapsed, duration }) => {
+        participants.forEach((p) => {
+          const runner = runners[p.id];
+          if (!runner) return;
+          const leftPx = 38 + Math.min(1, p.progress) * (maxLeft - 38);
+          runner.style.left = leftPx + 'px';
+          // dust & speed indicator
+          const prev = prevProgress[p.id] || 0;
+          const delta = p.progress - prev;
+          runner.classList.toggle('speedy', delta > 0.013);
+          prevProgress[p.id] = p.progress;
+        });
+        // leader highlight + badge
+        document.querySelectorAll('.runner').forEach((r) => r.classList.toggle('is-leading', r.dataset.horse === leader));
+        const leaderBadge = document.getElementById('leader-badge');
+        if (leaderBadge) leaderBadge.textContent = `En tête : ${HORSES.find(h=>h.id===leader)?.name || '—'}`;
+        // timer: show remaining real time or 'Kous la ap fèt...' when in final stretch
+        const $timer = document.getElementById('race-timer');
+        if ($timer) {
+          const remainingMs = Math.max(0, (duration - (elapsed || 0)));
+          if (remainingMs > 0) {
+            const remaining = Math.ceil(remainingMs / 1000);
+            const mm = Math.floor(remaining / 60).toString().padStart(2,'0');
+            const ss = (remaining % 60).toString().padStart(2,'0');
+            $timer.textContent = `${mm}:${ss}`;
+          } else {
+            $timer.textContent = 'Kous la ap fèt...';
+          }
+        }
+      },
+      onFinish: ({ participants, winnerId }) => {
+        // finalize UI
+        participants.forEach((p) => {
+          const runner = runners[p.id];
+          if (!runner) return;
+          const lane = runner.closest('.lane');
+          if (lane) lane.classList.toggle('winner', p.id === winnerId);
+          runner.classList.toggle('is-leading', p.id === winnerId);
+          runner.style.left = (38 + (p.id === winnerId ? 1 : Math.min(0.96, p.finalTarget)) * (maxLeft - 38)) + 'px';
+        });
+        updateHorseCardState();
+      }
+    });
+  }
+
+  function showHorseRaceResult(result) {
+    const bet = horseRaceState.amount;
+    const chose = horseRaceState.selectedHorse;
+    const won = Boolean(chose && chose.id === result.winner_id);
+    const gain = won ? Math.floor(bet * result.odds) : 0;
+    $result.innerHTML = `
+      <h3>🏆 Chwal ki genyen: ${result.winner.name} (x${result.winner.odds.toFixed(1)})</h3>
+      <div style="color: var(--texte-mute); font-size: 13px;">Ou te chwazi: ${chose ? chose.name : "-"}</div>
+      <div style="color: var(--texte-mute); font-size: 13px; margin-top: 4px;">Cote chwal chwazi: x${chose ? chose.odds.toFixed(1) : "-"}</div>
+      ${won
+        ? `<div class="gain">✅ Ou genyen ${gain} HTG!</div>`
+        : `<div class="loss">❌ Ou pèdi ${bet} HTG. Eseye ankò!</div>`}
+    `;
+    $result.classList.add("show");
+    $balance.textContent = "Solde démo";
+    horseRaceState.lastResult = result;
+    updateHorseCardState();
+  }
+
+  async function playHorseRacePlaceholder() {
+    if (horseRaceState.isPlaying) return;
+    if (!horseRaceState.selectedHorse) { setFeedback("Chwazi yon chwal anvan!", "error"); return; }
+    if (!horseRaceState.amount || horseRaceState.amount <= 0) { setFeedback("Mete yon montan valid!", "error"); return; }
+
+    horseRaceState.isPlaying = true;
+    updateHorseSummary();
+    $clearBtn.disabled = true;
+    $status.textContent = "Kous la kòmanse...";
+    $statusInline.textContent = "Kous la kòmanse...";
+    $result.classList.remove("show");
+    setFeedback("Kous la ap kouri...", "");
+
+    resetRunners();
+    const result = generateHorseRacePlaceholderResult();
+    horseRaceState.lastResult = result;
+    await animateHorseRace(result);
+    showHorseRaceResult(result);
+    $status.textContent = "Fini";
+    $statusInline.textContent = "Fini";
+    setFeedback("Kous la fini!", "success");
+    horseRaceState.isPlaying = false;
+    $clearBtn.disabled = false;
+    updateHorseSummary();
+  }
+
+  function setFeedback(msg, type) {
+    $feedback.textContent = msg;
+    $feedback.className = "feedback" + (type ? " " + type : "");
+  }
+
+  function buildHorseRacePayload() {
+    return {
+      horse_id: horseRaceState.selectedHorse ? horseRaceState.selectedHorse.id : null,
+      amount: horseRaceState.amount,
+    };
+  }
+
+  async function playHorseRace() {
+    // Future integration:
+    // const payload = buildHorseRacePayload();
+    // const { data, error } = await supabase.rpc('play_horse_race', {
+    //   p_user_id: currentUser.id,
+    //   p_horse_id: payload.horse_id,
+    //   p_amount: payload.amount
+    // });
+    // if (error) { setFeedback(error.message, "error"); return; }
+    // await animateHorseRace(data);
+    // showHorseRaceResult(data);
+  }
+
+  initHorseRace();
+</script>
+</body>
+</html>

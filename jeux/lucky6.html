@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Lucky 6</title>
+  <style>
+    :root {
+      --bg: #020813;
+      --panel: rgba(8, 24, 43, 0.96);
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #f5f7fb;
+      --muted: #aebbd0;
+      --gold: #ffd21f;
+      --gold-2: #ffb900;
+      --blue: #5bc4ff;
+      --green: #46e36f;
+      --red: #ff5d6c;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      --radius-xl: 28px;
+      --radius-md: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 82% 0%, rgba(255, 210, 31, 0.12), transparent 18%), radial-gradient(circle at 10% 8%, rgba(91, 196, 255, 0.14), transparent 24%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .app {
+      width: min(100%, 1180px);
+      margin: 0 auto;
+      padding: 16px 12px 36px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(8, 24, 43, 0.92);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title-wrap h1 {
+      margin: 0;
+      font-size: clamp(24px, 4vw, 32px);
+      letter-spacing: -0.03em;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 210, 31, 0.25);
+      border-radius: 999px;
+      background: rgba(255, 210, 31, 0.12);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+    }
+
+    .hero-card,
+    .panel,
+    .drawing-machine {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(8, 24, 43, 0.96), rgba(5, 17, 31, 0.96));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .hero-card h2 {
+      margin: 0 0 8px;
+      font-size: clamp(20px, 3.2vw, 24px);
+    }
+
+    .hero-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .rules-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .content-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+
+    .panel { padding: 16px; }
+    .panel-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .panel-head h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .grid-meta strong {
+      color: var(--gold);
+      font-size: 14px;
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .number-btn {
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      width: 100%;
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-weight: 800;
+      font-size: 13px;
+      transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+      min-height: 46px;
+    }
+
+    .number-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .number-btn.active {
+      border-color: rgba(255, 210, 31, 0.55);
+      background: rgba(255, 210, 31, 0.16);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px rgba(255, 210, 31, 0.1);
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, var(--gold), var(--gold-2));
+      color: #121212;
+      border-color: transparent;
+      box-shadow: 0 10px 28px rgba(255, 210, 31, 0.18);
+    }
+
+    .field-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .field-card label {
+      display: block;
+      color: #edf4ff;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .field-card input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      padding: 10px 12px;
+    }
+
+    .field-card .note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .summary-card,
+    .result-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-row,
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      min-height: 46px;
+    }
+
+    .summary-row strong,
+    .result-row strong {
+      color: var(--text);
+      text-align: right;
+      font-size: 13px;
+    }
+
+    .summary-row .highlight,
+    .result-row .highlight {
+      color: var(--gold);
+    }
+
+    .feedback {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      font-size: 13px;
+      min-height: 44px;
+    }
+
+    .feedback.success { color: #eafff1; border-color: rgba(70, 227, 111, 0.22); background: rgba(70, 227, 111, 0.08); }
+    .feedback.warn { color: #fff4d7; border-color: rgba(255, 210, 31, 0.2); background: rgba(255, 210, 31, 0.08); }
+    .feedback.error { color: #ffe7eb; border-color: rgba(255, 93, 108, 0.18); background: rgba(255, 93, 108, 0.08); }
+
+    .drawing-machine {
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .drawing-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .drawing-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .match-counter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 120px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 210, 31, 0.3);
+      background: rgba(255, 210, 31, 0.08);
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .drawing-zone {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      min-height: 210px;
+      padding: 12px;
+      border: 1px dashed rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .ball {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .ball.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .ball.match {
+      border-color: rgba(70, 227, 111, 0.45);
+      background: linear-gradient(135deg, rgba(70, 227, 111, 0.2), rgba(70, 227, 111, 0.08));
+      color: var(--green);
+      box-shadow: 0 0 12px rgba(70, 227, 111, 0.2);
+    }
+
+    .payout-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    .payout-table th,
+    .payout-table td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .payout-table th {
+      color: var(--gold);
+      font-weight: 800;
+    }
+
+    .payout-table td {
+      color: var(--muted);
+    }
+
+    @media (min-width: 760px) {
+      .hero-card {
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: start;
+      }
+      .content-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+      .number-grid {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+      }
+      .drawing-zone {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app { padding: 12px 10px 28px; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .title-wrap { width: 100%; justify-content: space-between; }
+      .number-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .drawing-zone { grid-template-columns: repeat(5, minmax(0, 1fr)); min-height: 160px; }
+      .summary-row, .result-row { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="back-link" href="games.html">← Retour aux jeux</a>
+      <div class="title-wrap">
+        <h1>Lucky 6</h1>
+        <span class="badge">Nouveau jeu</span>
+      </div>
+    </header>
+
+    <section class="hero-card">
+      <article>
+        <div class="eyebrow">Démo frontend</div>
+        <h2>Choisissez 6 numéros parmi 48</h2>
+        <p>Le système tire 35 boules. Plus vos 6 numéros sortent tôt, plus le gain est grand.</p>
+        <ul class="rules-list">
+          <li>Choisissez exactement 6 numéros parmi 48.</li>
+          <li>Le tirage est visuel et placeholder pour cette version.</li>
+          <li>Le gain dépend de la position de sortie du 6e match.</li>
+        </ul>
+      </article>
+      <article class="field-card">
+        <label for="stake-input">Montant de la mise</label>
+        <input id="stake-input" type="number" min="1" step="1" value="100" />
+        <div class="button-row" style="margin-top: 10px;">
+          <button id="quick-pick-btn" class="btn" type="button">Sélection rapide</button>
+          <button id="clear-btn" class="btn" type="button">Effacer</button>
+          <button id="play-btn" class="btn btn-primary" type="button">Jouer</button>
+        </div>
+        <div id="feedback-box" class="feedback">Choisissez 6 numéros puis lancez le tirage.</div>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h3>Grille de sélection</h3>
+            <p>Choisissez exactement 6 numéros. Un clic de nouveau les retire.</p>
+          </div>
+        </div>
+        <div class="grid-meta">
+          <strong id="selected-count">0/6 sélectionnés</strong>
+          <span id="selection-hint">Choisissez vos 6 numéros</span>
+        </div>
+        <div id="number-grid" class="number-grid"></div>
+      </article>
+
+      <article class="panel summary-card">
+        <div class="panel-head">
+          <div>
+            <h3>Résumé</h3>
+            <p>À jour avec votre choix actuel.</p>
+          </div>
+        </div>
+        <div class="summary-row"><span>Numéros choisis</span><strong id="selected-numbers">Aucun</strong></div>
+        <div class="summary-row"><span>Nombre sélectionné</span><strong id="summary-count">0/6</strong></div>
+        <div class="summary-row"><span>Montant de la mise</span><strong id="summary-stake">100 HTG</strong></div>
+        <div class="summary-row"><span>Gain potentiel indicatif</span><strong id="summary-potential">0 HTG</strong></div>
+      </article>
+    </section>
+
+    <section class="drawing-machine">
+      <div class="drawing-header">
+        <h3>Zone de tirage</h3>
+        <div class="match-counter" id="match-counter">Matches : 0/6</div>
+      </div>
+      <div id="drawing-zone" class="drawing-zone"></div>
+    </section>
+
+    <section class="content-grid" style="margin-top: 16px;">
+      <article class="panel result-card">
+        <div class="panel-head">
+          <div>
+            <h3>Résultat final</h3>
+            <p>Résultat réel depuis Supabase.</p>
+          </div>
+        </div>
+        <div class="result-row"><span>Ticket</span><strong id="result-ticket">—</strong></div>
+        <div class="result-row"><span>Numéros choisis</span><strong id="result-selected">Aucun</strong></div>
+        <div class="result-row"><span>Tirage complet</span><strong id="result-draw">En attente</strong></div>
+        <div class="result-row"><span>Matches</span><strong id="result-matches">0/6</strong></div>
+        <div class="result-row"><span>Position du 6e match</span><strong id="result-position">—</strong></div>
+        <div class="result-row"><span>Multiplicateur</span><strong id="result-multiplier">—</strong></div>
+        <div class="result-row"><span>Mise</span><strong id="result-stake">0 HTG</strong></div>
+        <div class="result-row"><span>Gain estimé</span><strong id="result-gain">0 HTG</strong></div>
+        <div class="result-row"><span>Statut</span><strong id="result-status">En attente</strong></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h3>Table de paiement démo</h3>
+            <p>Exemple visuel de la logique frontend.</p>
+          </div>
+        </div>
+        <table class="payout-table">
+          <thead>
+            <tr>
+              <th>Position du 6e match</th>
+              <th>Multiplicateur</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>6 à 10</td><td>x50</td></tr>
+            <tr><td>11 à 15</td><td>x15</td></tr>
+            <tr><td>16 à 20</td><td>x5</td></tr>
+            <tr><td>21 à 25</td><td>x2</td></tr>
+            <tr><td>26 à 30</td><td>x1.2</td></tr>
+            <tr><td>31 à 35</td><td>x0.5</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+  </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    const selectedNumbers = [];
+    const numberGrid = document.getElementById('number-grid');
+    const selectedCount = document.getElementById('selected-count');
+    const selectionHint = document.getElementById('selection-hint');
+    const selectedNumbersEl = document.getElementById('selected-numbers');
+    const summaryCount = document.getElementById('summary-count');
+    const summaryStake = document.getElementById('summary-stake');
+    const summaryPotential = document.getElementById('summary-potential');
+    const stakeInput = document.getElementById('stake-input');
+    const feedbackBox = document.getElementById('feedback-box');
+    const quickPickBtn = document.getElementById('quick-pick-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const playBtn = document.getElementById('play-btn');
+    const drawingZone = document.getElementById('drawing-zone');
+    const matchCounter = document.getElementById('match-counter');
+    const resultTicket = document.getElementById('result-ticket');
+    const resultSelected = document.getElementById('result-selected');
+    const resultDraw = document.getElementById('result-draw');
+    const resultMatches = document.getElementById('result-matches');
+    const resultPosition = document.getElementById('result-position');
+    const resultMultiplier = document.getElementById('result-multiplier');
+    const resultStake = document.getElementById('result-stake');
+    const resultGain = document.getElementById('result-gain');
+    const resultStatus = document.getElementById('result-status');
+
+    let currentUser = null;
+    let isPlaying = false;
+
+    function setFeedback(message, type) {
+      feedbackBox.className = 'feedback';
+      if (type === 'success') feedbackBox.classList.add('success');
+      if (type === 'warn') feedbackBox.classList.add('warn');
+      if (type === 'error') feedbackBox.classList.add('error');
+      feedbackBox.textContent = message;
+    }
+
+    function formatCurrency(value) {
+      return `${Number(value || 0).toLocaleString('fr-FR')} HTG`;
+    }
+
+    function getLucky6ErrorMessage(error) {
+      const status = Number(error?.status || error?.statusCode || 0);
+      const message = String(error?.message || '').trim();
+
+      if (status === 404 || message.includes('Could not find the function') || message.includes('does not exist') || message.includes('not found')) {
+        return 'La fonction Supabase play_lucky6 n’est pas encore disponible sur ce projet. Exécutez le SQL de création dans Supabase avant de jouer.';
+      }
+
+      if (message) {
+        return message;
+      }
+
+      return 'Une erreur est survenue lors du tirage Lucky 6.';
+    }
+
+    async function initLucky6() {
+      renderLucky6Grid();
+      updateLucky6Summary();
+      quickPickBtn.addEventListener('click', quickPickLucky6);
+      clearBtn.addEventListener('click', clearLucky6Selection);
+      playBtn.addEventListener('click', playLucky6);
+      numberGrid.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-number]');
+        if (!button) return;
+        toggleLucky6Number(Number(button.dataset.number));
+      });
+      stakeInput.addEventListener('input', updateLucky6Summary);
+
+      try {
+        if (typeof window.getCurrentUserAsync === 'function') {
+          currentUser = await window.getCurrentUserAsync();
+        }
+      } catch (error) {
+        console.error('Erreur chargement utilisateur Lucky 6', error);
+      }
+
+      if (!currentUser) {
+        setFeedback('Connectez-vous pour jouer.', 'warn');
+      }
+    }
+
+    function renderLucky6Grid() {
+      const buttons = [];
+      for (let number = 1; number <= 48; number += 1) {
+        const active = selectedNumbers.includes(number) ? ' active' : '';
+        buttons.push(`<button class="number-btn${active}" type="button" data-number="${number}">${number}</button>`);
+      }
+      numberGrid.innerHTML = buttons.join('');
+    }
+
+    function toggleLucky6Number(number) {
+      const index = selectedNumbers.indexOf(number);
+      if (index >= 0) {
+        selectedNumbers.splice(index, 1);
+        setFeedback('Numéro retiré de votre sélection.', 'warn');
+      } else if (selectedNumbers.length >= 6) {
+        setFeedback('Vous ne pouvez sélectionner que 6 numéros.', 'warn');
+        return;
+      } else {
+        selectedNumbers.push(number);
+        selectedNumbers.sort((a, b) => a - b);
+        setFeedback('Numéro ajouté à votre sélection.', 'success');
+      }
+      renderLucky6Grid();
+      updateLucky6Summary();
+    }
+
+    function quickPickLucky6() {
+      const pool = Array.from({ length: 48 }, (_, index) => index + 1);
+      const picked = [];
+      while (picked.length < 6) {
+        const randomIndex = Math.floor(Math.random() * pool.length);
+        const [number] = pool.splice(randomIndex, 1);
+        picked.push(number);
+      }
+      selectedNumbers.length = 0;
+      selectedNumbers.push(...picked.sort((a, b) => a - b));
+      renderLucky6Grid();
+      updateLucky6Summary();
+      setFeedback('Sélection rapide réalisée avec 6 numéros aléatoires.', 'success');
+    }
+
+    function clearLucky6Selection() {
+      selectedNumbers.length = 0;
+      renderLucky6Grid();
+      updateLucky6Summary();
+      setFeedback('Sélection effacée.', 'warn');
+    }
+
+    function updateLucky6Summary() {
+      const stake = Number(stakeInput.value) || 0;
+      selectedCount.textContent = `${selectedNumbers.length}/6 sélectionnés`;
+      selectionHint.textContent = selectedNumbers.length === 6 ? 'Sélection complète' : 'Choisissez encore ' + (6 - selectedNumbers.length) + ' numéro(s)';
+      selectedNumbersEl.textContent = selectedNumbers.length ? selectedNumbers.join(', ') : 'Aucun';
+      summaryCount.textContent = `${selectedNumbers.length}/6`;
+      summaryStake.textContent = formatCurrency(stake);
+      const potential = selectedNumbers.length === 6 ? formatCurrency(stake * 50) : formatCurrency(0);
+      summaryPotential.textContent = potential;
+      if (selectedNumbers.length === 6) {
+        selectedCount.classList.add('highlight');
+      } else {
+        selectedCount.classList.remove('highlight');
+      }
+    }
+
+    function generateLucky6PlaceholderDraw() {
+      // Démo seulement — le vrai tirage vient de Supabase public.play_lucky6()
+      const pool = Array.from({ length: 48 }, (_, index) => index + 1);
+      const draw = [];
+      while (draw.length < 35) {
+        const randomIndex = Math.floor(Math.random() * pool.length);
+        const [number] = pool.splice(randomIndex, 1);
+        draw.push(number);
+      }
+      return draw;
+    }
+
+    function animateLucky6Draw(drawNumbers) {
+      drawingZone.innerHTML = '';
+      matchCounter.textContent = 'Matches : 0/6';
+      const selectedSet = new Set(selectedNumbers);
+      const draw = Array.isArray(drawNumbers) ? drawNumbers : [];
+
+      draw.forEach((number, index) => {
+        const ball = document.createElement('div');
+        ball.className = 'ball';
+        ball.textContent = number;
+        if (selectedSet.has(number)) {
+          ball.classList.add('match');
+        }
+        drawingZone.appendChild(ball);
+        window.setTimeout(() => {
+          ball.classList.add('show');
+        }, 40 + index * 70);
+      });
+
+      window.setTimeout(() => {
+        const matches = draw.filter((number) => selectedSet.has(number));
+        matchCounter.textContent = `Matches : ${matches.length}/6`;
+      }, draw.length * 70 + 250);
+    }
+
+    async function playLucky6() {
+      if (isPlaying) {
+        return;
+      }
+
+      if (!currentUser) {
+        try {
+          if (typeof window.getCurrentUserAsync === 'function') {
+            currentUser = await window.getCurrentUserAsync();
+          }
+        } catch (error) {
+          console.error('Erreur récupération utilisateur Lucky 6', error);
+        }
+      }
+
+      if (!currentUser) {
+        setFeedback('Vous devez être connecté pour jouer.', 'error');
+        return;
+      }
+
+      if (selectedNumbers.length !== 6) {
+        setFeedback('Vous devez sélectionner exactement 6 numéros.', 'error');
+        return;
+      }
+
+      const amount = Number(stakeInput.value);
+      if (!amount || amount <= 0) {
+        setFeedback('Le montant de la mise doit être supérieur à 0.', 'error');
+        return;
+      }
+
+      const playButtonLabel = playBtn.textContent;
+      playBtn.disabled = true;
+      playBtn.textContent = 'Traitement…';
+      isPlaying = true;
+      setFeedback('Tirage en cours…', 'success');
+
+      try {
+        const client = window.supabaseClient;
+        if (!client || typeof client.rpc !== 'function') {
+          throw new Error('Connexion Supabase indisponible.');
+        }
+
+        const { data, error } = await client.rpc('play_lucky6', {
+          p_user_id: currentUser.id,
+          p_selected_numbers: selectedNumbers,
+          p_amount: amount,
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        const result = Array.isArray(data) ? data[0] : data;
+        if (!result) {
+          throw new Error('Aucun résultat reçu du backend.');
+        }
+
+        animateLucky6Draw(result.drawn_numbers || []);
+        showLucky6Result(result, amount);
+
+        if (typeof window.getAuthenticatedWallet === 'function') {
+          try {
+            await window.getAuthenticatedWallet();
+            setFeedback('Tirage validé. Solde mis à jour après transaction.', 'success');
+          } catch (walletError) {
+            console.warn('Impossible de rafraîchir le wallet', walletError);
+          }
+        }
+      } catch (error) {
+        console.error('Erreur jeu Lucky 6', error);
+        const message = getLucky6ErrorMessage(error);
+        setFeedback(message, 'error');
+      } finally {
+        playBtn.disabled = false;
+        playBtn.textContent = playButtonLabel;
+        isPlaying = false;
+      }
+    }
+
+    function showLucky6Result(result, amount) {
+      const stake = Number(amount || stakeInput.value || 0) || 0;
+      const selectedLabel = selectedNumbers.length ? selectedNumbers.join(', ') : 'Aucun';
+      const drawLabel = Array.isArray(result.drawn_numbers) ? result.drawn_numbers.join(', ') : '—';
+      const matchesLabel = `${Number(result.matches_count || 0)}/6`;
+      const positionLabel = result.sixth_match_position != null ? result.sixth_match_position : '—';
+      const multiplierLabel = result.payout_multiplier > 0 ? `x${Number(result.payout_multiplier)}` : '—';
+      const gainLabel = formatCurrency(Number(result.win_amount || 0));
+      const statusLabel = result.status === 'paid' ? 'Gagné' : 'Perdu';
+
+      resultTicket.textContent = result.ticket_number || '—';
+      resultSelected.textContent = selectedLabel;
+      resultDraw.textContent = drawLabel;
+      resultMatches.textContent = matchesLabel;
+      resultPosition.textContent = positionLabel;
+      resultMultiplier.textContent = multiplierLabel;
+      resultStake.textContent = formatCurrency(stake);
+      resultGain.textContent = gainLabel;
+      resultStatus.textContent = statusLabel;
+      resultStatus.style.color = statusLabel === 'Gagné' ? '#46e36f' : '#ff5d6c';
+
+      if (statusLabel === 'Gagné') {
+        setFeedback(`Tirage terminé. Gain de ${gainLabel}.`, 'success');
+      } else {
+        setFeedback(`Tirage terminé. ${statusLabel} : seulement ${matchesLabel} match(s).`, 'warn');
+      }
+    }
+
+    initLucky6();
+  </script>
+</body>
+</html>

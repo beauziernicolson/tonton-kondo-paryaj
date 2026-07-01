@@ -135,11 +135,13 @@
       const GAME_LABELS = {
         borlette: 'Borlette',
         mariage: 'Mariage',
+        penalty: 'Penalty',
         lotto3: 'Lotto3',
         lotto4: 'Lotto4',
         lotto5: 'Lotto5',
         keno: 'Keno',
         roulette: 'Roulette',
+        lucky6: 'Lucky 6',
       };
 
       const STATUS_LABELS = {
@@ -168,6 +170,13 @@
 
       function statusLabel(status) {
         return String(status || 'pending').toLowerCase();
+      }
+
+      function formatPenaltyOutcome(outcome) {
+        const normalized = String(outcome || '').toLowerCase();
+        if (normalized === 'won') return 'Gagné';
+        if (normalized === 'lost') return 'Perdu';
+        return String(outcome || '—');
       }
 
       function typeLabel(type) {
@@ -300,6 +309,68 @@
           }
         }
 
+        const penaltyTickets = tickets.filter((t) => String(t.game_type || '').toLowerCase() === 'penalty').map((t) => t.id);
+        let penaltyRoundsByTicket = {};
+        let penaltyBetsByTicket = {};
+        if (penaltyTickets.length > 0) {
+          try {
+            const penaltyRoundsResponse = await client
+              .from('penalty_rounds')
+              .select('id, ticket_id, total_bet_amount, total_win_amount, result_type, result_value, result_label, status, metadata, created_at')
+              .in('ticket_id', penaltyTickets);
+
+            if (penaltyRoundsResponse.error) {
+              console.warn('Erreur récupération penalty_rounds:', penaltyRoundsResponse.error);
+            } else {
+              penaltyRoundsByTicket = (penaltyRoundsResponse.data || []).reduce((map, round) => {
+                if (!map[round.ticket_id]) map[round.ticket_id] = [];
+                map[round.ticket_id].push(round);
+                return map;
+              }, {});
+            }
+
+            const penaltyBetsResponse = await client
+              .from('penalty_bets')
+              .select('id, ticket_id, round_id, bet_type, bet_value, bet_label, amount, payout_multiplier, outcome, win_amount, created_at')
+              .in('ticket_id', penaltyTickets);
+
+            if (penaltyBetsResponse.error) {
+              console.warn('Erreur récupération penalty_bets:', penaltyBetsResponse.error);
+            } else {
+              penaltyBetsByTicket = (penaltyBetsResponse.data || []).reduce((map, bet) => {
+                if (!map[bet.ticket_id]) map[bet.ticket_id] = [];
+                map[bet.ticket_id].push(bet);
+                return map;
+              }, {});
+            }
+          } catch (penaltyError) {
+            console.warn('Erreur chargement penalty data:', penaltyError);
+          }
+        }
+
+        const lucky6Tickets = tickets.filter((t) => String(t.game_type || '').toLowerCase() === 'lucky6').map((t) => t.id);
+        let lucky6RoundsByTicket = {};
+        if (lucky6Tickets.length > 0) {
+          try {
+            const lucky6Response = await client
+              .from('lucky6_rounds')
+              .select('id, ticket_id, selected_numbers, drawn_numbers, matches_count, sixth_match_position, payout_multiplier, bet_amount, win_amount, status, created_at')
+              .in('ticket_id', lucky6Tickets);
+
+            if (lucky6Response.error) {
+              console.warn('Erreur récupération lucky6_rounds:', lucky6Response.error);
+            } else {
+              lucky6RoundsByTicket = (lucky6Response.data || []).reduce((map, round) => {
+                if (!map[round.ticket_id]) map[round.ticket_id] = [];
+                map[round.ticket_id].push(round);
+                return map;
+              }, {});
+            }
+          } catch (lucky6Error) {
+            console.warn('Erreur chargement lucky6_rounds:', lucky6Error);
+          }
+        }
+
         const totalAmount = tickets.reduce((sum, item) => sum + Number(item.total_amount || 0), 0);
         const totalWon = tickets.reduce((sum, ticket) => {
           const lines = itemsByTicket[ticket.id] || [];
@@ -362,6 +433,9 @@
               kenoData,
               rouletteRound,
               rouletteBets,
+              penaltyRound: (penaltyRoundsByTicket[ticket.id] || [])[0] || null,
+              penaltyBets: penaltyBetsByTicket[ticket.id] || [],
+              lucky6Round: (lucky6RoundsByTicket[ticket.id] || [])[0] || null,
               gameType: ticket.game_type,
               gameLabel: formatGameLabel(ticket.game_type),
               ticketId: ticket.id,
@@ -492,6 +566,42 @@
               `;
             }
 
+            if (gameKey === 'penalty') {
+              const round = item.penaltyRound || null;
+              const bets = Array.isArray(item.penaltyBets) ? item.penaltyBets : [];
+              const resultTypeLabel = round?.result_type === 'sector'
+                ? 'Secteur'
+                : round?.result_type === 'event'
+                  ? 'Événement'
+                  : '—';
+              return `
+                <article class="history-item">
+                  <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                    <strong>${item.title}</strong>
+                    <span class="tag">${statusDisplay}</span>
+                  </div>
+                  <span>${item.meta}</span>
+                  <em>${item.amount}</em>
+                  <div class="detail-grid">
+                    <div class="detail-card">
+                      <div class="detail-card-title">Détails Penalty</div>
+                      <div class="detail-row"><span>Résultat</span><span>${round?.result_label || 'Détails indisponibles'}</span></div>
+                      <div class="detail-row"><span>Type résultat</span><span>${resultTypeLabel}</span></div>
+                      <div class="detail-row"><span>Total misé</span><span>${round?.total_bet_amount != null ? formatCurrency(round.total_bet_amount, item.currency) : 'Détails indisponibles'}</span></div>
+                      <div class="detail-row"><span>Gain total</span><span>${round?.total_win_amount != null ? formatCurrency(round.total_win_amount, item.currency) : 'Détails indisponibles'}</span></div>
+                      <div class="detail-row"><span>Statut</span><span>${round?.status ? formatStatusLabel(round.status) : statusDisplay}</span></div>
+                    </div>
+                    <div class="detail-card">
+                      <div class="detail-card-title">Détail des mises</div>
+                      ${bets.length ? `<div class="bet-list">${bets.map((bet) => `<div class="bet-item"><strong>${bet.bet_label || bet.bet_type || 'Mise'}</strong><div>${formatCurrency(bet.amount || 0, item.currency)}</div><div>Multiplicateur : ${bet.payout_multiplier != null ? bet.payout_multiplier : '—'}</div><div>Issue : ${formatPenaltyOutcome(bet.outcome)}</div><div>Gain : ${bet.win_amount != null ? formatCurrency(bet.win_amount, item.currency) : '—'}</div></div>`).join('')}</div>` : '<div style="font-size:13px;color:var(--muted);">Détails indisponibles.</div>'}
+                    </div>
+                  </div>
+                  <span>${item.gain}</span>
+                  <span>${item.result}</span>
+                </article>
+              `;
+            }
+
             const gameLabel = item.gameLabel || formatGameLabel(item.gameType);
             const linesMarkup = (item.lines || []).slice(0, 3).map((line) => {
               const lineStatus = formatStatusLabel(line.status);
@@ -509,6 +619,61 @@
               }
               return `<div class="detail-row"><span>${lineNumber}</span><span>${lineAmount} • ${lineGain} • ${lineStatus}</span></div>`;
             }).join('');
+
+            if (gameKey === 'lucky6') {
+              const lucky6 = item.lucky6Round;
+              if (lucky6) {
+                const selectedNums = Array.isArray(lucky6.selected_numbers) ? lucky6.selected_numbers : [];
+                const drawnNums = Array.isArray(lucky6.drawn_numbers) ? lucky6.drawn_numbers : [];
+                const payoutMultiplier = Number(lucky6.payout_multiplier || 0);
+                const statusText = payoutMultiplier === 0
+                  ? 'Perdu'
+                  : ['paid', 'won'].includes(statusLabel(item.status))
+                    ? 'Payé'
+                    : 'Gagné';
+                const sixthMatchLabel = lucky6.sixth_match_position != null
+                  ? String(lucky6.sixth_match_position)
+                  : '6e match non atteint';
+                return `
+                  <article class="history-item">
+                    <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                      <strong>${item.title}</strong>
+                      <span class="tag">${statusDisplay}</span>
+                    </div>
+                    <span>${item.meta}</span>
+                    <em>${item.amount}</em>
+                    <div class="detail-grid">
+                      <div class="detail-card">
+                        <div class="detail-card-title">Détails Lucky 6</div>
+                        <div class="detail-row"><span>Numéros choisis</span><span>${selectedNums.length ? selectedNums.join(', ') : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Numéros tirés</span><span>${drawnNums.length ? drawnNums.join(', ') : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Matches</span><span>${lucky6.matches_count != null ? lucky6.matches_count : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>6e match</span><span>${sixthMatchLabel}</span></div>
+                        <div class="detail-row"><span>Multiplicateur</span><span>${lucky6.payout_multiplier != null ? `${lucky6.payout_multiplier}x` : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Mise</span><span>${lucky6.bet_amount != null ? formatCurrency(lucky6.bet_amount, item.currency) : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Gain</span><span>${lucky6.win_amount != null ? formatCurrency(lucky6.win_amount, item.currency) : 'Détails indisponibles'}</span></div>
+                        <div class="detail-row"><span>Statut</span><span>${statusText}</span></div>
+                      </div>
+                    </div>
+                    <span>${item.gain}</span>
+                    <span>${item.result}</span>
+                  </article>
+                `;
+              }
+              return `
+                <article class="history-item">
+                  <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+                    <strong>${item.title}</strong>
+                    <span class="tag">${statusDisplay}</span>
+                  </div>
+                  <span>${item.meta}</span>
+                  <em>${item.amount}</em>
+                  <span style="color: var(--muted); font-size: 13px;">Détails Lucky 6 indisponibles.</span>
+                  <span>${item.gain}</span>
+                  <span>${item.result}</span>
+                </article>
+              `;
+            }
 
             return `
               <article class="history-item">

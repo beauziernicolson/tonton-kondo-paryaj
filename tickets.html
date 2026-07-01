@@ -204,15 +204,18 @@
       let currentUser = null;
       let tickets = [];
       let selectedTicketId = null;
+      let ticketItemsByTicket = {};
 
       const GAME_LABELS = {
         borlette: 'Borlette',
         mariage: 'Mariage',
+        penalty: 'Penalty',
         lotto3: 'Lotto3',
         lotto4: 'Lotto4',
         lotto5: 'Lotto5',
         keno: 'Keno',
         roulette: 'Roulette',
+        lucky6: 'Lucky 6',
       };
 
       const STATUS_LABELS = {
@@ -246,6 +249,16 @@
 
       function formatDate(value) {
         return new Date(value).toLocaleString('fr-FR');
+      }
+
+      function normalizeNumberPlayed(value) {
+        if (Array.isArray(value)) {
+          return value.join(', ');
+        }
+        if (value == null || value === '') {
+          return '—';
+        }
+        return String(value);
       }
 
       function statusLabel(status) {
@@ -322,6 +335,14 @@
         tickets.forEach((ticket) => {
           const card = document.createElement('article');
           card.className = 'ticket-card';
+          const gameKey = String(ticket.game_type || '').toLowerCase();
+          const ticketItems = ticketItemsByTicket[ticket.id] || [];
+          const isPenalty = gameKey === 'penalty';
+          const isLucky6 = gameKey === 'lucky6';
+          const chosenNumbers = ticketItems.length > 0 ? ticketItems.map((item) => normalizeNumberPlayed(item.number_played)).join(' | ') : null;
+          const potentialWin = ticketItems.length > 0 ? ticketItems.reduce((sum, item) => sum + Number(item.potential_win || 0), 0) : null;
+          const detailsFallback = 'Détails complets disponibles dans l’historique.';
+
           card.innerHTML = `
             <div class="ticket-row">
               <div class="ticket-title">
@@ -332,11 +353,14 @@
             </div>
             <div class="ticket-row" style="margin-top:8px;">
               <div class="ticket-title">
-                <span class="ticket-meta">Total du ticket</span>
+                <span class="ticket-meta">Montant misé</span>
                 <span class="ticket-total">${formatCurrency(ticket.total_amount)}</span>
               </div>
               ${renderStatusBadge(ticket.status)}
             </div>
+            ${isPenalty ? `<div class="ticket-row" style="margin-top:8px;"><div class="ticket-title"><span class="ticket-meta">Mises</span><span>${chosenNumbers || detailsFallback}</span></div></div>` : ''}
+            ${isLucky6 ? `<div class="ticket-row" style="margin-top:8px;"><div class="ticket-title"><span class="ticket-meta">Numéros choisis</span><span>${chosenNumbers || detailsFallback}</span></div></div>` : ''}
+            ${(isPenalty || isLucky6) && potentialWin != null ? `<div class="ticket-row" style="margin-top:8px;"><div class="ticket-title"><span class="ticket-meta">Gain potentiel</span><span>${formatCurrency(potentialWin)}</span></div></div>` : ''}
             <div class="ticket-actions">
               <span class="ticket-meta">ID ticket : ${ticket.id}</span>
               <button class="btn btn-primary" type="button" data-ticket-id="${ticket.id}">Voir détails</button>
@@ -375,13 +399,15 @@
           ? 'Combinaison jouée'
           : gameKey === 'borlette'
             ? 'Numéro joué'
-            : gameKey.startsWith('lotto')
-              ? 'Numéro joué'
-              : gameKey === 'keno'
-                ? 'Sélection Keno'
-                : gameKey === 'roulette'
-                  ? 'Mise Roulette'
-                  : 'Donnée jouée';
+            : gameKey === 'penalty'
+              ? 'Mise Penalty'
+              : gameKey.startsWith('lotto')
+                ? 'Numéro joué'
+                : gameKey === 'keno'
+                  ? 'Sélection Keno'
+                  : gameKey === 'roulette'
+                    ? 'Mise Roulette'
+                    : 'Donnée jouée';
         const resultLabel = ticketStatus === 'pending'
           ? 'En attente'
           : ticketStatus === 'won'
@@ -440,6 +466,14 @@
           } else if (gameKey === 'mariage') {
             lineCard.innerHTML = `
               <strong>${detailLabel} : ${item.number_played || '—'}</strong>
+              <span>Mise : ${formatCurrency(item.amount)}</span>
+              <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
+              <span>Statut : ${lineStatusLabel}</span>
+            `;
+          } else if (gameKey === 'penalty') {
+            lineCard.innerHTML = `
+              <strong>Ticket Penalty</strong>
+              <span>Détails complets disponibles dans l’historique.</span>
               <span>Mise : ${formatCurrency(item.amount)}</span>
               <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
               <span>Statut : ${lineStatusLabel}</span>
@@ -529,10 +563,28 @@
           }
 
           tickets = data || [];
+
+          const ticketIds = tickets.map((ticket) => ticket.id).filter(Boolean);
+          ticketItemsByTicket = {};
+
+          if (ticketIds.length > 0) {
+            const { data: itemsData, error: itemsError } = await client
+              .from('ticket_items')
+              .select('ticket_id, number_played, amount, potential_win, status, created_at')
+              .in('ticket_id', ticketIds);
+
+            if (!itemsError && Array.isArray(itemsData)) {
+              itemsData.forEach((item) => {
+                if (!ticketItemsByTicket[item.ticket_id]) ticketItemsByTicket[item.ticket_id] = [];
+                ticketItemsByTicket[item.ticket_id].push(item);
+              });
+            }
+          }
+
           renderTickets();
 
           if (!tickets.length) {
-            setState('Aucun ticket Borlette n’a encore été enregistré pour ce compte.', 'info');
+            setState('Aucun ticket n’a encore été enregistré pour ce compte.', 'info');
           } else {
             setState(`Chargement terminé : ${tickets.length} ticket(s) affiché(s).`, 'info');
           }

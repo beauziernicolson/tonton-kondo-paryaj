@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS public.deposit_requests (
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
   amount NUMERIC NOT NULL CHECK (amount > 0),
   currency TEXT NOT NULL DEFAULT 'HTG',
-  method TEXT NOT NULL CHECK (method IN ('moncash', 'natcash', 'manual')),
+  method TEXT NOT NULL CHECK (method IN ('moncash', 'natcash', 'manual', 'cash_paw')),
   phone TEXT,
   reference TEXT,
   proof_url TEXT,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS public.withdrawal_requests (
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
   amount NUMERIC NOT NULL CHECK (amount > 0),
   currency TEXT NOT NULL DEFAULT 'HTG',
-  method TEXT NOT NULL CHECK (method IN ('moncash', 'natcash', 'manual')),
+  method TEXT NOT NULL CHECK (method IN ('moncash', 'natcash', 'manual', 'cash_paw')),
   phone TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'cancelled')),
   admin_note TEXT,
@@ -35,6 +35,12 @@ CREATE TABLE IF NOT EXISTS public.withdrawal_requests (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+ALTER TABLE public.deposit_requests DROP CONSTRAINT IF EXISTS deposit_requests_method_check;
+ALTER TABLE public.deposit_requests ADD CONSTRAINT deposit_requests_method_check CHECK (method IN ('moncash', 'natcash', 'manual', 'cash_paw'));
+
+ALTER TABLE public.withdrawal_requests DROP CONSTRAINT IF EXISTS withdrawal_requests_method_check;
+ALTER TABLE public.withdrawal_requests ADD CONSTRAINT withdrawal_requests_method_check CHECK (method IN ('moncash', 'natcash', 'manual', 'cash_paw'));
 
 COMMENT ON TABLE public.deposit_requests IS
  'Demandes de dépôt manuel pour les utilisateurs Tonton Kondo.';

@@ -159,6 +159,17 @@
         .replaceAll("'", '&#39;');
     }
 
+    const PAYMENT_METHOD_LABELS = {
+      moncash: 'MonCash',
+      natcash: 'NatCash',
+      cash_paw: 'Cash Paw',
+      manual: 'Manuel'
+    };
+
+    function formatPaymentMethod(value) {
+      return PAYMENT_METHOD_LABELS[String(value || '').toLowerCase()] || String(value || '—');
+    }
+
     async function ensureAdminAccess() {
       const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
       if (!currentUser) {
@@ -205,7 +216,7 @@
               <td>${escapeHtml(profile.full_name || 'Client')}</td>
               <td>${escapeHtml(profile.email || '—')}</td>
               <td>${formatCurrency(item.amount)}</td>
-              <td>${escapeHtml(String(item.method || '—').toUpperCase())}</td>
+              <td>${escapeHtml(formatPaymentMethod(item.method))}</td>
               <td>${escapeHtml(item.phone || '—')}</td>
               <td><span class="badge ${String(item.status || 'pending').toLowerCase()}">${escapeHtml(item.status || 'pending')}</span></td>
               <td>${formatDate(item.created_at)}</td>
