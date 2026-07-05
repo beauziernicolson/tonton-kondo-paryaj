@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>American Roulette — Tonton Kondo / ParyajPam</title>
+<style>
+/* ============================================================
+   Tonton Kondo / ParyajPam — American Roulette (vanilla HTML/CSS/JS)
+   Frontend only. No backend, no Supabase, no payments.
+   ============================================================ */
+:root{
+  --bg:#0b0f1a;
+  --bg-2:#0f1626;
+  --panel:#121a2b;
+  --panel-2:#162035;
+  --border:#1f2a44;
+  --text:#eef2ff;
+  --muted:#8b97b8;
+  --gold-1:#f6d27a;
+  --gold-2:#c9962b;
+  --gold-3:#7a5a14;
+  --green:#0e6b3a;
+  --green-2:#0a5630;
+  --red:#c1272d;
+  --red-2:#8a1b20;
+  --black:#1a1f2e;
+  --black-2:#0a0d14;
+  --chip-10:#e7ecf3;
+  --chip-50:#2b6cff;
+  --chip-100:#1ea84a;
+  --chip-500:#7a1bd1;
+  --chip-1000:#ffb020;
+  --gradient-gold:linear-gradient(145deg,#f6d27a 0%,#c9962b 45%,#f4d57a 60%,#7a5a14 100%);
+  --shadow-deep:0 30px 60px rgba(0,0,0,.55),0 10px 24px rgba(0,0,0,.4);
+  --shadow-gold:0 0 0 1px rgba(246,210,122,.35),0 10px 30px rgba(201,150,43,.25);
+  --glow-active:inset 0 0 0 2px rgba(246,210,122,.95),0 0 18px rgba(246,210,122,.55);
+  --font-display:"Cinzel","Playfair Display",Georgia,serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:radial-gradient(1200px 800px at 50% -10%,#1b2540 0%,var(--bg) 55%,#05080f 100%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;min-height:100%;overflow-x:hidden;overflow-x:hidden;width:100%;overflow-x:hidden}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.55}
+
+/* ---------- Layout ---------- */
+.app{max-width:1500px;width:100%;margin:0 auto;padding:18px 16px 40px}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-mark{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-weight:900;color:#1b2540;background:var(--gradient-gold);box-shadow:var(--shadow-gold)}
+.brand h1{font-family:var(--font-display);font-size:22px;margin:0;letter-spacing:.18em;background:var(--gradient-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand p{margin:2px 0 0;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.balance{border:1px solid rgba(246,210,122,.4);background:rgba(18,26,43,.7);border-radius:18px;padding:8px 14px;box-shadow:var(--shadow-gold);backdrop-filter:blur(8px)}
+.balance .lbl{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.balance .val{font-weight:800;color:#f6d27a;font-size:18px}
+.balance .val small{font-weight:600;font-size:11px;opacity:.8}
+
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:18px}
+@media(min-width:1100px){.grid{grid-template-columns:auto 1fr 320px}}
+
+.panel{background:rgba(18,26,43,.55);border:1px solid var(--border);border-radius:22px;padding:18px;box-shadow:var(--shadow-deep);backdrop-filter:blur(8px)}
+
+/* ---------- Wheel ---------- */
+.wheel-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+.wheel{position:relative;width:min(86vw,460px);max-width:460px;aspect-ratio:1/1}
+.wheel .glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(246,210,122,.18),transparent 60%);filter:blur(18px);pointer-events:none}
+.wheel .ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 90deg,#7a5a14,#f6d27a,#c9962b,#f6d27a,#7a5a14,#f4d57a,#7a5a14);box-shadow:inset 0 0 0 3px rgba(0,0,0,.5),inset 0 0 30px rgba(0,0,0,.6),0 30px 60px rgba(0,0,0,.7),0 0 60px rgba(246,210,122,.25)}
+.wheel .bevel{position:absolute;inset:16px;border-radius:50%;background:#0e1422;box-shadow:inset 0 0 25px rgba(0,0,0,.8)}
+.wheel .track{position:absolute;inset:20px;border-radius:50%;background:radial-gradient(circle,transparent 62%,#1b2540 63%,#0d1320 70%,transparent 72%)}
+.wheel .face{position:absolute;inset:34px;border-radius:50%;transform:rotate(0deg);transition:transform .4s ease-out;will-change:transform}
+.wheel .face.spinning{transition:transform 5s cubic-bezier(.16,.84,.28,1)}
+.wheel svg{position:absolute;inset:0;width:100%;height:100%}
+.wheel .ball-orbit{position:absolute;inset:26px;border-radius:50%;transform:rotate(0deg);transition:transform .3s ease-out;pointer-events:none}
+.wheel .ball-orbit.spinning{transition:transform 5s cubic-bezier(.22,.9,.3,1)}
+.wheel .ball{position:absolute;left:50%;top:6px;width:14px;height:14px;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 30% 30%,#fff,#d8dcea 40%,#7a829a 100%);box-shadow:0 2px 6px rgba(0,0,0,.7),inset 0 -1px 2px rgba(0,0,0,.4)}
+.wheel .pointer{position:absolute;left:50%;top:-2px;width:22px;height:22px;transform:translateX(-50%);background:var(--gradient-gold);clip-path:polygon(50% 100%,0 0,100% 0);filter:drop-shadow(0 2px 4px rgba(0,0,0,.7))}
+
+/* ---------- Recent + result ---------- */
+.recent{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:460px}
+.recent .num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;border:1px solid rgba(246,210,122,.35);color:#fff}
+.recent .num.red{background:linear-gradient(145deg,#c1272d,#7e1a1f)}
+.recent .num.black{background:linear-gradient(145deg,#222a3d,#0a0d14)}
+.recent .num.green{background:linear-gradient(145deg,#0e6b3a,#063f20)}
+.result-panel{background:linear-gradient(145deg,rgba(246,210,122,.15),rgba(18,26,43,.7));border:1px solid rgba(246,210,122,.5);border-radius:16px;padding:14px 18px;text-align:center;min-width:240px}
+.result-panel .big{font-size:34px;font-weight:900;color:#f6d27a;font-family:var(--font-display)}
+.result-panel .win{color:#9be8a4;font-weight:700}
+.result-panel .loss{color:#ff8a8a;font-weight:700}
+
+/* ---------- Betting table (felt) ---------- */
+.felt{background:radial-gradient(ellipse at top,#0f7a44 0%,#0a5630 60%,#063f20 100%);padding:18px;border-radius:22px;box-shadow:var(--shadow-deep);border:1px solid rgba(246,210,122,.3);overflow-x:auto}
+.felt-inner{min-width:720px}
+.felt .tip{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:10px}
+.table-grid{display:grid;grid-template-columns:64px repeat(12,1fr) 64px;gap:4px}
+.cell{position:relative;display:grid;place-items:center;border:1px solid rgba(246,210,122,.3);border-radius:6px;color:#fff;font-weight:800;font-size:15px;padding:10px 4px;text-shadow:0 1px 2px rgba(0,0,0,.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 6px rgba(0,0,0,.5);transition:filter .15s,border-color .15s;min-height:44px}
+.cell:hover:not(:disabled){border-color:rgba(246,210,122,.95);filter:brightness(1.12)}
+.cell.red{background:linear-gradient(145deg,#c1272d,#7e1a1f)}
+.cell.black{background:linear-gradient(145deg,#222a3d,#0a0d14)}
+.cell.green{background:linear-gradient(145deg,#0e6b3a,#063f20)}
+.cell.outside{background:linear-gradient(145deg,#0e7a44,#0a5630)}
+.cell.zero{grid-row:span 3;font-size:22px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;padding:8px}
+.cell.col-bet{grid-row:span 1}
+.row-outside{grid-column:2 / span 12;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:6px}
+.row-dozens{grid-column:2 / span 12;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}
+.cell .has-chip{position:absolute;inset:0;border-radius:6px;box-shadow:var(--glow-active);pointer-events:none}
+.zero-stack{display:flex;flex-direction:column;gap:6px;width:100%}
+.zero-cell{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 4px}
+.zero-inner{width:100%;display:flex;flex-direction:column;gap:6px}
+.zero-btn{width:100%;border-radius:6px;padding:8px 4px;font-weight:900}
+
+/* ---------- Chips ---------- */
+.chip{position:relative;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#fff;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.4),transparent 45%),conic-gradient(var(--chip-color) 0 10%,#fff 0 12%,var(--chip-color) 0 22%,#fff 0 24%,var(--chip-color) 0 34%,#fff 0 36%,var(--chip-color) 0 46%,#fff 0 48%,var(--chip-color) 0 58%,#fff 0 60%,var(--chip-color) 0 70%,#fff 0 72%,var(--chip-color) 0 82%,#fff 0 84%,var(--chip-color) 0 100%);box-shadow:0 6px 14px rgba(0,0,0,.55),inset 0 0 0 3px rgba(0,0,0,.25),inset 0 0 0 8px var(--chip-color);text-shadow:0 1px 2px rgba(0,0,0,.6);font-size:14px;transition:transform .15s}
+.chip:hover{transform:translateY(-3px) scale(1.05)}
+.chip.active{transform:translateY(-4px) scale(1.12);box-shadow:0 0 0 2px #f6d27a,0 0 20px rgba(246,210,122,.7),0 6px 14px rgba(0,0,0,.55),inset 0 0 0 3px rgba(0,0,0,.25),inset 0 0 0 8px var(--chip-color)}
+.chip.mini{width:34px;height:34px;font-size:11px;position:absolute;animation:pop-in .25s ease-out}
+@keyframes pop-in{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ---------- Controls ---------- */
+.controls-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.chip-rack{display:flex;align-items:center;gap:10px}
+.chip-rack .lbl{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.btn{height:44px;padding:0 16px;border-radius:12px;background:rgba(30,40,64,.7);border:1px solid var(--border);color:#dbe1f3;font-weight:600;font-size:14px;transition:background .15s}
+.btn:hover:not(:disabled){background:rgba(40,52,84,.9)}
+.btn-spin{height:50px;padding:0 32px;border-radius:16px;background:var(--gradient-gold);color:#1b2540;font-weight:900;letter-spacing:.2em;text-transform:uppercase;font-family:var(--font-display);box-shadow:var(--shadow-gold),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -3px 0 rgba(0,0,0,.25);transition:transform .15s}
+.btn-spin:hover:not(:disabled){transform:scale(1.03)}
+.btn-spin:active{transform:scale(.96)}
+
+/* ---------- Summary ---------- */
+.summary{max-width:100%;width:100%;box-sizing:border-box;overflow:hidden;min-width:0}
+.summary h3{margin:0 0 12px;font-family:var(--font-display);letter-spacing:.18em;color:#f6d27a;font-size:14px;text-transform:uppercase}
+.summary .row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:10px;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.08);font-size:14px;min-width:0;width:100%}
+.summary .row .k,.summary .row .v{min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:break-word}
+.summary .row .k{color:var(--muted)}
+.summary .row .v{font-weight:800;text-align:right;justify-self:end}
+.summary .v.gold{color:#f6d27a}
+.summary .v.green{color:#9be8a4}
+.bet-list{margin-top:10px;max-height:240px;overflow:auto;min-width:0}
+.bet-list .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;font-size:13px;padding:6px 0;color:#cfd6ec;min-width:0}
+.bet-list .empty{color:var(--muted);font-style:italic;font-size:13px;padding:8px 0}
+
+.footer{margin-top:24px;text-align:center;font-size:11px;color:var(--muted)}
+.footer code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px}
+
+@media (max-width: 900px){
+  .app{padding:14px 12px 30px}
+  .header{flex-direction:column;align-items:flex-start}
+  .wheel-wrap{align-items:stretch}
+  .wheel{width:min(82vw,360px)}
+  .recent{max-width:100%}
+  .result-panel{min-width:0;width:100%}
+  .panel{padding:14px}
+  .felt{padding:14px}
+  .felt-inner{min-width:620px}
+  .controls-row{flex-direction:column;align-items:stretch;gap:12px}
+  .chip-rack{justify-content:space-between;flex-wrap:wrap}
+  .btn,.btn-spin{width:100%;min-height:48px}
+}
+
+@media (max-width: 600px){
+  .app{padding:10px 10px 24px}
+  .brand h1{font-size:18px}
+  .brand p{font-size:10px;letter-spacing:.2em}
+  .balance{width:100%;display:flex;justify-content:space-between;align-items:center}
+  .wheel{width:min(78vw,300px)}
+  .wheel .pointer{top:-4px}
+  .felt{padding:12px}
+  .felt-inner{min-width:560px}
+  .table-grid{gap:3px}
+  .cell{font-size:13px;min-height:40px;padding:8px 3px}
+  .chip{width:46px;height:46px;font-size:13px}
+  .chip-rack{gap:8px}
+  .btn,.btn-spin{padding:0 12px;font-size:13px;letter-spacing:.02em}
+}
+
+@media (max-width: 400px){
+  .app{padding:8px 8px 20px}
+  .brand-mark{width:42px;height:42px}
+  .wheel{width:min(74vw,260px)}
+  .recent .num{width:26px;height:26px;font-size:12px}
+  .result-panel .big{font-size:26px}
+  .felt-inner{min-width:500px}
+  .table-grid{grid-template-columns:56px repeat(12,1fr) 56px}
+  .cell{font-size:12px;min-height:36px}
+  .chip{width:40px;height:40px;font-size:11px}
+  .controls-row{gap:10px}
+}
+
+@media (max-width:1024px){
+  .grid{grid-template-columns:1fr}
+  .summary{order:3}
+}
+
+@media (max-width:768px){
+  .app{padding:12px 10px 28px}
+  .header{flex-direction:column;align-items:flex-start}
+  .brand h1{font-size:18px}
+  .brand p{letter-spacing:.2em}
+  .balance{width:100%}
+  .wheel{width:min(92vw,360px)}
+  .panel{padding:14px}
+  .controls-row{flex-direction:column;align-items:stretch}
+  .chip-rack{flex-wrap:wrap;justify-content:flex-start}
+  .chip-rack .lbl{width:100%}
+  .btn,.btn-spin{width:100%;justify-content:center;height:48px}
+  .felt{padding:12px}
+  .felt-inner{min-width:640px}
+  .summary .row{font-size:13px}
+  .bet-list{max-height:220px}
+}
+
+@media (max-width:480px){
+  .app{padding:10px 8px 24px}
+  .brand-mark{width:42px;height:42px}
+  .brand h1{font-size:16px}
+  .brand p{font-size:10px}
+  .balance .val{font-size:16px}
+  .wheel{width:min(94vw,310px)}
+  .recent .num{width:28px;height:28px;font-size:12px}
+  .result-panel{padding:12px 14px;min-width:0;width:100%}
+  .result-panel .big{font-size:28px}
+  .felt{padding:10px;border-radius:16px}
+  .felt-inner{min-width:560px}
+  .cell{min-height:40px;font-size:13px;padding:8px 2px}
+  .chip{width:46px;height:46px;font-size:12px}
+  .btn,.btn-spin{height:46px;font-size:13px;padding:0 12px}
+  .summary h3{font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-mark">TK</div>
+      <div>
+        <h1>TONTON KONDO</h1>
+        <p>ParyajPam · American Roulette</p>
+      </div>
+    </div>
+    <div class="balance">
+      <div class="lbl">Balance</div>
+      <div class="val"><span id="balance">Chargement du solde...</span> <small>HTG</small></div>
+    </div>
+  </header>
+
+  <!-- ============ MAIN GRID ============ -->
+  <div class="grid">
+
+    <!-- Wheel column -->
+    <section class="wheel-wrap">
+      <div class="panel" style="padding:14px">
+        <div class="wheel" id="wheel">
+          <div class="glow"></div>
+          <div class="ring"></div>
+          <div class="bevel"></div>
+          <div class="track"></div>
+          <div class="face" id="wheelFace">
+            <svg viewBox="0 0 400 400" id="wheelSvg"></svg>
+          </div>
+          <div class="ball-orbit" id="ballOrbit"><div class="ball"></div></div>
+          <div class="pointer"></div>
+        </div>
+      </div>
+
+      <div class="recent" id="recent"></div>
+      <div id="resultPanel"></div>
+    </section>
+
+    <!-- Table column -->
+    <section style="display:flex;flex-direction:column;gap:14px">
+      <div class="felt">
+        <div class="tip">
+          <span>Place your bets · Chip <b id="tipChip">50</b></span>
+          <span>American Roulette · 0, 00, 1–36</span>
+        </div>
+        <div class="felt-inner" id="bettingTable"></div>
+      </div>
+
+      <div class="panel">
+        <div class="controls-row">
+          <div class="chip-rack">
+            <span class="lbl">Chips</span>
+            <div id="chipRack" style="display:flex;gap:10px"></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn" id="btnClear">Clear</button>
+            <button class="btn" id="btnRepeat">Repeat</button>
+            <button class="btn-spin" id="btnSpin" disabled>Spin</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="grid" style="margin-top:18px">
+    <aside class="panel summary">
+      <h3>Résumé des mises</h3>
+      <div class="row"><span class="k">Balance</span><span class="v gold" id="sumBalance">Chargement du solde...</span></div>
+      <div class="row"><span class="k">Total misé</span><span class="v" id="sumBet">0</span></div>
+      <div class="row"><span class="k">Gain potentiel</span><span class="v green" id="sumWin">0</span></div>
+      <div class="row"><span class="k">Dernier numéro</span><span class="v" id="sumLast">—</span></div>
+      <div class="bet-list" id="betList"><div class="empty">Aucune mise placée.</div></div>
+    </aside>
+  </div>
+
+  <div class="footer">
+    Demo interface · No real money · Result uses local placeholder (TODO: remplacer le placeholder par Supabase public.play_american_roulette())
+  </div>
+</div>
+
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+/* ============================================================
+   American Roulette — Frontend only placeholder logic
+   TODO: remplacer le placeholder par Supabase public.play_american_roulette()
+   ============================================================ */
+
+// Wheel order for American roulette (strings used to support '00')
+const WHEEL_ORDER = ["0","28","9","26","30","11","7","20","32","17","5","22","34","15","3","24","36","13","1","00","27","10","25","29","12","8","19","31","18","6","21","33","16","4","23","35","14","2"];
+const RED_NUMBERS = new Set(["1","3","5","7","9","12","14","16","18","19","21","23","25","27","30","32","34","36"]);
+
+function getAmericanRouletteColor(n){
+  const s = String(n);
+  if(s === "0" || s === "00") return "green";
+  return RED_NUMBERS.has(s) ? "red" : "black";
+}
+
+const CHIPS = [
+  {value:10,  label:"10", tone:"var(--chip-10)"},
+  {value:50,  label:"50", tone:"var(--chip-50)"},
+  {value:100, label:"100",tone:"var(--chip-100)"},
+  {value:500, label:"500",tone:"var(--chip-500)"},
+  {value:1000,label:"1K", tone:"var(--chip-1000)"},
+];
+
+const PAYOUTS = {straight:35,red:2,black:2,odd:2,even:2,low:2,high:2,dozen:3,column:3};
+function payoutFor(key){
+  if(key.startsWith("n:")) return PAYOUTS.straight;
+  if(key.startsWith("dozen")) return PAYOUTS.dozen;
+  if(key.startsWith("col")) return PAYOUTS.column;
+  return PAYOUTS[key] || 1;
+}
+
+function winsAmericanBet(key, n){
+  // n is a string ("00","0","1"...)
+  const s = String(n);
+  if(key.startsWith("n:")) return key.slice(2) === s;
+  // 0 and 00 never win outside straight bets
+  if(s === "0" || s === "00") return false;
+  const num = Number(s);
+  const red = RED_NUMBERS.has(s);
+  switch(key){
+    case "red": return red;
+    case "black": return !red;
+    case "odd": return num%2===1;
+    case "even": return num%2===0;
+    case "low": return num>=1 && num<=18;
+    case "high": return num>=19 && num<=36;
+    case "dozen1": return num>=1 && num<=12;
+    case "dozen2": return num>=13 && num<=24;
+    case "dozen3": return num>=25 && num<=36;
+    case "col1": return num%3===1;
+    case "col2": return num%3===2;
+    case "col3": return num%3===0;
+  }
+  return false;
+}
+function labelOf(key){
+  if(key.startsWith("n:")) return "N° "+key.slice(2);
+  const m={red:"Rouge",black:"Noir",odd:"Impair",even:"Pair",low:"1-18",high:"19-36",
+    dozen1:"1er 12",dozen2:"2e 12",dozen3:"3e 12",col1:"Colonne 1",col2:"Colonne 2",col3:"Colonne 3"};
+  return m[key]||key;
+}
+
+/* ---------- State ---------- */
+const state = {
+  balance: null,
+  balanceStatus: 'loading',
+  balanceMessage: 'Chargement du solde...',
+  selectedChip: 50,
+  bets: {},          // {betKey: amount}
+  lastBets: {},
+  history: [],
+  lastNumber: null,
+  spinning: false,
+  wheelRot: 0,
+  ballRot: 0,
+};
+
+/* ---------- Init ---------- */
+function formatCurrency(value){
+  return Number(value || 0).toLocaleString("fr-FR");
+}
+function setSpinButtonState(isSpinning){
+  const button = document.getElementById("btnSpin");
+  const hasBet = totalBet() > 0;
+  button.disabled = isSpinning || !hasBet;
+  button.textContent = isSpinning ? "Spinning…" : "Spin";
+}
+function showFeedback(message, kind = "info"){
+  const panel = document.getElementById("resultPanel");
+  const color = kind === "error" ? "#ff8a8a" : kind === "success" ? "#9be8a4" : "#f6d27a";
+  panel.innerHTML = `
+    <div class="result-panel">
+      <div class="big" style="color:${color}; font-size:26px;">${message}</div>
+    </div>`;
+}
+function buildAmericanRoulettePayload(){
+  return Object.entries(state.bets).reduce((acc, [key, amount]) => {
+    if (Number(amount) > 0) acc[key] = Number(amount);
+    return acc;
+  }, {});
+}
+async function waitForAuthReady() {
+  for (let i = 0; i < 50; i++) {
+    if (typeof window.getCurrentUserAsync === "function" || typeof window.getCurrentUser === "function") {
+      return true;
+    }
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  return false;
+}
+
+async function getCurrentAmericanRouletteUser() {
+  const ready = await waitForAuthReady();
+  if (!ready) {
+    return null;
+  }
+
+  if (typeof window.getCurrentUserAsync === "function") {
+    return await window.getCurrentUserAsync();
+  }
+
+  if (typeof window.getCurrentUser === "function") {
+    return window.getCurrentUser();
+  }
+
+  return null;
+}
+
+async function ensureAuthenticatedUser(){
+  if (!window.getCurrentUserAsync && !window.getCurrentUser) {
+    showFeedback("Le système d’authentification est indisponible.", "error");
+    return null;
+  }
+
+  const currentUser = await getCurrentAmericanRouletteUser();
+  if (!currentUser?.id) {
+    showFeedback("Vous devez être connecté pour jouer.", "error");
+    return null;
+  }
+  return currentUser;
+}
+
+async function playAmericanRoulette(){
+  if (state.spinning) return;
+
+  const currentUser = await getCurrentAmericanRouletteUser();
+  if (!currentUser?.id) {
+    showFeedback("Vous devez être connecté pour jouer.", "error");
+    return;
+  }
+
+  const betsPayload = buildAmericanRoulettePayload();
+  if (!Object.keys(betsPayload).length) {
+    showFeedback("Veuillez placer au moins une mise.", "error");
+    return;
+  }
+
+  const client = window.supabaseClient;
+  if (!client?.rpc) {
+    showFeedback("Supabase non initialisé.", "error");
+    return;
+  }
+
+  state.spinning = true;
+  setSpinButtonState(true);
+
+  try {
+    const { data, error } = await client.rpc('play_american_roulette', {
+      p_user_id: currentUser.id,
+      p_bets: betsPayload
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    const result = Array.isArray(data) ? data[0] : data;
+    if (!result || !result.winning_slot) {
+      throw new Error('Réponse backend invalide.');
+    }
+
+    animateAmericanRouletteToSlot(result.winning_slot);
+    await refreshAmericanRouletteBalance({ silent: true });
+
+    state.lastNumber = String(result.winning_slot);
+    state.history = [state.lastNumber, ...state.history].slice(0, 12);
+    state.lastBets = { ...state.bets };
+    state.bets = {};
+    paintChipsOnCells();
+    updateAmericanRouletteSummary();
+    showAmericanBackendResultPanel(result);
+  } catch (err) {
+    const message = err?.message || "Erreur lors de la rotation.";
+    showFeedback(message, "error");
+  } finally {
+    state.spinning = false;
+    setSpinButtonState(false);
+  }
+}
+
+function showAmericanBackendResultPanel(result){
+  const slot = String(result.winning_slot || '—');
+  const color = result.winning_color === 'red' ? '#ff8a8a' : result.winning_color === 'black' ? '#cfd6ec' : '#9be8a4';
+  const bets = Array.isArray(result.bets) ? result.bets : [];
+  const betsMarkup = bets.length
+    ? bets.map((bet) => `
+      <div style="display:flex;justify-content:space-between;gap:10px">
+        <span>${bet.bet_label || bet.bet_key || 'Mise'}</span>
+        <span>${Number(bet.amount || 0).toLocaleString('fr-FR')} HTG</span>
+      </div>`).join('')
+    : '<div style="margin-top:10px;color:var(--muted)">Aucun pari.</div>';
+
+  document.getElementById("resultPanel").innerHTML = `
+    <div class="result-panel">
+      <div class="big" style="color:${color}">${slot}</div>
+      <div class="${result.total_win_amount > 0 ? 'win' : 'loss'}">
+        ${result.total_win_amount > 0 ? 'Gagné' : 'Perdu'} · ${result.total_win_amount > 0 ? '+' : ''}${formatCurrency(result.total_win_amount)} HTG
+      </div>
+      <div style="margin-top:8px;color:#dbe1f3;font-size:13px">Couleur : <strong>${String(result.winning_color || '—')}</strong></div>
+      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Total misé : <strong>${formatCurrency(result.total_bet_amount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Gain total : <strong>${formatCurrency(result.total_win_amount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Statut : <strong>${String(result.status || '—')}</strong></div>
+      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Ticket : <strong>${String(result.ticket_number || '—')}</strong></div>
+      <div style="margin-top:10px;color:#f6d27a;font-size:12px">Mises backend :</div>
+      ${betsMarkup}
+    </div>`;
+}
+
+async function initAmericanRoulette(){
+  renderAmericanRouletteWheel();
+  renderAmericanBettingTable();
+  renderChipRack();
+  updateAmericanRouletteSummary();
+  document.getElementById("btnClear").addEventListener("click",clearAmericanRouletteBets);
+  document.getElementById("btnRepeat").addEventListener("click",repeatAmericanRouletteBets);
+  document.getElementById("btnSpin").addEventListener("click",playAmericanRoulette);
+
+  await waitForAuthReady();
+  await getCurrentAmericanRouletteUser();
+  await refreshAmericanRouletteBalance();
+}
+
+/* ---------- Wheel SVG ---------- */
+function renderAmericanRouletteWheel(){
+  const svg = document.getElementById("wheelSvg");
+  const seg = 360 / WHEEL_ORDER.length;
+  const r=180, rIn=120, cx=200, cy=200;
+  const rad = d => d*Math.PI/180;
+  const defs = `
+    <defs>
+      <radialGradient id="pRed" cx="50%" cy="40%" r="70%">
+        <stop offset="0%" stop-color="#e0444a"/><stop offset="100%" stop-color="#6e1418"/>
+      </radialGradient>
+      <radialGradient id="pBlack" cx="50%" cy="40%" r="70%">
+        <stop offset="0%" stop-color="#2a3145"/><stop offset="100%" stop-color="#06080f"/>
+      </radialGradient>
+      <radialGradient id="pGreen" cx="50%" cy="40%" r="70%">
+        <stop offset="0%" stop-color="#22a05f"/><stop offset="100%" stop-color="#08522a"/>
+      </radialGradient>
+      <radialGradient id="hubGold" cx="40%" cy="35%" r="70%">
+        <stop offset="0%" stop-color="#fff1c2"/>
+        <stop offset="60%" stop-color="#e0b656"/>
+        <stop offset="100%" stop-color="#7a5a14"/>
+      </radialGradient>
+      <filter id="pShadow"><feDropShadow dx="0" dy="1" stdDeviation=".4" flood-opacity=".5"/></filter>
+    </defs>`;
+  let parts = [defs];
+  WHEEL_ORDER.forEach((num,i)=>{
+    const start = i*seg - 90 - seg/2;
+    const end = start + seg;
+    const x1=cx+r*Math.cos(rad(start)), y1=cy+r*Math.sin(rad(start));
+    const x2=cx+r*Math.cos(rad(end)),   y2=cy+r*Math.sin(rad(end));
+    const x3=cx+rIn*Math.cos(rad(end)), y3=cy+rIn*Math.sin(rad(end));
+    const x4=cx+rIn*Math.cos(rad(start)),y4=cy+rIn*Math.sin(rad(start));
+    const d = `M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${rIn} ${rIn} 0 0 0 ${x4} ${y4} Z`;
+    const c = getAmericanRouletteColor(num);
+    const fill = c==="red" ? "url(#pRed)" : c==="black" ? "url(#pBlack)" : "url(#pGreen)";
+    const lblA = start + seg/2;
+    const lblR = (r+rIn)/2;
+    const lx = cx + lblR*Math.cos(rad(lblA));
+    const ly = cy + lblR*Math.sin(rad(lblA));
+    parts.push(`<g filter="url(#pShadow)">
+      <path d="${d}" fill="${fill}" stroke="#d6a84a" stroke-width=".6"/>
+      <text x="${lx}" y="${ly}" fill="#fff8e1" font-size="11" font-weight="800"
+        text-anchor="middle" dominant-baseline="central"
+        transform="rotate(${lblA+90} ${lx} ${ly})" style="text-shadow:0 1px 2px rgba(0,0,0,.8)">${num}</text>
+    </g>`);
+  });
+  parts.push(`
+    <circle cx="200" cy="200" r="120" fill="none" stroke="url(#hubGold)" stroke-width="3"/>
+    <circle cx="200" cy="200" r="115" fill="#0e1422"/>
+    <circle cx="200" cy="200" r="95"  fill="url(#hubGold)" opacity=".18"/>
+    <rect x="120" y="196" width="160" height="8" rx="3" fill="url(#hubGold)" opacity=".9"/>
+    <rect x="120" y="196" width="160" height="8" rx="3" fill="url(#hubGold)" opacity=".9" transform="rotate(60 200 200)"/>
+    <rect x="120" y="196" width="160" height="8" rx="3" fill="url(#hubGold)" opacity=".9" transform="rotate(120 200 200)"/>
+    <circle cx="200" cy="200" r="22" fill="url(#hubGold)"/>
+    <circle cx="200" cy="200" r="10" fill="#0a0e18"/>
+    <circle cx="194" cy="194" r="3"  fill="#fff8e1" opacity=".5"/>
+  `);
+  svg.innerHTML = parts.join("");
+}
+
+/* ---------- Betting table ---------- */
+function renderAmericanBettingTable(){
+  const root = document.getElementById("bettingTable");
+  const ROW_TOP = [3,6,9,12,15,18,21,24,27,30,33,36];
+  const ROW_MID = [2,5,8,11,14,17,20,23,26,29,32,35];
+  const ROW_BOT = [1,4,7,10,13,16,19,22,25,28,31,34];
+
+  // numbers grid
+  const grid = document.createElement("div");
+  grid.className = "table-grid";
+
+  // left column: show 00 and 0 stacked (both must be bettable separately)
+  const zeroWrap = document.createElement("div");
+  zeroWrap.className = "zero-wrapper";
+  // ensure it spans the same grid rows as the original zero cell
+  zeroWrap.style.gridRow = "span 3";
+  const stack = document.createElement("div");
+  stack.className = "zero-stack";
+  const btn00 = document.createElement("button");
+  btn00.className = "cell zero-cell green";
+  btn00.type = "button";
+  btn00.dataset.bet = "n:00";
+  btn00.textContent = "00";
+  btn00.addEventListener("click", ()=>placeAmericanBetByKey("n:00"));
+  const btn0 = document.createElement("button");
+  btn0.className = "cell zero-cell green";
+  btn0.type = "button";
+  btn0.dataset.bet = "n:0";
+  btn0.textContent = "0";
+  btn0.addEventListener("click", ()=>placeAmericanBetByKey("n:0"));
+  stack.appendChild(btn00);
+  stack.appendChild(btn0);
+  zeroWrap.appendChild(stack);
+  grid.appendChild(zeroWrap);
+
+  // top row + col1 bet
+  ROW_TOP.forEach(n=>grid.appendChild(makeCell("n:"+n,n,getAmericanRouletteColor(String(n)))));
+  grid.appendChild(makeCell("col1","2:1","outside","cell col-bet"));
+  // mid row + col2
+  ROW_MID.forEach(n=>grid.appendChild(makeCell("n:"+n,n,getAmericanRouletteColor(String(n)))));
+  grid.appendChild(makeCell("col2","2:1","outside","cell col-bet"));
+  // bot row + col3
+  ROW_BOT.forEach(n=>grid.appendChild(makeCell("n:"+n,n,getAmericanRouletteColor(String(n)))));
+  grid.appendChild(makeCell("col3","2:1","outside","cell col-bet"));
+
+  // dozens row
+  const dozens = document.createElement("div");
+  dozens.className = "row-dozens";
+  ["dozen1","dozen2","dozen3"].forEach((k,i)=>dozens.appendChild(makeCell(k,["1st 12","2nd 12","3rd 12"][i],"outside","cell")));
+
+  // outside row
+  const out = document.createElement("div");
+  out.className = "row-outside";
+  [["low","1-18"],["even","PAIR"],["red","ROUGE","red"],["black","NOIR","black"],["odd","IMPAIR"],["high","19-36"]]
+    .forEach(([k,l,c])=>out.appendChild(makeCell(k,l,c||"outside","cell")));
+
+  root.innerHTML = "";
+  root.appendChild(grid);
+  root.appendChild(dozens);
+  root.appendChild(out);
+}
+function makeCell(key,label,color,extra="cell"){
+  const btn = document.createElement("button");
+  btn.className = `${extra} ${color}`;
+  btn.type = "button";
+  btn.dataset.bet = key;
+  btn.textContent = label;
+  btn.addEventListener("click",()=>placeAmericanBetByKey(key));
+  return btn;
+}
+
+/* ---------- Chip rack (shared) ---------- */
+function renderChipRack(){
+  const rack = document.getElementById("chipRack");
+  rack.innerHTML = "";
+  CHIPS.forEach(c=>{
+    const b = document.createElement("button");
+    b.className = "chip" + (state.selectedChip===c.value?" active":"");
+    b.style.setProperty("--chip-color",c.tone);
+    b.textContent = c.label;
+    b.addEventListener("click",()=>selectChip(c.value));
+    rack.appendChild(b);
+  });
+}
+
+function selectChip(amount){
+  state.selectedChip = amount;
+  document.getElementById("tipChip").textContent = amount;
+  renderChipRack();
+}
+
+/* ---------- Bets ---------- */
+function placeAmericanBetByKey(key){
+  const mult = payoutFor(key);
+  addAmericanRouletteBet(key.startsWith("n:")?"straight":key, key, labelOf(key), mult);
+}
+function addAmericanRouletteBet(/*type*/_t, key, /*label*/_l, /*mult*/_m){
+  if(state.spinning) return;
+  if (state.balance == null) {
+    showFeedback("Chargement du solde...", "info");
+    return;
+  }
+  const total = totalBet();
+  if(total + state.selectedChip > state.balance) return;
+  state.bets[key] = (state.bets[key]||0) + state.selectedChip;
+  paintChipsOnCells();
+  updateAmericanRouletteSummary();
+}
+function clearAmericanRouletteBets(){
+  if(state.spinning) return;
+  state.bets = {};
+  paintChipsOnCells();
+  updateAmericanRouletteSummary();
+}
+function repeatAmericanRouletteBets(){
+  if(state.spinning) return;
+  if (state.balance == null) {
+    showFeedback("Chargement du solde...", "info");
+    return;
+  }
+  const t = Object.values(state.lastBets).reduce((a,b)=>a+b,0);
+  if(!t || t>state.balance) return;
+  state.bets = {...state.lastBets};
+  paintChipsOnCells();
+  updateAmericanRouletteSummary();
+}
+
+function totalBet(){return Object.values(state.bets).reduce((a,b)=>a+b,0)}
+function potentialWin(){return Object.entries(state.bets).reduce((s,[k,a])=>s+a*payoutFor(k),0)}
+
+function paintChipsOnCells(){
+  const root = document.getElementById("bettingTable");
+  if(!root) return;
+  // remove all existing mini chips and glows in the betting area
+  root.querySelectorAll('.chip.mini, .has-chip').forEach(n=>n.remove());
+  // attach chips to each element that has a data-bet attribute
+  root.querySelectorAll('[data-bet]').forEach(el=>{
+    const key = el.dataset.bet;
+    const amt = state.bets[key];
+    if(amt>0){
+      const tone = amt>=1000?"var(--chip-1000)":amt>=500?"var(--chip-500)":amt>=100?"var(--chip-100)":amt>=50?"var(--chip-50)":"var(--chip-10)";
+      const chip = document.createElement("div");
+      chip.className = "chip mini";
+      chip.style.setProperty("--chip-color",tone);
+      chip.textContent = amt>=1000 ? (amt/1000)+"K" : amt;
+      el.appendChild(chip);
+      const glow = document.createElement("div");
+      glow.className = "has-chip";
+      el.appendChild(glow);
+    }
+  });
+}
+
+/* ---------- Summary ---------- */
+function setBalanceStatus(status, message){
+  state.balanceStatus = status;
+  state.balanceMessage = message || 'Chargement du solde...';
+  updateAmericanRouletteSummary();
+}
+function getBalanceDisplayText(){
+  if (state.balanceStatus === 'ready' && state.balance != null) {
+    return state.balance.toLocaleString('fr-FR');
+  }
+  return state.balanceMessage || 'Chargement du solde...';
+}
+async function refreshAmericanRouletteBalance({silent = false} = {}){
+  const client = window.supabaseClient || null;
+  if (!client?.from && !window.getAuthenticatedWallet && !window.getCurrentUserAsync && !window.getCurrentUser) {
+    if (!silent) setBalanceStatus('unavailable', 'Solde indisponible');
+    return;
+  }
+
+  try {
+    if (typeof window.getAuthenticatedWallet === 'function') {
+      const wallet = await window.getAuthenticatedWallet();
+      if (wallet?.balance != null) {
+        state.balance = Number(wallet.balance);
+        setBalanceStatus('ready', '');
+        return;
+      }
+    }
+
+    let currentUser = null;
+    if (typeof window.getCurrentUserAsync === "function" || typeof window.getCurrentUser === "function") {
+      currentUser = await getCurrentAmericanRouletteUser();
+    }
+
+    if (!currentUser?.id) {
+      state.balance = null;
+      setBalanceStatus('guest', 'Connectez-vous pour voir votre solde');
+      return;
+    }
+
+    if (!client?.from) {
+      state.balance = null;
+      setBalanceStatus('unavailable', 'Solde indisponible');
+      return;
+    }
+
+    const { data, error } = await client.from('wallets').select('balance').eq('user_id', currentUser.id).maybeSingle();
+    if (error) {
+      throw error;
+    }
+
+    if (data?.balance == null) {
+      state.balance = null;
+      setBalanceStatus('unavailable', 'Solde indisponible');
+      return;
+    }
+
+    state.balance = Number(data.balance);
+    setBalanceStatus('ready', '');
+  } catch (error) {
+    state.balance = null;
+    setBalanceStatus('unavailable', 'Solde indisponible');
+  }
+}
+function updateAmericanRouletteSummary(){
+  const balanceText = getBalanceDisplayText();
+  document.getElementById("balance").textContent = balanceText;
+  document.getElementById("sumBalance").textContent = balanceText;
+  document.getElementById("sumBet").textContent = totalBet().toLocaleString("fr-FR");
+  document.getElementById("sumWin").textContent = potentialWin().toLocaleString("fr-FR");
+  document.getElementById("sumLast").textContent = state.lastNumber==null ? "—" : state.lastNumber;
+  // recent
+  const rec = document.getElementById("recent");
+  rec.innerHTML = "";
+  state.history.forEach(n=>{
+    const d = document.createElement("div");
+    d.className = "num " + getAmericanRouletteColor(n);
+    d.textContent = n;
+    rec.appendChild(d);
+  });
+  // bet list
+  const list = document.getElementById("betList");
+  const entries = Object.entries(state.bets);
+  if(!entries.length){list.innerHTML='<div class="empty">Aucune mise placée.</div>';} 
+  else{
+    list.innerHTML = entries.map(([k,a])=>`<div class="item"><span>${labelOf(k)}</span><span>${a.toLocaleString("fr-FR")} HTG</span></div>`).join("");
+  }
+  // spin button
+  document.getElementById("btnSpin").disabled = state.spinning || totalBet()===0;
+}
+
+/* ---------- Spin (placeholder) ---------- */
+async function playAmericanRoulettePlaceholder(){
+  if(state.spinning) return;
+  if(totalBet()===0){
+    showFeedback("Veuillez placer au moins une mise.", "error");
+    return;
+  }
+
+  const currentUser = await ensureAuthenticatedUser();
+  if(!currentUser?.id) return;
+
+  const betsPayload = buildAmericanRoulettePayload();
+  if(!Object.keys(betsPayload).length){
+    showFeedback("Au moins une mise est requise.", "error");
+    return;
+  }
+
+  state.spinning = true;
+  state.lastBets = {...state.bets};
+  setSpinButtonState(true);
+
+  try {
+    // Placeholder local draw — randomly pick a slot from WHEEL_ORDER
+    const randomIndex = Math.floor(Math.random()*WHEEL_ORDER.length);
+    const winning = WHEEL_ORDER[randomIndex];
+
+    // animate wheel to slot
+    animateAmericanRouletteToSlot(winning);
+
+    setTimeout(async ()=>{
+      // compute results locally
+      const winningNumber = String(winning);
+      let totalBetAmount = Object.values(state.lastBets).reduce((a,b)=>a+b,0);
+      let totalWinAmount = 0;
+      const betDetails = [];
+
+      Object.entries(state.lastBets).forEach(([k,amt])=>{
+        const win = winsAmericanBet(k, winningNumber);
+        const payout = payoutFor(k) * amt;
+        if(win) totalWinAmount += payout;
+        betDetails.push({bet_key:k, bet_label: labelOf(k), amount: amt, won: !!win, payout: win ? payout : 0});
+      });
+
+      try { await refreshAmericanRouletteBalance({silent: true}); } catch(e){}
+
+      state.lastNumber = winningNumber;
+      state.history = [winningNumber, ...state.history].slice(0,12);
+      state.lastBets = {...state.bets};
+      state.bets = {};
+      state.spinning = false;
+      paintChipsOnCells();
+      updateAmericanRouletteSummary();
+      showAmericanResultPanel({
+        winningNumber,
+        winningColor: getAmericanRouletteColor(winningNumber),
+        totalBetAmount,
+        totalWinAmount,
+        status: totalWinAmount>0 ? 'won' : 'lost',
+        ticketNumber: 'LOCAL',
+        betDetails,
+        walletMessage: 'Placeholder local — pas de transaction réelle.'
+      });
+      setSpinButtonState(false);
+    }, 5100);
+  } catch (err){
+    state.spinning = false;
+    setSpinButtonState(false);
+    const message = err?.message || "Erreur lors du tirage Roulette.";
+    showFeedback(message, "error");
+  }
+}
+
+function animateAmericanRouletteToSlot(slot){
+  const face = document.getElementById("wheelFace");
+  const orbit = document.getElementById("ballOrbit");
+  const seg = 360/WHEEL_ORDER.length;
+  const idx = WHEEL_ORDER.indexOf(String(slot));
+  const target = -(idx*seg);
+  const newWheel = state.wheelRot + 360*6 + (target - (state.wheelRot % 360));
+  const newBall  = state.ballRot - 360*9 - (target - (state.ballRot % 360));
+  state.wheelRot = newWheel;
+  state.ballRot = newBall;
+  face.classList.add("spinning");
+  orbit.classList.add("spinning");
+  face.style.transform  = `rotate(${newWheel}deg)`;
+  orbit.style.transform = `rotate(${newBall}deg)`;
+  setTimeout(()=>{
+    face.classList.remove("spinning");
+    orbit.classList.remove("spinning");
+  }, 5100);
+}
+
+function showAmericanResultPanel(result){
+  const color = result.winningColor === 'red' ? '#ff8a8a' : result.winningColor === 'black' ? '#cfd6ec' : '#9be8a4';
+  const betDetails = Array.isArray(result.betDetails) ? result.betDetails : [];
+  const detailMarkup = betDetails.length
+    ? `<div style="margin-top:10px;text-align:left;font-size:13px;display:grid;gap:6px">${betDetails.map((bet)=>`<div style="display:flex;justify-content:space-between;gap:10px"><span>${bet.bet_label || bet.bet_key || 'Mise'}</span><span>${Number(bet.amount || 0).toLocaleString('fr-FR')} HTG</span></div>`).join('')}</div>`
+    : '<div style="margin-top:10px;color:var(--muted)">Aucune ligne de mise détaillée.</div>';
+
+  document.getElementById("resultPanel").innerHTML = `
+    <div class="result-panel">
+      <div class="big" style="color:${color}">${result.winningNumber}</div>
+      <div class="${result.totalWinAmount > 0 ? 'win' : 'loss'}">${result.totalWinAmount > 0 ? 'Gagné' : 'Perdu'} · ${result.totalWinAmount > 0 ? '+' : ''}${formatCurrency(result.totalWinAmount)} HTG</div>
+      <div style="margin-top:8px;color:#dbe1f3;font-size:13px">Couleur : <strong>${result.winningColor}</strong></div>
+      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Total misé : <strong>${formatCurrency(result.totalBetAmount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Statut : <strong>${result.status}</strong></div>
+      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Ticket : <strong>${result.ticketNumber}</strong></div>
+      <div style="margin-top:6px;color:#f6d27a;font-size:12px">${result.walletMessage || ''}</div>
+      ${detailMarkup}
+    </div>`;
+}
+
+// initialise
+document.addEventListener("DOMContentLoaded", ()=>{ void initAmericanRoulette(); });
+</script>
+</body>
+</html>

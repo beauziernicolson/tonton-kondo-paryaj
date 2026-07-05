@@ -15,6 +15,7 @@
 
   let supabaseClient = null;
   let loadingClient = null;
+  let clientInitializingPromise = null;
 
   function getSupabaseConfig() {
     const url = String(global.SUPABASE_URL || '').trim();
@@ -238,15 +239,33 @@
       return supabaseClient;
     }
 
-    const { url, key } = getSupabaseConfig();
-    if (!url || !key) {
-      throw new Error('Configurez les clés Supabase dans js/auth-config.js avant de poursuivre.');
+    // If initialization is already in progress, wait for it
+    if (clientInitializingPromise) {
+      return clientInitializingPromise;
     }
 
-    const supabase = await ensureSupabaseLoaded();
-    supabaseClient = supabase.createClient(url, key);
-    global.supabaseClient = supabaseClient;
-    return supabaseClient;
+    // Start initialization
+    clientInitializingPromise = (async () => {
+      if (supabaseClient) {
+        return supabaseClient;
+      }
+
+      const { url, key } = getSupabaseConfig();
+      if (!url || !key) {
+        throw new Error('Configurez les clés Supabase dans js/auth-config.js avant de poursuivre.');
+      }
+
+      const supabase = await ensureSupabaseLoaded();
+      supabaseClient = supabase.createClient(url, key);
+      global.supabaseClient = supabaseClient;
+      return supabaseClient;
+    })();
+
+    try {
+      return await clientInitializingPromise;
+    } finally {
+      clientInitializingPromise = null;
+    }
   }
 
   async function ensureProfileAndWallet(user, fallbackRole = DEFAULT_ROLE) {
@@ -869,4 +888,5 @@
   global.checkUserRole = checkUserRole;
   global.resolveRoleDestination = getRoleDestination;
   global.resolveRedirectUrl = resolveRedirectUrl;
+  global.getSupabaseClient = getSupabaseClient;
 })(window);
