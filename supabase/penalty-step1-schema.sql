@@ -1,4 +1,4 @@
--- Tonton Kondo / ParyajPam – Penalty V1 schema
+-- Tonton Kondo / paryaj – Penalty V1 schema
 -- Ajout du support penalty pour les tickets et création des tables de ronde et de mises.
 -- Ce script est safe à exécuter plusieurs fois autant que possible.
 

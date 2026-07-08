@@ -1,7 +1,6 @@
 /**
- * Configuration Supabase Auth (prototype uniquement).
- * Remplacez les valeurs vides par l'URL du projet et la clé anon
- * de votre instance Supabase quand elle sera configurée.
+ * Configuration Supabase Auth.
+ * Les valeurs ci-dessous sont utilisées par l’authentification Tonton Kondo.
  */
 
 const SUPABASE_URL = 'https://jkzfkllmxqjmdaxbaaab.supabase.co';

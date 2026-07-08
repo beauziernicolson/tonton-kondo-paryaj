@@ -25,6 +25,8 @@
     .brand-text strong { display:block; font-size:18px; letter-spacing:.03em; }
     .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
     .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .header-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+    .back-btn { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; text-decoration:none; }
     .card { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
     .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:900; }
     h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 36px); line-height:1.05; }
@@ -73,14 +75,17 @@
 <body>
   <main class="app">
     <header class="topbar">
-      <a class="brand" href="../index.html">
-        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
+      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
+        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
         <span class="brand-text">
           <strong>Tonton Kondo</strong>
           <span>Paryaj</span>
         </span>
       </a>
-      <span class="pill">Mariage — tickets en direct</span>
+      <div class="header-actions">
+        <a class="back-btn" href="games.html">← Retour aux jeux</a>
+        <span class="pill">Mariage</span>
+      </div>
     </header>
 
     <section class="card" style="margin-bottom:18px;">
@@ -159,7 +164,7 @@
           <article class="field-card">
             <div class="label"><span>Validation</span><span class="value-pill">Débit wallet</span></div>
             <button id="validate-btn" class="btn btn-primary" type="button" style="width:100%;">Valider le ticket</button>
-            <p class="footer-note">Le ticket est créé dans Supabase et le wallet est débité lors de la validation.</p>
+            <p class="footer-note">Le ticket est enregistré et la validation est traitée de façon sécurisée.</p>
           </article>
         </div>
       </article>
@@ -230,8 +235,8 @@
 
           const client = await waitForSupabaseClient();
           if (!client || typeof client.from !== 'function') {
-            drawNameSelect.innerHTML = '<option value="">Connexion Supabase indisponible</option>';
-            setFeedback('La connexion Supabase n’est pas encore disponible. Rechargez la page si nécessaire.', 'error');
+            drawNameSelect.innerHTML = '<option value="">Connexion au service momentanément indisponible</option>';
+            setFeedback('La connexion au service n’est pas encore disponible. Rechargez la page si nécessaire.', 'error');
             return;
           }
 
@@ -377,7 +382,7 @@
         if (!couponLines.length) { setFeedback('Aucune combinaison à valider. Ajoutez au moins une ligne au coupon.', 'warn'); return; }
 
         const client = window.supabaseClient || null;
-        if (!client || typeof client.from !== 'function') { setFeedback('La connexion Supabase n’est pas disponible. Rechargez la page puis réessayez.', 'error'); return; }
+        if (!client || typeof client.from !== 'function') { setFeedback('Connexion au service momentanément indisponible. Rechargez la page puis réessayez.', 'error'); return; }
 
         const userId = currentUser.id || currentUser.user_id || null;
         const totalAmountValue = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);

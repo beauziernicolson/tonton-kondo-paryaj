@@ -33,13 +33,33 @@
     padding: 14px 16px;
     display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 10;
+    flex-wrap: wrap; gap: 12px;
   }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
-  .brand-badge {
-    width: 34px; height: 34px; border-radius: 10px;
-    background: linear-gradient(135deg, var(--or), #b8860b);
-    display: grid; place-items: center; color: #1a1a1a; font-size: 18px;
-    box-shadow: 0 4px 16px rgba(245,197,24,0.35);
+  .header-actions {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px; color: var(--texte); text-decoration: none;
+  }
+  .brand img {
+    width: 56px; height: 56px; border-radius: 16px; object-fit: contain;
+  }
+  .brand-text strong {
+    display: block; font-size: 18px; letter-spacing: .04em;
+  }
+  .brand-text span {
+    display: block; color: var(--texte-mute); font-size: 12px; text-transform: uppercase; letter-spacing: .35em;
+  }
+  @media (max-width: 520px) {
+    .brand img { width: 46px; height: 46px; }
+    .brand-text strong { font-size: 16px; }
+    .brand-text span { font-size: 10px; letter-spacing: .24em; }
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--texte); font-size: 13px; font-weight: 700;
+    text-decoration: none;
   }
   .balance {
     display: flex; align-items: center; gap: 8px;
@@ -310,14 +330,20 @@
 <body id="horse-race-page">
 
 <header>
-  <div class="brand">
-    <div class="brand-badge">TK</div>
-    <div>Tonton Kondo</div>
-  </div>
-  <div class="balance">
-    <span>💰</span>
-    <span>Balans:</span>
-    <span id="user-balance">Chargement du solde...</span>
+  <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
+    <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
+    <span class="brand-text">
+      <strong>Tonton Kondo</strong>
+      <span>Paryaj</span>
+    </span>
+  </a>
+  <div class="header-actions">
+    <a class="back-link" href="games.html">← Retour aux jeux</a>
+    <div class="balance">
+      <span>💰</span>
+      <span>Balans:</span>
+      <span id="user-balance">Chargement du solde...</span>
+    </div>
   </div>
 </header>
 

@@ -1,4 +1,4 @@
--- Tonton Kondo / ParyajPam – American Roulette schema (step1)
+-- Tonton Kondo / paryaj – American Roulette schema (step1)
 -- Ajoute les tables de rondes et de mises pour American Roulette
 -- Ce script est idempotent autant que possible.
 

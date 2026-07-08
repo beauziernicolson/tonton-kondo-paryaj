@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Prototype mobile-first de la page d'accueil Tonton Kondo Paryaj." />
+  <meta name="description" content="La plateforme de paris en ligne Tonton Kondo. Accédez rapidement à tous nos jeux de loterie, borlette et casino sécurisés." />
   <title>Tonton Kondo Paryaj — Index</title>
 
   <style>
@@ -222,7 +222,7 @@
 
     /* Jeux populaires : carrousel horizontal mobile-first. */
     .games-carousel{position:relative}
-    .games-row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 10px;margin-inline:-2px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+    .games-row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;margin-inline:-2px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
     .games-row::-webkit-scrollbar{display:none}
     .games-nav{display:none;position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);justify-content:space-between;pointer-events:none;padding:0 2px;z-index:2}
     .games-nav-btn{pointer-events:auto;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:rgba(3,13,24,.92);color:#fff;display:grid;place-items:center;box-shadow:var(--shadow);font-size:22px}
@@ -231,21 +231,43 @@
     .games-dot{width:9px;height:9px;border-radius:999px;background:rgba(255,255,255,.22)}
     .games-dot.active{background:var(--gold)}
     .game-card{
-      flex:0 0 138px;height:150px;scroll-snap-align:start;border-radius:16px;
-      border:1px solid rgba(255,255,255,.14);background:linear-gradient(135deg,#071b38,#0b2443);
-      display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:12px;
-      position:relative;overflow:hidden;box-shadow:var(--shadow);
+      flex:0 0 min(220px, 78vw);
+      width:min(220px, 78vw);
+      height:260px;
+      scroll-snap-align:start;
+      display:flex;
+      flex-direction:column;
+      text-decoration:none;
+      color:inherit;
+      overflow:hidden;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(145deg, rgba(8,24,43,.98), rgba(5,16,32,.96));
+      box-shadow:0 18px 45px rgba(0,0,0,.35);
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
-    .game-card.purple{background:linear-gradient(135deg,#22113c,#45135f)}
-    .game-card.green{background:linear-gradient(135deg,#052c18,#106225)}
-    .game-card.blue{background:linear-gradient(135deg,#06294d,#064a86)}
-    .game-card.red{background:linear-gradient(135deg,#421014,#8f161c)}
-    .game-card.yellow{background:linear-gradient(135deg,#5f5200,#b88400)}
-    .game-card.orange{background:linear-gradient(135deg,#4c2114,#9a4c16)}
-    .game-card strong{font-size:16px;text-align:center;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,.5)}
-    .game-badge{position:absolute;top:10px;right:10px;z-index:2;display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:rgba(255,210,31,.16);border:1px solid rgba(255,210,31,.30);color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-    .game-emoji{font-size:30px;line-height:1;margin-bottom:8px;z-index:1}
-    .game-card .game-desc{font-size:12px;color:#e7edf6;text-align:center;line-height:1.35;margin-top:6px;z-index:1;max-width:100%}
+    .game-card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 0 0 1px rgba(255,210,31,.16),0 20px 45px rgba(255,210,31,.16);
+      border-color:rgba(255,210,31,.35);
+    }
+    .game-image-wrap{
+      height:170px;
+      padding:10px;
+      background:radial-gradient(circle at top, rgba(255,210,31,.12), transparent 60%), rgba(255,255,255,.03);
+    }
+    .game-image-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:12px;
+      display:block;
+      transition:transform .3s ease;
+    }
+    .game-card:hover .game-image-wrap img{transform:scale(1.02)}
+    .game-info{display:flex;flex-direction:column;gap:6px;padding:14px 14px 16px}
+    .game-info strong{font-size:16px;color:#fff;letter-spacing:-.02em}
+    .game-info span{font-size:13px;color:var(--muted);line-height:1.45}
 
     .game-art,
     .hero-image,
@@ -253,27 +275,10 @@
       display:block;
     }
 
-    .game-art{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transition:transform .3s ease;
-    }
-
-    .game-card .game-art{
-      width:100%;
-      aspect-ratio:1 / 1;
-      border-radius:16px;
-      overflow:hidden;
-    }
-
-    .game-card:hover .game-art{
-      transform:scale(1.05);
-    }
-
     @media (min-width: 901px) {
       .games-nav{display:flex}
-      .games-row{padding:4px 48px 12px}
+      .games-row{padding:4px 48px 14px}
+      .game-card{flex-basis:220px;width:220px;height:270px}
     }
 
     @media (max-width: 900px) {
@@ -297,8 +302,12 @@
     .floating-coupon-btn{
       position:fixed;right:24px;bottom:24px;z-index:100;border:none;border-radius:999px;
       background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#111;padding:14px 18px;
-      display:flex;align-items:center;gap:10px;font-weight:900;box-shadow:0 16px 40px rgba(255,210,31,.35);
+      display:none !important;align-items:center;gap:10px;font-weight:900;box-shadow:0 16px 40px rgba(255,210,31,.35);
     }
+    .sports-coming-soon{
+      border:1px solid var(--line);border-radius:22px;background:rgba(8,24,43,.82);padding:22px 20px;box-shadow:var(--shadow);
+    }
+    .sports-coming-soon p{margin:0;color:var(--muted);font-size:15px;line-height:1.7;}
     .coupon-icon{display:grid;place-items:center}
     .coupon-icon svg{width:18px;height:18px;display:block}
     .coupon-badge{min-width:24px;height:24px;border-radius:999px;background:#111;color:#fff;display:grid;place-items:center;font-size:12px;}
@@ -492,7 +501,7 @@
 <body>
   <div class="app">
     <header class="mobile-header" aria-label="En-tête principal">
-      <a class="brand" href="#" aria-label="Accueil Tonton Kondo">
+      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
         <div class="brand-block">
           <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
           <div class="brand-text">
@@ -535,7 +544,7 @@
       <h1>PARYAJ <span>TONTON KONDO</span></h1>
       <p>La plateforme de paris et jeux en ligne conçue pour un parcours joueur clair, rapide et professionnel.</p>
       <div class="hero-actions" id="heroActions">
-        <button class="btn-primary" type="button">Parier maintenant <span>→</span></button>
+        <a class="btn-primary" href="jeux/games.html">Parier maintenant <span>→</span></a>
         <a class="btn-secondary" href="dashboard.html">Tableau de bord</a>
       </div>
     </section>
@@ -556,44 +565,78 @@
           <button class="games-nav-btn" type="button" data-games-next aria-label="Jeux suivants">›</button>
         </div>
         <div class="games-row" id="popularGamesRow">
-          <a class="game-card" href="jeux/borlette.html">
-            <img src="assets/Lotterie.png" alt="Borlette" class="game-art" />
+        <a class="game-card" href="jeux/borlette.html">
+          <div class="game-image-wrap">
+            <img src="assets/Lotterie.png" alt="Borlette" />
+          </div>
+          <div class="game-info">
             <strong>Borlette</strong>
-          </a>
-          <article class="game-card purple"><a href="jeux/mariage.html" style="display:block; color:inherit; text-decoration:none;"><img src="assets/mariage.png" alt="Mariage" class="game-art" /><strong>Mariage</strong></a></article>
-          <article class="game-card green" href="jeux/lotto3.html"><img src="assets/lo3.png" alt="Lotto 3" class="game-art" /><strong>Lotto 3</strong></article>
-          <article class="game-card blue"><a href="jeux/lotto4.html"><img src="assets/lo4.png" alt="Lotto 4" class="game-art" /><strong>Lotto 4</strong></a></article>
-          <article class="game-card red"><a href="jeux/lotto5.html"><img src="assets/lo5.png" alt="Lotto 5" class="game-art" /><strong>Lotto 5</strong></a></article>
-          <article class="game-card yellow"><a href="jeux/keno.html"><img src="assets/lo5.png" alt="Keno" class="game-art" /><strong>Keno</strong></a></article>
-          <a class="game-card orange" href="jeux/roulette.html">
-            <span class="game-badge">Nouveau</span>
-            <span class="game-emoji" aria-hidden="true">🎡</span>
-            <strong>Roulette</strong>
-            <span class="game-desc">Misez sur vos numéros, couleurs ou combinaisons et tentez de gagner gros.</span>
-          </a>
-        </div>
+            <span>Un jeu rapide avec des gains immédiats.</span>
+          </div>
+        </a>
+        <a class="game-card" href="jeux/mariage.html">
+          <div class="game-image-wrap">
+            <img src="assets/mariage.png" alt="Mariage" />
+          </div>
+          <div class="game-info">
+            <strong>Mariage</strong>
+            <span>Une expérience de tirage simple et élégante.</span>
+          </div>
+        </a>
+        <a class="game-card" href="jeux/lotto3.html">
+          <div class="game-image-wrap">
+            <img src="assets/lo3.png" alt="Lotto 3" />
+          </div>
+          <div class="game-info">
+            <strong>Lotto 3</strong>
+            <span>Un format accessible pour des paris rapides.</span>
+          </div>
+        </a>
+        <a class="game-card" href="jeux/lotto4.html">
+          <div class="game-image-wrap">
+            <img src="assets/lo4.png" alt="Lotto 4" />
+          </div>
+          <div class="game-info">
+            <strong>Lotto 4</strong>
+            <span>Des combinaisons plus larges pour plus d’options.</span>
+          </div>
+        </a>
+        <a class="game-card" href="jeux/lotto5.html">
+          <div class="game-image-wrap">
+            <img src="assets/lo5.png" alt="Lotto 5" />
+          </div>
+          <div class="game-info">
+            <strong>Lotto 5</strong>
+            <span>Un jeu premium avec un rythme de jeu fluide.</span>
+          </div>
+        </a>
+        <a class="game-card" href="jeux/keno.html">
+          <div class="game-image-wrap">
+            <img src="assets/keno.png" alt="Keno" />
+          </div>
+          <div class="game-info">
+            <strong>Keno</strong>
+            <span>Choisissez vos numéros et suivez le tirage.</span>
+          </div>
+        </a>
+      </div>
       </div>
       <div class="games-dots" aria-hidden="true" data-games-dots></div>
     </section>
 
     <section aria-labelledby="sports-title">
-      <div class="section-head"><h2 class="section-title" id="sports-title"><svg class="section-icon"><use href="#i-trophy"/></svg>Paris sportifs</h2><a class="see-all" href="#">Voir tous <span>›</span></a></div>
-      <div class="sport-tabs"><button class="sport-tab active">Football</button><button class="sport-tab">Basketball</button><button class="sport-tab">Tennis</button><button class="sport-tab">eSports</button></div>
-      <div class="matches-list">
-        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>Real Madrid vs Barcelona</strong><span>La Liga - Espagne</span></div><div class="odds"><div class="odd"><span>1</span><strong>2.10</strong></div><div class="odd"><span>X</span><strong>3.40</strong></div><div class="odd"><span>2</span><strong>3.05</strong></div></div></article>
-        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>Manchester City vs Arsenal</strong><span>Premier League - Angleterre</span></div><div class="odds"><div class="odd"><span>1</span><strong>1.95</strong></div><div class="odd"><span>X</span><strong>3.25</strong></div><div class="odd"><span>2</span><strong>2.75</strong></div></div></article>
-        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>PSG vs Marseille</strong><span>Ligue 1 - France</span></div><div class="odds"><div class="odd"><span>1</span><strong>2.20</strong></div><div class="odd"><span>X</span><strong>3.10</strong></div><div class="odd"><span>2</span><strong>2.90</strong></div></div></article>
-        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>Inter Miami vs LA Galaxy</strong><span>MLS - USA</span></div><div class="odds"><div class="odd"><span>1</span><strong>1.85</strong></div><div class="odd"><span>X</span><strong>3.50</strong></div><div class="odd"><span>2</span><strong>3.20</strong></div></div></article>
-        <article class="match-card"><span class="live-pill">• LIVE</span><div class="match-title"><strong>Bayern Munich vs Dortmund</strong><span>Bundesliga - Allemagne</span></div><div class="odds"><div class="odd"><span>1</span><strong>1.75</strong></div><div class="odd"><span>X</span><strong>3.60</strong></div><div class="odd"><span>2</span><strong>3.40</strong></div></div></article>
+      <div class="section-head"><h2 class="section-title" id="sports-title"><svg class="section-icon"><use href="#i-trophy"/></svg>Paris sportifs</h2><a class="see-all" href="jeux/games.html">Voir les jeux <span>›</span></a></div>
+      <div class="sports-coming-soon">
+        <p>Notre module de paris sportifs sera activé après intégration officielle des données sportives.</p>
       </div>
     </section>
 
     <!-- SECTION CTA AVANT FOOTER -->
     <section class="final-cta">
       <div class="final-cta-content">
-        <span>Rejoignez des milliers de parieurs</span>
-        <h2>Pariez. Gagnez.<br><strong>Vivez la passion.</strong></h2>
-        <p>Plateforme rapide, sécurisée et pensée pour les parieurs haïtiens.</p>
+        <span>Une plateforme locale pensée pour les joueurs</span>
+        <h2>Jouez. Gagnez.<br><strong>Profitez d’un espace simple et fiable.</strong></h2>
+        <p>Découvrez une plateforme locale pensée pour les joueurs en Haïti.</p>
       </div>
 
       <div class="final-cta-visual">
@@ -609,8 +652,8 @@
     <section class="trust-grid">
       <article>
         <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.2 2.8 7.8 7 10 4.2-2.2 7-5.8 7-10V6l-7-3Z"/><path d="m9.5 12 1.8 1.8 3.2-3.5"/></svg></span>
-        <strong>100% Sécurisé</strong>
-        <p>Transactions protégées et cryptées.</p>
+        <strong>Transactions protégées</strong>
+        <p>Des opérations sécurisées et contrôlées.</p>
       </article>
 
       <article>
@@ -621,8 +664,8 @@
 
       <article>
         <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0v4a1 1 0 0 1-1 1h-2"/><path d="M7 15h10a2 2 0 0 1 2 2v1H5v-1a2 2 0 0 1 2-2Z"/><path d="M9 19v1m6-1v1"/></svg></span>
-        <strong>Support 24/7</strong>
-        <p>Notre équipe reste disponible pour vous.</p>
+        <strong>Support client disponible</strong>
+        <p>Une assistance à votre disposition pour vous accompagner.</p>
       </article>
 
       <article>
@@ -669,16 +712,9 @@
     <footer class="site-footer">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="assets/logo.png" alt="Logo Tonton Kondo">
+          <img src="assets/reallogo.png" alt="Logo Tonton Kondo">
           <p>La plateforme de paris et jeux en ligne conçue pour un parcours joueur clair, rapide et professionnel.</p>
-
-          <!--<div class="socials premium-socials">
-            <a href="#" class="social-link facebook" aria-label="Facebook">f</a>
-            <a href="#" class="social-link instagram" aria-label="Instagram">◎</a>
-            <a href="#" class="social-link x-twitter" aria-label="X">𝕏</a>
-            <a href="#" class="social-link youtube" aria-label="YouTube">▶</a>
-          </div>
-        </div> -->
+        </div>
 
         <div class="footer-accordion">
           <button class="footer-accordion-trigger" type="button" aria-expanded="false">
@@ -686,10 +722,10 @@
             <span class="footer-accordion-icon">⌄</span>
           </button>
           <div class="footer-accordion-content">
-            <a href="#">Paris sportifs</a>
-            <a href="#">En direct</a>
-            <a href="#">Prochains matchs</a>
-            <a href="#">Résultats</a>
+            <a href="index.html">Accueil</a>
+            <a href="results.html">Résultats</a>
+            <a href="jeux/games.html">Jeux</a>
+            <a href="tickets.html">Tickets</a>
           </div>
         </div>
 
@@ -699,12 +735,12 @@
             <span class="footer-accordion-icon">⌄</span>
           </button>
           <div class="footer-accordion-content">
-            <a href="#">Lotterie</a>
-            <a href="#">Borlette</a>
-            <a href="#">Mariage</a>
-            <a href="#">Lotto 3</a>
-            <a href="#">Lotto 4</a>
-            <a href="#">Lotto 5</a>
+            <a href="jeux/games.html">Tous les jeux</a>
+            <a href="jeux/borlette.html">Borlette</a>
+            <a href="jeux/mariage.html">Mariage</a>
+            <a href="jeux/lotto3.html">Lotto 3</a>
+            <a href="jeux/lotto4.html">Lotto 4</a>
+            <a href="jeux/lotto5.html">Lotto 5</a>
           </div>
         </div>
 
@@ -714,11 +750,12 @@
             <span class="footer-accordion-icon">⌄</span>
           </button>
           <div class="footer-accordion-content">
-            <a href="#">Mon compte</a>
-            <a href="#">Historique</a>
-            <a href="#">Dépôt</a>
-            <a href="#">Retrait</a>
-            <a href="#">Mes tickets</a>
+            <a href="profile.html">Profil</a>
+            <a href="history.html">Historique</a>
+            <a href="wallet.html">Portefeuille</a>
+            <a href="deposit.html">Dépôt</a>
+            <a href="withdraw.html">Retrait</a>
+            <a href="tickets.html">Mes tickets</a>
           </div>
         </div>
 
@@ -728,11 +765,9 @@
             <span class="footer-accordion-icon">⌄</span>
           </button>
           <div class="footer-accordion-content">
-            <a href="#">Centre d’aide</a>
-            <a href="#">FAQ</a>
-            <a href="#">Nous contacter</a>
-            <a href="#">Conditions générales</a>
-            <a href="#">Politique de confidentialité</a>
+            <a href="index.html">Accueil</a>
+            <a href="results.html">Résultats</a>
+            <a href="tickets.html">Tickets</a>
           </div>
         </div>
       </div>
@@ -753,10 +788,10 @@
   <button class="back-to-top" id="backToTop" type="button" aria-label="Retour en haut">↑</button>
 
   <nav class="bottom-nav" aria-label="Navigation mobile principale">
-    <a class="bottom-link active" href="#"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>Accueil</a>
+    <a class="bottom-link active" href="index.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>Accueil</a>
     <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dices-icon lucide-dices"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg></span>Jeux</a>
-    <a class="bottom-link" href="#"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volleyball-icon lucide-volleyball"><path d="M11 7a16 16 20 0 1 10.98 4.362"/><path d="M12 12a13 13 0 0 1-8.66 5"/><path d="M16.83 13.634a16 16 0 0 1-9.267 7.328"/><path d="M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10"/><path d="M8.17 15.366a16 16 0 0 1-1.713-11.69"/><circle cx="12" cy="12" r="10"/></svg></span>Sports</a>
-    <a class="bottom-link" href="#"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-signal-icon lucide-signal"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg></span>Résultats</a>
+    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volleyball-icon lucide-volleyball"><path d="M11 7a16 16 20 0 1 10.98 4.362"/><path d="M12 12a13 13 0 0 1-8.66 5"/><path d="M16.83 13.634a16 16 0 0 1-9.267 7.328"/><path d="M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10"/><path d="M8.17 15.366a16 16 0 0 1-1.713-11.69"/><circle cx="12" cy="12" r="10"/></svg></span>Jeux</a>
+    <a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-signal-icon lucide-signal"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg></span>Résultats</a>
     <a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span>Portefeuille</a>
   </nav>
 

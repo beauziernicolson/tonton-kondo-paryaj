@@ -1,4 +1,4 @@
--- Tonton Kondo / ParyajPam – Roulette V1 schema
+-- Tonton Kondo / paryaj – Roulette V1 schema
 -- Ajout du support roulette pour les tickets et création des tables de ronde et de mises.
 -- Ce script est safe à exécuter plusieurs fois autant que possible.
 

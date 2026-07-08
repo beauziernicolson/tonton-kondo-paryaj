@@ -22,6 +22,8 @@
     .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
     .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
     .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .header-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+    .back-btn { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; text-decoration:none; }
     .hero-card { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-bottom:18px; }
     .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
     .hero-card h1 { margin:0 0 8px; font-size:clamp(28px, 5vw, 38px); line-height:1.04; letter-spacing:-.03em; }
@@ -77,8 +79,11 @@
 <body>
   <main class="app">
     <header class="topbar">
-      <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
-      <span class="pill">Keno V1</span>
+      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo"><img src="../assets/reallogo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+      <div class="header-actions">
+        <a class="back-btn" href="games.html">← Retour aux jeux</a>
+        <span class="pill">Keno</span>
+      </div>
     </header>
 
     <section class="hero-card">
@@ -117,9 +122,9 @@
 
     <section class="content-grid">
       <article class="panel result-card">
-        <div class="panel-head"><div><h2>Résultat Keno</h2><p>Affichage temporaire de l’interface.</p></div></div>
+        <div class="panel-head"><div><h2>Résultat Keno</h2><p>Affichage du résultat après validation du tirage.</p></div></div>
         <div class="result-row"><span>Numéros choisis</span><strong id="chosen-numbers">Aucun</strong></div>
-        <div class="result-row"><span>Numéros tirés</span><strong id="drawn-numbers">En attente du backend</strong></div>
+        <div class="result-row"><span>Numéros tirés</span><strong id="drawn-numbers">En attente du résultat</strong></div>
         <div class="result-row"><span>Matchs</span><strong id="matches-count">-</strong></div>
         <div class="result-row"><span>Gain</span><strong id="gain-amount">-</strong></div>
         <div class="result-row"><span>Ticket</span><strong id="ticket-number">-</strong></div>
@@ -128,7 +133,7 @@
         <div class="result-row"><span>Statut</span><strong id="status-text">-</strong></div>
       </article>
       <article class="panel">
-        <div class="panel-head"><div><h2>Table de paiement V1</h2><p>Les gains sont affichés ici pour la version d’interface.</p></div></div>
+        <div class="panel-head"><div><h2>Table de paiement</h2><p>Les gains sont affichés ici pour une expérience claire et professionnelle.</p></div></div>
         <table class="payout-table">
           <thead><tr><th>Numéros choisis</th><th>Matchs</th><th>Gain</th></tr></thead>
           <tbody>
@@ -161,7 +166,7 @@
             <tr><td>10</td><td>10</td><td>mise × 5000</td></tr>
           </tbody>
         </table>
-        <div class="panel-note">Le tirage réel sera effectué plus tard côté Supabase pour éviter la triche.</div>
+        <div class="panel-note">Le tirage sera confirmé lors de la validation pour une expérience fluide.</div>
       </article>
     </section>
   </main>
@@ -284,7 +289,7 @@
       if (window.supabaseClient && typeof window.supabaseClient.rpc === 'function') {
         return window.supabaseClient;
       }
-      throw new Error('Connexion Supabase indisponible. Rechargez la page puis réessayez.');
+      throw new Error('Connexion au service momentanément indisponible. Rechargez la page puis réessayez.');
     }
 
     async function getCurrentPlayer() {
@@ -393,7 +398,7 @@
       try {
         client = await waitForSupabaseClient();
       } catch (error) {
-        setFeedback(error.message || 'Connexion Supabase indisponible.', 'error');
+        setFeedback(error.message || 'Connexion au service momentanément indisponible.', 'error');
         return;
       }
 
@@ -430,7 +435,7 @@
         await animateKenoDraw(result);
       } catch (error) {
         console.error('Erreur play_keno:', error);
-        const message = error?.message || 'Erreur lors de l’appel Supabase. Réessayez.';
+        const message = error?.message || 'Service momentanément indisponible. Réessayez plus tard.';
         setFeedback(message, 'error');
       } finally {
         playBtn.disabled = false;
@@ -442,10 +447,10 @@
       if (!validateKenoForm()) {
         return;
       }
-      drawnNumbersEl.textContent = 'En attente du backend';
+      drawnNumbersEl.textContent = 'En attente du résultat';
       matchesCount.textContent = '-';
       gainAmount.textContent = '-';
-      setFeedback('Interface Keno prête. Le backend Supabase sera branché à l’étape suivante.', 'success');
+      setFeedback('Votre sélection est prête. Le tirage sera confirmé après validation.', 'success');
     }
 
     numberGrid.addEventListener('click', (event) => {

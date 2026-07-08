@@ -21,6 +21,21 @@
     .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
     .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
     .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .mobile-header{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:8px 0 16px;border-bottom:1px solid var(--line);margin-bottom:24px}
+    .brand-block{display:flex;align-items:center;gap:12px}
+    .brand-icon{width:56px;height:56px;object-fit:contain;flex-shrink:0;display:block}
+    .brand-text{display:flex;flex-direction:column;line-height:1}
+    .brand-top,.brand-middle{display:block;font-weight:900;font-size:22px;letter-spacing:.04em}
+    .brand-top{color:#fff}.brand-middle{color:var(--gold)}
+    .brand-bottom{position:relative;display:block;margin-top:4px;text-align:center;color:#d7dde8;font-size:9px;font-weight:800;letter-spacing:.5em}
+    .brand-bottom::before,.brand-bottom::after{content:"";position:absolute;top:50%;width:22px;height:1px;background:rgba(255,255,255,.35)}
+    .brand-bottom::before{right:100%;margin-right:8px}.brand-bottom::after{left:100%;margin-left:8px}
+    .wallet-chip{display:flex;align-items:center;gap:8px;background:rgba(9,30,54,.92);border:1px solid var(--line);border-radius:17px;padding:10px 12px;box-shadow:var(--shadow);white-space:nowrap}
+    .wallet-chip strong{display:block;font-size:15px}.wallet-chip span{display:block;color:var(--muted);font-size:12px;margin-top:-2px}
+    .header-actions{display:flex;align-items:center;gap:8px}.action-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(8,24,43,.95);color:var(--gold);position:relative;display:grid;place-items:center;box-shadow:var(--shadow);text-decoration:none}
+    .user-button{width:42px;height:42px;border-radius:999px;padding:0;overflow:hidden;background:linear-gradient(135deg,rgba(255,210,31,.18),rgba(57,168,255,.18));border:1px solid rgba(255,255,255,.16);color:#fff;display:grid;place-items:center}
+    .user-avatar{width:100%;height:100%;display:grid;place-items:center;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(135deg,#1b3353,#07111e)}
+    .badge{position:absolute;right:-2px;top:-5px;background:var(--gold);color:#111;border-radius:999px;font-size:11px;font-weight:900;min-width:19px;height:19px;display:grid;place-items:center;border:2px solid #061426}
     .hero-card { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; margin-bottom:18px; }
     .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
     .hero-card h1 { margin:0 0 8px; font-size:clamp(28px, 5vw, 38px); line-height:1.04; letter-spacing:-.03em; }
@@ -49,9 +64,33 @@
 </head>
 <body>
   <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
-      <span class="pill">Jeux disponibles</span>
+    <header class="mobile-header" aria-label="En-tête principal">
+      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
+        <div class="brand-block">
+          <img src="../assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
+          <div class="brand-text">
+            <span class="brand-top">TONTON</span>
+            <span class="brand-middle">KONDO</span>
+            <span class="brand-bottom">PARYAJ</span>
+          </div>
+        </div>
+      </a>
+      <div class="wallet-chip" aria-label="Solde utilisateur">
+        <span><strong>Disponible</strong><span>Votre espace joueur</span></span>
+      </div>
+      <div class="header-actions">
+        <button class="action-btn" type="button" aria-label="Promotions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></svg>
+          <span class="badge">3</span>
+        </button>
+        <button class="action-btn" type="button" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+          <span class="badge">2</span>
+        </button>
+        <a class="action-btn user-button" href="../dashboard.html" aria-label="Tableau de bord">
+          <span class="user-avatar">U</span>
+        </a>
+      </div>
     </header>
 
     <section class="hero-card">
@@ -80,7 +119,7 @@
           <article class="game-card">
             <span class="tag">Lotto 3</span>
             <strong>Lotto 3</strong>
-            <p class="desc">Choisissez un numéro 000 à 999. Le gain V1 est basé sur le premier lot complet Borlette.</p>
+            <p class="desc">Choisissez un numéro 000 à 999. Le gain principal est basé sur le premier lot complet Borlette.</p>
             <div class="actions"><a class="btn btn-primary" href="lotto3.html">Jouer</a><a class="btn btn-secondary" href="help-lotto3.html">Comprendre</a></div>
           </article>
           <article class="game-card">
@@ -138,9 +177,9 @@
         <h2>Comprendre les règles</h2>
         <p>Accédez aux aides de chaque jeu pour vérifier la logique et les règles de base.</p>
         <div class="help-grid">
-          <article class="mini-card"><strong>Règles Borlette</strong><p>3 lots, multiplicateurs x60 / x20 / x10, résultat calculé à partir du tirage publié.</p><a class="btn btn-secondary" href="../help-borlette.html">Ouvrir</a></article>
-          <article class="mini-card"><strong>Règles Mariage</strong><p>Combinaison de deux numéros, ordre non important, gain x5000 sur les 3 lots Borlette.</p><a class="btn btn-secondary" href="../help-mariage.html">Ouvrir</a></article>
-          <article class="mini-card"><strong>Règles Lotto 3</strong><p>Numéro 000 à 999, ordre exact obligatoire, gain V1 = mise × 500.</p><a class="btn btn-secondary" href="../help-lotto3.html">Ouvrir</a></article>
+          <article class="mini-card"><strong>Règles Borlette</strong><p>3 lots, multiplicateurs x60 / x20 / x10, résultat calculé à partir du tirage publié.</p><a class="btn btn-secondary" href="help-borlette.html">Ouvrir</a></article>
+          <article class="mini-card"><strong>Règles Mariage</strong><p>Combinaison de deux numéros, ordre non important, gain x5000 sur les 3 lots Borlette.</p><a class="btn btn-secondary" href="help-mariage.html">Ouvrir</a></article>
+          <article class="mini-card"><strong>Règles Lotto 3</strong><p>Numéro 000 à 999, ordre exact obligatoire, gain principal = mise × 500.</p><a class="btn btn-secondary" href="help-lotto3.html">Ouvrir</a></article>
         </div>
       </article>
     </section>

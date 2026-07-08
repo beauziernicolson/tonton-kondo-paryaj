@@ -45,6 +45,7 @@
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 16px;
+      flex-wrap: wrap;
     }
 
     .back-link {
@@ -60,10 +61,33 @@
       box-shadow: var(--shadow);
     }
 
-    .title-wrap {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      object-fit: contain;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: .04em;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .35em;
     }
 
     .title-wrap h1 {
@@ -440,20 +464,23 @@
   <main class="app">
     <header class="topbar">
       <a class="back-link" href="games.html">← Retour aux jeux</a>
-      <div class="title-wrap">
-        <h1>Lucky 6</h1>
-        <span class="badge">Nouveau jeu</span>
-      </div>
+      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
+        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
     </header>
 
     <section class="hero-card">
       <article>
-        <div class="eyebrow">Démo frontend</div>
+        <div class="eyebrow">Jeu disponible</div>
         <h2>Choisissez 6 numéros parmi 48</h2>
         <p>Le système tire 35 boules. Plus vos 6 numéros sortent tôt, plus le gain est grand.</p>
         <ul class="rules-list">
           <li>Choisissez exactement 6 numéros parmi 48.</li>
-          <li>Le tirage est visuel et placeholder pour cette version.</li>
+          <li>Le tirage est confirmé et affiché une fois votre ticket validé.</li>
           <li>Le gain dépend de la position de sortie du 6e match.</li>
         </ul>
       </article>
@@ -511,7 +538,7 @@
         <div class="panel-head">
           <div>
             <h3>Résultat final</h3>
-            <p>Résultat réel depuis Supabase.</p>
+            <p>Résultat publié dans votre espace joueur.</p>
           </div>
         </div>
         <div class="result-row"><span>Ticket</span><strong id="result-ticket">—</strong></div>
@@ -528,8 +555,8 @@
       <article class="panel">
         <div class="panel-head">
           <div>
-            <h3>Table de paiement démo</h3>
-            <p>Exemple visuel de la logique frontend.</p>
+            <h3>Table de paiement</h3>
+            <p>Informations utiles pour suivre vos gains potentiels.</p>
           </div>
         </div>
         <table class="payout-table">
@@ -600,7 +627,7 @@
       const message = String(error?.message || '').trim();
 
       if (status === 404 || message.includes('Could not find the function') || message.includes('does not exist') || message.includes('not found')) {
-        return 'La fonction Supabase play_lucky6 n’est pas encore disponible sur ce projet. Exécutez le SQL de création dans Supabase avant de jouer.';
+        return 'Le service n’est pas disponible pour le moment. Réessayez plus tard.';
       }
 
       if (message) {
@@ -701,7 +728,7 @@
     }
 
     function generateLucky6PlaceholderDraw() {
-      // Démo seulement — le vrai tirage vient de Supabase public.play_lucky6()
+      // Tirage traité et affiché après validation du ticket.
       const pool = Array.from({ length: 48 }, (_, index) => index + 1);
       const draw = [];
       while (draw.length < 35) {

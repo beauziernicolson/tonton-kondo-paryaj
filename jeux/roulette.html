@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Roulette — Tonton Kondo / ParyajPam</title>
+<title>Roulette — Tonton Kondo / paryaj</title>
 <style>
 /* ============================================================
-   Tonton Kondo / ParyajPam — Roulette (vanilla HTML/CSS/JS)
-   Frontend only. No backend, no Supabase, no payments.
+   Tonton Kondo / paryaj — Roulette (vanilla HTML/CSS/JS)
+   Interface de jeu dédiée au parcours joueur.
    ============================================================ */
 :root{
   --bg:#0b0f1a;
@@ -41,15 +41,20 @@
 html,body{margin:0;padding:0;background:radial-gradient(1200px 800px at 50% -10%,#1b2540 0%,var(--bg) 55%,#05080f 100%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;min-height:100%;overflow-x:hidden;overflow-x:hidden;width:100%;overflow-x:hidden}
 button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
 button:disabled{cursor:not-allowed;opacity:.55}
+a{color:inherit;text-decoration:none}
 
 /* ---------- Layout ---------- */
 .app{max-width:1500px;width:100%;margin:0 auto;padding:18px 16px 40px}
 .header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}
-.brand-mark{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-weight:900;color:#1b2540;background:var(--gradient-gold);box-shadow:var(--shadow-gold)}
-.brand h1{font-family:var(--font-display);font-size:22px;margin:0;letter-spacing:.18em;background:var(--gradient-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand p{margin:2px 0 0;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.brand img{width:56px;height:56px;border-radius:16px;object-fit:contain}
+.brand-text strong{display:block;font-size:18px;letter-spacing:.04em}
+.brand-text span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.35em}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border:1px solid rgba(246,210,122,.28);border-radius:999px;background:rgba(18,26,43,.72);color:#f6d27a;font-weight:700;box-shadow:var(--shadow-gold);backdrop-filter:blur(6px)}
+.back-link:hover{transform:translateY(-1px)}
 .balance{border:1px solid rgba(246,210,122,.4);background:rgba(18,26,43,.7);border-radius:18px;padding:8px 14px;box-shadow:var(--shadow-gold);backdrop-filter:blur(8px)}
+@media (max-width: 520px){.brand img{width:46px;height:46px}.brand-text strong{font-size:16px}.brand-text span{font-size:10px;letter-spacing:.24em}}
 .balance .lbl{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
 .balance .val{font-weight:800;color:#f6d27a;font-size:18px}
 .balance .val small{font-weight:600;font-size:11px;opacity:.8}
@@ -168,7 +173,6 @@ button:disabled{cursor:not-allowed;opacity:.55}
 
 @media (max-width: 400px){
   .app{padding:8px 8px 20px}
-  .brand-mark{width:42px;height:42px}
   .wheel{width:min(74vw,260px)}
   .recent .num{width:26px;height:26px;font-size:12px}
   .result-panel .big{font-size:26px}
@@ -204,7 +208,6 @@ button:disabled{cursor:not-allowed;opacity:.55}
 
 @media (max-width:480px){
   .app{padding:10px 8px 24px}
-  .brand-mark{width:42px;height:42px}
   .brand h1{font-size:16px}
   .brand p{font-size:10px}
   .balance .val{font-size:16px}
@@ -226,16 +229,19 @@ button:disabled{cursor:not-allowed;opacity:.55}
 
   <!-- ============ HEADER ============ -->
   <header class="header">
-    <div class="brand">
-      <div class="brand-mark">TK</div>
-      <div>
-        <h1>TONTON KONDO</h1>
-        <p>ParyajPam · European Roulette</p>
+    <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
+      <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
+      <span class="brand-text">
+        <strong>Tonton Kondo</strong>
+        <span>Paryaj</span>
+      </span>
+    </a>
+    <div class="header-actions">
+      <a class="back-link" href="games.html">← Retour aux jeux</a>
+      <div class="balance">
+        <div class="lbl">Balance</div>
+        <div class="val"><span id="balance">Chargement du solde...</span> <small>HTG</small></div>
       </div>
-    </div>
-    <div class="balance">
-      <div class="lbl">Balance</div>
-      <div class="val"><span id="balance">Chargement du solde...</span> <small>HTG</small></div>
     </div>
   </header>
 
@@ -300,7 +306,7 @@ button:disabled{cursor:not-allowed;opacity:.55}
   </div>
 
   <div class="footer">
-    Demo interface · No real money · Result will come from <code>play_roulette()</code> backend.
+    Jouez, suivez vos tickets et consultez vos résultats en temps réel.
   </div>
 </div>
 
@@ -308,8 +314,8 @@ button:disabled{cursor:not-allowed;opacity:.55}
 <script src="../js/auth.js"></script>
 <script>
 /* ============================================================
-   Tonton Kondo / ParyajPam — Roulette logic (vanilla JS)
-   Frontend connecté à Supabase via public.play_roulette().
+   Tonton Kondo / paryaj — Roulette logic (vanilla JS)
+   Traitement du tirage et mise à jour de l’espace joueur.
    ============================================================ */
 
 const WHEEL_ORDER = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
@@ -423,7 +429,7 @@ async function initRoulette(){
   if (currentUser) {
     const client = window.supabaseClient || null;
     if (!client?.rpc) {
-      showFeedback("Le client Supabase n’est pas disponible.", "error");
+      showFeedback("Service momentanément indisponible. Réessayez dans quelques instants.", "error");
     }
   }
 }
@@ -752,7 +758,7 @@ async function playRoulette(){
 
     const result = Array.isArray(data) ? data[0] : data;
     if (!result || typeof result.winning_number !== 'number') {
-      throw new Error("Réponse Supabase invalide.");
+      throw new Error("Réponse du service invalide.");
     }
 
     // Le numéro gagnant vient de Supabase via public.play_roulette()

@@ -30,6 +30,10 @@
         linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
     }
     a { color: inherit; text-decoration: none; }
+    .mobile-header{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:8px 0 16px;border-bottom:1px solid var(--line);margin-bottom:24px}
+    .brand{display:flex;align-items:center;min-width:0;text-decoration:none;color:inherit}.brand-block{display:flex;align-items:center;gap:12px}.brand-icon{width:56px;height:56px;object-fit:contain;flex-shrink:0;display:block}.brand-text{display:flex;flex-direction:column;line-height:1}.brand-top,.brand-middle{display:block;font-weight:900;font-size:22px;letter-spacing:.04em}.brand-top{color:#fff}.brand-middle{color:var(--gold)}.brand-bottom{position:relative;display:block;margin-top:4px;text-align:center;color:#d7dde8;font-size:9px;font-weight:800;letter-spacing:.5em}.brand-bottom::before,.brand-bottom::after{content:"";position:absolute;top:50%;width:22px;height:1px;background:rgba(255,255,255,.35)}.brand-bottom::before{right:100%;margin-right:8px}.brand-bottom::after{left:100%;margin-left:8px}
+    .wallet-chip{display:flex;align-items:center;gap:8px;background:rgba(9,30,54,.92);border:1px solid var(--line);border-radius:17px;padding:10px 12px;box-shadow:var(--shadow);white-space:nowrap}.wallet-chip strong{display:block;font-size:15px}.wallet-chip span{display:block;color:var(--muted);font-size:12px;margin-top:-2px}
+    .header-actions{display:flex;align-items:center;gap:8px}.action-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(8,24,43,.95);color:var(--gold);position:relative;display:grid;place-items:center;box-shadow:var(--shadow);text-decoration:none}.user-button{width:42px;height:42px;border-radius:999px;padding:0;overflow:hidden;background:linear-gradient(135deg,rgba(255,210,31,.18),rgba(57,168,255,.18));border:1px solid rgba(255,255,255,.16);color:#fff;display:grid;place-items:center}.user-avatar{width:100%;height:100%;display:grid;place-items:center;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(135deg,#1b3353,#07111e)}.badge{position:absolute;right:-2px;top:-5px;background:var(--gold);color:#111;border-radius:999px;font-size:11px;font-weight:900;min-width:19px;height:19px;display:grid;place-items:center;border:2px solid #061426}
     .page { width: min(100%, 1180px); margin: 0 auto; padding: 18px 16px 56px; }
     .card { border: 1px solid var(--line); border-radius: var(--radius-xl); background: rgba(7, 24, 43, .92); box-shadow: var(--shadow); padding: 18px; margin-bottom: 18px; }
     .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
@@ -81,16 +85,34 @@
 </head>
 <body>
   <main class="page">
+    <header class="mobile-header" aria-label="En-tête principal">
+      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
+        <div class="brand-block">
+          <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
+          <div class="brand-text">
+            <span class="brand-top">TONTON</span>
+            <span class="brand-middle">KONDO</span>
+            <span class="brand-bottom">PARYAJ</span>
+          </div>
+        </div>
+      </a>
+      <div class="wallet-chip" aria-label="Solde utilisateur"><span><strong>Disponible</strong><span>Votre espace joueur</span></span></div>
+      <div class="header-actions">
+        <button class="action-btn" type="button" aria-label="Promotions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></svg><span class="badge">3</span></button>
+        <button class="action-btn" type="button" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span class="badge">2</span></button>
+        <a class="action-btn user-button" href="dashboard.html" aria-label="Tableau de bord"><span class="user-avatar">U</span></a>
+      </div>
+    </header>
     <section class="card">
       <div class="topbar">
         <div>
           <div class="eyebrow">Historique</div>
           <h1>Vos dernières activités</h1>
-          <p>Vue protégée et en lecture seule, alimentée par vos tickets, transactions et solde Supabase.</p>
+          <p>Votre espace de suivi personnel, avec vos tickets, transactions et solde disponibles en un seul endroit.</p>
         </div>
         <a class="btn" href="index.html">Retour à l’accueil</a>
       </div>
-      <div class="pill" id="history-pill">Connexion requise • Auth front-end</div>
+      <div class="pill" id="history-pill">Connexion requise</div>
     </section>
 
     <section class="grid">
@@ -113,7 +135,7 @@
           <button class="filter-btn" data-filter="retraits" type="button">Retraits</button>
         </div>
         <div id="history-feed" class="history-feed"></div>
-        <p class="hint" style="margin-top: 8px;">Les paiements et gains restent en lecture seule dans cette page.</p>
+        <p class="hint" style="margin-top: 8px;">Les paiements et gains sont présentés ici pour votre suivi clair et sécurisé.</p>
       </article>
     </section>
   </main>
@@ -200,7 +222,7 @@
 
       const client = window.supabaseClient || null;
       if (!client || typeof client.from !== 'function') {
-        historyFeed.innerHTML = '<div class="empty-state">Connexion Supabase indisponible.</div>';
+        historyFeed.innerHTML = '<div class="empty-state">Connexion au service momentanément indisponible. Réessayez dans quelques instants.</div>';
         return;
       }
 
@@ -706,7 +728,7 @@
         });
       } catch (error) {
         console.error('Erreur chargement historique.', error);
-        historyFeed.innerHTML = `<div class="empty-state">Erreur Supabase : ${error.message || 'Impossible de charger l’historique.'}</div>`;
+        historyFeed.innerHTML = '<div class="empty-state">Impossible de charger les données pour le moment. Réessayez plus tard.</div>';
       }
     })();
   </script>

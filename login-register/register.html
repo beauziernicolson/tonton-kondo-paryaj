@@ -7,8 +7,8 @@
   <style>
     :root {
       --bg:#020813;
-      --panel:rgba(8,24,43,.92);
-      --line:rgba(255,255,255,.10);
+      --panel:rgba(8,24,43,.96);
+      --line:rgba(255,255,255,.12);
       --text:#f5f7fb;
       --muted:#aebbd0;
       --gold:#ffd21f;
@@ -35,14 +35,14 @@
     .app { width: min(100%, 1100px); margin: 0 auto; padding: 18px 16px 40px; }
 
     .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
-    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
-    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background: rgba(255,255,255,.04); padding:6px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background: rgba(255,255,255,.04); padding:8px; border:1px solid rgba(255,210,31,.16); }
     .brand-text strong { display:block; font-size:18px; letter-spacing:.03em; }
     .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
-    .chip { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); background: rgba(8,24,43,.92); color:#fff; border-radius:999px; padding:10px 12px; box-shadow:var(--shadow); font-size:13px; font-weight:700; }
+    .chip { display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,210,31,.16); background: rgba(8,24,43,.92); color:#fff; border-radius:999px; padding:10px 12px; box-shadow:var(--shadow); font-size:13px; font-weight:700; }
 
     .shell { display:grid; grid-template-columns: .95fr 1.05fr; gap:24px; align-items:stretch; }
-    .panel { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); overflow:hidden; }
+    .panel { border:1px solid rgba(255,255,255,.12); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); overflow:hidden; }
 
     .hero-panel { padding:24px; display:flex; flex-direction:column; justify-content:space-between; min-height: 680px; background: linear-gradient(160deg, rgba(5,18,33,.98), rgba(4,11,20,.98)); }
     .badge-tag { display:inline-flex; align-items:center; width:fit-content; gap:8px; border-radius:999px; padding:8px 10px; background: rgba(255,210,31,.08); color: var(--gold); text-transform:uppercase; letter-spacing:.2em; font-size:11px; font-weight:900; border:1px solid rgba(255,210,31,.15); }
@@ -50,7 +50,7 @@
     .hero-panel h1 span { color: var(--gold); }
     .hero-panel p { color: var(--muted); max-width: 420px; }
 
-    .benefit-card { border:1px solid var(--line); border-radius:18px; padding:14px; background: rgba(255,255,255,.03); margin-top:14px; }
+    .benefit-card { border:1px solid rgba(255,255,255,.10); border-radius:18px; padding:14px; background: rgba(255,255,255,.03); margin-top:14px; }
     .benefit-card strong { display:block; font-size:15px; color:#fff; }
     .benefit-card span { color: var(--muted); font-size:13px; }
 
@@ -62,15 +62,15 @@
     .field { display:grid; gap:6px; }
     .field label { color:#edf2f8; font-weight:700; font-size:14px; }
     .field .hint { color: var(--muted); font-size:13px; line-height:1.4; }
-    .field input { width:100%; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.03); color:#fff; padding:12px 14px; outline:none; }
+    .field input { width:100%; border:1px solid rgba(255,255,255,.12); border-radius:14px; background:rgba(255,255,255,.03); color:#fff; padding:12px 14px; outline:none; }
     .field input:focus { border-color: rgba(255,210,31,.5); background: rgba(255,255,255,.05); }
 
-    .check { display:flex; align-items:flex-start; gap:10px; color: var(--muted); font-size:13px; border:1px solid var(--line); border-radius:16px; padding:12px; background: rgba(255,255,255,.03); }
+    .check { display:flex; align-items:flex-start; gap:10px; color: var(--muted); font-size:13px; border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:12px; background: rgba(255,255,255,.03); }
     .check input { margin-top:3px; accent-color: var(--gold); }
 
     .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:0; padding:13px 16px; font-weight:900; cursor:pointer; }
     .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#111; box-shadow:0 10px 28px rgba(255,210,31,.22); }
-    .btn-secondary { background: rgba(255,255,255,.04); border:1px solid var(--line); color:#fff; }
+    .btn-secondary { background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10); color:#fff; }
 
     .footer-links { display:flex; gap:8px; flex-wrap:wrap; align-items:center; color: var(--muted); font-size:13px; }
     .inline-link { color: var(--gold); font-weight:700; }
@@ -82,14 +82,14 @@
 <body>
   <main class="app">
     <header class="topbar">
-      <a class="brand" href="index.html">
-        <img src="assets/logo.png" alt="Logo Tonton Kondo" />
+      <a class="brand" href="../index.html">
+        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
         <span class="brand-text">
           <strong>Tonton Kondo</strong>
           <span>Paryaj</span>
         </span>
       </a>
-      <span class="chip">Création de compte • Prototype</span>
+      <span class="chip">Création de compte</span>
     </header>
 
     <section class="shell">
@@ -97,12 +97,12 @@
         <div>
           <span class="badge-tag">Nouveau joueur</span>
           <h1>Créez votre compte et entrez dans l’univers <span>Tonton Kondo</span>.</h1>
-          <p>Le formulaire ci-dessous est prêt pour la suite du projet, avec un design premium sans intégration backend.</p>
+          <p>Créez votre compte joueur et profitez des services Tonton Kondo.</p>
         </div>
         <div>
-          <div class="benefit-card"><strong>Profil complet</strong><span>Nom, téléphone, email et statut de compte visibles dans l’interface.</span></div>
-          <div class="benefit-card"><strong>Accès sécurisé</strong><span>Les champs sont pensés pour évoluer vers une vraie validation sans modifier la structure.</span></div>
-          <div class="benefit-card"><strong>Mobile-first</strong><span>Le layout reste confortable sur smartphone, tablette et bureau.</span></div>
+          <div class="benefit-card"><strong>Profil complet</strong><span>Gérez votre espace joueur, vos jeux et vos transactions en toute simplicité.</span></div>
+          <div class="benefit-card"><strong>Accès sécurisé</strong><span>Votre compte est protégé par des parcours simples et rassurants à chaque étape.</span></div>
+          <div class="benefit-card"><strong>Expérience premium</strong><span>Une interface pensée pour un parcours joueur fluide sur mobile et sur bureau.</span></div>
         </div>
       </article>
 
@@ -116,12 +116,12 @@
         <form id="registerForm" novalidate>
           <div class="grid">
             <div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" type="tel" placeholder="50933123456 ou 33123456" required /><span class="hint">Vous utiliserez ce numéro pour vous connecter.</span></div>
-            <div class="field"><label for="full-name">Nom complet</label><input id="full-name" name="full_name" type="text" placeholder="Jean Kouassi" /></div>
+            <div class="field"><label for="full-name">Nom complet</label><input id="full-name" name="full_name" type="text" placeholder="Jean Kouassi" required /></div>
           </div>
           <div class="field"><label for="email">Email (optionnel)</label><input id="email" name="email" type="email" placeholder="jean@exemple.com" autocomplete="email" /><span class="hint">Laissez ce champ vide si vous souhaitez vous inscrire uniquement avec votre téléphone.</span></div>
           <div class="grid">
-            <div class="field"><label for="password">Mot de passe</label><input id="password" name="password" type="password" placeholder="••••••••" required /></div>
-            <div class="field"><label for="confirm-password">Confirmer</label><input id="confirm-password" name="confirm_password" type="password" placeholder="••••••••" /></div>
+            <div class="field"><label for="password">Mot de passe</label><input id="password" name="password" type="password" placeholder="••••••••" required minlength="6" /></div>
+            <div class="field"><label for="confirmPassword">Confirmer le mot de passe</label><input id="confirmPassword" name="confirmPassword" type="password" placeholder="••••••••" required minlength="6" /></div>
           </div>
 
           <label class="check">
@@ -153,9 +153,24 @@
     registerForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      // La création réelle sera branchée ultérieurement dans auth.js.
       const formData = Object.fromEntries(new FormData(registerForm).entries());
-      const result = await window.registerUser({ ...formData, role: 'client' });
+
+      if (formData.password !== formData.confirmPassword) {
+        window.alert('Les mots de passe ne correspondent pas.');
+        return;
+      }
+
+      if (String(formData.password || '').length < 6) {
+        window.alert('Le mot de passe doit contenir au moins 6 caractères.');
+        return;
+      }
+
+      delete formData.confirmPassword;
+
+      const result = await window.registerUser({
+        ...formData,
+        role: 'client'
+      });
 
       if (result && result.ok) {
         const resolvedTarget = window.resolveRedirectUrl?.(result.redirectTo || window.resolveRoleDestination?.(result.role) || 'dashboard.html')

@@ -101,6 +101,26 @@
       font-size: 13px;
       font-weight: 800;
     }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(8,24,43,.92);
+      color: #fff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
 
     .layout-grid {
       display: grid;
@@ -448,14 +468,17 @@
 <body>
   <main class="app">
     <header class="topbar">
-      <a class="brand" href="../index.html">
-        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
+      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
+        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
         <span class="brand-text">
           <strong>Tonton Kondo</strong>
           <span>Paryaj</span>
         </span>
       </a>
-      <span class="pill">Borlette</span>
+      <div class="header-actions">
+        <a class="back-btn" href="games.html">← Retour aux jeux</a>
+        <span class="pill">Borlette</span>
+      </div>
     </header>
 
     <section class="card" style="margin-bottom:18px;">
@@ -463,7 +486,7 @@
       <h1>Borlette</h1>
       <p class="lede">Choisissez votre numéro, saisissez un montant, ajoutez plusieurs lignes au coupon, consultez le total et validez votre ticket.</p>
       <div class="hero-meta">
-        <span class="mini-chip">📅 Tirages actifs depuis Supabase</span>
+        <span class="mini-chip">📅 Tirages disponibles</span>
         <span class="mini-chip">💳 Validation en ligne</span>
         <span class="mini-chip">🔐 Accès joueur connecté</span>
         <a class="mini-chip" href="help-borlette.html" style="border-color: rgba(255,210,31,.22); background: rgba(255,210,31,.08); color: #fff7da;">📘 Comprendre les règles</a>
@@ -540,7 +563,7 @@
               <span class="value-pill">En ligne</span>
             </div>
             <button id="validate-btn" class="btn btn-primary" type="button" style="width:100%;">Valider le ticket</button>
-            <p class="footer-note">La validation utilise le wallet connecté et la création réelle de tickets dans Supabase.</p>
+            <p class="footer-note">La validation utilise votre portefeuille connecté et enregistre votre ticket de façon sécurisée.</p>
           </article>
         </div>
       </article>
@@ -617,8 +640,8 @@
 
           const client = await waitForSupabaseClient();
           if (!client || typeof client.from !== 'function') {
-            drawNameSelect.innerHTML = '<option value="">Connexion Supabase indisponible</option>';
-            setFeedback('La connexion Supabase n’est pas encore disponible. Rechargez la page si nécessaire.', 'warn');
+            drawNameSelect.innerHTML = '<option value="">Connexion au service momentanément indisponible</option>';
+            setFeedback('La connexion au service n’est pas encore disponible. Rechargez la page si nécessaire.', 'warn');
             return;
           }
 
@@ -794,7 +817,7 @@
 
         const client = window.supabaseClient || null;
         if (!client || typeof client.from !== 'function') {
-          setFeedback('La connexion Supabase n’est pas encore disponible. Rechargez la page et réessayez.', 'warn');
+          setFeedback('Connexion au service momentanément indisponible. Rechargez la page et réessayez.', 'warn');
           return;
         }
 

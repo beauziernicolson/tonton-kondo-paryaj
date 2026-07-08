@@ -1,4 +1,4 @@
--- Tonton Kondo / ParyajPam – American Roulette play function
+-- Tonton Kondo / paryaj – American Roulette play function
 -- Cette fonction exécute un tour de American Roulette, crée le ticket, enregistre la ronde
 -- et applique les transactions via public.apply_transaction().
 -- Le gagnant est choisi uniquement côté Supabase.

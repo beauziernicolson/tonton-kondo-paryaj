@@ -22,6 +22,8 @@
     .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
     .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
     .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .header-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+    .back-btn { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; text-decoration:none; }
     .hero-card { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-bottom:18px; }
     .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
     .hero-card h1 { margin:0 0 8px; font-size:clamp(28px, 5vw, 38px); line-height:1.04; letter-spacing:-.03em; }
@@ -67,8 +69,11 @@
 <body>
   <main class="app">
     <header class="topbar">
-      <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
-      <span class="pill">Lotto 4 V1</span>
+      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo"><img src="../assets/reallogo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+      <div class="header-actions">
+        <a class="back-btn" href="games.html">← Retour aux jeux</a>
+        <span class="pill">Lotto 4</span>
+      </div>
     </header>
 
     <section class="hero-card">
@@ -77,7 +82,7 @@
         <h1>Jouez au Lotto 4</h1>
         <p>Choisissez un numéro 0000 à 9999, sélectionnez une option et validez votre ticket. Le gain potentiel est mise × 5000.</p>
         <div id="user-chip" class="mini-chip">👤 Connecté</div>
-        <a class="help-link" href="help-lotto4.html">Comprendre les règles</a>
+        <a class="help-link" href="games.html">Retour aux jeux</a>
       </article>
       <article class="field-grid">
         <div class="field-card">
@@ -138,7 +143,7 @@
         <div id="feedback-box" class="feedback">Choisissez un tirage, un numéro 0000-9999 et validez.</div>
       </article>
       <article class="panel">
-        <div class="panel-head"><div><h2>Règles V1</h2><p>Ce jeu est indépendant des autres modules existants.</p></div></div>
+        <div class="panel-head"><div><h2>Règles du jeu</h2><p>Ce jeu est proposé dans la collection Tonton Kondo.</p></div></div>
         <div class="field-grid">
           <div class="field-card"><label>Gain</label><div class="note">Mise × 5000 si le numéro correspond au premier lot complet Borlette.</div></div>
           <div class="field-card"><label>Ordre exact</label><div class="note">0000 gagne, 9999 gagne, le numéro doit être exactement 4 chiffres.</div></div>
@@ -229,8 +234,8 @@
           drawNameSelect.innerHTML = '<option value="">Chargement des tirages…</option>';
           const client = await waitForSupabaseClient();
           if (!client || typeof client.from !== 'function') {
-            drawNameSelect.innerHTML = '<option value="">Connexion Supabase indisponible</option>';
-            setFeedback('Connexion Supabase indisponible. Rechargez la page si nécessaire.', 'warn');
+            drawNameSelect.innerHTML = '<option value="">Connexion au service momentanément indisponible</option>';
+            setFeedback('Connexion au service momentanément indisponible. Rechargez la page si nécessaire.', 'warn');
             return;
           }
           const { data, error } = await client.from('draw_schedules').select('draw_name, display_name').eq('game_type', 'lotto4').eq('is_active', true).order('sort_order', { ascending: true });
@@ -319,7 +324,7 @@
         if (!couponLines.length) { setFeedback('Ajoutez au moins un numéro à votre coupon.', 'warn'); return; }
 
         const client = await waitForSupabaseClient();
-        if (!client || typeof client.from !== 'function') { setFeedback('Connexion Supabase indisponible.', 'warn'); return; }
+        if (!client || typeof client.from !== 'function') { setFeedback('Connexion au service momentanément indisponible.', 'warn'); return; }
 
         const userId = currentUser.id || currentUser.user_id || null;
         const totalAmountValue = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);

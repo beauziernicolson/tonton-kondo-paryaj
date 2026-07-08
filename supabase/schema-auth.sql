@@ -79,6 +79,7 @@ COMMENT ON COLUMN activity_logs.details IS 'Détails de l’action au format JSO
 COMMENT ON COLUMN activity_logs.created_at IS 'Date et heure de l’événement.';
 
 -- Index utiles pour les recherches fréquentes.
+CREATE UNIQUE INDEX IF NOT EXISTS profiles_phone_unique ON public.profiles(phone);
 CREATE INDEX IF NOT EXISTS idx_profiles_role ON profiles(role);
 CREATE INDEX IF NOT EXISTS idx_profiles_status ON profiles(status);
 CREATE INDEX IF NOT EXISTS idx_wallets_user_id ON wallets(user_id);

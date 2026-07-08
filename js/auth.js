@@ -16,6 +16,8 @@
   let supabaseClient = null;
   let loadingClient = null;
   let clientInitializingPromise = null;
+  const SIGNUP_RATE_LIMIT_WINDOW_MS = 60_000;
+  const signupCooldownByKey = new Map();
 
   function getSupabaseConfig() {
     const url = String(global.SUPABASE_URL || '').trim();
@@ -130,7 +132,7 @@
     }
 
     if (message.includes('invalid login') || message.includes('invalid_grant') || message.includes('user not found') || message.includes('no user found')) {
-      return 'Utilisateur introuvable ou identifiants invalides. Vérifiez votre email et votre mot de passe.';
+      return 'Identifiants invalides. Vérifiez vos informations de connexion.';
     }
 
     if (message.includes('email') && message.includes('invalid')) {
@@ -138,6 +140,36 @@
     }
 
     return error?.message || 'Une erreur est survenue. Veuillez réessayer.';
+  }
+
+  function isValidPhone(phone) {
+    const normalized = normalizePhone(phone);
+    return Boolean(normalized && /^509\d{8}$/.test(normalized));
+  }
+
+  function getSignupCooldownKey(email, phone) {
+    return `${String(email || '').trim().toLowerCase()}::${String(phone || '').trim()}`;
+  }
+
+  function isSignupRateLimited(email, phone) {
+    const key = getSignupCooldownKey(email, phone);
+    const lastAttemptAt = signupCooldownByKey.get(key);
+    if (!lastAttemptAt) {
+      return false;
+    }
+
+    const now = Date.now();
+    if (now - lastAttemptAt < SIGNUP_RATE_LIMIT_WINDOW_MS) {
+      return true;
+    }
+
+    signupCooldownByKey.delete(key);
+    return false;
+  }
+
+  function rememberSignupAttempt(email, phone) {
+    const key = getSignupCooldownKey(email, phone);
+    signupCooldownByKey.set(key, Date.now());
   }
 
   /**
@@ -161,7 +193,7 @@
     if (!normalized) {
       throw new Error('Numéro de téléphone invalide.');
     }
-    return `phone_${normalized}@tontonkondo.local`;
+    return `phone_${normalized}@users.tontonkondo.com`;
   }
 
   /**
@@ -372,114 +404,125 @@
   async function registerUser(formData = {}) {
     try {
       const emailInput = String(formData.email || '').trim();
+      const cleanEmail = String(emailInput)
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '');
       const phoneInput = String(formData.phone || '').trim();
       const password = String(formData.password || '');
       const fullName = String(formData.full_name || formData.fullName || '').trim();
       const role = String(formData.role || DEFAULT_ROLE).toLowerCase();
 
-      // Déterminer la source (téléphone ou email)
-      let email, normalizedPhone, usePhoneAuth = false;
+      if (!fullName) {
+        return { ok: false, message: 'Veuillez saisir votre nom complet.', role, redirectTo: resolvePostLoginDestination(role) };
+      }
 
-      if (phoneInput) {
-        // Cas téléphone : normaliser et vérifier s'il existe déjà
-        normalizedPhone = normalizePhone(phoneInput);
-        if (!normalizedPhone) {
-          return { ok: false, message: 'Numéro de téléphone invalide.', role, redirectTo: resolvePostLoginDestination(role) };
-        }
+      if (!phoneInput) {
+        return { ok: false, message: 'Veuillez saisir votre numéro de téléphone.', role, redirectTo: resolvePostLoginDestination(role) };
+      }
 
-        // Vérifier que le téléphone n'existe pas déjà
-        const client = await getSupabaseClient();
-        const phoneExists = await phoneAlreadyExists(normalizedPhone, client);
-        if (phoneExists) {
-          return { ok: false, message: 'Ce numéro de téléphone est déjà utilisé.', role, redirectTo: resolvePostLoginDestination(role) };
-        }
-
-        // Générer l'email technique
-        try {
-          email = generateTechnicalEmailFromPhone(normalizedPhone);
-          usePhoneAuth = true;
-        } catch (err) {
-          return { ok: false, message: 'Numéro de téléphone invalide.', role, redirectTo: resolvePostLoginDestination(role) };
-        }
-      } else if (emailInput) {
-        // Cas email : utiliser l'email fourni
-        email = emailInput;
-        usePhoneAuth = false;
-      } else {
-        return { ok: false, message: 'Veuillez saisir une adresse email ou un numéro de téléphone.', role, redirectTo: resolvePostLoginDestination(role) };
+      if (!isValidPhone(phoneInput)) {
+        return { ok: false, message: 'Veuillez saisir un numéro de téléphone valide.', role, redirectTo: resolvePostLoginDestination(role) };
       }
 
       if (!password) {
         return { ok: false, message: 'Veuillez saisir un mot de passe.', role, redirectTo: resolvePostLoginDestination(role) };
       }
 
+      if (String(password).length < 6) {
+        return { ok: false, message: 'Le mot de passe doit contenir au moins 6 caractères.', role, redirectTo: resolvePostLoginDestination(role) };
+      }
+
+      if (cleanEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+        return { ok: false, message: 'Veuillez saisir une adresse email valide.', role, redirectTo: resolvePostLoginDestination(role) };
+      }
+
+      const normalizedPhone = normalizePhone(phoneInput);
       const client = await getSupabaseClient();
+      const phoneExists = await phoneAlreadyExists(normalizedPhone, client);
+      if (phoneExists) {
+        return { ok: false, message: 'Ce numéro possède déjà un compte.', role, redirectTo: resolvePostLoginDestination(role) };
+      }
+
+      const authEmail = cleanEmail || generateTechnicalEmailFromPhone(normalizedPhone);
+      if (isSignupRateLimited(authEmail, normalizedPhone)) {
+        return {
+          ok: false,
+          message: 'Trop de tentatives de création de compte. Veuillez patienter quelques minutes avant de réessayer.',
+          role,
+          redirectTo: resolvePostLoginDestination(role),
+        };
+      }
+
+      console.log('Auth email used:', authEmail);
+      const redirectUrl = resolveRedirectUrl('dashboard.html');
       const { data, error } = await client.auth.signUp({
-        email,
+        email: authEmail,
         password,
         options: {
           data: {
+            phone: normalizedPhone,
             full_name: fullName,
-            phone: normalizedPhone || phoneInput || null,
-            role,
+            role: role || 'client',
+            real_email: cleanEmail || null,
           },
+          emailRedirectTo: redirectUrl,
         },
       });
 
       if (error) {
-        return { ok: false, message: mapAuthError(error), role, redirectTo: resolvePostLoginDestination(role) };
-      }
-
-      const userId = data.user?.id;
-      if (userId) {
-        const profilePayload = {
-          id: userId,
-          full_name: fullName || data.user?.user_metadata?.full_name || email,
-          phone: normalizedPhone || data.user?.user_metadata?.phone || null,
-          email: emailInput || email,
-          role,
-          status: 'active',
-          updated_at: new Date().toISOString(),
-        };
-
-        const { error: profileError } = await client.from('profiles').upsert(profilePayload, { onConflict: 'id' });
-        if (profileError) {
+        console.error('Signup error full:', error);
+        const errorMessage = String(error?.message || '').toLowerCase();
+        if (errorMessage.includes('rate limit') || errorMessage.includes('too many requests') || errorMessage.includes('429')) {
+          rememberSignupAttempt(authEmail, normalizedPhone);
           return {
             ok: false,
-            message: 'Compte créé, mais la création du profil a échoué : ' + profileError.message,
+            message: 'Trop de tentatives de création de compte. Veuillez patienter quelques minutes avant de réessayer.',
             role,
             redirectTo: resolvePostLoginDestination(role),
           };
         }
 
-        const { error: walletError } = await client.from('wallets').insert({
-          user_id: userId,
-          balance: 0,
-          currency: 'HTG',
-          status: 'active',
-        });
+        return {
+          ok: false,
+          message: 'Impossible de créer le compte pour le moment. Vérifiez vos informations puis réessayez.',
+          role,
+          redirectTo: resolvePostLoginDestination(role),
+        };
+      }
 
-        if (walletError) {
-          return {
-            ok: false,
-            message: 'Compte créé, mais la création du wallet a échoué : ' + walletError.message,
-            role,
-            redirectTo: resolvePostLoginDestination(role),
-          };
+      const userId = data.user?.id;
+      let walletMessage = null;
+      if (userId) {
+        if (data.session) {
+          try {
+            const { error: walletInsertError } = await client.from('wallets').insert({
+              user_id: userId,
+              balance: 0,
+              currency: 'HTG',
+              status: 'active',
+            });
+
+            if (walletInsertError) {
+              walletMessage = 'Votre portefeuille sera activé automatiquement.';
+            }
+          } catch (walletError) {
+            walletMessage = 'Votre portefeuille sera activé automatiquement.';
+          }
         }
 
         saveCurrentUser({
           id: userId,
-          email: emailInput || email,
+          email: cleanEmail || null,
           role,
-          full_name: profilePayload.full_name,
-          phone: profilePayload.phone,
+          full_name: fullName || data.user?.user_metadata?.full_name || null,
+          phone: normalizedPhone,
         });
       }
 
       return {
         ok: true,
-        message: 'Compte créé avec succès.',
+        message: walletMessage ? 'Compte créé avec succès. Votre portefeuille sera activé automatiquement.' : 'Compte créé avec succès.',
         role,
         redirectTo: resolvePostLoginDestination(role),
         data,
@@ -500,37 +543,35 @@
       const phoneInput = String(formData.phone || '').trim();
       const password = String(formData.password || '');
 
-      // Déterminer la source et résoudre l'email pour Supabase Auth
-      let emailForAuth = emailInput;
-      if (phoneInput) {
-        // Cas téléphone : normaliser et chercher l'email technique
+      if (!password) {
+        return { ok: false, message: 'Veuillez saisir votre mot de passe.', role: DEFAULT_ROLE };
+      }
+
+      let emailForAuth = '';
+      if (emailInput && emailInput.includes('@')) {
+        emailForAuth = emailInput;
+      } else if (phoneInput) {
         const normalizedPhone = normalizePhone(phoneInput);
-        if (!normalizedPhone) {
-          return { ok: false, message: 'Numéro de téléphone invalide.', role: DEFAULT_ROLE };
+        if (!isValidPhone(phoneInput)) {
+          return { ok: false, message: 'Numéro ou mot de passe incorrect.', role: DEFAULT_ROLE };
         }
 
         const client = await getSupabaseClient();
         emailForAuth = await resolveEmailFromPhone(normalizedPhone, client);
         if (!emailForAuth) {
-          return { ok: false, message: 'Téléphone non enregistré.', role: DEFAULT_ROLE };
+          emailForAuth = generateTechnicalEmailFromPhone(normalizedPhone);
         }
-      } else if (!emailInput) {
+      } else {
         return { ok: false, message: 'Veuillez saisir votre email ou votre téléphone.', role: DEFAULT_ROLE };
-      }
-
-      if (!password) {
-        return { ok: false, message: 'Veuillez saisir votre mot de passe.', role: DEFAULT_ROLE };
       }
 
       const client = await getSupabaseClient();
       const { data, error } = await client.auth.signInWithPassword({ email: emailForAuth, password });
 
       if (error) {
-        // Améliorer le message d'erreur pour le contexte téléphone
-        let errorMsg = mapAuthError(error);
-        if (phoneInput && errorMsg.includes('email')) {
-          errorMsg = 'Téléphone ou mot de passe incorrect.';
-        }
+        const errorMsg = emailInput && emailInput.includes('@')
+          ? 'Email ou mot de passe incorrect.'
+          : 'Numéro ou mot de passe incorrect.';
         return { ok: false, message: errorMsg, role: DEFAULT_ROLE };
       }
 
@@ -568,6 +609,30 @@
         role: DEFAULT_ROLE,
         redirectTo: resolvePostLoginDestination(DEFAULT_ROLE),
       };
+    }
+  }
+
+  async function resetPasswordForEmail(email) {
+    try {
+      const normalizedEmail = String(email || '').trim();
+      if (!normalizedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+        return { ok: false, message: 'Veuillez saisir une adresse email valide.' };
+      }
+
+      const client = await getSupabaseClient();
+      const redirectTo = resolveRedirectUrl('login-register/login.html');
+      const { error } = await client.auth.resetPasswordForEmail(normalizedEmail, { redirectTo });
+
+      if (error) {
+        return { ok: false, message: mapAuthError(error) };
+      }
+
+      return {
+        ok: true,
+        message: 'Si cette adresse est associée à un compte, un lien de réinitialisation a été envoyé.',
+      };
+    } catch (error) {
+      return { ok: false, message: error?.message || 'Impossible d’envoyer la demande de réinitialisation.' };
     }
   }
 
@@ -875,6 +940,7 @@
 
   global.registerUser = registerUser;
   global.loginUser = loginUser;
+  global.resetPasswordForEmail = resetPasswordForEmail;
   global.loginWithGoogle = loginWithGoogle;
   global.logoutUser = logoutUser;
   global.getCurrentUser = getCurrentUser;
