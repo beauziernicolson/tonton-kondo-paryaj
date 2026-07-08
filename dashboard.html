@@ -182,10 +182,11 @@
       </a>
 
       <div class="wallet-chip" aria-label="Solde utilisateur">
-        <span><strong id="wallet-balance">Chargement…</strong><span id="wallet-label">Solde disponible</span></span>
+        <span><strong id="wallet-balance">Préparation de votre espace joueur…</strong><span id="wallet-label">Solde disponible</span></span>
       </div>
 
       <div class="header-actions">
+        <div id="authHeaderActions"></div>
         <!-- Promotions -->
         <button class="action-btn" type="button" aria-label="Promotions">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
@@ -230,13 +231,13 @@
       </article>
       <article class="player-box">
         <div class="player-row"><strong>Profil actif</strong><span class="tag" data-dashboard-status-chip>Compte vérifié</span></div>
-        <div class="player-row"><div style="display:flex; align-items:center; gap:10px;"><img data-dashboard-avatar src="assets/reallogo.png" alt="Avatar" class="avatar" style="object-fit: cover; width: 42px; height: 42px;" /><div><strong data-dashboard-name>Chargement…</strong><span data-dashboard-email style="display:block; color:var(--muted); font-size:12px;">Chargement…</span></div></div><a class="tag" href="profile.html">Voir profil</a></div>
+        <div class="player-row"><div style="display:flex; align-items:center; gap:10px;"><img data-dashboard-avatar src="assets/reallogo.png" alt="Avatar" class="avatar" style="object-fit: cover; width: 42px; height: 42px;" /><div><strong data-dashboard-name>Préparation de votre espace joueur…</strong><span data-dashboard-email style="display:block; color:var(--muted); font-size:12px;">Préparation de votre espace joueur…</span></div></div><a class="tag" href="profile.html">Voir profil</a></div>
         <div class="player-row"><span class="tag">Rôle : <strong data-dashboard-role>client</strong></span><span class="tag">Statut : <strong data-dashboard-status>active</strong></strong></span></div>
       </article>
     </section>
 
     <section class="stats-grid">
-      <article class="stat-card"><div class="icon-dot">💰</div><small>Solde</small><strong data-dashboard-balance-card>Chargement…</strong><span>Disponible pour jeu ou retrait.</span></article>
+      <article class="stat-card"><div class="icon-dot">💰</div><small>Solde</small><strong data-dashboard-balance-card>Préparation de votre espace joueur…</strong><span>Disponible pour jeu ou retrait.</span></article>
       <article class="stat-card"><div class="icon-dot">🎟️</div><small>Tickets actifs</small><strong data-dashboard-tickets>0</strong><span>Consultez vos transactions et l'historique complet.</span></article>
       <article class="stat-card"><div class="icon-dot">🏆</div><small>Gains</small><strong data-dashboard-gains>0</strong><span>Montant total à ce jour.</span></article>
       <article class="stat-card"><div class="icon-dot">⚡</div><small>Devise</small><strong data-dashboard-currency>HTG</strong><span>Wallet principal du compte.</span></article>
@@ -252,7 +253,7 @@
           <a class="inline-link" href="profile.html" style="color:var(--gold); font-weight:700;">Voir profil</a>
         </div>
         <div class="history-list" data-dashboard-transactions>
-          <div class="history-item"><div><strong>Chargement…</strong><span>Récupération des transactions récentes…</span></div><em>—</em></div>
+          <div class="history-item"><div><strong>Préparation de votre espace joueur…</strong><span>Nous récupérons vos dernières activités.</span></div><em>—</em></div>
         </div>
       </article>
 
@@ -271,13 +272,15 @@
         <div class="action-row" style="margin-top:12px;">
           <a class="btn btn-primary" href="deposit.html">Dépôt</a>
           <a class="btn btn-secondary" href="withdraw.html">Retrait</a>
-          <a class="btn btn-secondary"  href="index.html">Jouer</a>
+          <a class="btn btn-secondary" href="jeux/games.html">Voir mes jeux</a>
+          <a class="btn btn-secondary" href="index.html">Page principal</a>
         </div>
       </article>
     </section>
   </main>
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/auth-guard.js"></script>
   <script>
     (async () => {
       const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : (window.getCurrentUser ? window.getCurrentUser() : null));

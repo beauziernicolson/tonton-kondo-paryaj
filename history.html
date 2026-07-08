@@ -98,6 +98,7 @@
       </a>
       <div class="wallet-chip" aria-label="Solde utilisateur"><span><strong>Disponible</strong><span>Votre espace joueur</span></span></div>
       <div class="header-actions">
+        <div id="authHeaderActions"></div>
         <button class="action-btn" type="button" aria-label="Promotions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></svg><span class="badge">3</span></button>
         <button class="action-btn" type="button" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span class="badge">2</span></button>
         <a class="action-btn user-button" href="dashboard.html" aria-label="Tableau de bord"><span class="user-avatar">U</span></a>
@@ -112,7 +113,7 @@
         </div>
         <a class="btn" href="index.html">Retour à l’accueil</a>
       </div>
-      <div class="pill" id="history-pill">Connexion requise</div>
+      <div class="pill" id="history-pill">Connectez-vous pour voir votre historique.</div>
     </section>
 
     <section class="grid">
@@ -142,6 +143,7 @@
 
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/auth-guard.js"></script>
   <script>
     (async function initHistoryPage() {
       const historyFeed = document.getElementById('history-feed');
@@ -227,7 +229,7 @@
       }
 
       try {
-        historyFeed.innerHTML = '<div class="state-box">Chargement de l’historique…</div>';
+        historyFeed.innerHTML = '<div class="state-box">Chargement de votre historique…</div>';
 
         const [ticketsResponse, transactionsResponse, walletResponse] = await Promise.all([
           client
@@ -492,7 +494,7 @@
           });
 
           if (!visible.length) {
-            historyFeed.innerHTML = '<div class="empty-state">Aucun historique ne correspond à ce filtre.</div>';
+            historyFeed.innerHTML = '<div class="empty-state">Aucune activité ne correspond à ce filtre pour le moment.</div>';
             return;
           }
 
@@ -728,7 +730,7 @@
         });
       } catch (error) {
         console.error('Erreur chargement historique.', error);
-        historyFeed.innerHTML = '<div class="empty-state">Impossible de charger les données pour le moment. Réessayez plus tard.</div>';
+        historyFeed.innerHTML = '<div class="empty-state">Le chargement a échoué. Réessayez dans quelques instants.</div>';
       }
     })();
   </script>

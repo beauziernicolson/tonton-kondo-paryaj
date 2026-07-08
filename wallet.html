@@ -140,10 +140,11 @@
       </a>
 
       <div class="wallet-chip" aria-label="Solde utilisateur">
-        <span><strong id="header-wallet-balance">Chargement…</strong><span id="wallet-label">Solde disponible</span></span>
+        <span><strong id="header-wallet-balance">Chargement de votre portefeuille…</strong><span id="wallet-label">Solde disponible</span></span>
       </div>
 
       <div class="header-actions">
+        <div id="authHeaderActions"></div>
         <!-- Promotions -->
         <button class="action-btn" type="button" aria-label="Promotions">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
@@ -186,7 +187,7 @@
         <h1>Solde actuel</h1>
         <p>Consultez le solde de votre compte et accédez aux dépôts et retraits.</p>
         <div class="stat-grid">
-          <div class="stat-card"><small>Solde disponible</small><strong id="wallet-balance">Chargement…</strong><span id="wallet-caption">Solde disponible</span></div>
+          <div class="stat-card"><small>Solde disponible</small><strong id="wallet-balance">Chargement de votre portefeuille…</strong><span id="wallet-caption">Solde disponible</span></div>
           <div class="stat-card"><small>Devise</small><strong id="wallet-currency">HTG</strong><span>Monnaie du wallet</span></div>
           <div class="stat-card"><small>Statut</small><strong id="wallet-status">active</strong><span>État du portefeuille</span></div>
         </div>
@@ -203,7 +204,7 @@
         <h1>Derniers mouvements</h1>
         <p>Historique des transactions de votre portefeuille.</p>
         <div id="transactions-list" class="list">
-          <div class="item"><strong>Chargement…</strong><span>Récupération des transactions…</span></div>
+          <div class="item"><strong>Chargement de votre portefeuille…</strong><span>Chargement de vos mouvements récents…</span></div>
         </div>
       </article>
     </section>
@@ -211,6 +212,7 @@
 
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/auth-guard.js"></script>
   <script>
     const refreshWalletBtn = document.getElementById('refresh-wallet-btn');
 
@@ -247,7 +249,7 @@
 
         const list = document.getElementById('transactions-list');
         if (!data || !data.length) {
-          list.innerHTML = '<div class="item"><strong>Aucune transaction récente</strong><span>Les opérations financières apparaîtront ici.</span></div>';
+          list.innerHTML = '<div class="item"><strong>Aucune opération pour le moment. Vos mouvements apparaîtront ici.</strong><span>Vos opérations financières apparaîtront ici.</span><a class="btn btn-secondary" href="deposit.html" style="margin-top:8px; display:inline-flex;">Faire un dépôt</a></div>';
           return;
         }
 

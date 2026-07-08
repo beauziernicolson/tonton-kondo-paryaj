@@ -214,6 +214,7 @@
       </div>
 
       <div class="header-actions">
+        <div id="authHeaderActions"></div>
         <!-- Promotions -->
         <button class="action-btn" type="button" aria-label="Promotions">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
@@ -288,7 +289,7 @@
           </div>
           <button id="refresh-tickets-btn" class="btn btn-primary" type="button">Rafraîchir mes tickets</button>
         </div>
-        <div id="ticket-state" class="state-box">Chargement des tickets…</div>
+        <div id="ticket-state" class="state-box">Chargement de vos tickets…</div>
         <div id="ticket-list" class="ticket-list" aria-live="polite"></div>
       </article>
 
@@ -302,7 +303,7 @@
         <div id="details-panel" class="details-panel">
           <div class="details-card">
             <h3>Aucun ticket sélectionné</h3>
-            <p>Choisissez “Voir détails” dans la liste pour afficher les numéros joués et leurs montants.</p>
+            <p>Choisissez un ticket pour voir ses détails.</p>
           </div>
         </div>
       </article>
@@ -311,6 +312,7 @@
 
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/auth-guard.js"></script>
   <script>
     (function () {
       const ticketList = document.getElementById('ticket-list');
@@ -447,7 +449,7 @@
         if (!tickets.length) {
           const empty = document.createElement('div');
           empty.className = 'empty-state';
-          empty.textContent = 'Aucun ticket trouvé pour cet utilisateur.';
+          empty.innerHTML = 'Vous n’avez encore aucun ticket. Jouez pour créer votre premier billet.<br><a class="btn btn-primary" href="jeux/games.html" style="margin-top:10px; display:inline-flex;">Jouer maintenant</a>';
           ticketList.appendChild(empty);
           setSummary();
           return;
@@ -500,7 +502,7 @@
         detailsPanel.innerHTML = '';
 
         if (!ticket) {
-          detailsPanel.innerHTML = '<div class="details-card"><h3>Aucun ticket sélectionné</h3><p>Choisissez un ticket pour afficher les détails.</p></div>';
+          detailsPanel.innerHTML = '<div class="details-card"><h3>Aucun ticket sélectionné</h3><p>Choisissez un ticket pour voir ses détails.</p></div>';
           return;
         }
 

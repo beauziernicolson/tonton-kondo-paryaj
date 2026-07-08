@@ -76,6 +76,7 @@
       </a>
       <div class="wallet-chip" aria-label="Solde utilisateur"><span><strong>Disponible</strong><span>Votre espace joueur</span></span></div>
       <div class="header-actions">
+        <div id="authHeaderActions"></div>
         <button class="action-btn" type="button" aria-label="Promotions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></svg><span class="badge">3</span></button>
         <button class="action-btn" type="button" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span class="badge">2</span></button>
         <a class="action-btn user-button" href="dashboard.html" aria-label="Tableau de bord"><span class="user-avatar">U</span></a>
@@ -91,7 +92,7 @@
         <a class="btn" href="dashboard.html">Retour</a>
       </div>
 
-      <div class="pill" id="results-pill">Connexion requise</div>
+      <div class="pill" id="results-pill">Connectez-vous pour consulter les résultats.</div>
       <div class="filters" id="results-filters">
         <button class="filter-btn active" type="button" data-filter="all">Tous</button>
         <button class="filter-btn" type="button" data-filter="borlette">Lotto 3</button>
@@ -103,6 +104,7 @@
 
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/auth-guard.js"></script>
   <script>
     (async function initResultsPage() {
       const resultsList = document.getElementById('results-list');
@@ -155,7 +157,7 @@
         });
 
         if (!filtered.length) {
-          resultsList.innerHTML = '<div class="empty-state">Aucun résultat trouvé pour ce filtre.</div>';
+          resultsList.innerHTML = '<div class="empty-state">Aucun tirage n’est disponible pour ce filtre pour le moment.</div>';
           return;
         }
 
@@ -178,7 +180,7 @@
       }
 
       resultsPill.textContent = `Connecté · ${user.full_name || user.email || 'Joueur'}`;
-      resultsList.innerHTML = '<div class="state-box">Chargement des résultats publiés…</div>';
+      resultsList.innerHTML = '<div class="state-box">Chargement des tirages en cours…</div>';
 
       try {
         const client = window.supabaseClient || null;
@@ -202,7 +204,7 @@
         resultsPill.textContent = `Connecté · ${user.full_name || user.email || 'Joueur'} • ${window.__drawResults.length} résultat(s)`;
       } catch (error) {
         console.error('Erreur chargement résultats.', error);
-        resultsList.innerHTML = '<div class="state-box">Impossible de charger les données pour le moment. Réessayez plus tard.</div>';
+        resultsList.innerHTML = '<div class="state-box">Les résultats sont temporairement indisponibles.</div>';
       }
     })();
   </script>

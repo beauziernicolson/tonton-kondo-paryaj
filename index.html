@@ -517,6 +517,7 @@
       </div>
 
       <div class="header-actions">
+        <div id="authHeaderActions"></div>
         <button class="action-btn" type="button" aria-label="Promotions"><svg class="icon icon-lg"><use href="#i-gift"/></svg><span class="badge">3</span></button>
         <button class="action-btn" type="button" aria-label="Notifications"><svg class="icon icon-lg"><use href="#i-bell"/></svg><span class="badge">2</span></button>
         <div class="user-menu-wrap" id="userMenuWrap" hidden>
@@ -812,6 +813,7 @@
 
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/auth-guard.js"></script>
   <script>
     async function isConnectedForPublicGate() {
       try {
