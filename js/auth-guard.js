@@ -2,7 +2,7 @@
   const PUBLIC_PAGES = [
     'index.html',
     'login-register/login.html',
-    'login-register/register.html',
+    'login-register/login.html',
     'login-register/forgot-password.html',
   ];
 
@@ -91,7 +91,7 @@
 
     container.innerHTML = `
       <a class="header-auth-btn btn" href="${getRelativeHref('login-register/login.html')}">Connexion</a>
-      <a class="header-auth-btn btn" href="${getRelativeHref('login-register/register.html')}">Créer un compte</a>
+      <a class="header-auth-btn btn" href="${getRelativeHref('login-register/login.html')}">Créer un compte</a>
     `;
     container.style.display = 'flex';
     container.style.gap = '8px';

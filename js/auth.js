@@ -188,12 +188,26 @@
    * Génère un email technique à partir d'un téléphone normalisé.
    * Exemple : 50933123456 → phone_50933123456@tontonkondo.local
    */
+  function isLikelyValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim().toLowerCase());
+  }
+
   function generateTechnicalEmailFromPhone(phone) {
     const normalized = normalizePhone(phone);
     if (!normalized) {
       throw new Error('Numéro de téléphone invalide.');
     }
-    return `phone_${normalized}@users.tontonkondo.com`;
+
+    const baseLocalPart = `phone_${normalized}`;
+    const candidates = [
+      `${baseLocalPart}@users.tontonkondo.com`,
+      `${baseLocalPart}+auth@users.tontonkondo.com`,
+      `${baseLocalPart.replace(/_/g, '.')}@users.tontonkondo.com`,
+      `${baseLocalPart.replace(/_/g, '-')}@users.tontonkondo.com`,
+    ];
+
+    const validCandidate = candidates.find((candidate) => isLikelyValidEmail(candidate));
+    return validCandidate || `${baseLocalPart}+auth@users.tontonkondo.com`;
   }
 
   /**
@@ -403,11 +417,6 @@
 
   async function registerUser(formData = {}) {
     try {
-      const emailInput = String(formData.email || '').trim();
-      const cleanEmail = String(emailInput)
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, '');
       const phoneInput = String(formData.phone || '').trim();
       const password = String(formData.password || '');
       const fullName = String(formData.full_name || formData.fullName || '').trim();
@@ -433,10 +442,6 @@
         return { ok: false, message: 'Le mot de passe doit contenir au moins 6 caractères.', role, redirectTo: resolvePostLoginDestination(role) };
       }
 
-      if (cleanEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
-        return { ok: false, message: 'Veuillez saisir une adresse email valide.', role, redirectTo: resolvePostLoginDestination(role) };
-      }
-
       const normalizedPhone = normalizePhone(phoneInput);
       const client = await getSupabaseClient();
       const phoneExists = await phoneAlreadyExists(normalizedPhone, client);
@@ -444,7 +449,7 @@
         return { ok: false, message: 'Ce numéro possède déjà un compte.', role, redirectTo: resolvePostLoginDestination(role) };
       }
 
-      const authEmail = cleanEmail || generateTechnicalEmailFromPhone(normalizedPhone);
+      const authEmail = generateTechnicalEmailFromPhone(normalizedPhone);
       if (isSignupRateLimited(authEmail, normalizedPhone)) {
         return {
           ok: false,
@@ -454,7 +459,6 @@
         };
       }
 
-      console.log('Auth email used:', authEmail);
       const redirectUrl = resolveRedirectUrl('dashboard.html');
       const { data, error } = await client.auth.signUp({
         email: authEmail,
@@ -464,7 +468,7 @@
             phone: normalizedPhone,
             full_name: fullName,
             role: role || 'client',
-            real_email: cleanEmail || null,
+            real_email: null,
           },
           emailRedirectTo: redirectUrl,
         },
@@ -513,7 +517,7 @@
 
         saveCurrentUser({
           id: userId,
-          email: cleanEmail || null,
+          email: authEmail,
           role,
           full_name: fullName || data.user?.user_metadata?.full_name || null,
           phone: normalizedPhone,
@@ -539,7 +543,6 @@
 
   async function loginUser(formData = {}) {
     try {
-      const emailInput = String(formData.email || '').trim();
       const phoneInput = String(formData.phone || '').trim();
       const password = String(formData.password || '');
 
@@ -547,32 +550,40 @@
         return { ok: false, message: 'Veuillez saisir votre mot de passe.', role: DEFAULT_ROLE };
       }
 
-      let emailForAuth = '';
-      if (emailInput && emailInput.includes('@')) {
-        emailForAuth = emailInput;
-      } else if (phoneInput) {
-        const normalizedPhone = normalizePhone(phoneInput);
-        if (!isValidPhone(phoneInput)) {
-          return { ok: false, message: 'Numéro ou mot de passe incorrect.', role: DEFAULT_ROLE };
-        }
-
-        const client = await getSupabaseClient();
-        emailForAuth = await resolveEmailFromPhone(normalizedPhone, client);
-        if (!emailForAuth) {
-          emailForAuth = generateTechnicalEmailFromPhone(normalizedPhone);
-        }
-      } else {
-        return { ok: false, message: 'Veuillez saisir votre email ou votre téléphone.', role: DEFAULT_ROLE };
+      if (!phoneInput || !isValidPhone(phoneInput)) {
+        return { ok: false, message: 'Veuillez saisir un numéro de téléphone valide.', role: DEFAULT_ROLE };
       }
 
+      const normalizedPhone = normalizePhone(phoneInput);
       const client = await getSupabaseClient();
-      const { data, error } = await client.auth.signInWithPassword({ email: emailForAuth, password });
+      const candidateEmails = [
+        await resolveEmailFromPhone(normalizedPhone, client),
+        generateTechnicalEmailFromPhone(normalizedPhone),
+      ].filter(Boolean);
 
-      if (error) {
-        const errorMsg = emailInput && emailInput.includes('@')
-          ? 'Email ou mot de passe incorrect.'
-          : 'Numéro ou mot de passe incorrect.';
-        return { ok: false, message: errorMsg, role: DEFAULT_ROLE };
+      let data = null;
+      let error = null;
+      let emailForAuth = '';
+
+      for (const candidateEmail of candidateEmails) {
+        const signInResult = await client.auth.signInWithPassword({ email: candidateEmail, password });
+        if (!signInResult.error) {
+          data = signInResult.data;
+          error = null;
+          emailForAuth = candidateEmail;
+          break;
+        }
+
+        error = signInResult.error;
+        if (String(error?.message || '').toLowerCase().includes('invalid login') || String(error?.message || '').toLowerCase().includes('user not found')) {
+          continue;
+        }
+
+        break;
+      }
+
+      if (!data || error) {
+        return { ok: false, message: 'Numéro ou mot de passe incorrect.', role: DEFAULT_ROLE };
       }
 
       const user = data.user;

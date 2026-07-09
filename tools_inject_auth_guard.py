@@ -13,7 +13,7 @@ files = [
     root / 'results.html',
     root / 'settings.html',
     root / 'login-register' / 'login.html',
-    root / 'login-register' / 'register.html',
+    root / 'login-register' / 'login.html',
     root / 'login-register' / 'forgot-password.html',
 ]
 files += sorted((root / 'jeux').glob('*.html'))

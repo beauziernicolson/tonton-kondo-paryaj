@@ -32,7 +32,7 @@ Bugs fonctionnels
 3. agent/dashboard.html est une page de préparation seulement.
 4. Beaucoup de liens href="#" dans index.html : footer, sports, résultats, aide, FAQ, jeux, etc.
 5. admin/dashboard.html et agent/dashboard.html pointent vers ../login.html, mais ton login réel est dans login-register/login.html.
-6. login-register/register.html contient encore des alert() et un message “Inscription non activée pour l’instant.”
+6. login-register/login.html contient encore des alert() et un message “Inscription non activée pour l’instant.”
 7. schema-tickets.sql et schema-results.sql sont dépassés par des fichiers ALTER. Il faut consolider les schémas avant production.
 
 Structure
@@ -117,3 +117,4 @@ Production client réel : pas encore
 4)grille lotto et exemple lotto 3
 5)course cheval la pa ase aleatoire
 6)plusieurs langue
+7)quand qqun appuie sur qque chose et la chose charge elle ne doit pas se repeter si la personne reappuie

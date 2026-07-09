@@ -450,11 +450,12 @@
       }
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 768px) {
       .app { padding: 12px 10px 28px; }
       .topbar { flex-direction: column; align-items: flex-start; }
       .title-wrap { width: 100%; justify-content: space-between; }
-      .number-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .number-grid { grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; }
+      .number-btn { min-height: 40px; font-size: 12px; }
       .drawing-zone { grid-template-columns: repeat(5, minmax(0, 1fr)); min-height: 160px; }
       .summary-row, .result-row { flex-direction: column; align-items: flex-start; }
     }

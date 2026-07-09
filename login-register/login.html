@@ -222,8 +222,7 @@
             <span class="input-icon">📱</span>
             <input class="form-input" type="tel" id="phone" name="phone" placeholder="50933123456 ou 33123456" />
           </div>
-          <p class="hint">Entrez votre numéro de téléphone ou votre adresse email.</p>
-          <p class="hint" id="emailToggleWrapper"><a href="#" id="emailToggleLink">Se connecter avec email</a></p>
+          <p class="hint">Connectez-vous avec votre numéro de téléphone.</p>
         </div>
 
         <div class="form-group signup-only" id="fullnameGroup" style="display:none;">
@@ -232,15 +231,6 @@
             <span class="input-icon">👤</span>
             <input class="form-input" type="text" id="fullname" name="full_name" placeholder="Entrez votre nom complet" />
           </div>
-        </div>
-
-        <div class="form-group form-group-alt" id="emailGroup" style="display:none;">
-          <label class="form-label" for="email">Email</label>
-          <div class="input-wrap">
-            <span class="input-icon">✉</span>
-            <input class="form-input" type="email" id="email" name="email" placeholder="Entrez votre e-mail" />
-          </div>
-          <p class="hint" id="emailHint">Optionnel : utilisez votre email si vous ne vous connectez pas avec un téléphone.</p>
         </div>
 
         <div class="form-group">
@@ -303,12 +293,8 @@
     const formMessage = document.getElementById('formMessage');
     const fullnameInput = document.getElementById('fullname');
     const phoneInput = document.getElementById('phone');
-    const emailInput = document.getElementById('email');
     const phoneGroup = document.getElementById('phoneGroup');
-    const emailGroup = document.getElementById('emailGroup');
     const fullnameGroup = document.getElementById('fullnameGroup');
-    const emailToggleWrapper = document.getElementById('emailToggleWrapper');
-    const emailToggleLink = document.getElementById('emailToggleLink');
 
     let mode = 'login';
 
@@ -333,9 +319,7 @@
         : 'Vous n’avez pas de compte ? <a href="#" id="switchLink">Inscrivez-vous</a>';
 
       phoneGroup.style.display = 'block';
-      emailGroup.style.display = isSignup ? 'block' : 'none';
       fullnameGroup.style.display = isSignup ? 'block' : 'none';
-      emailToggleWrapper.style.display = isSignup ? 'none' : 'block';
 
       const newLink = document.getElementById('switchLink');
       newLink?.addEventListener('click', (event) => {
@@ -358,12 +342,6 @@
 
     loginTab.addEventListener('click', () => setMode('login'));
     signupTab.addEventListener('click', () => setMode('signup'));
-    emailToggleLink?.addEventListener('click', (event) => {
-      event.preventDefault();
-      emailGroup.style.display = 'block';
-      emailToggleWrapper.style.display = 'none';
-      emailInput.focus();
-    });
     togglePassword.addEventListener('click', () => {
       const isPassword = passwordInput.type === 'password';
       passwordInput.type = isPassword ? 'text' : 'password';
@@ -375,12 +353,11 @@
       setMessage('');
 
       const phone = String(phoneInput.value || '').trim();
-      const email = String(emailInput.value || '').trim();
       const password = String(passwordInput.value || '');
       const fullname = String(fullnameInput.value || '').trim();
 
-      if (!phone && !email) {
-        setMessage('Veuillez saisir votre numéro de téléphone ou votre email.', true);
+      if (!phone) {
+        setMessage('Veuillez saisir un numéro de téléphone valide.', true);
         return;
       }
 
@@ -399,8 +376,8 @@
 
       try {
         const result = mode === 'signup'
-          ? await window.registerUser({ full_name: fullname, phone, email, password })
-          : await window.loginUser({ phone, email, password });
+          ? await window.registerUser({ full_name: fullname, phone, password })
+          : await window.loginUser({ phone, password });
 
         if (result?.ok) {
           const redirectTarget = resolveRedirectTarget(result);
