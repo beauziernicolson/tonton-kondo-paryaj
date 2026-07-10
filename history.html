@@ -166,6 +166,15 @@
         keno: 'Keno',
         roulette: 'Roulette',
         lucky6: 'Lucky 6',
+        horse_racing: 'Course Cheval',
+        american_roulette: 'Roulette Américaine',
+        roulette_ameri: 'Roulette Américaine',
+      };
+
+      const GAME_ICONS = {
+        horse_racing: '🐎',
+        american_roulette: '🎰',
+        roulette_ameri: '🎰',
       };
 
       const STATUS_LABELS = {
@@ -184,7 +193,9 @@
 
       function formatGameLabel(gameType) {
         const normalized = String(gameType || '').toLowerCase();
-        return GAME_LABELS[normalized] || 'Jeu inconnu';
+        const label = GAME_LABELS[normalized] || 'Jeu inconnu';
+        const icon = GAME_ICONS[normalized];
+        return icon ? `${icon} ${label}` : label;
       }
 
       function formatStatusLabel(status) {
@@ -437,7 +448,7 @@
 
             const gameKey = String(ticket.game_type || '').toLowerCase();
             const isKeno = gameKey === 'keno';
-            const isRoulette = gameKey === 'roulette';
+            const isRoulette = ['roulette', 'american_roulette', 'roulette_ameri'].includes(gameKey);
             const kenoData = isKeno ? (kenoRoundsByTicket[ticket.id] || []) : [];
             const rouletteRound = isRoulette ? (rouletteRoundsByTicket[ticket.id] || [])[0] || null : null;
             const rouletteBets = isRoulette ? (rouletteBetsByTicket[ticket.id] || []) : [];
@@ -547,7 +558,7 @@
               `;
             }
 
-            if (gameKey === 'roulette') {
+            if (['roulette', 'american_roulette', 'roulette_ameri'].includes(gameKey)) {
               const round = item.rouletteRound || null;
               const bets = Array.isArray(item.rouletteBets) ? item.rouletteBets : [];
               if (round || bets.length) {

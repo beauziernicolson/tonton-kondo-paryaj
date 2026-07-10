@@ -163,6 +163,16 @@
     }
   }
 
+  async function waitForSession() {
+    const firstAttempt = global.getCurrentUserAsync ? await global.getCurrentUserAsync() : null;
+    if (firstAttempt) {
+      return firstAttempt;
+    }
+
+    await new Promise((resolve) => global.setTimeout(resolve, 800));
+    return global.getCurrentUserAsync ? await global.getCurrentUserAsync() : null;
+  }
+
   async function enforceAuthGuard() {
     if (!global.document) {
       return;
@@ -175,7 +185,7 @@
     }
 
     try {
-      const user = global.getCurrentUserAsync ? await global.getCurrentUserAsync() : null;
+      const user = await waitForSession();
       if (!user) {
         if (global.saveRedirectTarget) {
           global.saveRedirectTarget(getNormalizedPathname().replace(/^\/+/, ''));

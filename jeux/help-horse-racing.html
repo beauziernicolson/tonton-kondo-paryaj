@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guide détaillé des règles du Horse Racing sur Tonton Kondo." />
+  <title>Tonton Kondo — Help Horse Racing</title>
+  <style>
+    :root { --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.10); --text:#f5f7fb; --muted:#aebbd0; --gold:#ffd21f; --shadow:0 24px 60px rgba(0,0,0,.45); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 80% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 15% 8%, rgba(57,168,255,.12), transparent 22%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
+    .app { width:min(100%, 1120px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .action-row { display:flex; flex-wrap:wrap; gap:10px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#fff; padding:10px 12px; font-weight:800; text-decoration:none; }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), #ffb900); color:#121212; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .btn-secondary { background:rgba(255,255,255,.03); }
+    .card { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:900; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 38px); line-height:1.05; }
+    p, li { color:var(--muted); }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+    .panel { border:1px solid var(--line); border-radius:22px; padding:14px; background:rgba(255,255,255,.03); }
+    .panel h2 { margin-top:0; font-size:18px; }
+    ul { color:var(--muted); padding-left:18px; }
+    .example { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .pill { border:1px solid var(--line); border-radius:999px; padding:8px 10px; background:rgba(255,255,255,.04); color:#fff; font-size:13px; }
+    .callout { display:block; border:1px solid rgba(255,210,31,.18); border-radius:16px; padding:12px; background:rgba(255,210,31,.08); color:#fff8da; font-weight:800; margin-top:8px; }
+    .back-link { display:inline-flex; margin-top:12px; color:var(--gold); text-decoration:underline; }
+    @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <div class="action-row">
+        <a class="btn btn-secondary" href="games.html">Retour aux jeux</a>
+        <a class="btn btn-primary" href="horse-racing.html">Retour à Horse Racing</a>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="eyebrow">Aide</div>
+      <h1>Horse Racing — règles détaillées</h1>
+      <p>Horse Racing est une course virtuelle où le joueur choisit un cheval, place sa mise et attend la fin de la course. Le résultat dépend du cheval qui franchit la ligne d’arrivée en premier. Plus la cote du cheval est élevée, plus le gain potentiel est important si ce cheval gagne.</p>
+      <a class="back-link" href="horse-racing.html">← Retour à la page Horse Racing</a>
+
+      <div class="grid">
+        <article class="panel">
+          <h2>1. Principe du jeu</h2>
+          <p>Une course virtuelle démarre et plusieurs chevaux se disputent la victoire. Le joueur choisit le cheval qu’il pense voir gagner.</p>
+          <span class="callout">Le gain dépend de la cote du cheval sélectionné.</span>
+        </article>
+
+        <article class="panel">
+          <h2>2. Déroulement</h2>
+          <ul>
+            <li>Choisissez votre cheval.</li>
+            <li>Placez votre mise.</li>
+            <li>Attendez le résultat de la course.</li>
+            <li>Le gain dépend du classement final.</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <h2>3. Comment le gain se forme</h2>
+          <p>Si le cheval choisi termine en tête, le gain est attribué. Le montant est souvent calculé à partir de la cote du cheval, ce qui rend certains choix plus risqués et plus rémunérateurs.</p>
+          <p>Un cheval à forte cote peut rapporter plus, mais il est plus difficile à faire gagner.</p>
+        </article>
+
+        <article class="panel">
+          <h2>4. Exemple simple</h2>
+          <p>Vous misez sur un cheval à cote 4.0.</p>
+          <div class="example">
+            <span class="pill">Cheval vainqueur</span>
+            <span class="pill">Gain = mise × cote</span>
+          </div>
+          <p>Si votre cheval gagne, votre gain est calculé à partir de cette cote. Un cheval plus risqué peut donc rapporter davantage.</p>
+        </article>
+
+        <article class="panel" style="grid-column:1 / -1;">
+          <h2>5. Ce qu’il faut retenir</h2>
+          <ul>
+            <li>Horse Racing est une course virtuelle.</li>
+            <li>Le joueur choisit un cheval avant le départ.</li>
+            <li>Le gain dépend de la cote du cheval.</li>
+            <li>Un cheval à forte cote peut offrir un gain plus grand.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

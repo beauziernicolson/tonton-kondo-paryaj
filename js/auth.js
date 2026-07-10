@@ -11,6 +11,7 @@
     agent: 'agent/dashboard.html',
     admin: 'admin/dashboard.html',
     super_admin: 'admin/dashboard.html',
+    administrator: 'admin/dashboard.html',
   };
 
   let supabaseClient = null;
@@ -25,9 +26,45 @@
     return { url, key };
   }
 
+  function isAdminRole(role) {
+    const normalized = String(role || '').toLowerCase();
+    return ['admin', 'super_admin', 'administrator'].includes(normalized);
+  }
+
   function getRoleDestination(role) {
     const normalized = String(role || DEFAULT_ROLE).toLowerCase();
-    return ROLE_REDIRECTS[normalized] || 'dashboard.html';
+    if (!normalized || normalized === DEFAULT_ROLE) {
+      return 'dashboard.html';
+    }
+    if (isAdminRole(normalized)) {
+      return ROLE_REDIRECTS[normalized] || 'admin/dashboard.html';
+    }
+    if (normalized === 'agent') {
+      return ROLE_REDIRECTS.agent || 'dashboard.html';
+    }
+    return 'dashboard.html';
+  }
+
+  function isSafeRedirectTarget(target) {
+    const rawValue = String(target || '').trim();
+    if (!rawValue) {
+      return false;
+    }
+
+    const normalizedValue = rawValue
+      .replace(/^file:\/\//i, '')
+      .replace(/^https?:\/\/[^/]+/i, '')
+      .replace(/^\/+/, '');
+
+    if (!normalizedValue || normalizedValue === 'login-register/login.html' || normalizedValue === 'login.html') {
+      return false;
+    }
+
+    if (normalizedValue === 'dashboard2.html' || normalizedValue === '/dashboard2.html' || normalizedValue.includes('/admin/') || normalizedValue === 'admin/dashboard.html' || normalizedValue === 'admin') {
+      return false;
+    }
+
+    return true;
   }
 
   function saveRedirectTarget(target) {
@@ -42,7 +79,7 @@
     const fallbackValue = nickoIndex >= 0 ? segments.slice(nickoIndex + 1).join('/') : segments.join('/');
     const value = fallbackValue || rawValue;
 
-    if (!value || value === 'login-register/login.html' || value === 'login.html') {
+    if (!isSafeRedirectTarget(value)) {
       return null;
     }
 
@@ -60,7 +97,7 @@
 
   function resolvePostLoginDestination(role = DEFAULT_ROLE) {
     const storedTarget = consumeRedirectTarget();
-    if (storedTarget) {
+    if (storedTarget && isSafeRedirectTarget(storedTarget)) {
       return storedTarget;
     }
 
@@ -186,28 +223,10 @@
 
   /**
    * Génère un email technique à partir d'un téléphone normalisé.
-   * Exemple : 50933123456 → phone_50933123456@tontonkondo.local
    */
-  function isLikelyValidEmail(value) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim().toLowerCase());
-  }
-
   function generateTechnicalEmailFromPhone(phone) {
-    const normalized = normalizePhone(phone);
-    if (!normalized) {
-      throw new Error('Numéro de téléphone invalide.');
-    }
-
-    const baseLocalPart = `phone_${normalized}`;
-    const candidates = [
-      `${baseLocalPart}@users.tontonkondo.com`,
-      `${baseLocalPart}+auth@users.tontonkondo.com`,
-      `${baseLocalPart.replace(/_/g, '.')}@users.tontonkondo.com`,
-      `${baseLocalPart.replace(/_/g, '-')}@users.tontonkondo.com`,
-    ];
-
-    const validCandidate = candidates.find((candidate) => isLikelyValidEmail(candidate));
-    return validCandidate || `${baseLocalPart}+auth@users.tontonkondo.com`;
+    const digits = String(phone || '').replace(/\D/g, '');
+    return `tk${digits}@gmail.com`;
   }
 
   /**
@@ -459,6 +478,7 @@
         };
       }
 
+      console.log('FINAL AUTH EMAIL:', authEmail);
       const redirectUrl = resolveRedirectUrl('dashboard.html');
       const { data, error } = await client.auth.signUp({
         email: authEmail,
@@ -495,24 +515,23 @@
         };
       }
 
+      const hasSession = Boolean(data.session?.user);
       const userId = data.user?.id;
       let walletMessage = null;
-      if (userId) {
-        if (data.session) {
-          try {
-            const { error: walletInsertError } = await client.from('wallets').insert({
-              user_id: userId,
-              balance: 0,
-              currency: 'HTG',
-              status: 'active',
-            });
+      if (userId && hasSession) {
+        try {
+          const { error: walletInsertError } = await client.from('wallets').insert({
+            user_id: userId,
+            balance: 0,
+            currency: 'HTG',
+            status: 'active',
+          });
 
-            if (walletInsertError) {
-              walletMessage = 'Votre portefeuille sera activé automatiquement.';
-            }
-          } catch (walletError) {
+          if (walletInsertError) {
             walletMessage = 'Votre portefeuille sera activé automatiquement.';
           }
+        } catch (walletError) {
+          walletMessage = 'Votre portefeuille sera activé automatiquement.';
         }
 
         saveCurrentUser({
@@ -522,13 +541,26 @@
           full_name: fullName || data.user?.user_metadata?.full_name || null,
           phone: normalizedPhone,
         });
+      } else {
+        saveCurrentUser(null);
+      }
+
+      if (!hasSession) {
+        return {
+          ok: true,
+          needsLogin: true,
+          message: 'Compte créé. Connectez-vous maintenant avec votre numéro et votre mot de passe.',
+          role,
+          redirectTo: 'login-register/login.html',
+          data,
+        };
       }
 
       return {
         ok: true,
         message: walletMessage ? 'Compte créé avec succès. Votre portefeuille sera activé automatiquement.' : 'Compte créé avec succès.',
         role,
-        redirectTo: resolvePostLoginDestination(role),
+        redirectTo: 'dashboard.html',
         data,
       };
     } catch (error) {
@@ -556,9 +588,11 @@
 
       const normalizedPhone = normalizePhone(phoneInput);
       const client = await getSupabaseClient();
+      const technicalEmail = generateTechnicalEmailFromPhone(normalizedPhone);
+      const profileEmail = await resolveEmailFromPhone(normalizedPhone, client);
       const candidateEmails = [
-        await resolveEmailFromPhone(normalizedPhone, client),
-        generateTechnicalEmailFromPhone(normalizedPhone),
+        profileEmail && /^tk\d+@gmail\.com$/i.test(String(profileEmail)) ? profileEmail : null,
+        technicalEmail,
       ].filter(Boolean);
 
       let data = null;
@@ -567,18 +601,22 @@
 
       for (const candidateEmail of candidateEmails) {
         const signInResult = await client.auth.signInWithPassword({ email: candidateEmail, password });
-        if (!signInResult.error) {
-          data = signInResult.data;
-          error = null;
-          emailForAuth = candidateEmail;
+        if (signInResult.error) {
+          console.error('LOGIN error full:', signInResult.error);
+          console.log('LOGIN authEmail used:', candidateEmail);
+          console.log('LOGIN normalizedPhone:', normalizedPhone);
+          error = signInResult.error;
+          if (String(error?.message || '').toLowerCase().includes('invalid login') || String(error?.message || '').toLowerCase().includes('user not found')) {
+            continue;
+          }
           break;
         }
 
-        error = signInResult.error;
-        if (String(error?.message || '').toLowerCase().includes('invalid login') || String(error?.message || '').toLowerCase().includes('user not found')) {
-          continue;
-        }
-
+        console.log('LOGIN authEmail used:', candidateEmail);
+        console.log('LOGIN normalizedPhone:', normalizedPhone);
+        data = signInResult.data;
+        error = null;
+        emailForAuth = candidateEmail;
         break;
       }
 
@@ -746,8 +784,9 @@
       .from('transactions')
       .select('id, type, amount, status, created_at, description')
       .eq('user_id', user.id)
+      .in('type', ['deposit', 'withdrawal'])
       .order('created_at', { ascending: false })
-      .limit(5);
+      .limit(4);
 
     if (transactionsError) {
       throw transactionsError;
@@ -772,6 +811,53 @@
         created_at: user.created_at || null,
       },
     };
+  }
+
+  function getTransactionTypeLabel(type) {
+    const normalizedType = String(type || '').toLowerCase();
+    if (normalizedType === 'deposit') return 'Dépôt';
+    if (normalizedType === 'withdrawal') return 'Retrait';
+    return 'Transaction';
+  }
+
+  function getTransactionStatusLabel(status) {
+    const normalizedStatus = String(status || '').toLowerCase();
+    if (normalizedStatus === 'pending') return 'En attente';
+    if (normalizedStatus === 'approved') return 'Validé';
+    if (normalizedStatus === 'rejected') return 'Refusé';
+    if (normalizedStatus === 'cancelled') return 'Annulé';
+    if (normalizedStatus === 'completed') return 'Terminé';
+    return status || 'En attente';
+  }
+
+  function getTransactionStatusClass(status) {
+    const normalizedStatus = String(status || '').toLowerCase();
+    if (normalizedStatus === 'approved') return 'history-badge success';
+    if (normalizedStatus === 'rejected') return 'history-badge danger';
+    return 'history-badge pending';
+  }
+
+  function getTransactionIcon(type) {
+    const normalizedType = String(type || '').toLowerCase();
+    if (normalizedType === 'deposit') return '💰';
+    if (normalizedType === 'withdrawal') return '🏧';
+    return '💳';
+  }
+
+  function formatShortHistoryDate(value) {
+    if (!value) return '—';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+    if (target.getTime() === today.getTime()) return 'Aujourd’hui';
+    if (target.getTime() === yesterday.getTime()) return 'Hier';
+    return `${String(target.getDate()).padStart(2, '0')}/${String(target.getMonth() + 1).padStart(2, '0')}`;
   }
 
   function renderDashboardPage(data) {
@@ -839,14 +925,43 @@
     const historyEl = documentRef.querySelector('[data-dashboard-transactions]');
     if (historyEl) {
       if (transactions.length === 0) {
-        historyEl.innerHTML = '<div class="history-item"><div><strong>Aucune transaction récente</strong><span>Les opérations apparaîtront ici après votre premier mouvement.</span></div><em>—</em></div>';
+        historyEl.className = 'empty-history';
+        historyEl.innerHTML = `
+          <div class="empty-history-inner">
+            <span class="empty-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
+            </span>
+            <div>
+              <strong>Aucune activité récente</strong>
+              <p>Vos dépôts et retraits apparaîtront ici.</p>
+              <a class="history-empty-cta" href="deposit.html">Faire un dépôt</a>
+            </div>
+          </div>
+        `;
       } else {
+        historyEl.className = 'history-feed';
         historyEl.innerHTML = transactions.map((item) => {
           const amount = Number(item.amount || 0);
-          const sign = amount >= 0 ? '+' : '-';
-          const label = String(item.type || 'transaction').replace(/_/g, ' ');
-          const status = String(item.status || 'pending');
-          return `<div class="history-item"><div><strong>${label}</strong><span>${new Date(item.created_at).toLocaleString('fr-FR')} • ${status}</span></div><em>${sign} ${Math.abs(amount).toLocaleString('fr-FR')} ${currency}</em></div>`;
+          const typeLabel = getTransactionTypeLabel(item.type);
+          const icon = getTransactionIcon(item.type);
+          const statusLabel = getTransactionStatusLabel(item.status);
+          const statusClass = getTransactionStatusClass(item.status);
+          const signedAmount = amount >= 0 ? `+ ${Math.abs(amount).toLocaleString('fr-FR')} ${currency}` : `- ${Math.abs(amount).toLocaleString('fr-FR')} ${currency}`;
+          const amountClass = amount >= 0 ? 'history-amount positive' : 'history-amount negative';
+          return `
+            <div class="history-item">
+              <div class="history-icon">${icon}</div>
+              <div class="history-main">
+                <strong>${typeLabel}</strong>
+                <span>${item.description || 'Mouvement de compte'}</span>
+              </div>
+              <div class="history-meta">
+                <div class="${amountClass}">${signedAmount}</div>
+                <div class="${statusClass}">${statusLabel}</div>
+                <div class="history-date">${formatShortHistoryDate(item.created_at)}</div>
+              </div>
+            </div>
+          `;
         }).join('');
       }
     }
@@ -964,6 +1079,7 @@
   global.renderProfilePage = renderProfilePage;
   global.checkUserRole = checkUserRole;
   global.resolveRoleDestination = getRoleDestination;
+  global.getRoleDestination = getRoleDestination;
   global.resolveRedirectUrl = resolveRedirectUrl;
   global.getSupabaseClient = getSupabaseClient;
 })(window);

@@ -88,15 +88,140 @@
     .ticket-total { color:var(--gold); font-size:18px; font-weight:900; }
     .ticket-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:10px; }
 
-    .badge { display:inline-flex; align-items:center; justify-content:center; padding:6px 8px; border-radius:999px; font-size:11px; text-transform:uppercase; letter-spacing:.14em; font-weight:900; border:1px solid transparent; }
-    .badge.pending { background:rgba(255,210,31,.10); color:#fff5c6; border-color:rgba(255,210,31,.18); }
-    .badge.confirmed { background:rgba(70,227,111,.10); color:#e7fff0; border-color:rgba(70,227,111,.18); }
-    .badge.lost { background:rgba(255,93,108,.10); color:#ffe7eb; border-color:rgba(255,93,108,.18); }
-    .badge.won { background:rgba(57,168,255,.14); color:#e7f5ff; border-color:rgba(57,168,255,.18); }
-    .badge.paid { background:rgba(255,210,31,.14); color:#fff7d9; border-color:rgba(255,210,31,.20); }
-    .badge.cancelled { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
-    .badge.completed { background:rgba(70,227,111,.10); color:#e7fff0; border-color:rgba(70,227,111,.18); }
-    .badge.unknown { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
+    .ticket-copy-btn {
+      min-width:82px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(6,18,35,.8);
+      color:var(--text);
+      font-size:12px;
+      font-weight:700;
+      padding:8px 10px;
+      border-radius:999px;
+      transition:background .2s, color .2s, transform .2s;
+    }
+
+    .ticket-copy-btn:hover,
+    .ticket-copy-btn:focus-visible {
+      background:rgba(255,210,31,.14);
+      color:var(--gold);
+      outline:none;
+      transform:translateY(-1px);
+    }
+
+    .ticket-copy-btn:active {
+      transform:translateY(0);
+    }
+
+    .ticket-copy-btn[aria-label] {
+      cursor:pointer;
+    }
+
+    .ticket-toolbar {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+      padding:12px;
+      background:rgba(2,9,19,.92);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;
+    }
+
+    .ticket-toolbar input,
+    .ticket-toolbar select {
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      background:rgba(5,16,29,.92);
+      color:var(--text);
+      padding:12px 14px;
+      font-size:14px;
+      min-height:46px;
+      outline:none;
+    }
+
+    .ticket-toolbar input {
+      flex:1 1 320px;
+      min-width:220px;
+    }
+
+    .ticket-toolbar select {
+      flex:0 0 240px;
+      max-width:100%;
+    }
+
+    .ticket-toolbar input::placeholder {
+      color:rgba(255,255,255,.55);
+    }
+
+    .ticket-toolbar input:focus,
+    .ticket-toolbar select:focus {
+      border-color:var(--gold);
+      box-shadow:0 0 0 3px rgba(255,210,31,.18);
+    }
+
+    .ticket-filters {
+      display:flex;
+      flex-wrap:nowrap;
+      gap:8px;
+      overflow-x:auto;
+      padding:10px 10px 8px;
+      margin-bottom:12px;
+      background:rgba(2,9,19,.92);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+
+    .ticket-filters::-webkit-scrollbar {
+      display:none;
+    }
+
+    .ticket-filter-btn {
+      flex:0 0 auto;
+      appearance:none;
+      border:none;
+      background:rgba(3,12,25,.9);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:13px;
+      font-weight:700;
+      white-space:nowrap;
+      transition:background .2s, color .2s, border-color .2s;
+    }
+
+    .ticket-filter-btn:hover {
+      background:rgba(255,255,255,.08);
+    }
+
+    .ticket-filter-btn.active {
+      background:linear-gradient(180deg, var(--gold), var(--gold-2));
+      color:#111;
+      border-color:transparent;
+    }
+
+    .ticket-filters:focus-within {
+      outline:2px solid rgba(255,210,31,.25);
+      outline-offset:2px;
+    }
+
+    @media (max-width: 760px) {
+      .ticket-filters { padding-bottom:10px; }
+    }
+
+    .status-badge { display:inline-flex; align-items:center; justify-content:center; padding:6px 8px; border-radius:999px; font-size:11px; text-transform:uppercase; letter-spacing:.14em; font-weight:900; border:1px solid transparent; }
+    .status-badge.pending { background:rgba(255,210,31,.10); color:#fff5c6; border-color:rgba(255,210,31,.18); }
+    .status-badge.confirmed { background:rgba(70,227,111,.10); color:#e7fff0; border-color:rgba(70,227,111,.18); }
+    .status-badge.lost { background:rgba(255,93,108,.10); color:#ffe7eb; border-color:rgba(255,93,108,.18); }
+    .status-badge.won { background:rgba(57,168,255,.14); color:#e7f5ff; border-color:rgba(57,168,255,.18); }
+    .status-badge.paid { background:rgba(255,210,31,.14); color:#fff7d9; border-color:rgba(255,210,31,.20); }
+    .status-badge.cancelled { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
+    .status-badge.completed { background:rgba(70,227,111,.10); color:#e7fff0; border-color:rgba(70,227,111,.18); }
+    .status-badge.unknown { background:rgba(174,187,208,.10); color:#edf4ff; border-color:rgba(174,187,208,.18); }
 
     .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:10px 12px; border:1px solid var(--line); font-weight:900; color:#fff; background:rgba(255,255,255,.04); }
     .btn:hover { transform:translateY(-1px); }
@@ -181,7 +306,7 @@
     .user-menu-link:hover { background: rgba(255, 255, 255, .04); border-color: rgba(255, 255, 255, .08); }
     .user-menu-divider { height: 1px; background: rgba(255, 255, 255, .08); margin: 4px 0; }
     .user-menu-logout { color: #ffd6d6; }
-    .badge {
+    .header-badge {
       position: absolute; right: -2px; top: -5px; background: var(--gold); color: #111;
       border-radius: 999px; font-size: 11px; font-weight: 900; min-width: 19px; height: 19px;
       display: grid; place-items: center; border: 2px solid #061426;
@@ -220,14 +345,14 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
             <rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/>
           </svg>
-          <span class="badge">3</span>
+          <span class="header-badge">3</span>
         </button>
         <!-- Notifications -->
         <button class="action-btn" type="button" aria-label="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>
           </svg>
-          <span class="badge">2</span>
+          <span class="header-badge">2</span>
         </button>
 
         <!-- Menu utilisateur interactif -->
@@ -256,7 +381,6 @@
         <div class="eyebrow">Historique</div>
         <h1>Vos tickets</h1>
         <p>Consultez tous vos tickets joués, leurs numéros et leurs statuts.</p>
-        <div id="user-chip" class="mini-chip">👤 Connecté</div>
       </article>
       <article class="summary-grid">
         <div class="summary-card">
@@ -289,8 +413,43 @@
           </div>
           <button id="refresh-tickets-btn" class="btn btn-primary" type="button">Rafraîchir mes tickets</button>
         </div>
+        <div class="ticket-toolbar">
+          <input
+            id="ticket-search"
+            type="search"
+            placeholder="Rechercher un ticket..."
+            autocomplete="off"
+          />
+          <select id="ticket-game-filter" aria-label="Filtrer par jeu">
+            <option value="all">Tous les jeux</option>
+            <option value="borlette">Borlette</option>
+            <option value="mariage">Mariage</option>
+            <option value="lotto3">Lotto 3</option>
+            <option value="lotto4">Lotto 4</option>
+            <option value="lotto5">Lotto 5</option>
+            <option value="keno">Keno</option>
+            <option value="roulette">Roulette Européenne</option>
+            <option value="american_roulette">Roulette Américaine</option>
+            <option value="lucky6">Lucky 6</option>
+            <option value="penalty">Penalty</option>
+            <option value="horse_racing">Course Cheval</option>
+          </select>
+        </div>
+        <div class="ticket-filters" id="ticket-filters" role="group" aria-label="Filtres des tickets">
+          <button type="button" class="ticket-filter-btn active" data-ticket-filter="all">Tous</button>
+          <button type="button" class="ticket-filter-btn" data-ticket-filter="pending">En attente</button>
+          <button type="button" class="ticket-filter-btn" data-ticket-filter="won">Gagnés</button>
+          <button type="button" class="ticket-filter-btn" data-ticket-filter="lost">Perdus</button>
+          <button type="button" class="ticket-filter-btn" data-ticket-filter="paid">Payés</button>
+          <button type="button" class="ticket-filter-btn" data-ticket-filter="completed">Terminés</button>
+          <button type="button" class="ticket-filter-btn" data-ticket-filter="cancelled">Annulés</button>
+        </div>
         <div id="ticket-state" class="state-box">Chargement de vos tickets…</div>
         <div id="ticket-list" class="ticket-list" aria-live="polite"></div>
+        <div id="tickets-load-more-wrap" class="load-more-wrap" hidden>
+          <div class="load-more-info" id="tickets-load-more-info"></div>
+          <button id="tickets-load-more-btn" class="btn" type="button">Charger plus</button>
+        </div>
       </article>
 
       <article class="panel">
@@ -323,11 +482,19 @@
       const statusSummary = document.getElementById('status-summary');
       const userChip = document.getElementById('user-chip');
       const refreshTicketsBtn = document.getElementById('refresh-tickets-btn');
+      const ticketsLoadMoreWrap = document.getElementById('tickets-load-more-wrap');
+      const ticketsLoadMoreBtn = document.getElementById('tickets-load-more-btn');
+      const ticketsLoadMoreInfo = document.getElementById('tickets-load-more-info');
 
       let currentUser = null;
       let tickets = [];
       let selectedTicketId = null;
       let ticketItemsByTicket = {};
+      let activeTicketFilter = 'all';
+      let activeGameFilter = 'all';
+      let ticketSearchTerm = '';
+      let visibleTicketsCount = 20;
+      const TICKETS_PAGE_SIZE = 20;
 
       const GAME_LABELS = {
         borlette: 'Borlette',
@@ -337,9 +504,13 @@
         lotto4: 'Lotto4',
         lotto5: 'Lotto5',
         keno: 'Keno',
-        roulette: 'Roulette',
+        roulette: 'Roulette Européenne',
         lucky6: 'Lucky 6',
-      };
+        horse_racing: 'Course Cheval',
+        american_roulette: 'Roulette Américaine',
+        roulette_ameri: 'Roulette Américaine',
+        roulette_american: 'Roulette Américaine',
+      }; 
 
       const STATUS_LABELS = {
         pending: 'En attente',
@@ -372,6 +543,66 @@
 
       function formatDate(value) {
         return new Date(value).toLocaleString('fr-FR');
+      }
+
+      function formatCurrencyOrFallback(value, fallback = '—') {
+        const amount = Number(value);
+        return Number.isNaN(amount) ? fallback : `${amount.toLocaleString('fr-FR')} HTG`;
+      }
+
+      function safeText(value, fallback = '—') {
+        if (value == null || value === '' || value === 'undefined' || Number.isNaN(value)) {
+          return fallback;
+        }
+        return String(value);
+      }
+
+      function translateRouletteKey(value) {
+        const normalized = String(value || '').trim().toLowerCase();
+        if (!normalized) return '—';
+
+        const map = {
+          red: 'Rouge',
+          black: 'Noir',
+          even: 'Pair',
+          odd: 'Impair',
+          low: '1–18',
+          high: '19–36',
+          dozen1: '1re douzaine',
+          dozen2: '2e douzaine',
+          dozen3: '3e douzaine',
+          col1: 'Colonne 1',
+          col2: 'Colonne 2',
+          col3: 'Colonne 3',
+        };
+
+        if (map[normalized]) return map[normalized];
+        if (normalized.startsWith('n:')) {
+          return `Numéro ${normalized.slice(2)}`;
+        }
+        if (/^\d+$/.test(normalized) || normalized === '00') {
+          return `Numéro ${String(value).trim()}`;
+        }
+        return String(value);
+      }
+
+      function translateRouletteColor(value) {
+        const normalized = String(value || '').trim().toLowerCase();
+        if (!normalized) return '—';
+        const map = { green: 'Vert', red: 'Rouge', black: 'Noir' };
+        return map[normalized] || safeText(value, '—');
+      }
+
+      function translateOutcome(value) {
+        const normalized = String(value || '').trim().toLowerCase();
+        const map = {
+          won: 'Gagné',
+          lost: 'Perdu',
+          pending: 'En attente',
+          paid: 'Payé',
+          completed: 'Terminé',
+        };
+        return map[normalized] || safeText(value, '—');
       }
 
       function normalizeNumberPlayed(value) {
@@ -427,10 +658,11 @@
       function renderStatusBadge(status) {
         const label = formatStatusLabel(status);
         const cssClass = getStatusClass(status);
-        return `<span class="badge ${cssClass}">${label}</span>`;
+        return `<span class="status-badge ${cssClass}">${label}</span>`;
       }
 
       function setState(message, type) {
+        ticketState.style.display = '';
         ticketState.className = 'state-box';
         if (type === 'error') ticketState.className = 'error-state';
         ticketState.textContent = message;
@@ -443,19 +675,136 @@
         statusSummary.textContent = tickets.length ? formatStatusLabel(tickets[0].status) : '—';
       }
 
+      function setActiveFilterButton() {
+        document.querySelectorAll('[data-ticket-filter]').forEach((button) => {
+          const filter = String(button.dataset.ticketFilter || 'all').toLowerCase();
+          button.classList.toggle('active', filter === activeTicketFilter);
+        });
+      }
+
+      function setTicketFilter(filter) {
+        const normalized = String(filter || 'all').toLowerCase();
+        if (normalized === activeTicketFilter) return;
+        activeTicketFilter = normalized;
+        setActiveFilterButton();
+        renderTickets();
+      }
+
+      function setGameFilter(filter) {
+        const normalized = String(filter || 'all').toLowerCase();
+        if (normalized === activeGameFilter) return;
+        activeGameFilter = normalized;
+        visibleTicketsCount = TICKETS_PAGE_SIZE;
+        const select = document.getElementById('ticket-game-filter');
+        if (select) select.value = activeGameFilter;
+        renderTickets();
+      }
+
+      function setSearchTerm(term) {
+        ticketSearchTerm = String(term || '');
+        visibleTicketsCount = TICKETS_PAGE_SIZE;
+        const input = document.getElementById('ticket-search');
+        if (input) input.value = ticketSearchTerm;
+        renderTickets();
+      }
+
+      function resetAllTicketFilters() {
+        activeTicketFilter = 'all';
+        activeGameFilter = 'all';
+        ticketSearchTerm = '';
+        visibleTicketsCount = TICKETS_PAGE_SIZE;
+        setActiveFilterButton();
+        const select = document.getElementById('ticket-game-filter');
+        if (select) select.value = 'all';
+        const input = document.getElementById('ticket-search');
+        if (input) input.value = '';
+        renderTickets();
+      }
+
+      function setupTicketFilters() {
+        document.querySelectorAll('[data-ticket-filter]').forEach((button) => {
+          button.addEventListener('click', () => {
+            setTicketFilter(button.dataset.ticketFilter);
+          });
+        });
+
+        if (ticketsLoadMoreBtn) {
+          ticketsLoadMoreBtn.addEventListener('click', () => {
+            visibleTicketsCount += TICKETS_PAGE_SIZE;
+            renderTickets();
+          });
+        }
+
+        const searchInput = document.getElementById('ticket-search');
+        if (searchInput) {
+          searchInput.addEventListener('input', (event) => {
+            setSearchTerm(event.target.value);
+          });
+        }
+
+        const gameSelect = document.getElementById('ticket-game-filter');
+        if (gameSelect) {
+          gameSelect.addEventListener('change', (event) => {
+            visibleTicketsCount = TICKETS_PAGE_SIZE;
+            setGameFilter(event.target.value);
+          });
+        }
+
+        ticketList.addEventListener('click', (event) => {
+          const resetButton = event.target.closest('[data-ticket-reset]');
+          if (!resetButton) return;
+          resetAllTicketFilters();
+        });
+      }
+
       function renderTickets() {
         ticketList.innerHTML = '';
 
-        if (!tickets.length) {
+        let filteredTickets = [...tickets];
+
+        if (activeTicketFilter !== 'all') {
+          filteredTickets = filteredTickets.filter((ticket) => String(ticket.status || '').toLowerCase() === activeTicketFilter);
+        }
+
+        if (activeGameFilter !== 'all') {
+          filteredTickets = filteredTickets.filter((ticket) => String(ticket.game_type || '').toLowerCase() === activeGameFilter);
+        }
+
+        const searchQuery = ticketSearchTerm.trim().toLowerCase();
+        if (searchQuery) {
+          filteredTickets = filteredTickets.filter((ticket) => {
+            const gameKey = String(ticket.game_type || '').toLowerCase();
+            const gameLabel = GAME_LABELS[gameKey] || '';
+            const ticketNumber = String(ticket.ticket_number || '');
+            const drawName = String(ticket.draw_name || '');
+            const dateText = ticket.created_at ? formatDate(ticket.created_at) : '';
+            return [
+              gameKey,
+              gameLabel,
+              ticketNumber,
+              drawName,
+              dateText,
+            ].some((value) => String(value).toLowerCase().includes(searchQuery));
+          });
+        }
+
+        const visibleTickets = filteredTickets.slice(0, visibleTicketsCount);
+
+        if (!filteredTickets.length) {
           const empty = document.createElement('div');
           empty.className = 'empty-state';
-          empty.innerHTML = 'Vous n’avez encore aucun ticket. Jouez pour créer votre premier billet.<br><a class="btn btn-primary" href="jeux/games.html" style="margin-top:10px; display:inline-flex;">Jouer maintenant</a>';
+          if (!tickets.length) {
+            empty.innerHTML = 'Vous n’avez encore aucun ticket. Jouez pour créer votre premier billet.<br><a class="btn btn-primary" href="jeux/games.html" style="margin-top:10px; display:inline-flex;">Jouer maintenant</a>';
+          } else {
+            empty.innerHTML = 'Aucun ticket ne correspond à votre recherche ou à vos filtres.<br><button class="btn btn-primary" type="button" data-ticket-reset="true" style="margin-top:10px; display:inline-flex;">Réinitialiser les filtres</button>';
+          }
           ticketList.appendChild(empty);
+          if (ticketsLoadMoreWrap) ticketsLoadMoreWrap.hidden = true;
           setSummary();
           return;
         }
 
-        tickets.forEach((ticket) => {
+        visibleTickets.forEach((ticket) => {
           const card = document.createElement('article');
           card.className = 'ticket-card';
           const gameKey = String(ticket.game_type || '').toLowerCase();
@@ -465,14 +814,19 @@
           const chosenNumbers = ticketItems.length > 0 ? ticketItems.map((item) => normalizeNumberPlayed(item.number_played)).join(' | ') : null;
           const potentialWin = ticketItems.length > 0 ? ticketItems.reduce((sum, item) => sum + Number(item.potential_win || 0), 0) : null;
           const detailsFallback = 'Détails complets disponibles dans l’historique.';
+          const ticketNumber = String(ticket.ticket_number || '');
+          const ticketLabel = ticketNumber || 'Ticket';
 
           card.innerHTML = `
             <div class="ticket-row">
               <div class="ticket-title">
-                <span class="ticket-code">${ticket.ticket_number || 'Ticket'}</span>
+                <span class="ticket-code">${ticketLabel}</span>
                 <span class="ticket-meta">Jeu : ${formatGameLabel(ticket.game_type)} • ${formatDate(ticket.created_at)}</span>
               </div>
-              <span class="ticket-pill">${ticket.currency || 'HTG'}</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="ticket-pill">${ticket.currency || 'HTG'}</span>
+                <button class="btn ticket-copy-btn" type="button" data-ticket-copy aria-label="Copier le numéro du ticket ${ticketNumber}">Copier</button>
+              </div>
             </div>
             <div class="ticket-row" style="margin-top:8px;">
               <div class="ticket-title">
@@ -485,20 +839,86 @@
             ${isLucky6 ? `<div class="ticket-row" style="margin-top:8px;"><div class="ticket-title"><span class="ticket-meta">Numéros choisis</span><span>${chosenNumbers || detailsFallback}</span></div></div>` : ''}
             ${(isPenalty || isLucky6) && potentialWin != null ? `<div class="ticket-row" style="margin-top:8px;"><div class="ticket-title"><span class="ticket-meta">Gain potentiel</span><span>${formatCurrency(potentialWin)}</span></div></div>` : ''}
             <div class="ticket-actions">
-              <span class="ticket-meta">ID ticket : ${ticket.id}</span>
               <button class="btn btn-primary" type="button" data-ticket-id="${ticket.id}">Voir détails</button>
             </div>
           `;
 
-          const btn = card.querySelector('button');
-          btn.addEventListener('click', () => showTicketDetails(ticket.id));
+          const copyBtn = card.querySelector('[data-ticket-copy]');
+          if (copyBtn) {
+            copyBtn.addEventListener('click', async (event) => {
+              event.stopPropagation();
+              const originalText = copyBtn.textContent.trim();
+              const successLabel = 'Copié ✓';
+              const failLabel = 'Échec';
+              try {
+                await copyTextToClipboard(ticketNumber);
+                copyBtn.textContent = successLabel;
+                copyBtn.setAttribute('aria-label', `Numéro ${ticketNumber} copié`);
+                setTimeout(() => {
+                  copyBtn.textContent = originalText;
+                  copyBtn.setAttribute('aria-label', `Copier le numéro du ticket ${ticketNumber}`);
+                }, 1500);
+              } catch (copyError) {
+                console.warn('Impossible de copier le numéro du ticket', copyError);
+                copyBtn.textContent = failLabel;
+                setTimeout(() => {
+                  copyBtn.textContent = originalText;
+                  copyBtn.setAttribute('aria-label', `Copier le numéro du ticket ${ticketNumber}`);
+                }, 1500);
+              }
+            });
+          }
+
+          const detailBtn = card.querySelector('[data-ticket-id]');
+          if (detailBtn) {
+            detailBtn.addEventListener('click', () => showTicketDetails(ticket.id));
+          }
           ticketList.appendChild(card);
         });
+
+        if (ticketsLoadMoreWrap) {
+          const hasMore = visibleTicketsCount < filteredTickets.length;
+          ticketsLoadMoreWrap.hidden = !hasMore;
+          if (ticketsLoadMoreInfo) {
+            ticketsLoadMoreInfo.textContent = `${Math.min(visibleTicketsCount, filteredTickets.length)} sur ${filteredTickets.length} tickets affichés`;
+          }
+        }
 
         setSummary();
       }
 
-      function renderDetails(items, ticket) {
+      async function copyTextToClipboard(text) {
+        if (!text) return Promise.reject(new Error('Aucun numéro de ticket à copier'));
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+          return navigator.clipboard.writeText(text);
+        }
+
+        return new Promise((resolve, reject) => {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'absolute';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          textarea.setSelectionRange(0, textarea.value.length);
+
+          try {
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textarea);
+            if (successful) {
+              resolve();
+            } else {
+              reject(new Error('Commande de copie non supportée'));
+            }
+          } catch (error) {
+            document.body.removeChild(textarea);
+            reject(error);
+          }
+        });
+      }
+
+      function renderDetails(items, ticket, rouletteDetails = null) {
         detailsPanel.innerHTML = '';
 
         if (!ticket) {
@@ -510,8 +930,8 @@
         const ticketStatus = statusLabel(ticket.status);
         const ticketStatusLabel = formatStatusLabel(ticket.status);
         const capitalJoue = Number(ticket.total_amount || 0);
-        const relevantItems = items;
-        const gainPotentiel = relevantItems.reduce((sum, item) => {
+        const detailItems = rouletteDetails?.bets?.length ? rouletteDetails.bets : items;
+        const gainPotentiel = detailItems.reduce((sum, item) => {
           const computed = computeLinePotential(item, ticket.game_type);
           return sum + Number(computed.real || 0);
         }, 0);
@@ -526,11 +946,29 @@
               ? 'Mise Penalty'
               : gameKey.startsWith('lotto')
                 ? 'Numéro joué'
-                : gameKey === 'keno'
-                  ? 'Sélection Keno'
-                  : gameKey === 'roulette'
-                    ? 'Mise Roulette'
-                    : 'Donnée jouée';
+                : ['keno', 'roulette', 'american_roulette', 'roulette_ameri'].includes(gameKey)
+                  ? 'Mise Roulette'
+                  : 'Donnée jouée';
+        const winningSlot = ['roulette', 'american_roulette'].includes(gameKey)
+          ? safeText(
+              rouletteDetails?.round?.winning_slot || rouletteDetails?.round?.winning_number ||
+              ticket.winning_slot || ticket.winning_number || ticket.win_number || ticket.number || ticket.draw_name,
+              '—'
+            )
+          : '—';
+        const winningColor = ['roulette', 'american_roulette'].includes(gameKey)
+          ? safeText(
+              rouletteDetails?.round?.winning_color || ticket.winning_color || ticket.color || ticket.win_color,
+              '—'
+            )
+          : '—';
+        const totalWon = ['roulette', 'american_roulette'].includes(gameKey)
+          ? formatCurrencyOrFallback(
+              rouletteDetails?.round?.total_win_amount ??
+              (ticket.win_amount || ticket.payout || ticket.total_won || ticket.gain || ticket.won_amount || ticket.won),
+              '—'
+            )
+          : '—';
         const resultLabel = ticketStatus === 'pending'
           ? 'En attente'
           : ticketStatus === 'won'
@@ -555,6 +993,9 @@
               <article class="detail-item"><strong>Montant total</strong><span>${formatCurrency(ticket.total_amount)}</span></article>
               <article class="detail-item"><strong>Devise</strong><span>${ticket.currency || 'HTG'}</span></article>
               <article class="detail-item"><strong>Statut</strong><span>${ticketStatusLabel}</span></article>
+              ${['roulette', 'american_roulette'].includes(gameKey) ? `<article class="detail-item"><strong>${gameKey === 'american_roulette' ? 'Slot gagnant' : 'Numéro gagnant'}</strong><span>${winningSlot}</span></article>` : ''}
+              ${['roulette', 'american_roulette'].includes(gameKey) ? `<article class="detail-item"><strong>Couleur gagnante</strong><span>${winningColor}</span></article>` : ''}
+              ${['roulette', 'american_roulette'].includes(gameKey) ? `<article class="detail-item"><strong>Total gagné</strong><span>${totalWon}</span></article>` : ''}
               <article class="detail-item"><strong>Capital joué</strong><span>${formatCurrency(capitalJoue)}</span></article>
               <article class="detail-item"><strong>Gain potentiel</strong><span>${formatCurrency(gainPotentiel)}</span></article>
               <article class="detail-item"><strong>Bénéfice potentiel</strong><span>${formatSignedCurrency(beneficePotentiel)}</span></article>
@@ -571,15 +1012,38 @@
         const wrapper = document.createElement('div');
         wrapper.className = 'details-list';
 
-        items.forEach((item) => {
-          const lineStatus = statusLabel(item.status);
-          const lineStatusLabel = formatStatusLabel(item.status);
+        detailItems.forEach((item) => {
+          const lineStatus = statusLabel(item.status || item.outcome);
+          const lineStatusLabel = formatStatusLabel(item.status || item.outcome);
           const linePotential = computeLinePotential(item, ticket.game_type);
           const lineCard = document.createElement('article');
           lineCard.className = 'detail-item';
           const gameKey = String(ticket.game_type || '').toLowerCase();
 
-          if (gameKey === 'borlette') {
+          if (gameKey === 'horse_racing') {
+            const horseName = safeText(item.horse_name || item.selection_name, 'Cheval sélectionné');
+            const horseNumber = safeText(item.horse_number || item.number_played, '-');
+            const betType = safeText(item.bet_type || item.option_type, 'Simple');
+            const odds = safeText(item.odds, '-');
+            const stake = formatCurrencyOrFallback(item.amount, '—');
+            const potentialWin = formatCurrencyOrFallback(item.potential_win || item.possible_win, '—');
+            const winner = safeText(item.winning_horse || item.winner || item.result_horse, '');
+            const position = safeText(item.position || item.finish_position || item.place, '');
+            const payout = formatCurrencyOrFallback(item.won_amount || item.payout || item.won, '—');
+
+            lineCard.innerHTML = `
+              <strong>Cheval #${horseNumber}</strong>
+              <span>Nom : ${horseName}</span>
+              <span>Type : ${betType}</span>
+              <span>Cote : ${odds}</span>
+              <span>Mise : ${stake}</span>
+              <span>Gain potentiel : ${potentialWin}</span>
+              <span>Statut : ${lineStatusLabel}</span>
+              ${winner ? `<span>Cheval gagnant : ${winner}</span>` : ''}
+              ${position ? `<span>Position : ${position}</span>` : ''}
+              ${payout !== '—' ? `<span>Gain obtenu : ${payout}</span>` : ''}
+            `;
+          } else if (gameKey === 'borlette') {
             lineCard.innerHTML = `
               <strong>${detailLabel} : ${item.number_played || '—'}</strong>
               <span>Mise : ${formatCurrency(item.amount)}</span>
@@ -617,13 +1081,23 @@
               <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
               <span>Statut : ${lineStatusLabel}</span>
             `;
-          } else if (gameKey === 'roulette') {
+          } else if (gameKey === 'roulette' || gameKey === 'american_roulette') {
+            const betKey = safeText(item.bet_key || item.number_played || 'Mise');
+            const betType = translateRouletteKey(item.bet_label || item.bet_type || betKey || 'Type de mise');
+            const betValue = translateRouletteKey(item.bet_value || item.selection || item.number_played || betKey || '—');
+            const amount = formatCurrencyOrFallback(item.amount, '0 HTG');
+            const multiplier = safeText(item.payout_multiplier || item.odds || '—');
+            const winAmount = formatCurrencyOrFallback(item.win_amount || item.potential_win || 0, '0 HTG');
+            const outcomeLabel = item.status ? formatStatusLabel(item.status) : safeText(item.outcome, 'En attente');
+
             lineCard.innerHTML = `
-              <strong>Ticket Roulette</strong>
-              <span>Détails Roulette disponibles dans l’historique.</span>
-              <span>Mise : ${formatCurrency(item.amount)}</span>
-              <span>Gain potentiel : ${formatCurrency(linePotential.real || 0)}</span>
-              <span>Statut : ${lineStatusLabel}</span>
+              <strong>${translateRouletteKey(betKey)}</strong>
+              <span>Type : ${betType}</span>
+              <span>Valeur : ${betValue}</span>
+              <span>Mise : ${amount}</span>
+              <span>Multiplicateur : ${multiplier}</span>
+              <span>Gain : ${winAmount}</span>
+              <span>Résultat : ${outcomeLabel}</span>
             `;
           } else {
             lineCard.innerHTML = `
@@ -650,15 +1124,74 @@
             throw new Error('Connexion au service momentanément indisponible. Réessayez dans quelques instants.');
           }
 
-          const { data: itemsData, error: itemsError } = await client
+          const gameKey = String(ticket.game_type || '').toLowerCase();
+          let rouletteDetails = null;
+          let itemsData = [];
+
+          if (gameKey === 'roulette') {
+            try {
+              const [{ data: roundData, error: roundError }, { data: betData, error: betError }] = await Promise.all([
+                client
+                  .from('roulette_rounds')
+                  .select('id, winning_number, winning_color, total_bet_amount, total_win_amount, status')
+                  .eq('ticket_id', ticketId)
+                  .maybeSingle(),
+                client
+                  .from('roulette_bets')
+                  .select('id, bet_key, bet_label, bet_type, bet_value, amount, payout_multiplier, outcome, win_amount, status, created_at')
+                  .eq('ticket_id', ticketId)
+                  .order('created_at', { ascending: true }),
+              ]);
+
+              if (!roundError && !betError) {
+                rouletteDetails = {
+                  round: roundData || null,
+                  bets: betData || [],
+                };
+              } else {
+                console.warn('Impossible de charger les détails Roulette dédiés :', roundError || betError);
+              }
+            } catch (err) {
+              console.warn('Erreur lors de la requête Roulette dédiée, utilisation du fallback ticket_items.', err);
+            }
+          } else if (gameKey === 'american_roulette') {
+            try {
+              const [{ data: roundData, error: roundError }, { data: betData, error: betError }] = await Promise.all([
+                client
+                  .from('american_roulette_rounds')
+                  .select('id, winning_slot, winning_color, total_bet_amount, total_win_amount, status')
+                  .eq('ticket_id', ticketId)
+                  .maybeSingle(),
+                client
+                  .from('american_roulette_bets')
+                  .select('id, bet_key, bet_label, bet_type, bet_value, amount, payout_multiplier, outcome, win_amount, status, created_at')
+                  .eq('ticket_id', ticketId)
+                  .order('created_at', { ascending: true }),
+              ]);
+
+              if (!roundError && !betError) {
+                rouletteDetails = {
+                  round: roundData || null,
+                  bets: betData || [],
+                };
+              } else {
+                console.warn('Impossible de charger les détails American Roulette dédiés :', roundError || betError);
+              }
+            } catch (err) {
+              console.warn('Erreur lors de la requête American Roulette dédiée, utilisation du fallback ticket_items.', err);
+            }
+          }
+
+          const { data: fallbackItems, error: itemsError } = await client
             .from('ticket_items')
-            .select('id, number_played, amount, status, potential_win, created_at')
+            .select('id, number_played, amount, status, potential_win, option_type, created_at')
             .eq('ticket_id', ticketId)
             .order('created_at', { ascending: true });
 
           if (itemsError) throw itemsError;
 
-          renderDetails(itemsData || [], ticket);
+          itemsData = fallbackItems || [];
+          renderDetails(itemsData, ticket, rouletteDetails);
         } catch (error) {
           console.error('Erreur chargement tickets:', error);
           console.error('Erreur lors du chargement des détails du ticket.', error);
@@ -689,11 +1222,12 @@
 
           const ticketIds = tickets.map((ticket) => ticket.id).filter(Boolean);
           ticketItemsByTicket = {};
+          visibleTicketsCount = TICKETS_PAGE_SIZE;
 
           if (ticketIds.length > 0) {
             const { data: itemsData, error: itemsError } = await client
               .from('ticket_items')
-              .select('ticket_id, number_played, amount, potential_win, status, created_at')
+              .select('ticket_id, number_played, amount, potential_win, status, option_type, created_at')
               .in('ticket_id', ticketIds);
 
             if (!itemsError && Array.isArray(itemsData)) {
@@ -709,7 +1243,7 @@
           if (!tickets.length) {
             setState('Aucun ticket n’a encore été enregistré pour ce compte.', 'info');
           } else {
-            setState(`Chargement terminé : ${tickets.length} ticket(s) affiché(s).`, 'info');
+            ticketState.style.display = 'none';
           }
         } catch (error) {
           console.error('Erreur chargement tickets:', error);
@@ -730,6 +1264,8 @@
 
       (async function init() {
         try {
+          setupTicketFilters();
+
           if (!window.getCurrentUserAsync) {
             setState('Le système d’authentification est indisponible sur cette page.', 'error');
             return;
@@ -745,7 +1281,7 @@
           }
 
           const name = currentUser.full_name || currentUser.email || 'Joueur';
-          userChip.innerHTML = '👤 Connecté : <strong>' + name + '</strong>';
+          if (userChip) userChip.innerHTML = '👤 Connecté : <strong>' + name + '</strong>';
           await loadTickets();
         } catch (error) {
           console.error('Erreur d’initialisation.', error);

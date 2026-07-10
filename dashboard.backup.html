@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonton Kondo — Tableau de bord</title>
+  <style>
+    :root{
+      --bg:#020813;--bg-2:#061426;--panel:#07182b;--panel-2:#0b2038;--line:rgba(255,255,255,.10);--text:#f5f7fb;--muted:#aebbd0;--soft:#7f91ad;--gold:#ffd21f;--gold-2:#ffb900;--green:#46e36f;--red:#ff3434;--blue:#39a8ff;--purple:#ba4cff;--radius-xl:28px;--radius-lg:22px;--radius-md:16px;--shadow:0 24px 60px rgba(0,0,0,.45);--bottom-nav-height:86px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;min-height:100vh;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);line-height:1.5;background:radial-gradient(circle at 70% 0%, rgba(255,210,31,.12), transparent 24%),radial-gradient(circle at 10% 8%, rgba(57,168,255,.15), transparent 28%),linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%)} button,input{font:inherit} button{cursor:pointer} img{max-width:100%;display:block} a{color:inherit;text-decoration:none}
+    .app{width:min(100%, 430px);margin:0 auto;padding:18px 16px calc(var(--bottom-nav-height) + 22px)}
+    .mobile-header{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:8px 0 16px}.brand{display:flex;align-items:center;min-width:0;text-decoration:none;color:inherit}.brand-block{display:flex;align-items:center;gap:12px}.brand-icon{width:56px;height:56px;object-fit:contain;flex-shrink:0;display:block;border-radius:0;box-shadow:none}.brand-text{display:flex;flex-direction:column;line-height:1}.brand-top,.brand-middle{display:block;font-weight:900;font-size:22px;letter-spacing:.04em}.brand-top{color:#fff}.brand-middle{color:var(--gold)}.brand-bottom{position:relative;display:block;margin-top:4px;text-align:center;color:#d7dde8;font-size:9px;font-weight:800;letter-spacing:.5em}.brand-bottom::before,.brand-bottom::after{content:"";position:absolute;top:50%;width:22px;height:1px;background:rgba(255,255,255,.35)}.brand-bottom::before{right:100%;margin-right:8px}.brand-bottom::after{left:100%;margin-left:8px}
+    .wallet-chip{display:flex;align-items:center;gap:8px;background:rgba(9,30,54,.92);border:1px solid var(--line);border-radius:17px;padding:10px 12px;box-shadow:var(--shadow);white-space:nowrap}.wallet-icon,.action-icon,.stat-icon,.section-icon{display:grid;place-items:center;flex-shrink:0}.wallet-chip strong{display:block;font-size:15px}.wallet-chip span{display:block;color:var(--muted);font-size:12px;margin-top:-2px}
+    .header-actions{display:flex;align-items:center;gap:8px}.action-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(8,24,43,.95);color:var(--gold);position:relative;display:grid;place-items:center;box-shadow:var(--shadow);text-decoration:none}.header-auth-btn{width:auto;min-height:42px;padding:0 14px;border-radius:999px;color:#fff;font-size:13px;font-weight:800;letter-spacing:.04em;background:linear-gradient(135deg, rgba(255,210,31,.14), rgba(57,168,255,.12))}.user-menu-wrap{position:relative}.user-button{width:42px;height:42px;border-radius:999px;padding:0;overflow:hidden;background:linear-gradient(135deg, rgba(255,210,31,.18), rgba(57,168,255,.18));border:1px solid rgba(255,255,255,.16);color:#fff;display:grid;place-items:center;box-shadow:var(--shadow)}.user-avatar{width:100%;height:100%;display:grid;place-items:center;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(135deg,#1b3353,#07111e)}.user-avatar img{width:100%;height:100%;object-fit:cover}.user-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:220px;background:linear-gradient(180deg, rgba(7,20,35,.98), rgba(4,12,22,.98));border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.45);padding:8px;display:none;z-index:120}.user-menu.open{display:grid;gap:4px}.user-menu-link{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 12px;border-radius:12px;border:1px solid transparent;color:#edf4ff;text-decoration:none;font-size:14px;font-weight:700;background:transparent;text-align:left}.user-menu-link:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}.user-menu-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 0}.user-menu-logout{color:#ffd6d6}.badge{position:absolute;right:-2px;top:-5px;background:var(--gold);color:#111;border-radius:999px;font-size:11px;font-weight:900;min-width:19px;height:19px;display:grid;place-items:center;border:2px solid #061426}
+    .hero{border:1px solid var(--line);border-radius:var(--radius-xl);overflow:hidden;background:linear-gradient(90deg,rgba(3,12,26,.94) 0%,rgba(5,19,34,.72) 48%,rgba(4,13,24,.35) 100%),linear-gradient(135deg,#071a32,#092846);min-height:305px;position:relative;box-shadow:var(--shadow);padding:28px 22px;isolation:isolate}.hero-image{position:absolute;inset:0 0 0 42%;z-index:-1;width:58%;height:100%;object-fit:cover;object-position:center right;display:block;border-left:1px solid rgba(255,255,255,.10);opacity:.95}.hero h1{margin:0 0 14px;font-size:42px;line-height:1.05;letter-spacing:-.04em}.hero h1 span{display:block;color:var(--gold)}.hero p{margin:0;color:#e4eaf4;font-size:16px;max-width:270px}.hero-actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}.btn-primary,.btn-secondary,.btn-ghost{border:0;border-radius:14px;padding:14px 18px;font-weight:900;display:inline-flex;align-items:center;gap:8px;text-decoration:none}.btn-primary{background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#121212;box-shadow:0 10px 28px rgba(255,210,31,.22)}.btn-secondary,.btn-ghost{background:rgba(11,32,56,.92);border:1px solid var(--line);color:#fff}.slider-dots{display:flex;justify-content:center;gap:8px;margin:12px 0 24px}.dot{width:18px;height:6px;border-radius:999px;background:rgba(255,255,255,.18)}.dot.active{background:var(--gold)}
+    .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px}.stat-card{border:1px solid var(--line);border-radius:20px;background:rgba(8,24,43,.88);padding:16px;min-height:118px;box-shadow:var(--shadow)}.stat-icon{width:46px;height:46px;border-radius:50%;margin-bottom:14px}.stat-icon.gold{background:rgba(255,210,31,.14);color:var(--gold)}.stat-icon.green{background:rgba(70,227,111,.15);color:var(--green)}.stat-icon.blue{background:rgba(57,168,255,.16);color:var(--blue)}.stat-icon.purple{background:rgba(186,76,255,.16);color:var(--purple)}.stat-card small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.stat-card strong{display:block;font-size:19px;margin:3px 0;color:#fff}.stat-card span{color:#cfd8e8;font-size:14px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 0 12px}.section-title{display:flex;align-items:center;gap:10px;margin:0;font-size:24px;letter-spacing:-.02em}.section-icon{width:28px;height:28px;color:var(--gold)}.see-all{display:flex;align-items:center;gap:6px;color:#f3f7ff;text-decoration:none;font-size:14px}
+    .games-carousel{position:relative}.games-row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;margin-inline:-2px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}.games-row::-webkit-scrollbar{display:none}.games-nav{display:none;position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);justify-content:space-between;pointer-events:none;padding:0 2px;z-index:2}.games-nav-btn{pointer-events:auto;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:rgba(3,13,24,.92);color:#fff;display:grid;place-items:center;box-shadow:var(--shadow);font-size:22px}.games-nav-btn:disabled{opacity:.35;cursor:not-allowed}.games-dots{display:flex;justify-content:center;gap:8px;margin:8px 0 24px}.games-dot{width:9px;height:9px;border-radius:999px;background:rgba(255,255,255,.22)}.games-dot.active{background:var(--gold)}.game-card{flex:0 0 min(220px, 78vw);width:min(220px, 78vw);height:260px;scroll-snap-align:start;display:flex;flex-direction:column;text-decoration:none;color:inherit;overflow:hidden;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(145deg, rgba(8,24,43,.98), rgba(5,16,32,.96));box-shadow:0 18px 45px rgba(0,0,0,.35);transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease}.game-card:hover{transform:translateY(-5px);box-shadow:0 0 0 1px rgba(255,210,31,.16),0 20px 45px rgba(255,210,31,.16);border-color:rgba(255,210,31,.35)}.game-image-wrap{height:170px;padding:10px;background:radial-gradient(circle at top, rgba(255,210,31,.12), transparent 60%), rgba(255,255,255,.03)}.game-image-wrap img{width:100%;height:100%;object-fit:cover;border-radius:13px;background:rgba(255,255,255,.03)}.game-card strong{display:block;padding:14px 14px 0;font-size:15px;text-transform:uppercase;letter-spacing:.04em}
+    .bottom-nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);z-index:25;width:min(100%,430px);height:var(--bottom-nav-height);background:rgba(3,13,25,.97);border-top:1px solid var(--line);backdrop-filter:blur(16px);display:none;grid-template-columns:repeat(5,1fr);padding:10px 10px 8px}.bottom-link{color:#c8d1e0;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:600}.bottom-link svg{width:28px;height:28px}.bottom-link.active{color:var(--gold)}.bottom-link.active .nav-icon-wrap{background:rgba(255,210,31,.12)}.nav-icon-wrap{width:46px;height:46px;border-radius:14px;display:grid;place-items:center}
+    .welcome-card,.balance-card,.panel,.quick-item,.game-card,.notice-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(8,24,43,.88),rgba(5,17,31,.90));box-shadow:var(--shadow)}.welcome-card{border-radius:26px;padding:24px;min-height:166px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.welcome-card:after{content:"";position:absolute;right:-80px;bottom:-100px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(57,168,255,.18),transparent 65%)}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:900}.welcome-card h1{margin:8px 0;font-size:clamp(28px,4vw,42px);line-height:1.05;letter-spacing:-.04em}.welcome-card p{margin:0;max-width:650px;color:#d9e4f4;font-size:15px}.welcome-footer{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;margin-top:14px}.profile-badge{display:flex;align-items:center;gap:10px;min-width:0}.profile-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg, rgba(255,210,31,.18), rgba(57,168,255,.18));color:var(--gold);font-weight:900;border:1px solid rgba(255,255,255,.10)}.profile-copy strong{display:block;font-size:14px}.profile-copy span{display:block;color:var(--muted);font-size:12px}.profile-meta{display:flex;flex-wrap:wrap;gap:8px}.tag-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:999px;font-size:12px;font-weight:800;border:1px solid var(--line);color:#fff;background:rgba(255,255,255,.03)}.tag-pill.muted{color:var(--muted)}.balance-card{border-radius:26px;padding:20px;display:grid;align-content:center;gap:14px}.balance-top{display:flex;align-items:center;justify-content:space-between;gap:14px}.balance-top small{color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.12em}.balance-card strong{display:block;font-size:29px;line-height:1.05}.deposit-btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:14px;padding:13px 18px;background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#111;font-weight:900;box-shadow:0 12px 28px rgba(255,210,31,.20);white-space:nowrap}.main-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.panel{border-radius:26px;padding:18px}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}.panel-head h2{margin:0;font-size:20px}.panel-head span{display:block;margin-top:3px;color:var(--muted);font-size:13px}.panel-link{color:var(--gold);font-weight:800;font-size:13px;white-space:nowrap}.empty-history{min-height:220px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);border-radius:20px;padding:24px}.empty-history-inner{display:flex;align-items:center;gap:16px;max-width:470px}.empty-history strong{display:block;font-size:16px}.empty-history p{margin:4px 0 0;color:var(--muted);font-size:14px}.history-list{display:grid;gap:10px}.history-item{border:1px solid var(--line);border-radius:18px;padding:12px;background:rgba(255,255,255,.03);display:flex;justify-content:space-between;gap:10px;align-items:center}.history-item strong{display:block;font-size:14px}.history-item span{display:block;color:var(--muted);font-size:12px}.history-item em{font-style:normal;color:var(--green);font-weight:800;font-size:13px}.quick-list{display:grid;gap:10px}.quick-item{border-radius:18px;padding:14px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;transition:.2s}.quick-item:hover{transform:translateY(-2px);border-color:rgba(255,210,31,.22)}.quick-item strong{display:block;font-size:15px}.quick-item span span{display:block;color:var(--muted);font-size:13px;margin-top:2px}.quick-arrow{color:var(--muted);font-size:24px}.quick-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;padding:12px 16px;font-weight:900;border:1px solid var(--line);background:rgba(255,255,255,.035);color:#fff}.btn-primary{border:0;background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#111}.support-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.notice-card{border-radius:18px;padding:14px;display:flex;gap:10px;align-items:flex-start;min-height:86px}.notice-card svg{width:22px;height:22px;color:var(--gold);flex-shrink:0}.notice-card strong{display:block;font-size:13px;text-transform:uppercase}.notice-card span{display:block;color:var(--muted);font-size:12px;margin-top:3px}.quick-icon,.empty-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(57,168,255,.12);color:var(--blue);border:1px solid rgba(57,168,255,.18)}.quick-icon.gold{background:rgba(255,210,31,.14)!important;color:var(--gold)!important;border-color:rgba(255,210,31,.20)!important}.shell{display:grid;gap:18px}.intro-row{display:grid;grid-template-columns:1fr 330px;gap:18px}
+    @media(max-width:980px){.intro-row,.main-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.support-strip{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:760px){body{padding-bottom:var(--bottom-nav-height)}.app{width:min(100%,430px);padding:14px 12px calc(var(--bottom-nav-height) + 18px)}.mobile-header{grid-template-columns:1fr auto;margin-bottom:18px}.brand-icon{width:44px;height:44px}.brand-top,.brand-middle{font-size:18px}.brand-bottom{font-size:8px}.wallet-chip{display:none!important}.header-actions{gap:7px}.action-btn{width:40px;height:40px}.welcome-card{padding:20px;min-height:138px}.welcome-card h1{font-size:24px}.welcome-card p{font-size:14px}.balance-card{padding:16px}.balance-card strong{font-size:23px}.stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{min-height:118px;padding:13px}.stat-icon{width:38px;height:38px}.stat-card strong{font-size:20px}.panel{padding:15px;border-radius:22px}.empty-history{min-height:130px;justify-content:flex-start;padding:16px}.empty-history-inner{align-items:flex-start}.quick-buttons .btn{flex:1 1 calc(50% - 6px)}.quick-buttons .btn:last-child{flex-basis:100%}.bottom-nav{display:grid}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="mobile-header" aria-label="En-tête principal">
+      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
+        <div class="brand-block">
+          <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
+          <div class="brand-text">
+            <span class="brand-top">TONTON</span>
+            <span class="brand-middle">KONDO</span>
+            <span class="brand-bottom">PARYAJ</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="wallet-chip" aria-label="Solde utilisateur">
+        <span><strong id="wallet-balance">Préparation de votre espace joueur…</strong><span id="wallet-label">Solde disponible</span></span>
+      </div>
+
+      <div class="header-actions">
+        <div id="authHeaderActions"></div>
+        <button class="action-btn" type="button" aria-label="Promotions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
+            <rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/>
+          </svg>
+          <span class="badge">3</span>
+        </button>
+        <button class="action-btn" type="button" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>
+          </svg>
+          <span class="badge">2</span>
+        </button>
+        <div class="user-menu-wrap" id="userMenuWrap" hidden>
+          <button id="userMenuButton" class="action-btn user-button" type="button" aria-label="Menu utilisateur" aria-expanded="false">
+            <span class="user-avatar" id="userAvatar">U</span>
+          </button>
+          <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
+            <a class="user-menu-link" href="tickets.html">Tickets</a>
+            <a class="user-menu-link" href="history.html">Historique</a>
+            <a class="user-menu-link" href="results.html">Résultats</a>
+            <a class="user-menu-link" href="deposit.html">Dépôt</a>
+            <a class="user-menu-link" href="withdraw.html">Retrait</a>
+            <a class="user-menu-link" href="wallet.html">Portefeuille</a>
+            <a class="user-menu-link" href="profile.html">Profil</a>
+            <a class="user-menu-link" href="settings.html">Paramètres</a>
+            <div class="user-menu-divider"></div>
+            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button">Déconnexion</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="shell">
+      <div class="intro-row">
+        <article class="welcome-card">
+          <span class="eyebrow">Tableau de bord</span>
+          <h1>Bonjour, <span data-dashboard-greeting>joueur premium</span> 👋</h1>
+          <p>Voici votre espace de contrôle : solde, tickets, jeux et dernières activités en un seul endroit.</p>
+          <div class="welcome-footer">
+            <div class="profile-badge">
+              <div class="profile-avatar" data-dashboard-avatar>U</div>
+              <div class="profile-copy">
+                <strong data-dashboard-name>Préparation de votre espace joueur…</strong>
+                <span data-dashboard-email>Préparation de votre espace joueur…</span>
+              </div>
+            </div>
+            <div class="profile-meta">
+              <span class="tag-pill" data-dashboard-status-chip>Compte vérifié</span>
+              <span class="tag-pill muted">Rôle : <strong data-dashboard-role>client</strong></span>
+              <span class="tag-pill muted">Statut : <strong data-dashboard-status>active</strong></span>
+            </div>
+          </div>
+        </article>
+        <article class="balance-card">
+          <div class="balance-top">
+            <div>
+              <small>Solde disponible</small>
+              <strong data-dashboard-balance-card>Préparation de votre espace joueur…</strong>
+            </div>
+            <a class="deposit-btn" href="deposit.html">Déposer</a>
+          </div>
+        </article>
+      </div>
+
+      <section class="stats-grid" aria-label="Statistiques">
+        <article class="stat-card">
+          <span class="stat-icon gold"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M7 7V5h10v2"/><path d="M9 12h6"/></svg></span>
+          <small>Tickets actifs</small>
+          <strong data-dashboard-tickets>0</strong>
+          <span>Voir mes tickets →</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon gold"><svg viewBox="0 0 24 24"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M5 6H3a4 4 0 0 0 4 4"/><path d="M19 6h2a4 4 0 0 1-4 4"/></svg></span>
+          <small>Gains du jour</small>
+          <strong data-dashboard-gains>0</strong>
+          <span>Voir mes gains →</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15v-4"/><path d="M12 15V8"/><path d="M16 15v-6"/></svg></span>
+          <small>Mise totale</small>
+          <strong>0 HTG</strong>
+          <span>Voir mes mises →</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><path d="M16 7V5a2 2 0 0 0-2-2H8"/><path d="M18 13h.01"/></svg></span>
+          <small>Devise</small>
+          <strong data-dashboard-currency>HTG</strong>
+          <span>Wallet principal</span>
+        </article>
+      </section>
+
+      <section class="main-grid">
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Historique rapide</h2>
+              <span>Dernières activités du compte</span>
+            </div>
+            <a class="panel-link" href="profile.html">Voir profil</a>
+          </div>
+          <div class="empty-history" data-dashboard-transactions>
+            <div class="empty-history-inner">
+              <span class="empty-icon"><svg viewBox="0 0 24 24"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
+              <div>
+                <strong>Aucune transaction récente</strong>
+                <p>Les opérations apparaîtront ici après votre premier mouvement.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Actions rapides</h2>
+              <span>Les raccourcis essentiels du joueur</span>
+            </div>
+          </div>
+          <div class="quick-list">
+            <a class="quick-item" href="deposit.html"><span class="quick-icon gold"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span><span><strong>Dépôt</strong><span>Ajouter des fonds au compte joueur.</span></span><span class="quick-arrow">›</span></a>
+            <a class="quick-item" href="withdraw.html"><span class="quick-icon gold"><svg viewBox="0 0 24 24"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></svg></span><span><strong>Retrait</strong><span>Demander un retrait vers votre support.</span></span><span class="quick-arrow">›</span></a>
+            <a class="quick-item" href="jeux/games.html"><span class="quick-icon"><svg viewBox="0 0 24 24"><path d="M6 12h4"/><path d="M8 10v4"/><path d="M15 13h.01"/><path d="M18 11h.01"/><rect x="3" y="8" width="18" height="10" rx="5"/></svg></span><span><strong>Jouer</strong><span>Accéder aux jeux disponibles.</span></span><span class="quick-arrow">›</span></a>
+          </div>
+          <div class="quick-buttons">
+            <a class="btn btn-primary" href="deposit.html">Dépôt</a>
+            <a class="btn" href="withdraw.html">Retrait</a>
+            <a class="btn" href="jeux/games.html">Voir mes jeux</a>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel" aria-label="Jeux populaires">
+        <div class="panel-head">
+          <div>
+            <h2>Jeux populaires</h2>
+            <span>Accédez rapidement à vos jeux favoris.</span>
+          </div>
+          <a class="panel-link" href="jeux/games.html">Voir tous les jeux</a>
+        </div>
+        <div class="games-row">
+          <a class="game-card" href="jeux/borlette.html"><div class="game-image-wrap"><img src="assets/Lotterie.png" alt="Borlette"></div><strong>Borlette</strong></a>
+          <a class="game-card" href="jeux/mariage.html"><div class="game-image-wrap"><img src="assets/mariage.png" alt="Mariage"></div><strong>Mariage</strong></a>
+          <a class="game-card" href="jeux/lotto3.html"><div class="game-image-wrap"><img src="assets/lo3.png" alt="Lotto 3"></div><strong>Lotto 3</strong></a>
+          <a class="game-card" href="jeux/lotto4.html"><div class="game-image-wrap"><img src="assets/lo4.png" alt="Lotto 4"></div><strong>Lotto 4</strong></a>
+          <a class="game-card" href="jeux/keno.html"><div class="game-image-wrap"><img src="assets/keno.png" alt="Keno"></div><strong>Keno</strong></a>
+          <a class="game-card" href="jeux/roulette.html"><div class="game-image-wrap"><img src="assets/roulette.png" alt="Roulette"></div><strong>Roulette</strong></a>
+        </div>
+      </section>
+
+      <section class="support-strip" aria-label="Informations de confiance">
+        <article class="notice-card"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.2 2.8 7.8 7 10 4.2-2.2 7-5.8 7-10V6l-7-3Z"/></svg><div><strong>Protégé</strong><span>Données sécurisées.</span></div></article>
+        <article class="notice-card"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M7 17v2h10v-2"/></svg><div><strong>Paiements</strong><span>Dépôts et retraits suivis.</span></div></article>
+        <article class="notice-card"><svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0v4"/><path d="M6 14h2v5H6z"/><path d="M16 14h2v5h-2z"/></svg><div><strong>Support</strong><span>Assistance disponible.</span></div></article>
+        <article class="notice-card"><svg viewBox="0 0 24 24"><path d="M12 3 8 7H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3l4 4V3Z"/><path d="M16 8a3 3 0 1 1 0 6"/></svg><div><strong>Clair</strong><span>Suivi simple du compte.</span></div></article>
+      </section>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Navigation mobile principale">
+    <a class="bottom-link active" href="index.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>Accueil</a>
+    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg></span>Jeux</a>
+    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><path d="M11 7a16 16 20 0 1 10.98 4.362"/><path d="M12 12a13 13 0 0 1-8.66 5"/><path d="M16.83 13.634a16 16 0 0 1-9.267 7.328"/><path d="M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10"/><path d="M8.17 15.366a16 16 0 0 1-1.713-11.69"/><circle cx="12" cy="12" r="10"/></svg></span>Jeux</a>
+    <a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg></span>Résultats</a>
+    <a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span>Portefeuille</a>
+  </nav>
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script>
+    (async () => {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : (window.getCurrentUser ? window.getCurrentUser() : null));
+
+      if (!currentUser) {
+        const target = window.location.pathname.split('/').filter(Boolean).slice(-2).join('/') || 'dashboard.html';
+        window.saveRedirectTarget?.(target);
+        window.location.replace('login-register/login.html');
+        return;
+      }
+
+      const dashboardData = await (window.getAuthenticatedDashboardData ? window.getAuthenticatedDashboardData() : null);
+      if (window.renderDashboardPage) {
+        window.renderDashboardPage(dashboardData);
+      }
+
+      const role = String((dashboardData?.profile?.role || currentUser.role || 'client')).toLowerCase();
+      const roleMap = {
+        client: 'dashboard.html',
+        agent: 'agent/dashboard.html',
+        admin: 'admin/dashboard.html',
+        super_admin: 'admin/dashboard.html',
+      };
+
+      const target = roleMap[role] || 'dashboard.html';
+      if (window.location.pathname.split('/').pop() !== target.split('/').pop()) {
+        window.location.replace(target);
+      }
+    })();
+
+    // --- Initialisation du Header Premium Harmonisé ---
+    (async function initHeaderPremium() {
+      const userMenuWrap = document.getElementById('userMenuWrap');
+      const userMenuButton = document.getElementById('userMenuButton');
+      const userMenu = document.getElementById('userMenu');
+      const userAvatar = document.getElementById('userAvatar');
+      const logoutMenuBtn = document.getElementById('logoutMenuBtn');
+      const walletBalanceEl = document.getElementById('wallet-balance');
+
+      userMenuButton?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = userMenu?.classList.toggle('open');
+        userMenuButton.setAttribute('aria-expanded', String(isOpen));
+        userMenu?.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!userMenuWrap?.contains(event.target)) {
+          userMenu?.classList.remove('open');
+          userMenuButton?.setAttribute('aria-expanded', 'false');
+          userMenu?.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      logoutMenuBtn?.addEventListener('click', async () => {
+        if (window.logoutUser) {
+          const result = await window.logoutUser();
+          if (result?.ok) {
+            window.location.replace('login-register/login.html');
+          }
+        }
+      });
+
+      try {
+        const currentUser = window.getCurrentUser ? window.getCurrentUser() : (window.getCurrentUserAsync ? await window.getCurrentUserAsync() : null);
+        if (currentUser) {
+          if (userMenuWrap) userMenuWrap.hidden = false;
+          const displayName = currentUser.full_name || currentUser.email || 'Joueur';
+          const firstLetter = String(displayName).trim().charAt(0).toUpperCase();
+
+          if (userAvatar) {
+            userAvatar.innerHTML = '';
+            const avatarUrl = currentUser.avatar_url || currentUser.picture || null;
+            if (avatarUrl) {
+              const img = document.createElement('img');
+              img.src = avatarUrl;
+              img.alt = displayName;
+              userAvatar.appendChild(img);
+            } else {
+              userAvatar.textContent = firstLetter || 'U';
+            }
+          }
+
+          if (window.getAuthenticatedWallet) {
+            const wallet = await window.getAuthenticatedWallet();
+            if (wallet && walletBalanceEl) {
+              const balance = Number(wallet.balance || 0);
+              const currency = wallet.currency || 'HTG';
+              walletBalanceEl.textContent = `${balance.toLocaleString('fr-FR')} ${currency}`;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Erreur d'initialisation du header premium:", err);
+      }
+    })();
+  </script>
+</body>
+</html>

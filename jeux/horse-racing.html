@@ -33,33 +33,13 @@
     padding: 14px 16px;
     display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 10;
-    flex-wrap: wrap; gap: 12px;
   }
-  .header-actions {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  }
-  .brand {
-    display: flex; align-items: center; gap: 12px; color: var(--texte); text-decoration: none;
-  }
-  .brand img {
-    width: 56px; height: 56px; border-radius: 16px; object-fit: contain;
-  }
-  .brand-text strong {
-    display: block; font-size: 18px; letter-spacing: .04em;
-  }
-  .brand-text span {
-    display: block; color: var(--texte-mute); font-size: 12px; text-transform: uppercase; letter-spacing: .35em;
-  }
-  @media (max-width: 520px) {
-    .brand img { width: 46px; height: 46px; }
-    .brand-text strong { font-size: 16px; }
-    .brand-text span { font-size: 10px; letter-spacing: .24em; }
-  }
-  .back-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border);
-    background: rgba(255,255,255,0.04); color: var(--texte); font-size: 13px; font-weight: 700;
-    text-decoration: none;
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+  .brand-badge {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--or), #b8860b);
+    display: grid; place-items: center; color: #1a1a1a; font-size: 18px;
+    box-shadow: 0 4px 16px rgba(245,197,24,0.35);
   }
   .balance {
     display: flex; align-items: center; gap: 8px;
@@ -330,21 +310,14 @@
 <body id="horse-race-page">
 
 <header>
-  <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
-    <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-    <span class="brand-text">
-      <strong>Tonton Kondo</strong>
-      <span>Paryaj</span>
-    </span>
-  </a>
-  <div class="header-actions">
-        <div id="authHeaderActions"></div>
-    <a class="back-link" href="games.html">← Retour aux jeux</a>
-    <div class="balance">
-      <span>💰</span>
-      <span>Balans:</span>
-      <span id="user-balance">Chargement du solde...</span>
-    </div>
+  <div class="brand">
+    <div class="brand-badge">TK</div>
+    <div>Tonton Kondo</div>
+  </div>
+  <div class="balance">
+    <span>💰</span>
+    <span>Balans:</span>
+    <span id="user-balance">Solde démo</span>
   </div>
 </header>
 
@@ -390,7 +363,6 @@
 
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
 <script>
   const HORSES = [
     { id: "zekle", number: 1, name: "Zeklè", color: "noir", colorLabel: "Noir", colorHex: "#1a1a1a", image: "../assets/horses/horse-black-run.jpeg", odds: 5.0 },
@@ -681,6 +653,11 @@
     void $track.offsetWidth;
   }
 
+  function generateHorseRacePlaceholderResult() {
+    const winner = HORSES[Math.floor(Math.random() * HORSES.length)];
+    return { winner_id: winner.id, winner, odds: winner.odds };
+  }
+
   function animateHorseRace(result) {
     const duration = 6500 + Math.random() * 3000;
     const race = createRaceTimeline(HORSES, result.winner_id, duration);
@@ -764,20 +741,17 @@
 
   function showHorseRaceResult(result) {
     const selected = horseRaceState.selectedHorse;
-    const selectedHorseName = result.selected_horse_name || selected?.name || HORSES.find((h) => h.id === result.horse_id)?.name || '—';
-    const winnerHorseName = result.winner_horse_name || HORSES.find((h) => h.id === result.winner_id)?.name || '—';
+    const winner = HORSES.find((h) => h.id === result.winner_id) || HORSES.find((h) => h.id === result.horse_id) || selected || { name: '—', odds: Number(result?.odds) || 0 };
     const ticketNumber = result.ticket_number || result.ticket || result.ticketNumber || '—';
-    const betAmount = Number(result.amount ?? horseRaceState.amount ?? 0);
-    const multiplier = Number(result.payout_multiplier ?? result.odds ?? 0);
-    const gainAmount = Number(result.gain ?? 0);
-    const status = String(result.status || '—').trim();
+    const betAmount = Number(result.amount ?? (horseRaceState.amount || 0));
+    const gainAmount = Number(result.gain ?? (winner.id === selected?.id ? Math.floor(betAmount * winner.odds) : 0));
+    const status = String(result.status || (winner.id === selected?.id ? 'Gagné' : 'Perdu')).trim();
 
     $result.innerHTML = `
       <h3>Résultat de la course</h3>
       <div><strong>Ticket :</strong> ${ticketNumber}</div>
-      <div><strong>Cheval choisi :</strong> ${selectedHorseName}</div>
-      <div><strong>Cheval gagnant :</strong> ${winnerHorseName}</div>
-      <div><strong>Cote :</strong> x${multiplier.toFixed(1)}</div>
+      <div><strong>Cheval choisi :</strong> ${selected ? selected.name : '—'}</div>
+      <div><strong>Cheval gagnant :</strong> ${winner.name}</div>
       <div><strong>Mise :</strong> ${betAmount.toLocaleString('fr-FR')} HTG</div>
       <div><strong>Gain :</strong> ${gainAmount.toLocaleString('fr-FR')} HTG</div>
       <div><strong>Statut :</strong> ${status}</div>
@@ -787,20 +761,33 @@
     updateHorseCardState();
   }
 
-  async function waitForSupabaseClient(maxAttempts = 12, delayMs = 250) {
-    // Try to get client through the exposed function first
-    if (typeof window.getSupabaseClient === 'function') {
-      try {
-        const client = await window.getSupabaseClient();
-        if (client && typeof client.from === 'function') {
-          return client;
-        }
-      } catch (error) {
-        console.warn('Error calling getSupabaseClient:', error);
-      }
-    }
+  async function playHorseRacePlaceholder() {
+    if (horseRaceState.isPlaying) return;
+    if (!horseRaceState.selectedHorse) { setFeedback('Choisissez un cheval avant de jouer.', 'error'); return; }
+    if (!horseRaceState.amount || horseRaceState.amount <= 0) { setFeedback('Entrez un montant valide.', 'error'); return; }
 
-    // Fallback: wait for window.supabaseClient
+    horseRaceState.isPlaying = true;
+    updateHorseSummary();
+    $clearBtn.disabled = true;
+    setRaceStatus('Kous la kòmanse...');
+    $result.classList.remove('show');
+    setFeedback('Kous la ap kouri...', 'warn');
+
+    resetRunners();
+    horseRaceState.lastResult = null;
+    updateHorseCardState();
+    const result = generateHorseRacePlaceholderResult();
+    horseRaceState.lastResult = result;
+    await animateHorseRace(result);
+    showHorseRaceResult(result);
+    setRaceStatus('Fini');
+    setFeedback('Kous la fini!', 'success');
+    horseRaceState.isPlaying = false;
+    $clearBtn.disabled = false;
+    updateHorseSummary();
+  }
+
+  async function waitForSupabaseClient(maxAttempts = 12, delayMs = 250) {
     for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
       const client = window.supabaseClient || null;
       if (client && typeof client.from === 'function') {
@@ -815,17 +802,12 @@
     if (horseRaceState.currentUser) {
       return horseRaceState.currentUser;
     }
-    if (typeof window.getCurrentUserAsync === 'function') {
-      const currentUser = await window.getCurrentUserAsync();
-      horseRaceState.currentUser = currentUser;
-      return currentUser;
+    if (typeof window.getCurrentUserAsync !== 'function') {
+      return null;
     }
-    if (typeof window.getCurrentUser === 'function') {
-      const currentUser = await window.getCurrentUser();
-      horseRaceState.currentUser = currentUser;
-      return currentUser;
-    }
-    return null;
+    const currentUser = await window.getCurrentUserAsync();
+    horseRaceState.currentUser = currentUser;
+    return currentUser;
   }
 
   async function refreshHorseRaceBalance({ silent = false } = {}) {
@@ -924,54 +906,18 @@
       });
 
       if (error) {
-        console.error('RPC Error:', error);
         throw error;
       }
-      
-      console.log('RPC Response:', data);
-      
-      if (!data) {
-        throw new Error('Aucune donnée retournée par la course. Vérifiez la fonction RPC play_horse_race.');
-      }
-      
-      // Handle array response from RPC (Supabase returns array by default)
-      let result = Array.isArray(data) ? data[0] : data;
-      
-      if (!result) {
-        throw new Error('Le tableau de résultats est vide.');
-      }
-      
-      // Map RPC response fields to expected format
-      result = {
-        ticket_id: result.ticket_id,
-        ticket_number: result.ticket_number,
-        ticket: result.ticket_number,
-        round_id: result.round_id,
-        horse_id: result.selected_horse_id,
-        selected_horse_id: result.selected_horse_id,
-        selected_horse_name: result.selected_horse_name,
-        winner_id: result.winner_horse_id,  // RPC returns winner_horse_id, we need winner_id
-        winner_horse_id: result.winner_horse_id,
-        winner_horse_name: result.winner_horse_name,
-        amount: result.bet_amount,           // RPC returns bet_amount, we need amount
-        gain: result.win_amount,             // RPC returns win_amount, we need gain
-        status: result.status,
-        payout_multiplier: result.payout_multiplier,
-        odds: horseRaceState.selectedHorse?.odds || 0,
-      };
-      
-      if (!result.winner_id) {
-        console.error('Invalid result data:', result);
-        throw new Error('Résultat de course invalide: winner_id manquant. Réponse: ' + JSON.stringify(result));
+      if (!data || !data.winner_id) {
+        throw new Error('Résultat de course invalide.');
       }
 
-      await animateHorseRace(result);
-      showHorseRaceResult(result);
+      await animateHorseRace(data);
+      showHorseRaceResult(data);
       await refreshHorseRaceBalance({ silent: true });
       setFeedback('Kous terminée.', 'success');
       setRaceStatus('Fini');
     } catch (error) {
-      console.error('Play Horse Race Error:', error);
       setFeedback(error?.message || 'Erreur pendant la course. Réessayez.', 'error');
       setRaceStatus('Erreur');
     } finally {

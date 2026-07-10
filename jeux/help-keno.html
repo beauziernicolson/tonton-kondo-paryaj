@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guide détaillé des règles du Keno sur Tonton Kondo." />
+  <title>Tonton Kondo — Help Keno</title>
+  <style>
+    :root { --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.10); --text:#f5f7fb; --muted:#aebbd0; --gold:#ffd21f; --shadow:0 24px 60px rgba(0,0,0,.45); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 80% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 15% 8%, rgba(57,168,255,.12), transparent 22%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
+    .app { width:min(100%, 1120px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .action-row { display:flex; flex-wrap:wrap; gap:10px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#fff; padding:10px 12px; font-weight:800; text-decoration:none; }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), #ffb900); color:#121212; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .btn-secondary { background:rgba(255,255,255,.03); }
+    .card { border:1px solid var(--line); border-radius:28px; background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:900; }
+    h1 { margin:8px 0 8px; font-size:clamp(28px, 6vw, 38px); line-height:1.05; }
+    p, li { color:var(--muted); }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+    .panel { border:1px solid var(--line); border-radius:22px; padding:14px; background:rgba(255,255,255,.03); }
+    .panel h2 { margin-top:0; font-size:18px; }
+    ul { color:var(--muted); padding-left:18px; }
+    .example { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .pill { border:1px solid var(--line); border-radius:999px; padding:8px 10px; background:rgba(255,255,255,.04); color:#fff; font-size:13px; }
+    .callout { display:block; border:1px solid rgba(255,210,31,.18); border-radius:16px; padding:12px; background:rgba(255,210,31,.08); color:#fff8da; font-weight:800; margin-top:8px; }
+    .back-link { display:inline-flex; margin-top:12px; color:var(--gold); text-decoration:underline; }
+    @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
+        <span class="brand-text">
+          <strong>Tonton Kondo</strong>
+          <span>Paryaj</span>
+        </span>
+      </a>
+      <div class="action-row">
+        <a class="btn btn-secondary" href="games.html">Retour aux jeux</a>
+        <a class="btn btn-primary" href="keno.html">Retour à Keno</a>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="eyebrow">Aide</div>
+      <h1>Keno — règles détaillées</h1>
+      <p>Le Keno est un jeu de tirage rapide où vous choisissez plusieurs numéros parmi une grille de boules. Plus vous trouvez de bons numéros au moment du tirage, plus votre gain augmente. C’est un jeu simple à comprendre, mais très dynamique, car le suspense vient du tirage lui-même.</p>
+      <a class="back-link" href="keno.html">← Retour à la page Keno</a>
+
+      <div class="grid">
+        <article class="panel">
+          <h2>1. Principe du jeu</h2>
+          <p>Vous sélectionnez un ensemble de numéros dans la grille disponible. Le système garde votre sélection jusqu’au tirage.</p>
+          <span class="callout">Le but est de retrouver le maximum de numéros tirés.</span>
+        </article>
+
+        <article class="panel">
+          <h2>2. Déroulement</h2>
+          <ul>
+            <li>Choisissez vos numéros.</li>
+            <li>Choisissez votre mise.</li>
+            <li>Validez votre ticket.</li>
+            <li>Attendez le tirage.</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <h2>3. Comment le gain se forme</h2>
+          <p>Après le tirage, le système compare vos numéros à ceux qui sont sortis. Chaque numéro trouvé correspond à un “match”.</p>
+          <p>Plus vous avez de matches, plus votre gain est élevé. Le gain exact dépend du nombre de bonnes réponses et du multiplicateur associé au jeu.</p>
+        </article>
+
+        <article class="panel">
+          <h2>4. Exemple simple</h2>
+          <p>Vous choisissez 6 numéros : 3, 12, 18, 24, 37 et 40.</p>
+          <div class="example">
+            <span class="pill">3 matches</span>
+            <span class="pill">Gain modeste</span>
+            <span class="pill">6 matches</span>
+            <span class="pill">Gain plus important</span>
+          </div>
+          <p>Le principe est simple : plus vous êtes proche du tirage complet, plus le gain est intéressant.</p>
+        </article>
+
+        <article class="panel" style="grid-column:1 / -1;">
+          <h2>5. Ce qu’il faut retenir</h2>
+          <ul>
+            <li>Le Keno repose sur la sélection de plusieurs numéros.</li>
+            <li>Le nombre de correspondances détermine le gain.</li>
+            <li>Le tirage est l’étape finale du jeu.</li>
+            <li>Une stratégie simple consiste à jouer des numéros que vous aimez ou à utiliser un choix rapide.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

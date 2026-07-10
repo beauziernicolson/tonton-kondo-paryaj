@@ -173,6 +173,16 @@
       });
 
       if (result && result.ok) {
+        if (result.needsLogin) {
+          const message = result.message || 'Compte créé. Connectez-vous maintenant avec votre numéro et votre mot de passe.';
+          window.alert(message);
+          window.setTimeout(() => {
+            const target = window.resolveRedirectUrl?.(result.redirectTo || 'login-register/login.html') || result.redirectTo || 'login-register/login.html';
+            window.location.href = target;
+          }, 1000);
+          return;
+        }
+
         const resolvedTarget = window.resolveRedirectUrl?.(result.redirectTo || window.resolveRoleDestination?.(result.role) || 'dashboard.html')
           || result.redirectTo
           || window.resolveRoleDestination?.(result.role)
