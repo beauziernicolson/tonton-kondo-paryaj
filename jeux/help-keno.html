@@ -33,6 +33,7 @@
     .back-link { display:inline-flex; margin-top:12px; color:var(--gold); text-decoration:underline; }
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
+  <script src="../js/i18n.js"></script>
 </head>
 <body>
   <main class="app">
@@ -103,5 +104,12 @@
       </div>
     </section>
   </main>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
 </body>
 </html>

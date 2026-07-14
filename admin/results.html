@@ -230,6 +230,7 @@
     </section>
   </main>
 
+  <script src="../js/i18n.js"></script>
   <script src="../js/auth-config.js"></script>
   <script src="../js/auth.js"></script>
   <script>
@@ -263,7 +264,7 @@
       }
 
       function formatDate(value) {
-        try { return new Date(value).toLocaleDateString('fr-FR'); } catch { return value; }
+        try { return new Date(value).toLocaleDateString(window.TKI18n?.getLocale?.() || 'fr-FR'); } catch { return value; }
       }
 
       function updateLottoPreview() {
@@ -698,6 +699,13 @@
       resultsBody.addEventListener('click', handleTableAction);
     })();
   </script>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
 </body>
 </html>
 

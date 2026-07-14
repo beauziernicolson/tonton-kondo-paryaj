@@ -574,7 +574,8 @@
   </div>
 </main>
 
-<script src="../js/auth-config.js"></script>
+<script src="../js/i18n.js"></script>
+  <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
   <script src="../js/auth-guard.js"></script>
 <script>
@@ -963,7 +964,7 @@ async function refreshPenaltyBalance() {
       throw new Error('Solde indisponible');
     }
 
-    balanceEl.textContent = `${Number(balance).toLocaleString('fr-FR')} ${currency || 'HTG'}`;
+    balanceEl.textContent = `${Number(balance).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency || 'HTG'}`;
     return { balance, currency };
   } catch (error) {
     console.error('refreshPenaltyBalance', error);
@@ -1089,6 +1090,13 @@ function showFeedback(msg, level = 'info') {
    BOOT
    =========================================================== */
 document.addEventListener('DOMContentLoaded', initPenalty);
+</script>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
 </script>
 </body>
 </html>

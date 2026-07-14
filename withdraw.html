@@ -335,6 +335,7 @@
     </section>
   </main>
 
+  <script src="js/i18n.js"></script>
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/auth-guard.js"></script>
@@ -359,7 +360,7 @@
     }
 
     function formatCurrency(value) {
-      return `${Number(value || 0).toLocaleString('fr-FR')} HTG`;
+      return `${Number(value || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG`;
     }
 
     function formatPaymentMethod(value) {
@@ -406,7 +407,7 @@
 
         historyList.innerHTML = data.map((item) => `
           <article class="card-item">
-            <strong>${new Date(item.created_at).toLocaleDateString('fr-FR')}</strong>
+            <strong>${new Date(item.created_at).toLocaleDateString(window.TKI18n?.getLocale?.() || 'fr-FR')}</strong>
             <span>${formatCurrency(item.amount)} • ${formatPaymentMethod(item.method)}</span>
             <span style="margin-top:8px;"><span class="badge ${badgeClass(item.status)}">${item.status || 'pending'}</span></span>
           </article>
@@ -533,7 +534,7 @@
             if (wallet && walletBalanceEl) {
               const balance = Number(wallet.balance || 0);
               const currency = wallet.currency || 'HTG';
-              walletBalanceEl.textContent = `${balance.toLocaleString('fr-FR')} ${currency}`;
+              walletBalanceEl.textContent = `${balance.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}`;
             }
           }
         }
@@ -542,6 +543,13 @@
       }
     })();
   </script>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
 </body>
 </html>
 

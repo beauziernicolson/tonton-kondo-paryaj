@@ -1,23 +1,15 @@
 /*
- * Tonton Kondo i18n foundation
+ * Tonton Kondo — moteur i18n global (fr / ht / en)
  *
- * Purpose:
- *   - provide a small, reusable, vanilla JavaScript translation engine
- *   - support fr / ht / en with a simple nested-key lookup API
- *   - load JSON locale files from the project locales directory
- *   - translate DOM elements via data-i18n attributes without innerHTML
+ * Deux modes complémentaires :
+ * 1) Clés structurées : data-i18n="wallet.title" et TKI18n.t('wallet.title').
+ * 2) Migration automatique : traduit les anciens textes visibles avec auto.exact
+ *    et auto.phrases dans les fichiers locales/*.json.
  *
- * Supported languages:
- *   fr, ht, en
- *
- * Examples:
- *   window.TKI18n.init({ language: 'en' });
- *   window.TKI18n.t('common.save');
- *   window.TKI18n.t('test.amount', { amount: 500, currency: 'HTG' });
- *
- * DOM example:
- *   <h1 data-i18n="common.profile">Profil</h1>
- *   <span data-i18n="test.amount" data-i18n-vars='{"amount":500,"currency":"HTG"}'></span>
+ * Exemples :
+ *   await TKI18n.init();
+ *   TKI18n.t('common.save');
+ *   await TKI18n.setLanguage('ht');
  */
 (function (global) {
   'use strict';
@@ -28,32 +20,23 @@
   const translationsCache = new Map();
   const loadingPromises = new Map();
   const languageChangeCallbacks = new Set();
+  const originalTextNodes = new WeakMap();
+  const originalAttributes = new WeakMap();
+
+  let currentLanguage = DEFAULT_LANGUAGE;
+  let translations = {};
+  let mutationObserver = null;
+  let observerEnabled = false;
+  let applyingTranslations = false;
 
   function normalizeLanguage(language) {
     const normalized = String(language || '').trim().toLowerCase();
-    if (!normalized) {
-      return DEFAULT_LANGUAGE;
-    }
-
-    const languagePrefix = normalized.split('-')[0];
-    if (languagePrefix === 'fr') {
-      return 'fr';
-    }
-    if (languagePrefix === 'ht') {
-      return 'ht';
-    }
-    if (languagePrefix === 'en') {
-      return 'en';
-    }
-
-    return DEFAULT_LANGUAGE;
+    const prefix = normalized.split('-')[0];
+    return SUPPORTED_LANGUAGES.includes(prefix) ? prefix : DEFAULT_LANGUAGE;
   }
 
   function safeParseJson(value) {
-    if (!value) {
-      return {};
-    }
-
+    if (!value) return {};
     try {
       return JSON.parse(value);
     } catch (error) {
@@ -63,411 +46,278 @@
   }
 
   function getNestedValue(object, key) {
-    return String(key || '')
-      .split('.')
-      .reduce((currentValue, part) => {
-        if (currentValue && Object.prototype.hasOwnProperty.call(currentValue, part)) {
-          return currentValue[part];
-        }
-        return undefined;
-      }, object);
+    return String(key || '').split('.').reduce((value, part) => {
+      if (value && Object.prototype.hasOwnProperty.call(value, part)) return value[part];
+      return undefined;
+    }, object);
+  }
+
+  function getScriptUrl() {
+    const direct = global.document?.currentScript;
+    if (direct?.src) return direct.src;
+    const scripts = Array.from(global.document?.scripts || []);
+    const match = scripts.reverse().find((script) => /(?:^|\/)i18n\.js(?:[?#].*)?$/.test(script.src || ''));
+    return match?.src || null;
   }
 
   function buildLocaleUrl(language) {
-    const normalizedLanguage = normalizeLanguage(language);
-
-    try {
-      const currentScript = global.document?.currentScript;
-      if (currentScript && currentScript.src) {
-        const scriptUrl = new URL(currentScript.src, global.location?.href || '');
-        const localesBaseUrl = new URL('../locales/', scriptUrl);
-        return new URL(`${normalizedLanguage}.json`, localesBaseUrl);
-      }
-    } catch (error) {
-      console.warn('Unable to resolve locales URL from currentScript, using fallback.', error);
-    }
-
-    const fallbackBaseUrl = new URL('../locales/', global.location?.href || 'http://localhost/');
-    return new URL(`${normalizedLanguage}.json`, fallbackBaseUrl);
+    const normalized = normalizeLanguage(language);
+    const scriptSrc = getScriptUrl();
+    if (scriptSrc) return new URL(`${normalized}.json`, new URL('../locales/', scriptSrc));
+    return new URL(`locales/${normalized}.json`, global.location?.origin + global.location?.pathname.replace(/[^/]*$/, ''));
   }
 
   async function fetchLanguageFile(language) {
-    const normalizedLanguage = normalizeLanguage(language);
-    if (translationsCache.has(normalizedLanguage)) {
-      return translationsCache.get(normalizedLanguage);
-    }
+    const normalized = normalizeLanguage(language);
+    if (translationsCache.has(normalized)) return translationsCache.get(normalized);
+    if (loadingPromises.has(normalized)) return loadingPromises.get(normalized);
 
-    if (loadingPromises.has(normalizedLanguage)) {
-      return loadingPromises.get(normalizedLanguage);
-    }
-
-    const loadingPromise = (async () => {
+    const promise = (async () => {
       try {
-        const response = await fetch(buildLocaleUrl(normalizedLanguage).href, {
-          headers: {
-            Accept: 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const json = await response.json();
-        const translations = json && typeof json === 'object' ? json : {};
-        translationsCache.set(normalizedLanguage, translations);
-        return translations;
+        const response = await fetch(buildLocaleUrl(normalized).href, { headers: { Accept: 'application/json' } });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        const dictionary = data && typeof data === 'object' ? data : {};
+        translationsCache.set(normalized, dictionary);
+        return dictionary;
       } catch (error) {
-        console.warn(`Unable to load locale ${normalizedLanguage}, falling back to fr.`, error);
-
-        if (normalizedLanguage !== DEFAULT_LANGUAGE) {
-          try {
-            const fallbackResponse = await fetch(buildLocaleUrl(DEFAULT_LANGUAGE).href, {
-              headers: {
-                Accept: 'application/json'
-              }
-            });
-
-            if (!fallbackResponse.ok) {
-              throw new Error(`HTTP ${fallbackResponse.status}`);
-            }
-
-            const fallbackJson = await fallbackResponse.json();
-            const fallbackTranslations = fallbackJson && typeof fallbackJson === 'object' ? fallbackJson : {};
-            translationsCache.set(normalizedLanguage, fallbackTranslations);
-            return fallbackTranslations;
-          } catch (fallbackError) {
-            console.error(`Unable to load fallback locale ${DEFAULT_LANGUAGE}.`, fallbackError);
-            const emptyTranslations = {};
-            translationsCache.set(normalizedLanguage, emptyTranslations);
-            return emptyTranslations;
-          }
-        }
-
-        const emptyTranslations = {};
-        translationsCache.set(normalizedLanguage, emptyTranslations);
-        return emptyTranslations;
+        console.warn(`Unable to load locale ${normalized}.`, error);
+        if (normalized !== DEFAULT_LANGUAGE) return fetchLanguageFile(DEFAULT_LANGUAGE);
+        translationsCache.set(DEFAULT_LANGUAGE, {});
+        return {};
       } finally {
-        loadingPromises.delete(normalizedLanguage);
+        loadingPromises.delete(normalized);
       }
     })();
 
-    loadingPromises.set(normalizedLanguage, loadingPromise);
-    return loadingPromise;
+    loadingPromises.set(normalized, promise);
+    return promise;
   }
 
-  function renderInterpolation(template, variables) {
-    return String(template || '').replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, (match, variableName) => {
-      const variableValue = variables && Object.prototype.hasOwnProperty.call(variables, variableName)
-        ? variables[variableName]
-        : undefined;
-
-      if (variableValue === undefined || variableValue === null) {
-        return '';
-      }
-
-      return String(variableValue);
+  function renderInterpolation(template, variables = {}) {
+    return String(template ?? '').replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, (_, name) => {
+      const value = Object.prototype.hasOwnProperty.call(variables, name) ? variables[name] : '';
+      return value === null || value === undefined ? '' : String(value);
     });
   }
 
-  function resolveInitialLanguage(options) {
-    const explicitLanguage = normalizeLanguage(options?.language);
-    if (SUPPORTED_LANGUAGES.includes(explicitLanguage)) {
-      return explicitLanguage;
+  function t(key, variables = {}) {
+    const normalizedKey = String(key || '');
+    const currentDictionary = translationsCache.get(currentLanguage) || translations || {};
+    const currentValue = getNestedValue(currentDictionary, normalizedKey);
+    if (typeof currentValue === 'string' || typeof currentValue === 'number') {
+      return renderInterpolation(currentValue, variables);
     }
-
-    if (typeof options?.remoteLanguageLoader === 'function') {
-      return Promise.resolve(options.remoteLanguageLoader()).then((remoteLanguage) => normalizeLanguage(remoteLanguage));
+    const fallback = translationsCache.get(DEFAULT_LANGUAGE) || {};
+    const fallbackValue = getNestedValue(fallback, normalizedKey);
+    if (typeof fallbackValue === 'string' || typeof fallbackValue === 'number') {
+      return renderInterpolation(fallbackValue, variables);
     }
+    console.warn('Missing translation:', currentLanguage, normalizedKey);
+    return normalizedKey;
+  }
 
+  function shouldSkipElement(element) {
+    if (!element || element.nodeType !== 1) return false;
+    return Boolean(element.closest('script, style, svg, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function rememberAttribute(element, name) {
+    let values = originalAttributes.get(element);
+    if (!values) {
+      values = {};
+      originalAttributes.set(element, values);
+    }
+    if (!Object.prototype.hasOwnProperty.call(values, name)) values[name] = element.getAttribute(name);
+    return values[name];
+  }
+
+  function translateLegacyText(source) {
+    const value = String(source ?? '');
+    if (currentLanguage === DEFAULT_LANGUAGE || !value.trim()) return value;
+    const auto = translations?.auto || {};
+    const exact = auto.exact || {};
+    const trimmed = value.trim();
+    const leading = value.slice(0, value.indexOf(trimmed));
+    const trailing = value.slice(value.indexOf(trimmed) + trimmed.length);
+    if (Object.prototype.hasOwnProperty.call(exact, trimmed)) return leading + exact[trimmed] + trailing;
+
+    let translated = trimmed;
+    const phrases = auto.phrases || {};
+    Object.keys(phrases).sort((a, b) => b.length - a.length).forEach((phrase) => {
+      const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      translated = translated.replace(new RegExp(escaped, 'gi'), phrases[phrase]);
+    });
+    return leading + translated + trailing;
+  }
+
+  function translateTextNode(node) {
+    if (!node || node.nodeType !== Node.TEXT_NODE || !node.parentElement || shouldSkipElement(node.parentElement)) return;
+    if (node.parentElement.closest('[data-i18n]')) return;
+    if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.nodeValue);
+    const source = originalTextNodes.get(node);
+    node.nodeValue = translateLegacyText(source);
+  }
+
+  function applyLegacyTranslations(root) {
+    const base = root?.nodeType === Node.TEXT_NODE ? root.parentNode : root;
+    if (!base) return;
+    const documentRef = base.ownerDocument || global.document;
+    const walker = documentRef.createTreeWalker(base, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(translateTextNode);
+
+    const elements = [];
+    if (base.nodeType === Node.ELEMENT_NODE) elements.push(base);
+    if (base.querySelectorAll) elements.push(...base.querySelectorAll('[placeholder], [title], [aria-label]'));
+    elements.forEach((element) => {
+      if (shouldSkipElement(element)) return;
+      ['placeholder', 'title', 'aria-label'].forEach((name) => {
+        if (!element.hasAttribute(name) || element.hasAttribute(`data-i18n-${name}`)) return;
+        const source = rememberAttribute(element, name);
+        if (source !== null) element.setAttribute(name, translateLegacyText(source));
+      });
+    });
+  }
+
+  function applyKeyedTranslations(root) {
+    const target = root || global.document;
+    if (!target?.querySelectorAll) return;
+    const includeSelf = (selector) => target.matches?.(selector) ? [target] : [];
+
+    [...includeSelf('[data-i18n]'), ...target.querySelectorAll('[data-i18n]')].forEach((element) => {
+      element.textContent = t(element.dataset.i18n, safeParseJson(element.dataset.i18nVars));
+    });
+    const attributeMappings = [
+      ['data-i18n-placeholder', 'placeholder'],
+      ['data-i18n-title', 'title'],
+      ['data-i18n-aria-label', 'aria-label'],
+      ['data-i18n-value', 'value']
+    ];
+    attributeMappings.forEach(([selectorAttribute, targetAttribute]) => {
+      const selector = `[${selectorAttribute}]`;
+      [...includeSelf(selector), ...target.querySelectorAll(selector)].forEach((element) => {
+        element.setAttribute(targetAttribute, t(element.getAttribute(selectorAttribute)));
+      });
+    });
+  }
+
+  function applyTranslations(root = global.document) {
+    if (!root || applyingTranslations) return;
+    applyingTranslations = true;
     try {
-      const storedLanguage = global.localStorage?.getItem(LOCAL_STORAGE_KEY);
-      if (storedLanguage) {
-        return normalizeLanguage(storedLanguage);
-      }
-    } catch (error) {
-      console.warn('Unable to read localStorage language.', error);
+      applyKeyedTranslations(root);
+      applyLegacyTranslations(root);
+    } finally {
+      applyingTranslations = false;
     }
-
-    const docLang = normalizeLanguage(global.document?.documentElement?.lang);
-    if (SUPPORTED_LANGUAGES.includes(docLang)) {
-      return docLang;
-    }
-
-    const navigatorLanguage = normalizeLanguage(global.navigator?.language);
-    if (SUPPORTED_LANGUAGES.includes(navigatorLanguage)) {
-      return navigatorLanguage;
-    }
-
-    return DEFAULT_LANGUAGE;
   }
 
-  let currentLanguage = DEFAULT_LANGUAGE;
-  let translations = {};
-
-  function hideDocumentUntilReady() {
-    if (!global.document || !global.document.documentElement) {
-      return;
-    }
-
-    global.document.documentElement.classList.add('tk-i18n-loading');
+  function stopMutationObserver() {
+    mutationObserver?.disconnect();
+    mutationObserver = null;
+    observerEnabled = false;
   }
 
-  function showDocumentWhenReady() {
-    if (!global.document || !global.document.documentElement) {
-      return;
-    }
-
-    global.document.documentElement.classList.remove('tk-i18n-loading');
-  }
-
-  function applyTranslations(root) {
-    const targetRoot = root || global.document;
-    if (!targetRoot) {
-      return;
-    }
-
-    targetRoot.querySelectorAll('[data-i18n]').forEach((element) => {
-      const key = element.dataset.i18n;
-      const variables = safeParseJson(element.dataset.i18nVars);
-      const translatedValue = TKI18n.t(key, variables);
-      if (translatedValue !== undefined && translatedValue !== null) {
-        element.textContent = translatedValue;
+  function startMutationObserver() {
+    if (!global.document?.body) return;
+    stopMutationObserver();
+    observerEnabled = true;
+    mutationObserver = new MutationObserver((mutations) => {
+      if (applyingTranslations) return;
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            translateTextNode(node);
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            applyTranslations(node);
+          }
+        }
       }
     });
-
-    targetRoot.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
-      const key = element.dataset.i18nPlaceholder;
-      const translatedValue = TKI18n.t(key);
-      if (translatedValue !== undefined && translatedValue !== null) {
-        element.setAttribute('placeholder', translatedValue);
-      }
-    });
-
-    targetRoot.querySelectorAll('[data-i18n-title]').forEach((element) => {
-      const key = element.dataset.i18nTitle;
-      const translatedValue = TKI18n.t(key);
-      if (translatedValue !== undefined && translatedValue !== null) {
-        element.setAttribute('title', translatedValue);
-      }
-    });
-
-    targetRoot.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
-      const key = element.dataset.i18nAriaLabel;
-      const translatedValue = TKI18n.t(key);
-      if (translatedValue !== undefined && translatedValue !== null) {
-        element.setAttribute('aria-label', translatedValue);
-      }
-    });
-
-    targetRoot.querySelectorAll('[data-i18n-value]').forEach((element) => {
-      const key = element.dataset.i18nValue;
-      const translatedValue = TKI18n.t(key);
-      if (translatedValue !== undefined && translatedValue !== null) {
-        element.setAttribute('value', translatedValue);
-      }
-    });
+    // childList only: textContent replacements appear as added text nodes, while
+    // translations made by this engine do not retrigger an infinite characterData loop.
+    mutationObserver.observe(global.document.body, { childList: true, subtree: true });
   }
 
   async function loadLanguage(language) {
-    const normalizedLanguage = normalizeLanguage(language);
-    return fetchLanguageFile(normalizedLanguage);
+    return fetchLanguageFile(normalizeLanguage(language));
   }
 
   function getLanguage() {
     return currentLanguage;
   }
 
+  function getLocale() {
+    return currentLanguage === 'en' ? 'en-US' : currentLanguage === 'ht' ? 'ht-HT' : 'fr-FR';
+  }
+
   async function setLanguage(language, options = {}) {
-    const normalizedLanguage = normalizeLanguage(language);
-    const parsedOptions = options || {};
-    const persistLocal = parsedOptions.persistLocal !== false;
-    const persistRemote = parsedOptions.persistRemote === true;
-    const apply = parsedOptions.apply !== false;
+    const normalized = normalizeLanguage(language);
+    const next = await loadLanguage(normalized);
+    currentLanguage = normalized;
+    translations = next || {};
+    if (global.document?.documentElement) global.document.documentElement.lang = normalized;
 
-    const nextTranslations = await loadLanguage(normalizedLanguage);
-    currentLanguage = normalizedLanguage;
-    translations = nextTranslations || {};
-
-    if (global.document?.documentElement) {
-      global.document.documentElement.lang = normalizedLanguage;
+    if (options.persistLocal !== false) {
+      try { global.localStorage?.setItem(LOCAL_STORAGE_KEY, normalized); }
+      catch (error) { console.warn('Unable to persist language.', error); }
     }
-
-    if (persistLocal) {
-      try {
-        global.localStorage?.setItem(LOCAL_STORAGE_KEY, normalizedLanguage);
-      } catch (error) {
-        console.warn('Unable to persist language in localStorage.', error);
-      }
+    if (options.persistRemote === true && typeof options.remoteLanguageSaver === 'function') {
+      try { await options.remoteLanguageSaver(normalized); }
+      catch (error) { console.warn('Unable to persist remote language.', error); }
     }
+    if (options.apply !== false) applyTranslations(global.document);
 
-    if (persistRemote) {
-      console.warn('persistRemote is configured but no remote save is performed in this phase.');
-    }
-
-    if (apply) {
-      applyTranslations(global.document);
-    }
-
+    const detail = { language: normalized, translations };
     languageChangeCallbacks.forEach((callback) => {
-      try {
-        callback({
-          language: normalizedLanguage,
-          translations: translations || {}
-        });
-      } catch (error) {
-        console.error('i18n callback failed:', error);
-      }
+      try { callback(detail); } catch (error) { console.error('i18n callback failed:', error); }
     });
-
-    global.dispatchEvent(
-      new global.CustomEvent('tk:language-changed', {
-        detail: {
-          language: normalizedLanguage,
-          translations: translations || {}
-        }
-      })
-    );
-
-    return normalizedLanguage;
+    global.dispatchEvent(new CustomEvent('tk:language-changed', { detail }));
+    return normalized;
   }
 
   async function init(options = {}) {
-    const normalizedOptions = options || {};
-    const hideUntilReady = normalizedOptions.hideUntilReady === true;
-
-    if (hideUntilReady) {
-      hideDocumentUntilReady();
-    }
-
-    let resolvedLanguage = normalizeLanguage(normalizedOptions.language);
-    if (!SUPPORTED_LANGUAGES.includes(resolvedLanguage)) {
-      const remoteLanguageLoader = normalizedOptions.remoteLanguageLoader;
-      if (typeof remoteLanguageLoader === 'function') {
-        try {
-          const remoteLanguage = await remoteLanguageLoader();
-          resolvedLanguage = normalizeLanguage(remoteLanguage);
-        } catch (error) {
-          console.warn('remoteLanguageLoader failed.', error);
-        }
-      }
-
-      if (!SUPPORTED_LANGUAGES.includes(resolvedLanguage)) {
-        try {
-          const localStoredLanguage = global.localStorage?.getItem(LOCAL_STORAGE_KEY);
-          if (localStoredLanguage) {
-            resolvedLanguage = normalizeLanguage(localStoredLanguage);
-          }
-        } catch (error) {
-          console.warn('Unable to read localStorage during init.', error);
-        }
-      }
-
-      if (!SUPPORTED_LANGUAGES.includes(resolvedLanguage)) {
-        const documentLanguage = normalizeLanguage(global.document?.documentElement?.lang);
-        if (SUPPORTED_LANGUAGES.includes(documentLanguage)) {
-          resolvedLanguage = documentLanguage;
-        }
-      }
-
-      if (!SUPPORTED_LANGUAGES.includes(resolvedLanguage)) {
-        const navigatorLanguage = normalizeLanguage(global.navigator?.language);
-        if (SUPPORTED_LANGUAGES.includes(navigatorLanguage)) {
-          resolvedLanguage = navigatorLanguage;
-        }
-      }
-
-      if (!SUPPORTED_LANGUAGES.includes(resolvedLanguage)) {
-        resolvedLanguage = DEFAULT_LANGUAGE;
-      }
-    }
-
+    const hide = options.hideUntilReady === true;
+    if (hide) hideDocumentUntilReady();
+    let language = null;
     try {
-      await setLanguage(resolvedLanguage, {
-        persistLocal: normalizedOptions.useLocalStorage !== false,
-        persistRemote: false,
-        apply: normalizedOptions.autoApply !== false
-      });
+      if (options.language) language = normalizeLanguage(options.language);
+      if (!language && typeof options.remoteLanguageLoader === 'function') {
+        try { language = normalizeLanguage(await options.remoteLanguageLoader()); } catch (error) { console.warn('remoteLanguageLoader failed.', error); }
+      }
+      if (!language && options.useLocalStorage !== false) {
+        try {
+          const stored = global.localStorage?.getItem(LOCAL_STORAGE_KEY);
+          if (stored) language = normalizeLanguage(stored);
+        } catch (error) { console.warn('Unable to read language.', error); }
+      }
+      if (!language) language = normalizeLanguage(global.document?.documentElement?.lang || global.navigator?.language || DEFAULT_LANGUAGE);
+      await setLanguage(language, { persistLocal: options.useLocalStorage !== false, apply: options.autoApply !== false });
+      if (options.observeMutations !== false) startMutationObserver();
     } catch (error) {
       console.error('TKI18n initialization failed:', error);
     } finally {
-      if (hideUntilReady) {
-        showDocumentWhenReady();
-      }
+      if (hide) showDocumentWhenReady();
     }
-
     return currentLanguage;
   }
 
-  function onLanguageChanged(callback) {
-    if (typeof callback === 'function') {
-      languageChangeCallbacks.add(callback);
-    }
-  }
-
-  function offLanguageChanged(callback) {
-    if (typeof callback === 'function') {
-      languageChangeCallbacks.delete(callback);
-    }
-  }
-
-  function t(key, variables = {}) {
-    const normalizedKey = String(key || '');
-    const translationsForCurrentLanguage = translationsCache.get(currentLanguage) || {};
-    const translationFromCurrent = getNestedValue(translationsForCurrentLanguage, normalizedKey);
-
-    if (translationFromCurrent !== undefined && translationFromCurrent !== null) {
-      return renderInterpolation(translationFromCurrent, variables || {});
-    }
-
-    const fallbackTranslations = translationsCache.get(DEFAULT_LANGUAGE) || {};
-    const fallbackValue = getNestedValue(fallbackTranslations, normalizedKey);
-    if (fallbackValue !== undefined && fallbackValue !== null) {
-      return renderInterpolation(fallbackValue, variables || {});
-    }
-
-    console.warn('Missing translation:', currentLanguage, normalizedKey);
-    return normalizedKey;
-  }
+  function hideDocumentUntilReady() { global.document?.documentElement?.classList.add('tk-i18n-loading'); }
+  function showDocumentWhenReady() { global.document?.documentElement?.classList.remove('tk-i18n-loading'); }
+  function onLanguageChanged(callback) { if (typeof callback === 'function') languageChangeCallbacks.add(callback); }
+  function offLanguageChanged(callback) { languageChangeCallbacks.delete(callback); }
 
   const TKI18n = {
-    init,
-    t,
-    setLanguage,
-    getLanguage,
-    applyTranslations,
-    loadLanguage,
-    onLanguageChanged,
-    offLanguageChanged,
-    hideDocumentUntilReady,
-    showDocumentWhenReady,
-    normalizeLanguage,
-    SUPPORTED_LANGUAGES
+    init, t, setLanguage, getLanguage, applyTranslations, loadLanguage,
+    onLanguageChanged, offLanguageChanged, hideDocumentUntilReady,
+    showDocumentWhenReady, normalizeLanguage, getLocale, startMutationObserver,
+    stopMutationObserver, SUPPORTED_LANGUAGES
   };
 
   global.TKI18n = TKI18n;
-
-  if (!global.t) {
-    global.t = function tGlobal(...args) {
-      return global.TKI18n.t(...args);
-    };
-  } else {
-    console.warn('window.t already exists; leaving it untouched.');
-  }
-
-  if (!global.setLanguage) {
-    global.setLanguage = function setLanguageGlobal(...args) {
-      return global.TKI18n.setLanguage(...args);
-    };
-  } else {
-    console.warn('window.setLanguage already exists; leaving it untouched.');
-  }
-
-  if (!global.getCurrentLanguage) {
-    global.getCurrentLanguage = function getCurrentLanguageGlobal() {
-      return global.TKI18n.getLanguage();
-    };
-  } else {
-    console.warn('window.getCurrentLanguage already exists; leaving it untouched.');
-  }
+  if (!global.t) global.t = (...args) => TKI18n.t(...args);
+  if (!global.setLanguage) global.setLanguage = (...args) => TKI18n.setLanguage(...args);
+  if (!global.getCurrentLanguage) global.getCurrentLanguage = () => TKI18n.getLanguage();
 })(window);

@@ -895,7 +895,7 @@
     if (statusChipEl) statusChipEl.textContent = statusLabel;
 
     const balanceEl = documentRef.querySelector('[data-dashboard-balance]');
-    if (balanceEl) balanceEl.textContent = `${balance.toLocaleString('fr-FR')} ${currency}`;
+    if (balanceEl) balanceEl.textContent = `${balance.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}`;
 
     const currencyEl = documentRef.querySelector('[data-dashboard-currency]');
     if (currencyEl) currencyEl.textContent = currency;
@@ -914,7 +914,7 @@
     }
 
     const balanceCardEl = documentRef.querySelector('[data-dashboard-balance-card]');
-    if (balanceCardEl) balanceCardEl.textContent = `${balance.toLocaleString('fr-FR')} ${currency}`;
+    if (balanceCardEl) balanceCardEl.textContent = `${balance.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}`;
 
     const ticketsEl = documentRef.querySelector('[data-dashboard-tickets]');
     if (ticketsEl) ticketsEl.textContent = '0';
@@ -946,7 +946,7 @@
           const icon = getTransactionIcon(item.type);
           const statusLabel = getTransactionStatusLabel(item.status);
           const statusClass = getTransactionStatusClass(item.status);
-          const signedAmount = amount >= 0 ? `+ ${Math.abs(amount).toLocaleString('fr-FR')} ${currency}` : `- ${Math.abs(amount).toLocaleString('fr-FR')} ${currency}`;
+          const signedAmount = amount >= 0 ? `+ ${Math.abs(amount).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}` : `- ${Math.abs(amount).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}`;
           const amountClass = amount >= 0 ? 'history-amount positive' : 'history-amount negative';
           return `
             <div class="history-item">
@@ -1014,11 +1014,11 @@
     const createdAtEl = documentRef.querySelector('[data-profile-created-at]');
     if (createdAtEl) {
       const createdAt = user.created_at || currentUser.created_at;
-      createdAtEl.textContent = createdAt ? new Date(createdAt).toLocaleString('fr-FR') : 'Non disponible';
+      createdAtEl.textContent = createdAt ? new Date(createdAt).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR') : 'Non disponible';
     }
 
     const balanceEl = documentRef.querySelector('[data-profile-balance]');
-    if (balanceEl) balanceEl.textContent = wallet.balance != null ? `${Number(wallet.balance).toLocaleString('fr-FR')} ${wallet.currency || 'HTG'}` : '0 HTG';
+    if (balanceEl) balanceEl.textContent = wallet.balance != null ? `${Number(wallet.balance).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${wallet.currency || 'HTG'}` : '0 HTG';
 
     const currencyEl = documentRef.querySelector('[data-profile-currency]');
     if (currencyEl) currencyEl.textContent = wallet.currency || 'HTG';

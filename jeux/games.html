@@ -209,6 +209,7 @@
     </section>
   </main>
 
+  <script src="../js/i18n.js"></script>
   <script src="../js/auth-config.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/auth-guard.js"></script>
@@ -316,5 +317,12 @@
       syncGamesHeader();
     })();
   </script>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
 </body>
 </html>

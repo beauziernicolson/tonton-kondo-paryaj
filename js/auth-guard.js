@@ -264,7 +264,7 @@
     if (!container) return;
 
     const displayName = currentUser?.full_name || currentUser?.email || 'Profil';
-    const balance = wallet?.balance != null ? Number(wallet.balance).toLocaleString('fr-FR') : '0';
+    const balance = wallet?.balance != null ? Number(wallet.balance).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR') : '0';
     const currency = wallet?.currency || 'HTG';
 
     container.innerHTML = `

@@ -380,6 +380,7 @@
       <p class="footer-note">Prototype statique — aucun appel Supabase ni validation réelle n’est effectué.</p>
     </section>
   </main>
+  <script src="../js/i18n.js"></script>
   <script src="../js/auth-config.js"></script>
   <script src="../js/auth.js"></script>
   <script>
@@ -432,6 +433,13 @@
       if (event.target === this) closeModal();
     });
   </script>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
 </body>
 </html>
 

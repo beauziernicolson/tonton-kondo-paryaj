@@ -174,6 +174,7 @@
     </section>
   </main>
 
+  <script src="../js/i18n.js"></script>
   <script src="../js/auth-config.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/auth-guard.js"></script>
@@ -345,7 +346,7 @@
       setFeedback('Tirage en cours...', 'warn');
       matchesCount.textContent = '0';
       ticketNumberEl.textContent = result.ticket_number || '-';
-      betAmountEl.textContent = `${Number(result.bet_amount || 0).toLocaleString('fr-FR')} HTG`;
+      betAmountEl.textContent = `${Number(result.bet_amount || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG`;
       payoutMultiplierEl.textContent = result.payout_multiplier != null ? `× ${result.payout_multiplier}` : '-';
       statusTextEl.textContent = result.status || '-';
 
@@ -371,7 +372,7 @@
       }
 
       // Afficher la résultat final dans la section résultat
-      gainAmount.textContent = `${Number(result.win_amount || 0).toLocaleString('fr-FR')} HTG`;
+      gainAmount.textContent = `${Number(result.win_amount || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG`;
       chosenNumbersEl.textContent = result.selected_numbers ? result.selected_numbers.join(', ') : 'Aucun';
       
       // Afficher les numéros tirés dans le format "Résultat Keno"
@@ -382,7 +383,7 @@
 
       // Message final
       const finalMessage = result.win_amount > 0 
-        ? `Félicitations, vous avez gagné ${Number(result.win_amount).toLocaleString('fr-FR')} HTG` 
+        ? `Félicitations, vous avez gagné ${Number(result.win_amount).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG` 
         : 'Pas de gain cette fois. Réessayez.';
       setFeedback(finalMessage, result.win_amount > 0 ? 'success' : 'warn');
     }
@@ -471,5 +472,12 @@
     renderGrid();
     resetKenoResult();
   </script>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
 </body>
 </html>

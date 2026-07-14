@@ -235,9 +235,9 @@
         return 'en-US';
       }
       if (currentLanguage === 'ht') {
-        return 'fr-FR';
+        return window.TKI18n?.getLocale?.() || 'fr-FR';
       }
-      return 'fr-FR';
+      return window.TKI18n?.getLocale?.() || 'fr-FR';
     }
 
     function getTransactionTypeLabel(type) {

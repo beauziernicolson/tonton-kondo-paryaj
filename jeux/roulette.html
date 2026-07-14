@@ -312,7 +312,8 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<script src="../js/auth-config.js"></script>
+<script src="../js/i18n.js"></script>
+  <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
   <script src="../js/auth-guard.js"></script>
 <script>
@@ -381,7 +382,7 @@ const state = {
 
 /* ---------- Init ---------- */
 function formatCurrency(value){
-  return Number(value || 0).toLocaleString("fr-FR");
+  return Number(value || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR');
 }
 function setSpinButtonState(isSpinning){
   const button = document.getElementById("btnSpin");
@@ -634,7 +635,7 @@ function setBalanceStatus(status, message){
 }
 function getBalanceDisplayText(){
   if (state.balanceStatus === 'ready' && state.balance != null) {
-    return state.balance.toLocaleString('fr-FR');
+    return state.balance.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR');
   }
   return state.balanceMessage || 'Chargement du solde...';
 }
@@ -699,8 +700,8 @@ function updateRouletteSummary(){
   const balanceText = getBalanceDisplayText();
   document.getElementById("balance").textContent = balanceText;
   document.getElementById("sumBalance").textContent = balanceText;
-  document.getElementById("sumBet").textContent = totalBet().toLocaleString("fr-FR");
-  document.getElementById("sumWin").textContent = potentialWin().toLocaleString("fr-FR");
+  document.getElementById("sumBet").textContent = totalBet().toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR');
+  document.getElementById("sumWin").textContent = potentialWin().toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR');
   document.getElementById("sumLast").textContent = state.lastNumber==null ? "—" : state.lastNumber;
   // recent
   const rec = document.getElementById("recent");
@@ -716,7 +717,7 @@ function updateRouletteSummary(){
   const entries = Object.entries(state.bets);
   if(!entries.length){list.innerHTML='<div class="empty">Aucune mise placée.</div>';}
   else{
-    list.innerHTML = entries.map(([k,a])=>`<div class="item"><span>${labelOf(k)}</span><span>${a.toLocaleString("fr-FR")} HTG</span></div>`).join("");
+    list.innerHTML = entries.map(([k,a])=>`<div class="item"><span>${labelOf(k)}</span><span>${a.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG</span></div>`).join("");
   }
   // spin button
   document.getElementById("btnSpin").disabled = state.spinning || totalBet()===0;
@@ -833,7 +834,7 @@ function showResultPanel(result){
   const color = result.winningColor === 'red' ? '#ff8a8a' : result.winningColor === 'black' ? '#cfd6ec' : '#9be8a4';
   const betDetails = Array.isArray(result.betDetails) ? result.betDetails : [];
   const detailMarkup = betDetails.length
-    ? `<div style="margin-top:10px;text-align:left;font-size:13px;display:grid;gap:6px">${betDetails.map((bet)=>`<div style="display:flex;justify-content:space-between;gap:10px"><span>${bet.bet_label || bet.bet_key || 'Mise'}</span><span>${Number(bet.amount || 0).toLocaleString('fr-FR')} HTG</span></div>`).join('')}</div>`
+    ? `<div style="margin-top:10px;text-align:left;font-size:13px;display:grid;gap:6px">${betDetails.map((bet)=>`<div style="display:flex;justify-content:space-between;gap:10px"><span>${bet.bet_label || bet.bet_key || 'Mise'}</span><span>${Number(bet.amount || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG</span></div>`).join('')}</div>`
     : '<div style="margin-top:10px;color:var(--muted)">Aucune ligne de mise détaillée.</div>';
 
   document.getElementById("resultPanel").innerHTML = `
@@ -850,6 +851,13 @@ function showResultPanel(result){
 }
 
 document.addEventListener("DOMContentLoaded", ()=>{ void initRoulette(); });
+</script>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
 </script>
 </body>
 </html>

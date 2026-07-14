@@ -233,7 +233,7 @@
     function formatHistoryAmount(type, amount, currency) {
       const numericAmount = Number(amount || 0);
       const sign = type === 'deposit' ? '+' : '-';
-      const formatted = numericAmount.toLocaleString('fr-FR');
+      const formatted = numericAmount.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR');
       return `${sign} ${formatted} ${currency || 'HTG'}`;
     }
 
@@ -261,7 +261,7 @@
         const isDeposit = item.type === 'deposit';
         const label = isDeposit ? tkText('common.deposit', 'Dépôt') : tkText('common.withdraw', 'Retrait');
         const amountClass = isDeposit ? 'history-amount positive' : 'history-amount negative';
-        const dateLabel = item.created_at ? new Date(item.created_at).toLocaleDateString('fr-FR') : '—';
+        const dateLabel = item.created_at ? new Date(item.created_at).toLocaleDateString(window.TKI18n?.getLocale?.() || 'fr-FR') : '—';
         const iconSvg = isDeposit
           ? '<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>'
           : '<svg viewBox="0 0 24 24"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></svg>';
@@ -337,7 +337,7 @@
       const currency = wallet.currency || 'HTG';
       const balanceCardEl = document.querySelector('[data-dashboard-balance-card]');
       if (balanceCardEl) {
-        balanceCardEl.textContent = `${Number(wallet.balance || 0).toLocaleString('fr-FR')} ${currency}`;
+        balanceCardEl.textContent = `${Number(wallet.balance || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}`;
       }
 
       return data;
@@ -549,7 +549,7 @@
             if (wallet && walletBalanceEl) {
               const balance = Number(wallet.balance || 0);
               const currency = wallet.currency || 'HTG';
-              walletBalanceEl.textContent = `${balance.toLocaleString('fr-FR')} ${currency}`;
+              walletBalanceEl.textContent = `${balance.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}`;
             }
           }
         }

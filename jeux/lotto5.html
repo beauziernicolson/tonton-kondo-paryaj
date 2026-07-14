@@ -156,6 +156,7 @@
     </section>
   </main>
 
+  <script src="../js/i18n.js"></script>
   <script src="../js/auth-config.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/auth-guard.js"></script>
@@ -188,7 +189,7 @@
         feedbackBox.textContent = message;
       }
 
-      function formatCurrency(value) { return `${Number(value || 0).toLocaleString('fr-FR')} HTG`; }
+      function formatCurrency(value) { return `${Number(value || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG`; }
 
       function syncNumberSelection() {
         const number = selectedDigits.join('');
@@ -280,7 +281,7 @@
         couponLines.forEach((line) => {
           const item = document.createElement('article');
           item.className = 'coupon-item';
-          item.innerHTML = `<div><strong>Numéro ${line.number} • ${line.option_type || 'option inconnue'}</strong><span>Ajouté le ${new Date(line.createdAt).toLocaleString('fr-FR')}</span></div><div><strong>${formatCurrency(line.amount)}</strong><button class="btn" type="button" data-delete="${line.id}" style="padding:8px 10px;">Supprimer</button></div>`;
+          item.innerHTML = `<div><strong>Numéro ${line.number} • ${line.option_type || 'option inconnue'}</strong><span>Ajouté le ${new Date(line.createdAt).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')}</span></div><div><strong>${formatCurrency(line.amount)}</strong><button class="btn" type="button" data-delete="${line.id}" style="padding:8px 10px;">Supprimer</button></div>`;
           couponList.appendChild(item);
         });
       }
@@ -405,6 +406,13 @@
       })();
     })();
   </script>
+<script data-tk-i18n-auto-init>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
 </body>
 </html>
 
