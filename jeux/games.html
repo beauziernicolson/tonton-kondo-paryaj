@@ -35,6 +35,7 @@
     .header-actions{display:flex;align-items:center;gap:8px}.action-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(8,24,43,.95);color:var(--gold);position:relative;display:grid;place-items:center;box-shadow:var(--shadow);text-decoration:none}
     .user-button{width:42px;height:42px;border-radius:999px;padding:0;overflow:hidden;background:linear-gradient(135deg,rgba(255,210,31,.18),rgba(57,168,255,.18));border:1px solid rgba(255,255,255,.16);color:#fff;display:grid;place-items:center}
     .user-avatar{width:100%;height:100%;display:grid;place-items:center;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(135deg,#1b3353,#07111e)}
+    .user-menu-wrap{position:relative}.user-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:220px;display:none;grid-template-columns:1fr;gap:4px;padding:8px;border:1px solid var(--line);border-radius:16px;background:rgba(7,24,43,.98);box-shadow:var(--shadow);z-index:50}.user-menu.open{display:grid}.user-menu-link{display:block;padding:10px 12px;border-radius:12px;border:1px solid transparent;color:#f3f7ff;font-size:13px;font-weight:700;text-decoration:none;background:transparent}.user-menu-link:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}.user-menu-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 0}.user-menu-logout{color:#ffd6d6}
     .badge{position:absolute;right:-2px;top:-5px;background:var(--gold);color:#111;border-radius:999px;font-size:11px;font-weight:900;min-width:19px;height:19px;display:grid;place-items:center;border:2px solid #061426}
     .hero-card { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; margin-bottom:18px; }
     .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
@@ -84,13 +85,27 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></svg>
           <span class="badge">3</span>
         </button>
-        <button class="action-btn" type="button" aria-label="Notifications">
+        <a href="../notifications.html" class="action-btn notifications-link" aria-label="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
-          <span class="badge">2</span>
-        </button>
-        <a class="action-btn user-button" href="../dashboard.html" aria-label="Tableau de bord">
-          <span class="user-avatar">U</span>
+          <span class="badge notifications-badge" hidden>0</span>
         </a>
+        <div class="user-menu-wrap" id="userMenuWrap" hidden>
+          <button id="userMenuButton" class="action-btn user-button" type="button" aria-label="Menu utilisateur" aria-expanded="false">
+            <span class="user-avatar" id="userAvatar">U</span>
+          </button>
+          <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
+            <a class="user-menu-link" href="../tickets.html">Tickets</a>
+            <a class="user-menu-link" href="../history.html">Historique</a>
+            <a class="user-menu-link" href="../results.html">Résultats</a>
+            <a class="user-menu-link" href="../deposit.html">Dépôt</a>
+            <a class="user-menu-link" href="../withdraw.html">Retrait</a>
+            <a class="user-menu-link" href="../wallet.html">Portefeuille</a>
+            <a class="user-menu-link" href="../profile.html">Profil</a>
+            <a class="user-menu-link" href="../settings.html">Paramètres</a>
+            <div class="user-menu-divider"></div>
+            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button">Déconnexion</button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -193,5 +208,113 @@
       </article>
     </section>
   </main>
+
+  <script src="../js/auth-config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/auth-guard.js"></script>
+  <script>
+    function toggleUserMenu(event) {
+      event?.stopPropagation();
+      const userMenuButton = document.getElementById('userMenuButton');
+      const userMenu = document.getElementById('userMenu');
+      if (!userMenuButton || !userMenu) {
+        return;
+      }
+      const isOpen = userMenu.classList.toggle('open');
+      userMenuButton.setAttribute('aria-expanded', String(Boolean(isOpen)));
+      userMenu.setAttribute('aria-hidden', String(!isOpen));
+    }
+
+    function closeUserMenu(event) {
+      const userMenuWrap = document.getElementById('userMenuWrap');
+      const userMenuButton = document.getElementById('userMenuButton');
+      const userMenu = document.getElementById('userMenu');
+      if (!userMenuWrap || !userMenuButton || !userMenu) {
+        return;
+      }
+      if (userMenuWrap.contains(event?.target)) {
+        return;
+      }
+      userMenu.classList.remove('open');
+      userMenuButton.setAttribute('aria-expanded', 'false');
+      userMenu.setAttribute('aria-hidden', 'true');
+    }
+
+    window.toggleUserMenu = toggleUserMenu;
+    window.closeUserMenu = closeUserMenu;
+
+    (function initGamesUserMenu() {
+      const userMenuWrap = document.getElementById('userMenuWrap');
+      const userMenuButton = document.getElementById('userMenuButton');
+      const userMenu = document.getElementById('userMenu');
+      const userAvatar = document.getElementById('userAvatar');
+      const logoutMenuBtn = document.getElementById('logoutMenuBtn');
+
+      if (!userMenuWrap || !userMenuButton || !userMenu) {
+        return;
+      }
+
+      if (userMenuButton.dataset.menuBound === 'true') {
+        return;
+      }
+
+      userMenuButton.dataset.menuBound = 'true';
+
+      function showUserInitials(user) {
+        const displayName = user?.full_name || user?.email || 'Utilisateur';
+        const firstLetter = String(displayName).trim().charAt(0).toUpperCase();
+        if (userAvatar) {
+          userAvatar.innerHTML = '';
+          const avatarUrl = user?.avatar_url || user?.picture || null;
+          if (avatarUrl) {
+            const img = document.createElement('img');
+            img.src = avatarUrl;
+            img.alt = displayName;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            userAvatar.appendChild(img);
+          } else {
+            userAvatar.textContent = firstLetter || 'U';
+          }
+        }
+      }
+
+      async function syncGamesHeader() {
+        try {
+          const currentUser = window.getCurrentUserAsync ? await window.getCurrentUserAsync() : window.getCurrentUser?.();
+          if (userMenuWrap) {
+            userMenuWrap.hidden = false;
+          }
+          if (currentUser) {
+            showUserInitials(currentUser);
+          } else if (userAvatar) {
+            userAvatar.textContent = 'U';
+          }
+        } catch (error) {
+          if (userMenuWrap) userMenuWrap.hidden = false;
+          if (userAvatar) userAvatar.textContent = 'U';
+        }
+      }
+
+      userMenuButton?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = userMenu?.classList.toggle('open');
+        userMenuButton.setAttribute('aria-expanded', String(Boolean(isOpen)));
+        userMenu?.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      document.addEventListener('click', closeUserMenu);
+
+      logoutMenuBtn?.addEventListener('click', async () => {
+        const result = await window.logoutUser?.();
+        if (result?.ok) {
+          window.location.reload();
+        }
+      });
+
+      syncGamesHeader();
+    })();
+  </script>
 </body>
 </html>

@@ -80,14 +80,64 @@
 
     .ticket-list { display:grid; gap:10px; }
     .ticket-card { border:1px solid var(--line); border-radius:18px; padding:14px; background:linear-gradient(180deg, rgba(9,26,45,.96), rgba(5,16,28,.96)); box-shadow:inset 0 -1px 0 rgba(255,255,255,.04); }
-    .ticket-row { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .ticket-card-head {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .ticket-card-info {
+      min-width:0;
+      display:grid;
+      gap:4px;
+    }
+    .ticket-card-actions {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-shrink:0;
+    }
+    .ticket-game {
+      color:var(--muted);
+      font-size:12px;
+      overflow-wrap:anywhere;
+    }
+    .ticket-card-meta {
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,.07);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .ticket-card-note {
+      margin-top:10px;
+      padding:10px;
+      border-radius:12px;
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:12px;
+      overflow-wrap:anywhere;
+    }
+    .ticket-card-foot {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:12px;
+    }
+    .ticket-amount {
+      color:var(--gold);
+      font-size:18px;
+      font-weight:900;
+    }
     .ticket-title { display:flex; flex-direction:column; gap:4px; }
     .ticket-code { font-weight:900; color:#fff; letter-spacing:.03em; font-size:15px; }
     .ticket-meta { color:var(--muted); font-size:12px; }
     .ticket-pill { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:999px; padding:6px 8px; background:rgba(255,255,255,.03); color:#edf4ff; font-size:12px; font-weight:800; white-space:nowrap; }
     .ticket-total { color:var(--gold); font-size:18px; font-weight:900; }
-    .ticket-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:10px; }
-
     .ticket-copy-btn {
       min-width:82px;
       border:1px solid rgba(255,255,255,.16);
@@ -166,6 +216,7 @@
       flex-wrap:nowrap;
       gap:8px;
       overflow-x:auto;
+      overflow-y:hidden;
       padding:10px 10px 8px;
       margin-bottom:12px;
       background:rgba(2,9,19,.92);
@@ -173,6 +224,10 @@
       border-radius:24px;
       scrollbar-width:none;
       -ms-overflow-style:none;
+      scroll-snap-type:x proximity;
+      -webkit-overflow-scrolling:touch;
+      touch-action:pan-x;
+      overscroll-behavior-x:contain;
     }
 
     .ticket-filters::-webkit-scrollbar {
@@ -192,6 +247,7 @@
       font-weight:700;
       white-space:nowrap;
       transition:background .2s, color .2s, border-color .2s;
+      scroll-snap-align:start;
     }
 
     .ticket-filter-btn:hover {
@@ -209,8 +265,78 @@
       outline-offset:2px;
     }
 
-    @media (max-width: 760px) {
-      .ticket-filters { padding-bottom:10px; }
+    .load-more-wrap {
+      display:grid;
+      justify-items:center;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .load-more-wrap[hidden] {
+      display:none;
+    }
+
+    .load-more-info {
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .bottom-nav {
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:100;
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:0;
+      background:rgba(2,9,19,.98);
+      border-top:1px solid rgba(255,255,255,.08);
+      padding:8px 0 10px;
+      box-shadow:0 -10px 30px rgba(0,0,0,.18);
+    }
+
+    .bottom-link {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      color:var(--muted);
+      font-size:11px;
+      text-decoration:none;
+      min-height:58px;
+      padding:0 4px;
+      transition:color .2s;
+    }
+
+    .bottom-link.active { color:var(--gold); }
+
+    .nav-icon-wrap { display:inline-flex; width:24px; height:24px; align-items:center; justify-content:center; }
+
+    @media (min-width: 768px) {
+      .bottom-nav {
+        display:none;
+      }
+    }
+
+    .details-panel,
+    .details-card,
+    .details-list,
+    .detail-item {
+      min-width:0;
+      max-width:100%;
+    }
+
+    .details-card {
+      padding:11px;
+      border-radius:15px;
+    }
+
+    .detail-item {
+      padding:9px;
+      border-radius:12px;
+      overflow-wrap:anywhere;
     }
 
     .status-badge { display:inline-flex; align-items:center; justify-content:center; padding:6px 8px; border-radius:999px; font-size:11px; text-transform:uppercase; letter-spacing:.14em; font-weight:900; border:1px solid transparent; }
@@ -237,8 +363,176 @@
     .detail-item span { color:var(--muted); font-size:12px; }
 
     @media (max-width: 1080px) { .hero-card, .content-grid { grid-template-columns:1fr; } }
-    @media (max-width: 760px) { .app { padding:12px 12px 28px; } .summary-grid { grid-template-columns:1fr; } .ticket-row, .ticket-actions { flex-direction:column; align-items:flex-start; } }
+    @media (max-width: 760px) {
+      body { padding-bottom:90px; }
+      .app { padding:12px 12px 105px; }
+
+      .hero-card {
+        padding:14px;
+        gap:14px;
+        border-radius:20px;
+      }
+      .hero-card h1 {
+        font-size:25px;
+      }
+      .hero-card p {
+        font-size:13px;
+      }
+      .summary-grid {
+        grid-template-columns:repeat(2, minmax(0,1fr));
+        gap:8px;
+      }
+      .summary-card {
+        min-height:auto;
+        padding:11px;
+        border-radius:15px;
+      }
+      .summary-card:last-child {
+        grid-column:1 / -1;
+      }
+      .summary-icon {
+        width:32px;
+        height:32px;
+        margin-bottom:5px;
+      }
+      .summary-card strong {
+        font-size:18px;
+      }
+      .summary-card span {
+        font-size:11px;
+      }
+
+      .panel-head {
+        display:grid;
+        grid-template-columns:1fr;
+        gap:10px;
+      }
+      #refresh-tickets-btn {
+        width:100%;
+        min-height:44px;
+      }
+
+      .ticket-toolbar {
+        display:grid;
+        grid-template-columns:1fr;
+        gap:8px;
+        padding:10px;
+        border-radius:16px;
+      }
+      .ticket-toolbar input,
+      .ticket-toolbar select {
+        width:100%;
+        min-width:0;
+        max-width:none;
+        min-height:44px;
+      }
+      .ticket-filters {
+        width:100%;
+        max-width:100%;
+        overflow-x:auto;
+        flex-wrap:nowrap;
+        border-radius:16px;
+        padding:8px;
+      }
+
+      .ticket-card {
+        padding:12px;
+        border-radius:16px;
+      }
+      .ticket-card-head {
+        display:grid;
+        grid-template-columns:minmax(0,1fr) auto;
+        align-items:start;
+        gap:8px;
+      }
+      .ticket-card-actions {
+        display:grid;
+        justify-items:end;
+        gap:7px;
+      }
+      .ticket-code {
+        font-size:14px;
+        overflow-wrap:anywhere;
+      }
+      .ticket-copy-btn {
+        min-width:auto;
+        padding:6px 9px;
+        font-size:11px;
+      }
+      .status-badge {
+        max-width:100%;
+        font-size:9px;
+        letter-spacing:.08em;
+        padding:5px 7px;
+      }
+      .ticket-card-meta {
+        flex-wrap:wrap;
+      }
+      .ticket-card-foot {
+        display:grid;
+        grid-template-columns:1fr auto;
+        align-items:center;
+      }
+      .ticket-card-foot .btn {
+        min-height:40px;
+        padding:9px 11px;
+      }
+
+      .details-panel,
+      .details-card,
+      .details-list,
+      .detail-item {
+        min-width:0;
+        max-width:100%;
+      }
+      .details-card {
+        padding:11px;
+        border-radius:15px;
+      }
+      .detail-item {
+        padding:9px;
+        border-radius:12px;
+      }
+
+      #tickets-load-more-btn {
+        width:100%;
+        min-height:44px;
+      }
+
+      .mobile-header {
+        grid-template-columns:minmax(0,1fr) auto;
+        gap:8px;
+      }
+      .header-actions {
+        gap:6px;
+      }
+      .action-btn {
+        width:38px;
+        height:38px;
+      }
+      .brand-block {
+        gap:8px;
+      }
+      .brand-icon {
+        width:40px;
+        height:40px;
+      }
+      .brand-top,
+      .brand-middle {
+        font-size:16px;
+      }
+    }
     @media (max-width: 520px) { .pill { display:none; } }
+
+    @media (min-width: 1081px) {
+      .content-grid > .panel:last-child {
+        position:sticky;
+        top:18px;
+        align-self:start;
+        max-height:calc(100vh - 36px);
+        overflow-y:auto;
+      }
+    }
 
     /* Styles du Header Premium Harmonisé */
     .mobile-header {
@@ -309,7 +603,7 @@
     .header-badge {
       position: absolute; right: -2px; top: -5px; background: var(--gold); color: #111;
       border-radius: 999px; font-size: 11px; font-weight: 900; min-width: 19px; height: 19px;
-      display: grid; place-items: center; border: 2px solid #061426;
+      display: none !important; place-items: center; border: 2px solid #061426;
     }
 
     @media (max-width: 760px) {
@@ -318,6 +612,112 @@
       .brand-bottom { font-size: 8px; }
       .wallet-chip { display: none !important; }
     }
+  
+    /* Responsive mobile et tablette uniquement */
+    @media (max-width: 1024px) {
+      .app { width:100%; padding-left:14px; padding-right:14px; }
+      .hero-card, .content-grid { grid-template-columns:1fr; }
+      .content-grid { gap:14px; }
+      .panel, .ticket-card, .details-card, .detail-item { min-width:0; max-width:100%; }
+      .ticket-toolbar { display:grid; grid-template-columns:minmax(0,1fr) minmax(180px,240px); gap:10px; }
+      .ticket-toolbar input, .ticket-toolbar select { width:100%; min-width:0; max-width:100%; }
+      .ticket-card-head, .ticket-card-foot, .ticket-card-meta, .ticket-card-info { min-width:0; }
+      .ticket-code, .ticket-game, .ticket-card-note, .ticket-meta, .detail-item, .details-card p { overflow-wrap:anywhere; word-break:break-word; }
+    }
+
+    @media (max-width: 760px) {
+      html, body { max-width:100%; overflow-x:hidden; }
+      body { padding-bottom:92px; }
+      .app { width:100%; max-width:100%; padding:10px 10px 108px; }
+      .mobile-header { grid-template-columns:minmax(0,1fr) auto; gap:8px; margin-bottom:16px; padding:6px 0 12px; }
+      .brand, .brand-block, .brand-text { min-width:0; }
+      .brand-block { gap:8px; }
+      .brand-icon { width:40px; height:40px; }
+      .brand-top, .brand-middle { font-size:16px; }
+      .brand-bottom { font-size:7px; letter-spacing:.35em; }
+      .header-actions { gap:5px; }
+      .action-btn, .user-button { width:36px; height:36px; }
+      .action-btn svg { width:20px !important; height:20px !important; }
+      .header-badge { min-width:17px; height:17px; font-size:10px; }
+      .wallet-chip { display:none !important; }
+      .hero-card { padding:13px; gap:12px; margin-bottom:14px; border-radius:18px; }
+      .hero-card h1 { font-size:24px; }
+      .hero-card p { font-size:13px; }
+      .eyebrow { font-size:10px; letter-spacing:.2em; }
+      .summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+      .summary-card { min-width:0; min-height:0; padding:10px; border-radius:14px; }
+      .summary-card:last-child { grid-column:1/-1; }
+      .summary-icon { width:30px; height:30px; margin-bottom:5px; }
+      .summary-card small { font-size:9px; letter-spacing:.1em; }
+      .summary-card strong { font-size:17px; }
+      .summary-card span { font-size:10px; }
+      .content-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+      .panel { width:100%; min-width:0; padding:12px; border-radius:18px; }
+      .panel-head { display:grid; grid-template-columns:1fr; gap:9px; }
+      .panel-head h2 { font-size:17px; }
+      .panel-head p { font-size:12px; }
+      #refresh-tickets-btn { width:100%; min-height:42px; }
+      .ticket-toolbar { display:grid; grid-template-columns:1fr; gap:8px; padding:9px; border-radius:14px; }
+      .ticket-toolbar input, .ticket-toolbar select { width:100%; min-width:0; max-width:100%; min-height:42px; padding:10px 12px; font-size:13px; }
+      .ticket-filters { width:100%; max-width:100%; overflow-x:auto; overflow-y:hidden; flex-wrap:nowrap; padding:7px; border-radius:14px; scroll-behavior:smooth; }
+      .ticket-filter-btn { flex:0 0 auto; padding:8px 11px; font-size:12px; }
+      .ticket-list { gap:8px; }
+      .ticket-card { width:100%; min-width:0; padding:11px; border-radius:14px; }
+      .ticket-card-head { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:8px; }
+      .ticket-card-info { min-width:0; }
+      .ticket-card-actions { display:grid; justify-items:end; align-content:start; gap:6px; min-width:0; }
+      .ticket-code { max-width:100%; font-size:13px; overflow-wrap:anywhere; word-break:break-word; }
+      .ticket-game { font-size:11px; }
+      .ticket-copy-btn { min-width:0; padding:6px 8px; font-size:10px; }
+      .status-badge { max-width:100%; padding:5px 7px; font-size:9px; letter-spacing:.06em; white-space:nowrap; }
+      .ticket-card-meta { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px; margin-top:8px; padding-top:8px; font-size:11px; }
+      .ticket-card-note { margin-top:8px; padding:8px; font-size:11px; }
+      .ticket-card-foot { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:8px; margin-top:10px; }
+      .ticket-amount { font-size:16px; }
+      .ticket-card-foot .btn { min-height:38px; padding:8px 10px; font-size:12px; white-space:nowrap; }
+      .state-box, .empty-state, .error-state { padding:12px; border-radius:14px; font-size:12px; }
+      .details-panel, .details-card, .details-list, .detail-item { width:100%; min-width:0; max-width:100%; }
+      .details-card { padding:10px; border-radius:14px; }
+      .details-card h3 { font-size:13px; }
+      .details-card p { font-size:12px; }
+      .details-list { gap:7px; }
+      .detail-item { padding:8px; border-radius:11px; }
+      .detail-item strong { font-size:13px; }
+      .detail-item span { font-size:11px; }
+      .load-more-wrap { width:100%; }
+      #tickets-load-more-btn { width:100%; min-height:42px; }
+      .bottom-nav { width:100%; padding-bottom:max(8px,env(safe-area-inset-bottom)); }
+      .bottom-link { min-width:0; font-size:10px; padding-inline:2px; }
+      .nav-icon-wrap, .nav-icon-wrap svg { width:22px; height:22px; }
+    }
+
+    @media (max-width: 420px) {
+      .app { padding-left:8px; padding-right:8px; }
+      .brand-icon { width:36px; height:36px; }
+      .brand-top, .brand-middle { font-size:14px; }
+      .action-btn, .user-button { width:34px; height:34px; }
+      .summary-grid { gap:6px; }
+      .summary-card { padding:9px; }
+      .panel { padding:10px; }
+      .ticket-card-head { grid-template-columns:minmax(0,1fr) 82px; }
+      .ticket-card-actions { width:82px; }
+      .ticket-card-foot { grid-template-columns:1fr; }
+      .ticket-card-foot .btn { width:100%; }
+      .ticket-amount { display:block; }
+    }
+
+    @media (max-width: 360px) {
+      .brand-bottom { display:none; }
+      .header-actions { gap:4px; }
+      .action-btn, .user-button { width:32px; height:32px; }
+      .summary-grid { grid-template-columns:1fr; }
+      .summary-card:last-child { grid-column:auto; }
+      .ticket-card-head { grid-template-columns:1fr; }
+      .ticket-card-actions { width:100%; display:flex; justify-content:space-between; align-items:center; }
+      .status-badge { white-space:normal; text-align:center; }
+      .bottom-link { font-size:9px; }
+    }
+
   </style>
 </head>
 <body>
@@ -348,12 +748,12 @@
           <span class="header-badge">3</span>
         </button>
         <!-- Notifications -->
-        <button class="action-btn" type="button" aria-label="Notifications">
+        <a href="notifications.html" class="action-btn notifications-link" aria-label="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>
           </svg>
-          <span class="header-badge">2</span>
-        </button>
+          <span class="badge notifications-badge" hidden>0</span>
+        </a>
 
         <!-- Menu utilisateur interactif -->
         <div class="user-menu-wrap" id="userMenuWrap" hidden>
@@ -379,8 +779,8 @@
     <section class="hero-card">
       <article>
         <div class="eyebrow">Historique</div>
-        <h1>Vos tickets</h1>
-        <p>Consultez tous vos tickets joués, leurs numéros et leurs statuts.</p>
+        <h1>Mes tickets</h1>
+        <p>Consultez vos tickets en un coup d’œil et suivez les résultats rapidement.</p>
       </article>
       <article class="summary-grid">
         <div class="summary-card">
@@ -469,6 +869,13 @@
     </section>
   </main>
 
+  <nav class="bottom-nav" aria-label="Navigation mobile principale">
+    <a class="bottom-link" href="index.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>Accueil</a>
+    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg></span>Jeux</a>
+    <a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg></span>Résultats</a>
+    <a class="bottom-link active" href="tickets.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7Z"/><path d="M13 5v14"/></svg></span>Tickets</a>
+    <a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span>Portefeuille</a>
+  </nav>
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/auth-guard.js"></script>
@@ -818,27 +1225,23 @@
           const ticketLabel = ticketNumber || 'Ticket';
 
           card.innerHTML = `
-            <div class="ticket-row">
-              <div class="ticket-title">
+            <div class="ticket-card-head">
+              <div class="ticket-card-info">
                 <span class="ticket-code">${ticketLabel}</span>
-                <span class="ticket-meta">Jeu : ${formatGameLabel(ticket.game_type)} • ${formatDate(ticket.created_at)}</span>
+                <span class="ticket-game">${formatGameLabel(ticket.game_type)} • ${formatDate(ticket.created_at)}</span>
               </div>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span class="ticket-pill">${ticket.currency || 'HTG'}</span>
+              <div class="ticket-card-actions">
                 <button class="btn ticket-copy-btn" type="button" data-ticket-copy aria-label="Copier le numéro du ticket ${ticketNumber}">Copier</button>
+                ${renderStatusBadge(ticket.status)}
               </div>
             </div>
-            <div class="ticket-row" style="margin-top:8px;">
-              <div class="ticket-title">
-                <span class="ticket-meta">Montant misé</span>
-                <span class="ticket-total">${formatCurrency(ticket.total_amount)}</span>
-              </div>
-              ${renderStatusBadge(ticket.status)}
+            <div class="ticket-card-meta">
+              <span>${formatDate(ticket.created_at)}</span>
+              <span>${ticket.currency || 'HTG'}</span>
             </div>
-            ${isPenalty ? `<div class="ticket-row" style="margin-top:8px;"><div class="ticket-title"><span class="ticket-meta">Mises</span><span>${chosenNumbers || detailsFallback}</span></div></div>` : ''}
-            ${isLucky6 ? `<div class="ticket-row" style="margin-top:8px;"><div class="ticket-title"><span class="ticket-meta">Numéros choisis</span><span>${chosenNumbers || detailsFallback}</span></div></div>` : ''}
-            ${(isPenalty || isLucky6) && potentialWin != null ? `<div class="ticket-row" style="margin-top:8px;"><div class="ticket-title"><span class="ticket-meta">Gain potentiel</span><span>${formatCurrency(potentialWin)}</span></div></div>` : ''}
-            <div class="ticket-actions">
+            ${isPenalty || isLucky6 ? `<div class="ticket-card-note">${chosenNumbers || detailsFallback}</div>` : ''}
+            <div class="ticket-card-foot">
+              <span class="ticket-amount">${formatCurrency(ticket.total_amount)}</span>
               <button class="btn btn-primary" type="button" data-ticket-id="${ticket.id}">Voir détails</button>
             </div>
           `;
@@ -1276,7 +1679,7 @@
             if (window.saveRedirectTarget) {
               window.saveRedirectTarget('tickets.html');
             }
-            window.location.replace('login-register/login.html');
+            window.tryRedirectToLogin('login-register/login.html');
             return;
           }
 
@@ -1318,7 +1721,7 @@
         if (window.logoutUser) {
           const result = await window.logoutUser();
           if (result?.ok) {
-            window.location.replace('login-register/login.html');
+            window.tryRedirectToLogin('login-register/login.html');
           }
         }
       });
@@ -1359,3 +1762,4 @@
   </script>
 </body>
 </html>
+

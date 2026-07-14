@@ -56,6 +56,22 @@
     return `${prefix}${target}`;
   }
 
+  let TEMPORARY_AUTH_REDIRECTS_DISABLED = true;
+
+  function tryRedirectToLogin(target) {
+    if (TEMPORARY_AUTH_REDIRECTS_DISABLED) {
+      console.warn('Authentification temporaire désactivée : redirection vers', target, 'supprimée.');
+      return;
+    }
+
+    if (global.saveRedirectTarget) {
+      global.saveRedirectTarget(getNormalizedPathname().replace(/^\/+/, ''));
+    }
+
+    const loginHref = getRelativeHref(target || 'login-register/login.html');
+    global.location.replace(loginHref);
+  }
+
   function ensureAuthHeaderContainer() {
     let container = global.document?.getElementById('authHeaderActions');
     if (container) {
@@ -79,10 +95,155 @@
     if (walletChip) {
       walletChip.style.display = 'none';
     }
+  }
 
-    const userMenuWrap = global.document?.querySelector('.user-menu-wrap');
-    if (userMenuWrap) {
-      userMenuWrap.hidden = true;
+  function ensureNotificationsBadgeStyle() {
+    if (!global.document || !global.document.head) {
+      return;
+    }
+
+    if (global.document.getElementById('tonton-notifications-badge-style')) {
+      return;
+    }
+
+    const style = global.document.createElement('style');
+    style.id = 'tonton-notifications-badge-style';
+    style.textContent = '.notifications-badge[hidden] { display: none !important; }';
+    global.document.head.appendChild(style);
+  }
+
+  async function updateNotificationsBadges() {
+    ensureNotificationsBadgeStyle();
+    const badges = Array.from(global.document?.querySelectorAll('.notifications-badge') || []);
+    if (!badges.length) {
+      return;
+    }
+
+    badges.forEach((badge) => {
+      badge.textContent = '';
+      badge.hidden = true;
+    });
+
+    try {
+      const client = global.getSupabaseClient ? await global.getSupabaseClient() : null;
+      if (!client) {
+        return;
+      }
+
+      const currentUser = global.getCurrentUserAsync ? await global.getCurrentUserAsync() : null;
+      if (!currentUser) {
+        return;
+      }
+
+      const { data, error } = await client.rpc('count_unread_notifications');
+      if (error) {
+        throw error;
+      }
+
+      const normalizedCount = Number.parseInt(Number(data || 0), 10);
+      const safeCount = Number.isFinite(normalizedCount) ? Math.max(0, normalizedCount) : 0;
+
+      if (safeCount <= 0) {
+        return;
+      }
+
+      const displayValue = safeCount > 99 ? '99+' : String(safeCount);
+      badges.forEach((badge) => {
+        badge.textContent = displayValue;
+        badge.hidden = false;
+      });
+    } catch (error) {
+      console.warn('notifications badge update failed:', error);
+      badges.forEach((badge) => {
+        badge.textContent = '';
+        badge.hidden = true;
+      });
+    }
+  }
+
+  function showUserInitialsInMenu(user) {
+    const userAvatar = global.document?.getElementById('userAvatar');
+    if (!userAvatar) {
+      return null;
+    }
+
+    const displayName = user?.full_name || user?.email || 'Utilisateur';
+    const firstLetter = String(displayName).trim().charAt(0).toUpperCase();
+    userAvatar.innerHTML = '';
+
+    const avatarUrl = user?.avatar_url || user?.picture || null;
+    if (avatarUrl) {
+      const img = global.document.createElement('img');
+      img.src = avatarUrl;
+      img.alt = displayName;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      userAvatar.appendChild(img);
+      return displayName;
+    }
+
+    userAvatar.textContent = firstLetter || 'U';
+    return displayName;
+  }
+
+  function bindUserMenu() {
+    const userMenuWrap = global.document?.getElementById('userMenuWrap');
+    const userMenuButton = global.document?.getElementById('userMenuButton');
+    const userMenu = global.document?.getElementById('userMenu');
+    const logoutMenuBtn = global.document?.getElementById('logoutMenuBtn');
+
+    if (!userMenuWrap || !userMenuButton || !userMenu) {
+      return;
+    }
+
+    if (userMenuButton.dataset.menuBound === 'true') {
+      return;
+    }
+
+    userMenuButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = userMenu.classList.toggle('open');
+      userMenuButton.setAttribute('aria-expanded', String(Boolean(isOpen)));
+      userMenu.setAttribute('aria-hidden', String(!isOpen));
+    });
+
+    global.document.addEventListener('click', (event) => {
+      if (!userMenuWrap.contains(event.target)) {
+        userMenu.classList.remove('open');
+        userMenuButton.setAttribute('aria-expanded', 'false');
+        userMenu.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    logoutMenuBtn?.addEventListener('click', async () => {
+      const result = await global.logoutUser?.();
+      if (result?.ok) {
+        global.location.reload();
+      }
+    });
+
+    userMenuButton.dataset.menuBound = 'true';
+  }
+
+  async function syncUserMenuState(currentUser = null) {
+    const userMenuWrap = global.document?.getElementById('userMenuWrap');
+    const userAvatar = global.document?.getElementById('userAvatar');
+
+    if (!userMenuWrap) {
+      return;
+    }
+
+    userMenuWrap.hidden = false;
+
+    const resolvedUser = currentUser || (global.getCurrentUserAsync ? await global.getCurrentUserAsync() : global.getCurrentUser?.());
+    if (resolvedUser) {
+      showUserInitialsInMenu(resolvedUser);
+      return;
+    }
+
+    if (userAvatar) {
+      userAvatar.textContent = 'U';
     }
   }
 
@@ -135,6 +296,7 @@
     }
 
     setHeaderVisibility();
+    bindUserMenu();
 
     try {
       if (global.getAuthenticatedProfile) {
@@ -144,6 +306,8 @@
 
         if (currentUser) {
           renderLoggedInHeader(container, currentUser, wallet);
+          await syncUserMenuState(currentUser);
+          await updateNotificationsBadges();
           return;
         }
       }
@@ -152,14 +316,20 @@
         const storedUser = global.getCurrentUser();
         if (storedUser) {
           renderLoggedInHeader(container, storedUser, null);
+          await syncUserMenuState(storedUser);
+          await updateNotificationsBadges();
           return;
         }
       }
 
       renderLoggedOutHeader(container);
+      await syncUserMenuState(null);
+      await updateNotificationsBadges();
     } catch (error) {
       console.warn('auth-guard header update failed:', error);
       renderLoggedOutHeader(container);
+      await syncUserMenuState(null);
+      await updateNotificationsBadges();
     }
   }
 
@@ -187,12 +357,16 @@
     try {
       const user = await waitForSession();
       if (!user) {
+        // ⚠️ TEMPORAIRE : remettre avant production
+        // Auth obligatoire désactivée temporairement
+        /*
         if (global.saveRedirectTarget) {
           global.saveRedirectTarget(getNormalizedPathname().replace(/^\/+/, ''));
         }
 
         const target = getRelativeHref('login-register/login.html');
         global.location.replace(target);
+        */
       }
     } catch (error) {
       console.warn('auth-guard protection failed:', error);
@@ -205,6 +379,12 @@
     });
   }
 
+  global.addEventListener('notifications:changed', () => {
+    updateNotificationsBadges();
+  });
+
+  global.tryRedirectToLogin = tryRedirectToLogin;
   global.updateAuthHeader = updateAuthHeader;
+  global.updateNotificationsBadges = updateNotificationsBadges;
   global.enforceAuthGuard = enforceAuthGuard;
 })(window);

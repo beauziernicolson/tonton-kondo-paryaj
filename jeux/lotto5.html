@@ -325,7 +325,7 @@
       });
 
       validateBtn.addEventListener('click', async () => {
-        if (!currentUser) { setFeedback('Vous devez être connecté pour valider un ticket.', 'warn'); if (window.saveRedirectTarget) window.saveRedirectTarget('lotto5.html'); window.location.replace('../login-register/login.html'); return; }
+        if (!currentUser) { setFeedback('Vous devez être connecté pour valider un ticket.', 'warn'); if (window.saveRedirectTarget) window.saveRedirectTarget('lotto5.html'); window.tryRedirectToLogin('../login-register/login.html'); return; }
         selectedDrawName = drawNameSelect.value || '';
         if (!selectedDrawName) { setFeedback('Choisissez un tirage avant de valider.', 'warn'); drawNameSelect.focus(); return; }
         if (!couponLines.length) { setFeedback('Ajoutez au moins un numéro à votre coupon.', 'warn'); return; }
@@ -397,7 +397,7 @@
         currentUser = await window.getCurrentUserAsync();
         if (!currentUser) {
           if (window.saveRedirectTarget) window.saveRedirectTarget('lotto5.html');
-          window.location.replace('../login-register/login.html');
+          window.tryRedirectToLogin('../login-register/login.html');
           return;
         }
         const name = currentUser.full_name || currentUser.email || 'Joueur';
@@ -407,3 +407,4 @@
   </script>
 </body>
 </html>
+

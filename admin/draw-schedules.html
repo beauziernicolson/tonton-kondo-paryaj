@@ -299,7 +299,7 @@
       (async function init() {
         if (!window.getCurrentUserAsync) { setFeedback('Le système d’authentification est indisponible.', 'error'); return; }
         currentUser = await window.getCurrentUserAsync();
-        if (!currentUser) { if (window.saveRedirectTarget) window.saveRedirectTarget('admin/draw-schedules.html'); window.location.replace('../login-register/login.html'); return; }
+        if (!currentUser) { if (window.saveRedirectTarget) window.saveRedirectTarget('admin/draw-schedules.html'); window.tryRedirectToLogin('../login-register/login.html'); return; }
         resetForm();
         await loadSchedules();
       })();
@@ -307,3 +307,4 @@
   </script>
 </body>
 </html>
+

@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Centre de notifications Tonton Kondo – consultez, filtrez et gérez vos alertes et résultats." />
+  <title>Tonton Kondo — Centre de notifications</title>
+  <style>
+    :root {
+      --bg:#020813;
+      --bg-2:#061426;
+      --panel:#07182b;
+      --panel-2:#0b2038;
+      --line:rgba(255,255,255,.10);
+      --text:#f5f7fb;
+      --muted:#aebbd0;
+      --soft:#7f91ad;
+      --gold:#ffd21f;
+      --gold-2:#ffb900;
+      --green:#46e36f;
+      --red:#ff3f55;
+      --blue:#39a8ff;
+      --purple:#ba4cff;
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --bottom-nav-height:86px;
+    }
+
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0;
+      min-height:100vh;
+      font-family:"Segoe UI",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 70% 0%, rgba(255,210,31,.12), transparent 24%),
+        radial-gradient(circle at 10% 8%, rgba(57,168,255,.15), transparent 28%),
+        linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%);
+      line-height:1.5;
+    }
+
+    a { color:inherit; text-decoration:none; }
+    button,input { font:inherit; }
+    button { cursor:pointer; }
+    img { max-width:100%; display:block; }
+
+    .page {
+      width:min(100%, 1080px);
+      margin:0 auto;
+      padding:18px 16px 56px;
+    }
+
+    .mobile-header {
+      display:grid;
+      grid-template-columns:1fr auto auto;
+      align-items:center;
+      gap:12px;
+      padding:8px 0 16px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:24px;
+    }
+
+    .brand { display:flex; align-items:center; min-width:0; color:inherit; }
+    .brand-block { display:flex; align-items:center; gap:12px; }
+    .brand-icon {
+      width:56px;
+      height:56px;
+      object-fit:contain;
+      flex-shrink:0;
+      display:block;
+    }
+    .brand-text { display:flex; flex-direction:column; line-height:1; }
+    .brand-top,
+    .brand-middle { display:block; font-weight:900; font-size:22px; letter-spacing:.04em; }
+    .brand-top { color:#fff; }
+    .brand-middle { color:var(--gold); }
+    .brand-bottom {
+      position:relative;
+      display:block;
+      margin-top:4px;
+      text-align:center;
+      color:#d7dde8;
+      font-size:9px;
+      font-weight:800;
+      letter-spacing:.5em;
+    }
+    .brand-bottom::before,
+    .brand-bottom::after {
+      content:"";
+      position:absolute;
+      top:50%;
+      width:22px;
+      height:1px;
+      background:rgba(255,255,255,.35);
+    }
+    .brand-bottom::before { right:100%; margin-right:8px; }
+    .brand-bottom::after { left:100%; margin-left:8px; }
+
+    .wallet-chip {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background:rgba(9,30,54,.92);
+      border:1px solid var(--line);
+      border-radius:17px;
+      padding:10px 12px;
+      box-shadow:var(--shadow);
+      white-space:nowrap;
+    }
+    .wallet-chip strong { display:block; font-size:15px; }
+    .wallet-chip span { display:block; color:var(--muted); font-size:12px; margin-top:-2px; }
+
+    .header-actions { display:flex; align-items:center; gap:8px; }
+    .action-btn {
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      border:1px solid var(--line);
+      background:rgba(8,24,43,.95);
+      color:var(--gold);
+      position:relative;
+      display:grid;
+      place-items:center;
+      box-shadow:var(--shadow);
+      text-decoration:none;
+    }
+    .header-auth-btn {
+      width:auto;
+      min-height:42px;
+      padding:0 14px;
+      border-radius:999px;
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.04em;
+      background:linear-gradient(135deg, rgba(255,210,31,.14), rgba(57,168,255,.12));
+      border:1px solid var(--line);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .user-menu-wrap{ position:relative; }
+    .user-button{
+      width:42px;
+      height:42px;
+      border-radius:999px;
+      padding:0;
+      overflow:hidden;
+      background:linear-gradient(135deg, rgba(255,210,31,.18), rgba(57,168,255,.18));
+      border:1px solid rgba(255,255,255,.16);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      box-shadow:var(--shadow);
+    }
+    .user-avatar {
+      width:100%;
+      height:100%;
+      display:grid;
+      place-items:center;
+      font-size:13px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      background:linear-gradient(135deg,#1b3353,#07111e);
+    }
+    .user-avatar img { width:100%; height:100%; object-fit:cover; }
+    .user-menu {
+      position:absolute;
+      top:calc(100% + 8px);
+      right:0;
+      min-width:220px;
+      background:linear-gradient(180deg, rgba(7,20,35,.98), rgba(4,12,22,.98));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px;
+      box-shadow:0 20px 50px rgba(0,0,0,.45);
+      padding:8px;
+      display:none;
+      z-index:120;
+    }
+    .user-menu.open { display:grid; gap:4px; }
+    .user-menu-link {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      color:#edf4ff;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:700;
+      background:transparent;
+      text-align:left;
+    }
+    .user-menu-link:hover{ background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.08); }
+    .user-menu-divider{ height:1px; background:rgba(255,255,255,.08); margin:4px 0; }
+    .user-menu-logout{ color:#ffd6d6; }
+    .badge{
+      position:absolute;
+      right:-2px;
+      top:-5px;
+      background:var(--gold);
+      color:#111;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      min-width:19px;
+      height:19px;
+      display:grid;
+      place-items:center;
+      border:2px solid #061426;
+    }
+
+    .card {
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      background:rgba(7,24,43,.92);
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-bottom:20px;
+    }
+
+    .hero {
+      display:grid;
+      gap:18px;
+      background:
+        linear-gradient(90deg,rgba(3,12,26,.96) 0%,rgba(5,19,34,.78) 48%,rgba(4,13,24,.38) 100%),
+        linear-gradient(135deg,#071a32,#092846);
+    }
+
+    .eyebrow {
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:11px;
+      font-weight:800;
+    }
+
+    h1 {
+      margin:4px 0 6px;
+      font-size:clamp(28px, 6vw, 40px);
+      line-height:1.02;
+      letter-spacing:-.03em;
+    }
+
+    .hero-copy p,
+    .muted {
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .summary-grid {
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:12px;
+    }
+
+    .summary-tile {
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      padding:14px;
+      min-height:108px;
+    }
+    .summary-tile small {
+      display:block;
+      color:var(--muted);
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      font-size:11px;
+      margin-bottom:8px;
+    }
+    .summary-tile strong {
+      display:block;
+      font-size:26px;
+      line-height:1;
+      margin-bottom:4px;
+    }
+    .summary-tile span {
+      color:#dfe9f8;
+      font-size:13px;
+    }
+
+    .toolbar {
+      display:grid;
+      grid-template-columns:1.4fr auto auto;
+      gap:12px;
+      align-items:center;
+      margin-top:8px;
+    }
+
+    .search-wrap {
+      position:relative;
+    }
+    .search-wrap input {
+      width:100%;
+      min-height:46px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(5,16,30,.92);
+      color:#fff;
+      padding:12px 14px 12px 42px;
+      outline:none;
+    }
+    .search-wrap svg {
+      position:absolute;
+      left:14px;
+      top:50%;
+      width:18px;
+      height:18px;
+      transform:translateY(-50%);
+      color:var(--muted);
+      pointer-events:none;
+    }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      padding:10px 14px;
+      font-weight:800;
+      min-height:46px;
+    }
+    .btn-primary {
+      background:linear-gradient(180deg,var(--gold),var(--gold-2));
+      color:#111;
+      border-color:transparent;
+    }
+    .btn-ghost {
+      background:rgba(9,24,43,.92);
+    }
+
+    .filters {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin:12px 0 16px;
+    }
+    .filter-chip {
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:#dae4f2;
+      border-radius:999px;
+      padding:9px 12px;
+      font-size:13px;
+      font-weight:800;
+    }
+    .filter-chip.active {
+      background:rgba(255,210,31,.18);
+      border-color:rgba(255,210,31,.52);
+      color:var(--gold);
+    }
+
+    .notice {
+      border:1px dashed rgba(255,210,31,.45);
+      border-radius:16px;
+      padding:12px 14px;
+      background:rgba(255,210,31,.06);
+      color:#f8e6a0;
+      font-size:13px;
+    }
+
+    .notification-list {
+      display:grid;
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .notification-item {
+      display:grid;
+      gap:12px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(12,31,56,.98), rgba(7,18,33,.98));
+      padding:14px;
+    }
+    .notification-head {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .notification-main {
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      min-width:0;
+      flex:1;
+    }
+    .notification-icon {
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color:var(--gold);
+      flex-shrink:0;
+    }
+    .notification-copy { min-width:0; }
+    .notification-title {
+      margin:0;
+      font-size:18px;
+      line-height:1.25;
+    }
+    .notification-meta {
+      margin:4px 0 0;
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .notification-message {
+      color:#e3ecfb;
+      margin:0;
+      font-size:14px;
+    }
+    .notification-actions {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .status-pill {
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:#cdd7e7;
+      white-space:nowrap;
+    }
+    .status-pill.unread { color:#111; background:rgba(255,210,31,.9); border-color:transparent; }
+    .status-pill.archived { color:#fbd6d6; background:rgba(255,63,85,.12); }
+
+    .empty-state {
+      border:1px dashed rgba(255,255,255,.16);
+      border-radius:18px;
+      padding:20px;
+      text-align:center;
+      color:var(--muted);
+      background:rgba(255,255,255,.02);
+    }
+
+    .loading-row {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .dot-spinner {
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--gold);
+      box-shadow:0 0 0 0 rgba(255,210,31,.4);
+      animation:pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow:0 0 0 0 rgba(255,210,31,.35); }
+      70% { box-shadow:0 0 0 10px rgba(255,210,31,0); }
+      100% { box-shadow:0 0 0 0 rgba(255,210,31,0); }
+    }
+
+    @media (max-width: 900px) {
+      .summary-grid,
+      .toolbar { grid-template-columns:1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .mobile-header {
+        grid-template-columns:1fr auto;
+      }
+      .wallet-chip {
+        display:none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="mobile-header" aria-label="En-tête principal">
+      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
+        <div class="brand-block">
+          <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
+          <div class="brand-text">
+            <span class="brand-top">TONTON</span>
+            <span class="brand-middle">KONDO</span>
+            <span class="brand-bottom">PARYAJ</span>
+          </div>
+        </div>
+      </a>
+      <div class="wallet-chip" aria-label="Solde utilisateur">
+        <span><strong>Disponible</strong><span>Votre espace joueur</span></span>
+      </div>
+      <div class="header-actions">
+        <div id="authHeaderActions"></div>
+        <button class="action-btn" type="button" aria-label="Promotions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">
+            <rect x="3" y="8" width="18" height="13" rx="2"></rect>
+            <path d="M12 8v13M3 12h18"></path>
+            <path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path>
+            <path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path>
+          </svg>
+          <span class="badge">3</span>
+        </button>
+        <a href="notifications.html" class="action-btn" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M10 21h4"></path>
+          </svg>
+          <span class="badge" id="notificationBadge" hidden>0</span>
+        </a>
+        <div class="user-menu-wrap" id="userMenuWrap" hidden>
+          <button id="userMenuButton" class="action-btn user-button" type="button" aria-label="Menu utilisateur" aria-expanded="false">
+            <span class="user-avatar" id="userAvatar">U</span>
+          </button>
+          <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
+            <a class="user-menu-link" href="tickets.html">Tickets</a>
+            <a class="user-menu-link" href="history.html">Historique</a>
+            <a class="user-menu-link" href="results.html">Résultats</a>
+            <a class="user-menu-link" href="deposit.html">Dépôt</a>
+            <a class="user-menu-link" href="withdraw.html">Retrait</a>
+            <a class="user-menu-link" href="wallet.html">Portefeuille</a>
+            <a class="user-menu-link" href="profile.html">Profil</a>
+            <a class="user-menu-link" href="settings.html">Paramètres</a>
+            <div class="user-menu-divider"></div>
+            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button">Déconnexion</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="card hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Tonton Kondo</div>
+        <h1>Centre de notifications</h1>
+        <p>Consultez vos alertes, résultats et rappels de paiement depuis un seul espace dédié.</p>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-tile">
+          <small>Non lues</small>
+          <strong id="unreadTotal">0</strong>
+          <span>Messages à traiter</span>
+        </div>
+        <div class="summary-tile">
+          <small>Affichées</small>
+          <strong id="visibleTotal">0</strong>
+          <span>Notifications visibles</span>
+        </div>
+        <div class="summary-tile">
+          <small>Filtre</small>
+          <strong id="activeFilter">Tous</strong>
+          <span>Vue locale active</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="toolbar">
+        <label class="search-wrap" for="notificationSearch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <input id="notificationSearch" type="search" placeholder="Rechercher par titre, message ou catégorie" />
+        </label>
+        <button class="btn btn-ghost" id="refreshNotifications" type="button">Rafraîchir</button>
+        <button class="btn btn-primary" id="markAllRead" type="button">Tout marquer comme lu</button>
+      </div>
+
+      <div class="filters" id="notificationFilters" aria-label="Filtres de notifications">
+        <button type="button" class="filter-chip active" data-category="all">Tous</button>
+        <button type="button" class="filter-chip" data-category="result">Résultats</button>
+        <button type="button" class="filter-chip" data-category="wallet">Portefeuille</button>
+        <button type="button" class="filter-chip" data-category="deposit">Dépôts</button>
+        <button type="button" class="filter-chip" data-category="withdrawal">Retraits</button>
+        <button type="button" class="filter-chip" data-category="promotion">Promotions</button>
+        <button type="button" class="filter-chip" data-category="security">Sécurité</button>
+        <button type="button" class="filter-chip" data-category="ticket">Tickets</button>
+      </div>
+
+      <div class="notice" id="notificationStatus" role="status" aria-live="polite">Chargement des notifications…</div>
+      <div class="notification-list" id="notificationList"></div>
+      <div class="loading-row" id="notificationLoading" hidden>
+        <span class="dot-spinner" aria-hidden="true"></span>
+        <span>Chargement en cours…</span>
+      </div>
+      <div class="empty-state" id="notificationEmpty" hidden>
+        Aucune notification disponible pour cette vue. Essayez un autre filtre ou revenez plus tard.
+      </div>
+      <div class="toolbar" style="margin-top:16px;">
+        <div class="muted" id="notificationHint">Affichage des 10 dernières notifications.</div>
+        <button class="btn btn-ghost" id="loadMoreNotifications" type="button" hidden>Charger plus</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script>
+    (async function initNotificationsCenter() {
+      const notificationList = document.getElementById('notificationList');
+      const notificationStatus = document.getElementById('notificationStatus');
+      const notificationEmpty = document.getElementById('notificationEmpty');
+      const notificationLoading = document.getElementById('notificationLoading');
+      const unreadTotal = document.getElementById('unreadTotal');
+      const visibleTotal = document.getElementById('visibleTotal');
+      const activeFilter = document.getElementById('activeFilter');
+      const notificationBadge = document.getElementById('notificationBadge');
+      const notificationHint = document.getElementById('notificationHint');
+      const loadMoreButton = document.getElementById('loadMoreNotifications');
+      const markAllReadButton = document.getElementById('markAllRead');
+      const refreshNotificationsButton = document.getElementById('refreshNotifications');
+      const searchInput = document.getElementById('notificationSearch');
+      const filterButtons = Array.from(document.querySelectorAll('.filter-chip'));
+
+      const state = {
+        client: null,
+        currentUser: null,
+        notifications: [],
+        pageSize: 10,
+        offset: 0,
+        currentCategory: 'all',
+        unreadOnly: false,
+        searchTerm: '',
+        unreadCount: 0,
+        loading: false,
+        fullyLoaded: false,
+      };
+
+      function setStatus(message) {
+        notificationStatus.textContent = message;
+      }
+
+      function formatTimestamp(value) {
+        if (!value) {
+          return 'Date inconnue';
+        }
+
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+          return 'Date inconnue';
+        }
+
+        return date.toLocaleString('fr-FR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+      }
+
+      function slugifyCategory(category) {
+        const mapping = {
+          ticket: 'Ticket',
+          wallet: 'Portefeuille',
+          deposit: 'Dépôt',
+          withdrawal: 'Retrait',
+          promotion: 'Promotion',
+          security: 'Sécurité',
+          admin: 'Admin',
+          merchant: 'Marchand',
+          system: 'Système',
+          result: 'Résultat',
+        };
+        return mapping[category] || String(category || 'Autre');
+      }
+
+      function escapeHtml(value) {
+        return String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function getIconByCategory(category) {
+        const icons = {
+           ticket: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      aria-hidden="true">
+      <path d="M2 9a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a3 3 0 0 0 0-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+      <path d="M13 5v2"/>
+      <path d="M13 17v2"/>
+      <path d="M13 11v2"/>
+    </svg>
+  `,
+  wallet: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      aria-hidden="true">
+      <path d="M20 7V5a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v10a2 2 0 0 1-2 2H5a3 3 0 0 1-3-3V6"/>
+      <path d="M16 13h2"/>
+    </svg>
+  `,
+  system: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      aria-hidden="true">
+      <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/>
+      <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.09a1.7 1.7 0 0 0-1.4-1.68 1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 3.8 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H2v-4h.09a1.7 1.7 0 0 0 1.68-1.4 1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 8 3.8a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V2h4v.09A1.7 1.7 0 0 0 15 3.8a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 20.2 8a1.7 1.7 0 0 0 .6 1 1.7 1.7 0 0 0 1.1.4H22v4h-.09A1.7 1.7 0 0 0 20.2 15Z"/>
+    </svg>
+  `
+};
+return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+</svg>`;
+      }
+
+      function applyFilteredSearch(list) {
+        const query = state.searchTerm.trim().toLowerCase();
+        if (!query) {
+          return list;
+        }
+
+        return list.filter((item) => {
+          const haystack = [
+            item.title,
+            item.message,
+            item.category,
+            item.type,
+            item.action_label,
+          ].filter(Boolean).join(' ').toLowerCase();
+          return haystack.includes(query);
+        });
+      }
+
+      function renderNotifications() {
+        const filtered = applyFilteredSearch(state.notifications);
+        visibleTotal.textContent = String(filtered.length);
+
+        if (!filtered.length) {
+          notificationList.innerHTML = '';
+          notificationEmpty.hidden = false;
+          loadMoreButton.hidden = true;
+          return;
+        }
+
+        notificationEmpty.hidden = true;
+        notificationList.innerHTML = filtered
+          .map((item) => {
+            const isUnread = item.is_read === false;
+            const statusText = item.is_read ? 'Lu' : 'Non lu';
+            const statusClass = item.is_read ? 'status-pill' : 'status-pill unread';
+            const body = escapeHtml(item.message || '');
+            const title = escapeHtml(item.title || 'Notification');
+            const category = slugifyCategory(item.category);
+            const timestamp = formatTimestamp(item.created_at);
+            const action = item.action_url ? `<a class="btn btn-ghost" href="${escapeHtml(item.action_url)}" target="_self">Ouvrir</a>` : '';
+
+            return `
+              <article class="notification-item">
+                <div class="notification-head">
+                  <div class="notification-main">
+                    <div class="notification-icon" aria-hidden="true">${getIconByCategory(item.category)}</div>
+                    <div class="notification-copy">
+                      <h3 class="notification-title">${title}</h3>
+                      <p class="notification-meta">
+                        <span>${category}</span>
+                        <span>•</span>
+                        <span>${timestamp}</span>
+                      </p>
+                      <p class="notification-message">${body}</p>
+                    </div>
+                  </div>
+                  <span class="${statusClass}">${statusText}</span>
+                </div>
+                <div class="notification-actions">
+                  ${isUnread ? `<button class="btn btn-ghost" type="button" data-action="mark-read" data-id="${item.id}">Marquer lu</button>` : ''}
+                  <button class="btn btn-ghost" type="button" data-action="archive" data-id="${item.id}">Archiver</button>
+                  ${action}
+                </div>
+              </article>
+            `;
+          })
+          .join('');
+
+        loadMoreButton.hidden = state.fullyLoaded || filtered.length < state.pageSize;
+        notificationHint.textContent = `Affichage de ${filtered.length} notification${filtered.length > 1 ? 's' : ''} filtrée${filtered.length > 1 ? 's' : ''} localement.`;
+      }
+
+      async function refreshUnreadCount() {
+        if (!state.client) {
+          return;
+        }
+
+        const { data, error } = await state.client.rpc('count_unread_notifications');
+        if (error) {
+          console.error('count_unread_notifications', error);
+          return;
+        }
+
+        state.unreadCount = Number(data || 0);
+        unreadTotal.textContent = String(state.unreadCount);
+        notificationBadge.textContent = String(state.unreadCount);
+        notificationBadge.hidden = state.unreadCount <= 0;
+      }
+
+      async function loadNotifications(reset = false) {
+        if (!state.client || state.loading) {
+          return;
+        }
+
+        state.loading = true;
+        notificationLoading.hidden = false;
+        setStatus('Chargement des notifications…');
+
+        try {
+          const categoryParam = state.currentCategory === 'all' ? null : state.currentCategory;
+          const { data, error } = await state.client.rpc('get_notifications', {
+            p_category: categoryParam,
+            p_unread_only: state.unreadOnly,
+            p_limit: state.pageSize,
+            p_offset: reset ? 0 : state.offset,
+          });
+
+          if (error) {
+            throw error;
+          }
+
+          const rows = Array.isArray(data) ? data : [];
+          if (reset) {
+            state.notifications = rows;
+            state.offset = rows.length;
+            state.fullyLoaded = rows.length < state.pageSize;
+          } else {
+            state.notifications = state.notifications.concat(rows);
+            state.offset += rows.length;
+            state.fullyLoaded = rows.length < state.pageSize;
+          }
+
+          if (!state.notifications.length) {
+            notificationEmpty.hidden = false;
+          } else {
+            notificationEmpty.hidden = true;
+          }
+
+          renderNotifications();
+          setStatus('Notifications chargées avec succès.');
+        } catch (error) {
+          console.error('Erreur get_notifications', error);
+          setStatus(error?.message || 'Impossible de charger les notifications pour le moment.');
+          notificationList.innerHTML = '';
+          notificationEmpty.hidden = false;
+        } finally {
+          state.loading = false;
+          notificationLoading.hidden = true;
+        }
+      }
+
+      async function markNotificationRead(notificationId) {
+        if (!state.client || !notificationId) {
+          return;
+        }
+
+        try {
+          const { data, error } = await state.client.rpc('mark_notification_read', { p_notification_id: notificationId });
+          if (error) {
+            throw error;
+          }
+
+          const updated = data?.[0] || data || null;
+          state.notifications = state.notifications.map((item) => item.id === notificationId ? { ...item, is_read: true, read_at: updated?.read_at || item.read_at } : item);
+          await refreshUnreadCount();
+          renderNotifications();
+          setStatus('Notification marquée comme lue.');
+        } catch (error) {
+          console.error('Erreur mark_notification_read', error);
+          setStatus(error?.message || 'Impossible de marquer cette notification comme lue.');
+        }
+      }
+
+      async function archiveNotification(notificationId) {
+        if (!state.client || !notificationId) {
+          return;
+        }
+
+        try {
+          const { data, error } = await state.client.rpc('archive_notification', { p_notification_id: notificationId });
+          if (error) {
+            throw error;
+          }
+
+          const archivedRow = data?.[0] || data || null;
+          state.notifications = state.notifications.filter((item) => item.id !== notificationId);
+          state.offset = Math.max(0, state.offset - 1);
+          await refreshUnreadCount();
+          renderNotifications();
+          setStatus(archivedRow ? 'Notification archivée.' : 'Notification retirée de la vue.');
+        } catch (error) {
+          console.error('Erreur archive_notification', error);
+          setStatus(error?.message || 'Impossible d’archiver cette notification.');
+        }
+      }
+
+      async function markAllRead() {
+        if (!state.client) {
+          return;
+        }
+
+        try {
+          const { data, error } = await state.client.rpc('mark_all_notifications_read');
+          if (error) {
+            throw error;
+          }
+
+          state.notifications = state.notifications.map((item) => ({ ...item, is_read: true }));
+          await refreshUnreadCount();
+          renderNotifications();
+          setStatus(`Toutes les notifications ont été marquées lues (${Number(data || 0)} mise${Number(data || 0) > 1 ? 's' : ''}).`);
+        } catch (error) {
+          console.error('Erreur mark_all_notifications_read', error);
+          setStatus(error?.message || 'Impossible de marquer toutes les notifications comme lues.');
+        }
+      }
+
+      async function init() {
+        try {
+          const currentUser = await window.getCurrentUserAsync?.();
+          state.currentUser = currentUser;
+          state.client = await window.getSupabaseClient?.();
+
+          if (!state.client) {
+            throw new Error('Supabase client introuvable.');
+          }
+
+          await refreshUnreadCount();
+          await loadNotifications(true);
+        } catch (error) {
+          console.error('Erreur initialisation notifications', error);
+          setStatus(error?.message || 'Une erreur de connexion a empêché le chargement des notifications.');
+        }
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', async () => {
+          state.currentCategory = button.dataset.category || 'all';
+          state.offset = 0;
+          state.fullyLoaded = false;
+          filterButtons.forEach((chip) => chip.classList.toggle('active', chip === button));
+          activeFilter.textContent = button.textContent.trim();
+          await loadNotifications(true);
+        });
+      });
+
+      searchInput.addEventListener('input', (event) => {
+        state.searchTerm = event.target.value.trim();
+        renderNotifications();
+      });
+
+      notificationList.addEventListener('click', async (event) => {
+        const target = event.target;
+        const button = target.closest('button[data-action]');
+        if (!button) {
+          return;
+        }
+
+        const action = button.dataset.action;
+        const notificationId = button.dataset.id;
+
+        if (action === 'mark-read') {
+          await markNotificationRead(notificationId);
+        }
+
+        if (action === 'archive') {
+          await archiveNotification(notificationId);
+        }
+      });
+
+      loadMoreButton.addEventListener('click', async () => {
+        if (state.loading || state.fullyLoaded) {
+          return;
+        }
+
+        await loadNotifications(false);
+      });
+
+      markAllReadButton.addEventListener('click', async () => {
+        await markAllRead();
+      });
+
+      refreshNotificationsButton.addEventListener('click', async () => {
+        state.offset = 0;
+        state.fullyLoaded = false;
+        await refreshUnreadCount();
+        await loadNotifications(true);
+      });
+
+      await init();
+    })();
+  </script>
+</body>
+</html>

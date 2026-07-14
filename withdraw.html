@@ -233,12 +233,12 @@
           <span class="badge">3</span>
         </button>
         <!-- Notifications -->
-        <button class="action-btn" type="button" aria-label="Notifications">
+        <a href="notifications.html" class="action-btn notifications-link" aria-label="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>
           </svg>
-          <span class="badge">2</span>
-        </button>
+          <span class="badge notifications-badge" hidden>0</span>
+        </a>
 
         <!-- Menu utilisateur interactif -->
         <div class="user-menu-wrap" id="userMenuWrap" hidden>
@@ -374,7 +374,7 @@
       const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
       if (!currentUser) {
         window.saveRedirectTarget?.('withdraw.html');
-        window.location.replace('login-register/login.html');
+        window.tryRedirectToLogin('login-register/login.html');
         return null;
       }
       return currentUser;
@@ -503,7 +503,7 @@
         if (window.logoutUser) {
           const result = await window.logoutUser();
           if (result?.ok) {
-            window.location.replace('login-register/login.html');
+            window.tryRedirectToLogin('login-register/login.html');
           }
         }
       });
@@ -544,3 +544,4 @@
   </script>
 </body>
 </html>
+

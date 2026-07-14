@@ -149,8 +149,8 @@
 </head>
 <body>
   <main class="app">
-    <header class="mobile-header" aria-label="En-tête principal">
-      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
+    <header class="mobile-header" data-i18n-aria-label="common.main_header">
+      <a class="brand" href="index.html" data-i18n-aria-label="common.home">
         <div class="brand-block">
           <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
           <div class="brand-text">
@@ -161,43 +161,43 @@
         </div>
       </a>
 
-      <div class="wallet-chip" aria-label="Solde utilisateur">
-        <span><strong id="header-wallet-balance">Chargement…</strong><span id="wallet-label">Solde disponible</span></span>
+      <div class="wallet-chip" data-i18n-aria-label="common.user_balance">
+        <span><strong id="header-wallet-balance" data-i18n="common.player_space_loading"></strong><span id="wallet-label" data-i18n="common.available_balance"></span></span>
       </div>
 
       <div class="header-actions">
         <div id="authHeaderActions"></div>
         <!-- Promotions -->
-        <button class="action-btn" type="button" aria-label="Promotions">
+        <button class="action-btn" type="button" data-i18n-aria-label="common.promotions">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
             <rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/>
           </svg>
           <span class="badge">3</span>
         </button>
         <!-- Notifications -->
-        <button class="action-btn" type="button" aria-label="Notifications">
+        <a href="notifications.html" class="action-btn notifications-link" data-i18n-aria-label="common.notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>
           </svg>
-          <span class="badge">2</span>
-        </button>
+          <span class="badge notifications-badge" hidden>0</span>
+        </a>
 
         <!-- Menu utilisateur interactif -->
         <div class="user-menu-wrap" id="userMenuWrap" hidden>
-          <button id="userMenuButton" class="action-btn user-button" type="button" aria-label="Menu utilisateur" aria-expanded="false">
+          <button id="userMenuButton" class="action-btn user-button" type="button" data-i18n-aria-label="common.user_menu" aria-expanded="false">
             <span class="user-avatar" id="userAvatar">U</span>
           </button>
           <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
-            <a class="user-menu-link" href="tickets.html">Tickets</a>
-            <a class="user-menu-link" href="history.html">Historique</a>
-            <a class="user-menu-link" href="results.html">Résultats</a>
-            <a class="user-menu-link" href="deposit.html">Dépôt</a>
-            <a class="user-menu-link" href="withdraw.html">Retrait</a>
-            <a class="user-menu-link" href="wallet.html">Portefeuille</a>
-            <a class="user-menu-link" href="profile.html">Profil</a>
-            <a class="user-menu-link" href="settings.html">Paramètres</a>
+            <a class="user-menu-link" href="tickets.html" data-i18n="common.tickets"></a>
+            <a class="user-menu-link" href="history.html" data-i18n="common.history"></a>
+            <a class="user-menu-link" href="results.html" data-i18n="common.results"></a>
+            <a class="user-menu-link" href="deposit.html" data-i18n="common.deposit"></a>
+            <a class="user-menu-link" href="withdraw.html" data-i18n="common.withdraw"></a>
+            <a class="user-menu-link" href="wallet.html" data-i18n="common.wallet"></a>
+            <a class="user-menu-link" href="profile.html" data-i18n="common.profile"></a>
+            <a class="user-menu-link" href="settings.html" data-i18n="common.settings"></a>
             <div class="user-menu-divider"></div>
-            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button">Déconnexion</button>
+            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button" data-i18n="common.logout"></button>
           </div>
         </div>
       </div>
@@ -205,87 +205,221 @@
 
     <section class="shell">
       <article class="panel">
-        <span class="badge-tag">Profil joueur</span>
-        <h1>Informations personnelles</h1>
-        <p>Consultez et gérez les données personnelles de votre compte joueur.</p>
+        <span class="badge-tag" data-i18n="profile.player_profile"></span>
+        <h1 data-i18n="profile.personal_information"></h1>
+        <p data-i18n="profile.personal_information_description"></p>
 
         <div class="profile-card">
           <div class="profile-row">
             <div style="display:flex; align-items:center; gap:10px;">
               <img data-profile-avatar src="assets/reallogo.png" alt="Avatar" class="avatar" style="object-fit: cover; width: 56px; height: 56px;" />
               <div>
-                <strong data-profile-name style="display:block; color:#fff;">Chargement…</strong>
-                <span data-profile-role-tag style="color:var(--muted); font-size:13px; text-transform: uppercase;">CLIENT</span>
+                <strong data-profile-name style="display:block; color:#fff;" data-i18n="common.player_space_loading"></strong>
+                <span data-profile-role-tag style="color:var(--muted); font-size:13px; text-transform: uppercase;" data-i18n="common.client"></span>
               </div>
             </div>
-            <span class="status" data-profile-account-status>Statut : Actif</span>
+            <span class="status" data-profile-account-status data-i18n="profile.account_status_placeholder"></span>
           </div>
-          <p class="mini-note">Informations de connexion et d'activité du compte.</p>
+          <p class="mini-note" data-i18n="profile.account_details_note"></p>
         </div>
 
         <div class="info-grid">
-          <div class="info-item"><span>Nom complet</span><strong data-profile-name-full>Chargement…</strong></div>
-          <div class="info-item"><span>Prénom</span><strong data-profile-first-name>Chargement…</strong></div>
-          <div class="info-item"><span>Nom</span><strong data-profile-last-name>Chargement…</strong></div>
-          <div class="info-item"><span>Téléphone</span><strong data-profile-phone>Chargement…</strong></div>
-          <div class="info-item"><span>Email</span><strong data-profile-email>Chargement…</strong></div>
-          <div class="info-item"><span>Rôle</span><strong data-profile-role>Chargement…</strong></div>
-          <div class="info-item"><span>Statut du compte</span><strong data-profile-status>Chargement…</strong></div>
+          <div class="info-item"><span data-i18n="profile.full_name"></span><strong data-profile-name-full data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.first_name"></span><strong data-profile-first-name data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.last_name"></span><strong data-profile-last-name data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.phone"></span><strong data-profile-phone data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.email"></span><strong data-profile-email data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="common.role"></span><strong data-profile-role data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.account_status"></span><strong data-profile-status data-i18n="common.player_space_loading"></strong></div>
         </div>
 
-        <button id="logoutBtn" class="btn btn-primary" type="button">Déconnexion</button>
-        <a class="btn btn-secondary" href="dashboard.html">Retour au tableau de bord</a>
+        <button id="logoutBtn" class="btn btn-primary" type="button" data-i18n="common.logout"></button>
+        <a class="btn btn-secondary" href="dashboard.html" data-i18n="profile.back_to_dashboard"></a>
       </article>
 
       <article class="panel">
-        <span class="badge-tag">Portefeuille</span>
-        <h1>Vue d’ensemble</h1>
-        <p>Vue d'ensemble de votre solde et de la sécurité du compte.</p>
+        <span class="badge-tag" data-i18n="profile.wallet"></span>
+        <h1 data-i18n="profile.overview"></h1>
+        <p data-i18n="profile.overview_description"></p>
         <div class="info-grid">
-          <div class="info-item"><span>Solde disponible</span><strong data-profile-balance>Chargement…</strong></div>
-          <div class="info-item"><span>Devise</span><strong data-profile-currency>Chargement…</strong></div>
-          <div class="info-item"><span>Statut du wallet</span><strong data-profile-wallet-status>Chargement…</strong></div>
-          <div class="info-item"><span>Provider</span><strong data-profile-provider>Chargement…</strong></div>
-          <div class="info-item"><span>Date de création</span><strong data-profile-created-at>Chargement…</strong></div>
-          <div class="info-item"><span>Avatar</span><strong data-profile-avatar-note>Image Google ou initiale locale</strong></div>
+          <div class="info-item"><span data-i18n="common.available_balance"></span><strong data-profile-balance data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="common.currency"></span><strong data-profile-currency data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.wallet_status"></span><strong data-profile-wallet-status data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.provider"></span><strong data-profile-provider data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.created_at"></span><strong data-profile-created-at data-i18n="common.player_space_loading"></strong></div>
+          <div class="info-item"><span data-i18n="profile.avatar"></span><strong data-profile-avatar-note data-i18n="profile.avatar_note"></strong></div>
         </div>
 
         <div class="profile-card" style="margin-top: 12px;">
-          <strong style="color:#fff;">Historique rapide</strong>
-          <p class="mini-note">Données de sécurité de votre compte joueur.</p>
+          <strong style="color:#fff;" data-i18n="common.quick_history"></strong>
+          <p class="mini-note" data-i18n="profile.security_note"></p>
           <div class="info-grid">
-            <div class="info-item"><span>Dernière mise à jour</span><strong>Chargement…</strong></div>
-            <div class="info-item"><span>Type d’accès</span><strong data-profile-provider-sub>Chargement…</strong></div>
+            <div class="info-item"><span data-i18n="profile.last_updated"></span><strong data-i18n="common.player_space_loading"></strong></div>
+            <div class="info-item"><span data-i18n="profile.access_type"></span><strong data-profile-provider-sub data-i18n="common.player_space_loading"></strong></div>
           </div>
         </div>
       </article>
     </section>
   </main>
+  <script src="js/i18n.js"></script>
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/auth-guard.js"></script>
   <script>
+    const profilePageState = {
+      data: null,
+      currentUser: null
+    };
+
+    function tkText(key, fallback) {
+      if (window.TKI18n && typeof window.TKI18n.t === 'function') {
+        return window.TKI18n.t(key);
+      }
+      return fallback || key;
+    }
+
+    function formatStatusValue(value) {
+      const rawValue = String(value || '').trim();
+      if (!rawValue) return tkText('common.player_space_loading', 'Chargement…');
+      return rawValue;
+    }
+
+    function renderProfileStaticLabels() {
+      if (!window.TKI18n || typeof window.TKI18n.applyTranslations !== 'function') {
+        return;
+      }
+      document.title = tkText('profile.page_title', 'Tonton Kondo — Profil');
+      window.TKI18n.applyTranslations(document);
+    }
+
+    async function resolveProfileLanguagePreference() {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : (window.getCurrentUser ? window.getCurrentUser() : null));
+      if (window.supabaseClient && currentUser?.id) {
+        try {
+          const { data, error } = await window.supabaseClient
+            .from('user_settings')
+            .select('language')
+            .eq('user_id', currentUser.id)
+            .maybeSingle();
+
+          if (!error && data?.language) {
+            return window.TKI18n.normalizeLanguage(data.language);
+          }
+        } catch (error) {
+          console.warn('Unable to read user_settings.language for profile.', error);
+        }
+      }
+
+      try {
+        const storedLanguage = window.localStorage?.getItem('tk_language');
+        if (storedLanguage) {
+          return window.TKI18n.normalizeLanguage(storedLanguage);
+        }
+      } catch (error) {
+        console.warn('Unable to read localStorage language for profile.', error);
+      }
+
+      return 'fr';
+    }
+
+    function refreshProfilePageUi() {
+      renderProfileStaticLabels();
+
+      const currentUser = profilePageState.currentUser || profilePageState.data?.currentUser || {};
+      const profile = profilePageState.data?.profile || {};
+      const wallet = profilePageState.data?.wallet || {};
+      const user = profilePageState.data?.user || {};
+      const displayName = profile.full_name || currentUser.full_name || user.user_metadata?.full_name || user.user_metadata?.name || currentUser.email || user.email || tkText('common.player', 'Joueur');
+      const roleValue = String(profile.role || currentUser.role || user.role || 'client');
+      const statusValue = String(profile.status || currentUser.status || 'active');
+
+      const nameEl = document.querySelector('[data-profile-name]');
+      if (nameEl) nameEl.textContent = displayName;
+
+      const roleTagEl = document.querySelector('[data-profile-role-tag]');
+      if (roleTagEl) roleTagEl.textContent = String(roleValue).toUpperCase();
+
+      const accountStatusEl = document.querySelector('[data-profile-account-status]');
+      if (accountStatusEl) {
+        accountStatusEl.textContent = `${tkText('profile.status_prefix', 'Statut :')} ${formatStatusValue(statusValue)}`;
+      }
+
+      const nameFullEl = document.querySelector('[data-profile-name-full]');
+      if (nameFullEl) nameFullEl.textContent = profile.full_name || currentUser.full_name || user.user_metadata?.full_name || user.user_metadata?.name || tkText('common.player_space_loading', 'Chargement…');
+
+      const firstNameEl = document.querySelector('[data-profile-first-name]');
+      if (firstNameEl) firstNameEl.textContent = profile.first_name || currentUser.first_name || user.user_metadata?.first_name || tkText('common.player_space_loading', 'Chargement…');
+
+      const lastNameEl = document.querySelector('[data-profile-last-name]');
+      if (lastNameEl) lastNameEl.textContent = profile.last_name || currentUser.last_name || user.user_metadata?.last_name || tkText('common.player_space_loading', 'Chargement…');
+
+      const phoneEl = document.querySelector('[data-profile-phone]');
+      if (phoneEl) phoneEl.textContent = profile.phone || currentUser.phone || user.phone || tkText('common.player_space_loading', 'Chargement…');
+
+      const emailEl = document.querySelector('[data-profile-email]');
+      if (emailEl) emailEl.textContent = profile.email || currentUser.email || user.email || tkText('common.player_space_loading', 'Chargement…');
+
+      const roleEl = document.querySelector('[data-profile-role]');
+      if (roleEl) roleEl.textContent = roleValue || tkText('common.player_space_loading', 'Chargement…');
+
+      const statusEl = document.querySelector('[data-profile-status]');
+      if (statusEl) statusEl.textContent = statusValue || tkText('common.player_space_loading', 'Chargement…');
+
+      const balanceEl = document.querySelector('[data-profile-balance]');
+      if (balanceEl) balanceEl.textContent = wallet.balance != null ? `${Number(wallet.balance || 0).toLocaleString('fr-FR')} ${wallet.currency || 'HTG'}` : tkText('common.player_space_loading', 'Chargement…');
+
+      const currencyEl = document.querySelector('[data-profile-currency]');
+      if (currencyEl) currencyEl.textContent = wallet.currency || 'HTG';
+
+      const walletStatusEl = document.querySelector('[data-profile-wallet-status]');
+      if (walletStatusEl) walletStatusEl.textContent = wallet.status || tkText('common.player_space_loading', 'Chargement…');
+
+      const providerEl = document.querySelector('[data-profile-provider]');
+      if (providerEl) providerEl.textContent = wallet.provider || user.app_metadata?.provider || tkText('common.player_space_loading', 'Chargement…');
+
+      const createdAtEl = document.querySelector('[data-profile-created-at]');
+      if (createdAtEl) createdAtEl.textContent = profile.created_at || currentUser.created_at || user.created_at || tkText('common.player_space_loading', 'Chargement…');
+
+      const providerSubEl = document.querySelector('[data-profile-provider-sub]');
+      if (providerSubEl) providerSubEl.textContent = wallet.provider || user.app_metadata?.provider || tkText('common.player_space_loading', 'Chargement…');
+    }
+
     (async () => {
+      const preferredLanguage = await resolveProfileLanguagePreference();
+
+      if (window.TKI18n && typeof window.TKI18n.init === 'function') {
+        await window.TKI18n.init({ language: preferredLanguage });
+        window.TKI18n.onLanguageChanged(refreshProfilePageUi);
+        window.addEventListener('storage', (event) => {
+          if (event.key === 'tk_language' && event.newValue && window.TKI18n && typeof window.TKI18n.setLanguage === 'function') {
+            window.TKI18n.setLanguage(event.newValue);
+          }
+        });
+      }
+      renderProfileStaticLabels();
       const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
       if (!currentUser) {
         const target = window.location.pathname.split('/').filter(Boolean).slice(-2).join('/') || 'profile.html';
         window.saveRedirectTarget?.(target);
-        window.location.replace('login-register/login.html');
+        window.tryRedirectToLogin('login-register/login.html');
         return;
       }
 
       const data = await (window.getAuthenticatedProfile ? window.getAuthenticatedProfile() : null);
+      profilePageState.data = data || null;
+      profilePageState.currentUser = currentUser || null;
       if (window.renderProfilePage) {
         window.renderProfilePage(data);
       }
+      refreshProfilePageUi();
 
       const logoutBtn = document.getElementById('logoutBtn');
       logoutBtn?.addEventListener('click', async () => {
         const result = await window.logoutUser?.();
         if (result?.ok) {
-          window.location.replace('login-register/login.html');
+          window.tryRedirectToLogin('login-register/login.html');
         } else {
-          window.alert(result?.message || 'Déconnexion impossible.');
+          window.alert(result?.message || tkText('profile.logout_failed', 'Déconnexion impossible.'));
         }
       });
     })();
@@ -318,7 +452,7 @@
         if (window.logoutUser) {
           const result = await window.logoutUser();
           if (result?.ok) {
-            window.location.replace('login-register/login.html');
+            window.tryRedirectToLogin('login-register/login.html');
           }
         }
       });
@@ -327,7 +461,7 @@
         const currentUser = window.getCurrentUser ? window.getCurrentUser() : (window.getCurrentUserAsync ? await window.getCurrentUserAsync() : null);
         if (currentUser) {
           if (userMenuWrap) userMenuWrap.hidden = false;
-          const displayName = currentUser.full_name || currentUser.email || 'Joueur';
+          const displayName = currentUser.full_name || currentUser.email || tkText('common.player', 'Joueur');
           const firstLetter = String(displayName).trim().charAt(0).toUpperCase();
 
           if (userAvatar) {
@@ -359,3 +493,4 @@
   </script>
 </body>
 </html>
+

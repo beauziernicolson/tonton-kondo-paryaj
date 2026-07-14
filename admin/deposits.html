@@ -175,7 +175,7 @@
       const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
       if (!currentUser) {
         window.saveRedirectTarget?.('admin/deposits.html');
-        window.location.replace('../login-register/login.html');
+        window.tryRedirectToLogin('../login-register/login.html');
         return null;
       }
       if (!['admin', 'super_admin'].includes(String(currentUser.role || '').toLowerCase())) {
@@ -311,3 +311,4 @@
   </script>
 </body>
 </html>
+

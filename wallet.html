@@ -127,8 +127,8 @@
 </head>
 <body>
   <main class="app">
-    <header class="mobile-header" aria-label="En-tête principal">
-      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
+    <header class="mobile-header" data-i18n-aria-label="common.main_header">
+      <a class="brand" href="index.html" data-i18n-aria-label="common.home">
         <div class="brand-block">
           <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
           <div class="brand-text">
@@ -139,43 +139,40 @@
         </div>
       </a>
 
-      <div class="wallet-chip" aria-label="Solde utilisateur">
-        <span><strong id="header-wallet-balance">Chargement de votre portefeuille…</strong><span id="wallet-label">Solde disponible</span></span>
+      <div class="wallet-chip" data-i18n-aria-label="common.user_balance">
+        <span><strong id="header-wallet-balance" data-i18n="wallet.header_balance_loading">Chargement de votre portefeuille…</strong><span id="wallet-label" data-i18n="common.available_balance">Solde disponible</span></span>
       </div>
 
       <div class="header-actions">
         <div id="authHeaderActions"></div>
-        <!-- Promotions -->
-        <button class="action-btn" type="button" aria-label="Promotions">
+        <button class="action-btn" type="button" data-i18n-aria-label="common.promotions">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
             <rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/>
           </svg>
           <span class="badge">3</span>
         </button>
-        <!-- Notifications -->
-        <button class="action-btn" type="button" aria-label="Notifications">
+        <a href="notifications.html" class="action-btn notifications-link" data-i18n-aria-label="common.notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>
           </svg>
-          <span class="badge">2</span>
-        </button>
+          <span class="badge notifications-badge" hidden>0</span>
+        </a>
 
-        <!-- Menu utilisateur interactif -->
         <div class="user-menu-wrap" id="userMenuWrap" hidden>
-          <button id="userMenuButton" class="action-btn user-button" type="button" aria-label="Menu utilisateur" aria-expanded="false">
+          <button id="userMenuButton" class="action-btn user-button" type="button" data-i18n-aria-label="common.user_menu" aria-expanded="false">
             <span class="user-avatar" id="userAvatar">U</span>
           </button>
           <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
-            <a class="user-menu-link" href="tickets.html">Tickets</a>
-            <a class="user-menu-link" href="history.html">Historique</a>
-            <a class="user-menu-link" href="results.html">Résultats</a>
-            <a class="user-menu-link" href="deposit.html">Dépôt</a>
-            <a class="user-menu-link" href="withdraw.html">Retrait</a>
-            <a class="user-menu-link" href="wallet.html">Portefeuille</a>
-            <a class="user-menu-link" href="profile.html">Profil</a>
-            <a class="user-menu-link" href="settings.html">Paramètres</a>
+            <a class="user-menu-link" href="tickets.html" data-i18n="common.tickets"></a>
+            <a class="user-menu-link" href="history.html" data-i18n="common.history"></a>
+            <a class="user-menu-link" href="results.html" data-i18n="common.results"></a>
+            <a class="user-menu-link" href="deposit.html" data-i18n="common.deposit"></a>
+            <a class="user-menu-link" href="withdraw.html" data-i18n="common.withdraw"></a>
+            <a class="user-menu-link" href="wallet.html" data-i18n="common.wallet"></a>
+            <a class="user-menu-link" href="profile.html" data-i18n="common.profile"></a>
+            <a class="user-menu-link" href="settings.html" data-i18n="common.settings"></a>
             <div class="user-menu-divider"></div>
-            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button">Déconnexion</button>
+            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button" data-i18n="common.logout"></button>
           </div>
         </div>
       </div>
@@ -183,59 +180,225 @@
 
     <section class="grid">
       <article class="panel">
-        <div class="eyebrow">Portefeuille</div>
-        <h1>Solde actuel</h1>
-        <p>Consultez le solde de votre compte et accédez aux dépôts et retraits.</p>
+        <div class="eyebrow" data-i18n="wallet.eyebrow">Portefeuille</div>
+        <h1 data-i18n="wallet.balance_heading">Solde actuel</h1>
+        <p data-i18n="wallet.description">Consultez le solde de votre compte et accédez aux dépôts et retraits.</p>
         <div class="stat-grid">
-          <div class="stat-card"><small>Solde disponible</small><strong id="wallet-balance">Chargement de votre portefeuille…</strong><span id="wallet-caption">Solde disponible</span></div>
-          <div class="stat-card"><small>Devise</small><strong id="wallet-currency">HTG</strong><span>Monnaie du wallet</span></div>
-          <div class="stat-card"><small>Statut</small><strong id="wallet-status">active</strong><span>État du portefeuille</span></div>
+          <div class="stat-card"><small data-i18n="common.available_balance">Solde disponible</small><strong id="wallet-balance" data-i18n="wallet.header_balance_loading">Chargement de votre portefeuille…</strong><span id="wallet-caption" data-i18n="common.available_balance">Solde disponible</span></div>
+          <div class="stat-card"><small data-i18n="common.currency">Devise</small><strong id="wallet-currency" data-i18n="wallet.currency_placeholder">HTG</strong><span data-i18n="wallet.currency_help">Monnaie du wallet</span></div>
+          <div class="stat-card"><small data-i18n="common.status">Statut</small><strong id="wallet-status" data-i18n="wallet.status_placeholder">active</strong><span data-i18n="wallet.status_help">État du portefeuille</span></div>
         </div>
         <div class="action-row">
-          <button id="refresh-wallet-btn" class="btn btn-primary" type="button">Rafraîchir le solde</button>
-          <a class="btn btn-secondary" href="deposit.html">Dépôt</a>
-          <a class="btn btn-secondary" href="withdraw.html">Retrait</a>
-          <a class="btn btn-secondary" href="dashboard.html">Retour au tableau de bord</a>
+          <button id="refresh-wallet-btn" class="btn btn-primary" type="button" data-i18n="wallet.refresh_balance">Rafraîchir le solde</button>
+          <a class="btn btn-secondary" href="deposit.html" data-i18n="common.deposit">Dépôt</a>
+          <a class="btn btn-secondary" href="withdraw.html" data-i18n="common.withdraw">Retrait</a>
+          <a class="btn btn-secondary" href="dashboard.html" data-i18n="wallet.back_to_dashboard">Retour au tableau de bord</a>
         </div>
       </article>
 
       <article class="panel">
-        <div class="eyebrow">Transactions</div>
-        <h1>Derniers mouvements</h1>
-        <p>Historique des transactions de votre portefeuille.</p>
+        <div class="eyebrow" data-i18n="wallet.transactions_eyebrow">Transactions</div>
+        <h1 data-i18n="wallet.transactions_heading">Derniers mouvements</h1>
+        <p data-i18n="wallet.transactions_description">Historique des transactions de votre portefeuille.</p>
         <div id="transactions-list" class="list">
-          <div class="item"><strong>Chargement de votre portefeuille…</strong><span>Chargement de vos mouvements récents…</span></div>
+          <div class="item"><strong data-i18n="wallet.loading_transactions">Chargement de votre portefeuille…</strong><span data-i18n="wallet.loading_transactions_subtitle">Chargement de vos mouvements récents…</span></div>
         </div>
       </article>
     </section>
   </main>
 
+  <script src="js/i18n.js"></script>
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/auth-guard.js"></script>
   <script>
     const refreshWalletBtn = document.getElementById('refresh-wallet-btn');
+    const walletPageState = {
+      wallet: null,
+      transactions: [],
+      currentUser: null,
+      errorMessage: ''
+    };
+
+    function tkText(key, fallback) {
+      if (window.TKI18n && typeof window.TKI18n.t === 'function') {
+        return window.TKI18n.t(key);
+      }
+      return fallback || key;
+    }
+
+    function getWalletLocale() {
+      const currentLanguage = (window.TKI18n && typeof window.TKI18n.getLanguage === 'function')
+        ? window.TKI18n.getLanguage()
+        : 'fr';
+      if (currentLanguage === 'en') {
+        return 'en-US';
+      }
+      if (currentLanguage === 'ht') {
+        return 'fr-FR';
+      }
+      return 'fr-FR';
+    }
+
+    function getTransactionTypeLabel(type) {
+      const normalizedType = String(type || '').toLowerCase();
+      const typeKeys = {
+        deposit: 'wallet.transaction_types.deposit',
+        withdrawal: 'wallet.transaction_types.withdrawal',
+        bet: 'wallet.transaction_types.bet',
+        win: 'wallet.transaction_types.win',
+        credit: 'wallet.transaction_types.credit',
+        debit: 'wallet.transaction_types.debit'
+      };
+      return window.TKI18n.t(typeKeys[normalizedType] || 'wallet.transaction_types.default');
+    }
+
+    function getTransactionStatusLabel(status) {
+      const normalizedStatus = String(status || '').toLowerCase();
+      const statusKeys = {
+        pending: 'wallet.status.pending',
+        approved: 'wallet.status.approved',
+        rejected: 'wallet.status.rejected',
+        completed: 'wallet.status.completed',
+        paid: 'wallet.status.paid',
+        failed: 'wallet.status.failed',
+        cancelled: 'wallet.status.cancelled',
+        active: 'common.active'
+      };
+      return window.TKI18n.t(statusKeys[normalizedStatus] || 'wallet.status.default');
+    }
+
+    function formatWalletBalance(balance, currency) {
+      const safeBalance = Number(balance || 0);
+      const formattedAmount = safeBalance.toLocaleString(getWalletLocale());
+      return window.TKI18n.t('wallet.balance_value', { amount: formattedAmount, currency: currency || 'HTG' });
+    }
+
+    function formatTransactionDate(createdAt) {
+      const dateValue = createdAt ? new Date(createdAt) : null;
+      if (!dateValue || Number.isNaN(dateValue.getTime())) {
+        return window.TKI18n.t('wallet.transaction_date_unknown');
+      }
+      return dateValue.toLocaleString(getWalletLocale());
+    }
+
+    function renderWalletStaticLabels() {
+      if (!window.TKI18n || typeof window.TKI18n.applyTranslations !== 'function') {
+        return;
+      }
+      document.title = window.TKI18n.t('wallet.page_title');
+      window.TKI18n.applyTranslations(document);
+    }
+
+    function renderWalletPageUi() {
+      renderWalletStaticLabels();
+      const wallet = walletPageState.wallet || {};
+      const balance = wallet?.balance != null ? Number(wallet.balance) : 0;
+      const currency = wallet?.currency || 'HTG';
+      const status = wallet?.status || 'active';
+      const balanceText = formatWalletBalance(balance, currency);
+
+      const balanceEl = document.getElementById('wallet-balance');
+      if (balanceEl) balanceEl.textContent = balanceText;
+
+      const headerBalanceEl = document.getElementById('header-wallet-balance');
+      if (headerBalanceEl) headerBalanceEl.textContent = balanceText;
+
+      const currencyEl = document.getElementById('wallet-currency');
+      if (currencyEl) currencyEl.textContent = currency;
+
+      const statusEl = document.getElementById('wallet-status');
+      if (statusEl) statusEl.textContent = getTransactionStatusLabel(status);
+
+      const captionEl = document.getElementById('wallet-caption');
+      if (captionEl) captionEl.textContent = tkText('common.available_balance', 'Solde disponible');
+
+      const list = document.getElementById('transactions-list');
+      if (!list) return;
+
+      if (!walletPageState.transactions || !walletPageState.transactions.length) {
+        list.innerHTML = `
+          <div class="item">
+            <strong>${tkText('wallet.empty_state_title', 'Aucune opération pour le moment.')}</strong>
+            <span>${tkText('wallet.empty_state_text', 'Vos mouvements apparaîtront ici.')}</span>
+            <a class="btn btn-secondary" href="deposit.html" style="margin-top:8px; display:inline-flex;">${tkText('wallet.empty_state_cta', 'Faire un dépôt')}</a>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = walletPageState.transactions.map((item) => `
+        <article class="item">
+          <strong>${getTransactionTypeLabel(item.type)}</strong>
+          <span>${formatTransactionDate(item.created_at)} • ${getTransactionStatusLabel(item.status)}</span>
+          <span class="muted">${window.TKI18n.t('wallet.reference_label', { reference: item.reference || '—' })}</span>
+          <span class="muted">${item.description || tkText('wallet.transaction_description_fallback', 'Mouvement wallet')}</span>
+          <strong style="margin-top:6px; color: var(--gold);">${window.TKI18n.t('wallet.amount_value', { amount: Number(item.amount || 0).toLocaleString(getWalletLocale()), currency })}</strong>
+        </article>
+      `).join('');
+    }
+
+    async function resolveWalletLanguagePreference() {
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : (window.getCurrentUser ? window.getCurrentUser() : null));
+      if (window.supabaseClient && currentUser?.id) {
+        try {
+          const { data, error } = await window.supabaseClient
+            .from('user_settings')
+            .select('language')
+            .eq('user_id', currentUser.id)
+            .maybeSingle();
+
+          if (!error && data?.language) {
+            return window.TKI18n.normalizeLanguage(data.language);
+          }
+        } catch (error) {
+          console.warn('Unable to read user_settings.language for wallet.', error);
+        }
+      }
+
+      try {
+        const storedLanguage = window.localStorage?.getItem('tk_language');
+        if (storedLanguage) {
+          return window.TKI18n.normalizeLanguage(storedLanguage);
+        }
+      } catch (error) {
+        console.warn('Unable to read localStorage language for wallet.', error);
+      }
+
+      return 'fr';
+    }
+
+    async function initWalletI18n() {
+      const preferredLanguage = await resolveWalletLanguagePreference();
+      if (window.TKI18n && typeof window.TKI18n.init === 'function') {
+        await window.TKI18n.init({ language: preferredLanguage });
+        window.TKI18n.onLanguageChanged(renderWalletPageUi);
+        window.addEventListener('storage', (event) => {
+          if (event.key === 'tk_language' && event.newValue && window.TKI18n && typeof window.TKI18n.setLanguage === 'function') {
+            window.TKI18n.setLanguage(event.newValue);
+          }
+        });
+      }
+      renderWalletPageUi();
+    }
 
     async function loadWalletData() {
       const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
       if (!currentUser) {
         window.saveRedirectTarget?.('wallet.html');
-        window.location.replace('login-register/login.html');
+        window.tryRedirectToLogin('login-register/login.html');
         return;
       }
 
+      walletPageState.currentUser = currentUser;
       const wallet = await (window.getAuthenticatedWallet ? window.getAuthenticatedWallet() : null);
-      const balance = wallet?.balance != null ? Number(wallet.balance) : 0;
-      const currency = wallet?.currency || 'HTG';
-      document.getElementById('wallet-balance').textContent = `${balance.toLocaleString('fr-FR')} ${currency}`;
-      document.getElementById('wallet-currency').textContent = currency;
-      document.getElementById('wallet-status').textContent = wallet?.status || 'active';
-      document.getElementById('wallet-caption').textContent = 'Solde disponible';
+      walletPageState.wallet = wallet || {};
+      renderWalletPageUi();
 
       try {
         const client = window.supabaseClient || null;
         if (!client || typeof client.from !== 'function') {
-          throw new Error('Connexion au service momentanément indisponible. Réessayez dans quelques instants.');
+          throw new Error('wallet.error_network');
         }
 
         const { data, error } = await client
@@ -247,24 +410,20 @@
 
         if (error) throw error;
 
-        const list = document.getElementById('transactions-list');
-        if (!data || !data.length) {
-          list.innerHTML = '<div class="item"><strong>Aucune opération pour le moment. Vos mouvements apparaîtront ici.</strong><span>Vos opérations financières apparaîtront ici.</span><a class="btn btn-secondary" href="deposit.html" style="margin-top:8px; display:inline-flex;">Faire un dépôt</a></div>';
-          return;
-        }
-
-        list.innerHTML = data.map((item) => `
-          <article class="item">
-            <strong>${String(item.type || 'transaction').toUpperCase()}</strong>
-            <span>${new Date(item.created_at).toLocaleString('fr-FR')} • ${item.status || 'pending'}</span>
-            <span class="muted">Réf. : ${item.reference || '—'}</span>
-            <span class="muted">${item.description || 'Mouvement wallet'}</span>
-            <strong style="margin-top:6px; color: var(--gold);">${Number(item.amount || 0).toLocaleString('fr-FR')} ${currency}</strong>
-          </article>
-        `).join('');
+        walletPageState.transactions = Array.isArray(data) ? data : [];
+        renderWalletPageUi();
       } catch (error) {
         console.error('Erreur chargement transactions wallet.', error);
-        document.getElementById('transactions-list').innerHTML = `<div class="item"><strong>Erreur</strong><span>${error.message || 'Impossible de charger les transactions.'}</span></div>`;
+        walletPageState.transactions = [];
+        const list = document.getElementById('transactions-list');
+        if (list) {
+          list.innerHTML = `
+            <div class="item">
+              <strong>${tkText('wallet.error_title', 'Erreur')}</strong>
+              <span>${tkText('wallet.error_loading_transactions', 'Impossible de charger les transactions.')}</span>
+            </div>
+          `;
+        }
       }
     }
 
@@ -272,9 +431,9 @@
       await loadWalletData();
     });
 
+    initWalletI18n();
     loadWalletData();
 
-    // --- Initialisation du Header Premium Harmonisé ---
     (async function initHeaderPremium() {
       const userMenuWrap = document.getElementById('userMenuWrap');
       const userMenuButton = document.getElementById('userMenuButton');
@@ -302,7 +461,7 @@
         if (window.logoutUser) {
           const result = await window.logoutUser();
           if (result?.ok) {
-            window.location.replace('login-register/login.html');
+            window.tryRedirectToLogin('login-register/login.html');
           }
         }
       });
@@ -311,7 +470,7 @@
         const currentUser = window.getCurrentUser ? window.getCurrentUser() : (window.getCurrentUserAsync ? await window.getCurrentUserAsync() : null);
         if (currentUser) {
           if (userMenuWrap) userMenuWrap.hidden = false;
-          const displayName = currentUser.full_name || currentUser.email || 'Joueur';
+          const displayName = currentUser.full_name || currentUser.email || tkText('common.player', 'Joueur');
           const firstLetter = String(displayName).trim().charAt(0).toUpperCase();
 
           if (userAvatar) {
@@ -332,7 +491,7 @@
             if (wallet && walletBalanceEl) {
               const balance = Number(wallet.balance || 0);
               const currency = wallet.currency || 'HTG';
-              walletBalanceEl.textContent = `${balance.toLocaleString('fr-FR')} ${currency}`;
+              walletBalanceEl.textContent = formatWalletBalance(balance, currency);
             }
           }
         }
@@ -343,3 +502,4 @@
   </script>
 </body>
 </html>
+

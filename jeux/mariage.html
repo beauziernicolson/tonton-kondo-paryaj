@@ -376,7 +376,7 @@
         if (!currentUser) {
           setFeedback('Vous devez être connecté pour valider un ticket.', 'warn');
           if (window.saveRedirectTarget) window.saveRedirectTarget('../mariage.html');
-          window.location.replace('../login-register/login.html');
+          window.tryRedirectToLogin('../login-register/login.html');
           return;
         }
 
@@ -512,7 +512,7 @@
         currentUser = await window.getCurrentUserAsync();
         if (!currentUser) {
           if (window.saveRedirectTarget) window.saveRedirectTarget('../mariage.html');
-          window.location.replace('../login-register/login.html');
+          window.tryRedirectToLogin('../login-register/login.html');
           return;
         }
 
@@ -528,3 +528,4 @@
   </script>
 </body>
 </html>
+

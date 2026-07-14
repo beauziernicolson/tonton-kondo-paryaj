@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Paramètres</title>
+  <title data-i18n="common.settings"></title>
   <style>
     :root {
       --bg:#020813;
@@ -31,7 +31,7 @@
     .mobile-header{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:8px 0 16px;border-bottom:1px solid var(--line);margin-bottom:24px}
     .brand{display:flex;align-items:center;min-width:0;text-decoration:none;color:inherit}.brand-block{display:flex;align-items:center;gap:12px}.brand-icon{width:56px;height:56px;object-fit:contain;flex-shrink:0;display:block}.brand-text{display:flex;flex-direction:column;line-height:1}.brand-top,.brand-middle{display:block;font-weight:900;font-size:22px;letter-spacing:.04em}.brand-top{color:#fff}.brand-middle{color:var(--gold)}.brand-bottom{position:relative;display:block;margin-top:4px;text-align:center;color:#d7dde8;font-size:9px;font-weight:800;letter-spacing:.5em}.brand-bottom::before,.brand-bottom::after{content:"";position:absolute;top:50%;width:22px;height:1px;background:rgba(255,255,255,.35)}.brand-bottom::before{right:100%;margin-right:8px}.brand-bottom::after{left:100%;margin-left:8px}
     .wallet-chip{display:flex;align-items:center;gap:8px;background:rgba(9,30,54,.92);border:1px solid var(--line);border-radius:17px;padding:10px 12px;box-shadow:var(--shadow);white-space:nowrap}.wallet-chip strong{display:block;font-size:15px}.wallet-chip span{display:block;color:var(--muted);font-size:12px;margin-top:-2px}
-    .header-actions{display:flex;align-items:center;gap:8px}.action-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(8,24,43,.95);color:var(--gold);position:relative;display:grid;place-items:center;box-shadow:var(--shadow);text-decoration:none}.user-button{width:42px;height:42px;border-radius:999px;padding:0;overflow:hidden;background:linear-gradient(135deg,rgba(255,210,31,.18),rgba(57,168,255,.18));border:1px solid rgba(255,255,255,.16);color:#fff;display:grid;place-items:center}.user-avatar{width:100%;height:100%;display:grid;place-items:center;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(135deg,#1b3353,#07111e)}.badge{position:absolute;right:-2px;top:-5px;background:var(--gold);color:#111;border-radius:999px;font-size:11px;font-weight:900;min-width:19px;height:19px;display:grid;place-items:center;border:2px solid #061426}
+    .header-actions{display:flex;align-items:center;gap:8px}.action-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(8,24,43,.95);color:var(--gold);position:relative;display:grid;place-items:center;box-shadow:var(--shadow);text-decoration:none}.user-button{width:42px;height:42px;border-radius:999px;padding:0;overflow:hidden;background:linear-gradient(135deg,rgba(255,210,31,.18),rgba(57,168,255,.18));border:1px solid rgba(255,255,255,.16);color:#fff;display:grid;place-items:center}.user-avatar{width:100%;height:100%;display:grid;place-items:center;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(135deg,#1b3353,#07111e)}.badge{position:absolute;right:-2px;top:-5px;background:var(--gold);color:#111;border-radius:999px;font-size:11px;font-weight:900;min-width:19px;height:19px;display:grid;place-items:center;border:2px solid #061426}.user-menu-wrap{position:relative}.user-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:220px;display:none;grid-template-columns:1fr;gap:4px;padding:8px;border:1px solid var(--line);border-radius:16px;background:rgba(7,24,43,.98);box-shadow:var(--shadow);z-index:50}.user-menu.open{display:grid}.user-menu-link{display:block;padding:10px 12px;border-radius:12px;border:1px solid transparent;color:#f3f7ff;font-size:13px;font-weight:700;text-decoration:none;background:transparent}.user-menu-link:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}.user-menu-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 0}.user-menu-logout{color:#ffd6d6}
     .page { width: min(100%, 1080px); margin: 0 auto; padding: 18px 16px 56px; }
     .card {
       border: 1px solid var(--line); border-radius: var(--radius-xl); background: rgba(7, 24, 43, .92);
@@ -48,13 +48,51 @@
     .chip { display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; background: rgba(255,255,255,.04); border:1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 700; }
     .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:1px solid var(--line); background: rgba(255,255,255,.04); color: #fff; padding:10px 12px; font-weight:800; }
     .btn-primary { background: linear-gradient(180deg, var(--gold), #ffb900); color: #111; border-color: transparent; }
+    .notifications-list { display:grid; gap:12px; margin-top:14px; }
+    .notification-row { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:10px 0; border-top:1px solid rgba(255,255,255,.06); }
+    .notification-row:first-child { border-top:0; padding-top:0; }
+    .notification-copy { display:grid; gap:3px; min-width:0; }
+    .notification-copy strong { font-size:15px; }
+    .notification-copy span { color: var(--muted); font-size:13px; }
+    .switch-shell { position:relative; display:inline-flex; align-items:center; }
+    .switch-shell input { position:absolute; inset:0; opacity:0; pointer-events:none; }
+    .switch-track { position:relative; display:inline-flex; align-items:center; width:52px; height:30px; border-radius:999px; background: rgba(255,255,255,.12); border:1px solid var(--line); transition: background .18s ease, border-color .18s ease; }
+    .switch-thumb { position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%; background:#fff; box-shadow: 0 3px 8px rgba(0,0,0,.28); transition: transform .18s ease; }
+    .switch-shell input:checked + .switch-track { background: rgba(255,210,31,.38); border-color: rgba(255,210,31,.55); }
+    .switch-shell input:checked + .switch-track .switch-thumb { transform: translateX(22px); background: var(--gold); }
+    .switch-shell input:disabled + .switch-track { opacity:.62; cursor:wait; }
+    .settings-inline-status { min-height:20px; margin-top:12px; font-size:12px; font-weight:700; color: var(--gold); }
+    .settings-inline-status.error { color:#ffb3b3; }
+    .language-field { display:grid; gap:10px; margin-top:14px; }
+    .language-field label { font-size:14px; font-weight:800; color: var(--text); }
+    .language-select {
+      width: 100%;
+      max-width: 100%;
+      padding: 11px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: #07182b;
+      color: #fff;
+      font: inherit;
+      font-weight: 700;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+    }
+    .language-select:focus {
+      outline: 2px solid rgba(255,210,31,.6);
+      outline-offset: 1px;
+      border-color: rgba(255,210,31,.55);
+    }
+    .language-select:disabled { opacity: .72; cursor: wait; }
+    .language-select option { background: #07182b; color: #fff; }
+    .language-help { color: var(--muted); font-size: 13px; line-height: 1.5; }
     @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .notification-row { align-items:flex-start; } .notification-copy span { max-width: 100%; } }
   </style>
 </head>
 <body>
   <main class="page">
-    <header class="mobile-header" aria-label="En-tête principal">
-      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
+    <header class="mobile-header" data-i18n-aria-label="common.settings">
+      <a class="brand" href="index.html" data-i18n-aria-label="common.dashboard">
         <div class="brand-block">
           <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
           <div class="brand-text">
@@ -64,42 +102,121 @@
           </div>
         </div>
       </a>
-      <div class="wallet-chip" aria-label="Solde utilisateur"><span><strong>Disponible</strong><span>Votre espace joueur</span></span></div>
+      <div class="wallet-chip" data-i18n-aria-label="common.profile"><span><strong data-i18n="common.settings"></strong><span data-i18n="common.profile"></span></span></div>
       <div class="header-actions">
         <div id="authHeaderActions"></div>
-        <button class="action-btn" type="button" aria-label="Promotions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></svg><span class="badge">3</span></button>
-        <button class="action-btn" type="button" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span class="badge">2</span></button>
-        <a class="action-btn user-button" href="dashboard.html" aria-label="Tableau de bord"><span class="user-avatar">U</span></a>
+        <button class="action-btn" type="button" data-i18n-aria-label="common.notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></svg><span class="badge">3</span></button>
+        <a href="notifications.html" class="action-btn notifications-link" data-i18n-aria-label="common.notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span class="badge notifications-badge" hidden>0</span></a>
+        <div class="user-menu-wrap" id="userMenuWrap" hidden>
+          <button id="userMenuButton" class="action-btn user-button" type="button" data-i18n-aria-label="common.profile" aria-expanded="false">
+            <span class="user-avatar" id="userAvatar">U</span>
+          </button>
+          <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
+            <a class="user-menu-link" href="tickets.html" data-i18n="common.dashboard"></a>
+            <a class="user-menu-link" href="history.html" data-i18n="common.settings"></a>
+            <a class="user-menu-link" href="results.html" data-i18n="common.notifications"></a>
+            <a class="user-menu-link" href="deposit.html" data-i18n="common.profile"></a>
+            <a class="user-menu-link" href="withdraw.html" data-i18n="common.settings"></a>
+            <a class="user-menu-link" href="wallet.html" data-i18n="common.dashboard"></a>
+            <a class="user-menu-link" href="profile.html" data-i18n="common.profile"></a>
+            <a class="user-menu-link" href="settings.html" data-i18n="common.settings"></a>
+            <div class="user-menu-divider"></div>
+            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button" data-i18n="common.logout"></button>
+          </div>
+        </div>
       </div>
     </header>
     <section class="card">
       <div class="topbar">
         <div>
-          <div class="eyebrow">Paramètres</div>
-          <h1>Préférences du compte</h1>
-          <p>Votre espace de gestion du compte, prêt à centraliser vos préférences et paramètres.</p>
+          <div class="eyebrow" data-i18n="common.settings"></div>
+          <h1 data-i18n="common.settings"></h1>
+          <p data-i18n="common.profile"></p>
         </div>
-        <a class="btn" href="index.html">Retour à l’accueil</a>
+        <a class="btn" href="index.html" data-i18n="common.dashboard"></a>
       </div>
-      <span class="chip">Connexion requise</span>
+      <span class="chip" data-i18n="common.profile"></span>
     </section>
 
     <section class="grid">
       <article class="card item">
-        <h2>Notifications</h2>
-        <p>Recevoir les mises à jour des paris, promotions et alertes de sécurité.</p>
+        <h2 data-i18n="common.notifications"></h2>
+        <p data-i18n="common.settings"></p>
+        <div class="notifications-list" id="notificationsList">
+          <div class="notification-row">
+            <div class="notification-copy">
+              <strong data-i18n="common.notifications"></strong>
+              <span data-i18n="common.settings"></span>
+            </div>
+            <label class="switch-shell" for="notification_results">
+              <input id="notification_results" class="setting-switch" type="checkbox" data-column="notification_results" />
+              <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            </label>
+          </div>
+          <div class="notification-row">
+            <div class="notification-copy">
+              <strong data-i18n="common.profile"></strong>
+              <span data-i18n="common.dashboard"></span>
+            </div>
+            <label class="switch-shell" for="notification_deposits">
+              <input id="notification_deposits" class="setting-switch" type="checkbox" data-column="notification_deposits" />
+              <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            </label>
+          </div>
+          <div class="notification-row">
+            <div class="notification-copy">
+              <strong data-i18n="common.settings"></strong>
+              <span data-i18n="common.notifications"></span>
+            </div>
+            <label class="switch-shell" for="notification_withdrawals">
+              <input id="notification_withdrawals" class="setting-switch" type="checkbox" data-column="notification_withdrawals" />
+              <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            </label>
+          </div>
+          <div class="notification-row">
+            <div class="notification-copy">
+              <strong data-i18n="common.dashboard"></strong>
+              <span data-i18n="common.settings"></span>
+            </div>
+            <label class="switch-shell" for="notification_promotions">
+              <input id="notification_promotions" class="setting-switch" type="checkbox" data-column="notification_promotions" />
+              <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            </label>
+          </div>
+          <div class="notification-row">
+            <div class="notification-copy">
+              <strong data-i18n="common.profile"></strong>
+              <span data-i18n="common.notifications"></span>
+            </div>
+            <label class="switch-shell" for="notification_security">
+              <input id="notification_security" class="setting-switch" type="checkbox" data-column="notification_security" />
+              <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+        <div class="settings-inline-status" id="notificationsLoading" aria-live="polite" data-i18n="common.loading"></div>
+        <div class="settings-inline-status" id="notificationSaveStatus" aria-live="polite"></div>
       </article>
       <article class="card item">
-        <h2>Confidentialité</h2>
-        <p>Gérer les préférences de données et les options de connexion Google.</p>
+        <h2 data-i18n="common.profile"></h2>
+        <p data-i18n="common.settings"></p>
       </article>
       <article class="card item">
-        <h2>Sécurité</h2>
-        <p>Mot de passe, double authentification et sessions actives.</p>
+        <h2 data-i18n="common.settings"></h2>
+        <p data-i18n="common.notifications"></p>
       </article>
       <article class="card item">
-        <h2>Langue</h2>
-        <p>Interface en français, sélection prête pour les futures options internationales.</p>
+        <h2 data-i18n="language.french"></h2>
+        <div class="language-field">
+          <label for="languageSelect" data-i18n="common.settings"></label>
+          <select id="languageSelect" class="language-select" data-i18n-aria-label="common.settings">
+            <option value="fr" data-i18n="language.french"></option>
+            <option value="ht" data-i18n="language.haitian_creole"></option>
+            <option value="en" data-i18n="language.english"></option>
+          </select>
+          <p class="language-help" data-i18n="common.settings"></p>
+          <div class="settings-inline-status" id="languageStatus" aria-live="polite"></div>
+        </div>
       </article>
     </section>
   </main>
@@ -107,15 +224,250 @@
   <script src="js/auth-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/auth-guard.js"></script>
+  <script src="js/i18n.js"></script>
   <script>
     (async function protectSettingsPage() {
       const user = await window.getCurrentUserAsync?.();
-      if (!user) {
-        if (window.saveRedirectTarget) window.saveRedirectTarget('settings.html');
-        window.location.replace('login-register/login.html');
-        return;
+      const client = window.getSupabaseClient ? await window.getSupabaseClient() : null;
+      const notificationsLoading = document.getElementById('notificationsLoading');
+      const notificationSaveStatus = document.getElementById('notificationSaveStatus');
+      const languageSelect = document.getElementById('languageSelect');
+      const languageStatus = document.getElementById('languageStatus');
+      const switches = Array.from(document.querySelectorAll('.setting-switch'));
+      const allowedLanguages = Array.isArray(window.TKI18n?.SUPPORTED_LANGUAGES)
+        ? window.TKI18n.SUPPORTED_LANGUAGES
+        : ['fr', 'ht', 'en'];
+      let currentSettings = null;
+
+      function setSaveStatus(message, type = 'info') {
+        if (!notificationSaveStatus) {
+          return;
+        }
+
+        notificationSaveStatus.textContent = message || '';
+        notificationSaveStatus.classList.toggle('error', type === 'error');
+      }
+
+      function setLanguageStatus(message, type = 'info') {
+        if (!languageStatus) {
+          return;
+        }
+
+        languageStatus.textContent = message || '';
+        languageStatus.classList.toggle('error', type === 'error');
+      }
+
+      async function ensureCurrentSettings() {
+        if (!client) {
+          return null;
+        }
+
+        const {
+          data: { user: authUser },
+          error: authUserError
+        } = await client.auth.getUser();
+
+        if (authUserError || !authUser?.id) {
+          console.error('Impossible de récupérer l’utilisateur Auth :', authUserError);
+          setSaveStatus(`${window.TKI18n.t('common.error')} ${window.TKI18n.t('common.retry')}`, 'error');
+          notificationsLoading.hidden = true;
+          return null;
+        }
+
+        const userId = authUser.id;
+
+        console.log('SETTINGS auth.uid utilisé :', userId);
+        console.log('SETTINGS profil id disponible :', user?.id || null);
+
+        const { data: rpcData, error: rpcError } = await client.rpc(
+          'ensure_user_settings',
+          {
+            p_user_id: userId
+          }
+        );
+
+        if (rpcError) {
+          console.error('ensure_user_settings error full:', rpcError);
+          throw rpcError;
+        }
+
+        const { data, error: selectError } = await client
+          .from('user_settings')
+          .select('*')
+          .eq('user_id', authUser.id)
+          .maybeSingle();
+
+        if (selectError) {
+          throw selectError;
+        }
+
+        return data;
+      }
+
+      function applySettingsRow(settings) {
+        currentSettings = settings || currentSettings;
+
+        switches.forEach((input) => {
+          const key = input.dataset.column;
+          const nextValue = Boolean(currentSettings?.[key]);
+          input.checked = nextValue;
+          input.dataset.previousValue = String(nextValue);
+        });
+
+        if (languageSelect) {
+          const normalizedLanguage = window.TKI18n.normalizeLanguage(currentSettings?.language);
+          languageSelect.value = normalizedLanguage;
+          languageSelect.dataset.previousValue = normalizedLanguage;
+        }
+      }
+
+      async function saveSinglePreference(column, value) {
+        if (!client || !user?.id) {
+          return false;
+        }
+
+        const targetInput = document.querySelector(`[data-column="${column}"]`);
+        if (targetInput) {
+          targetInput.disabled = true;
+        }
+
+        const { error } = await client
+          .from('user_settings')
+          .update({ [column]: value })
+          .eq('user_id', user.id);
+
+        if (targetInput) {
+          targetInput.disabled = false;
+        }
+
+        if (error) {
+          if (targetInput) {
+            targetInput.checked = !value;
+          }
+          return false;
+        }
+
+        return true;
+      }
+
+      async function saveLanguagePreference(nextValue) {
+        if (!languageSelect || !client) {
+          return false;
+        }
+
+        const safeValue = window.TKI18n.normalizeLanguage(nextValue);
+        const targetUserId = currentSettings?.user_id || user?.id;
+
+        if (!allowedLanguages.includes(safeValue) || !targetUserId) {
+          return false;
+        }
+
+        const previousValue = window.TKI18n.normalizeLanguage(languageSelect.dataset.previousValue || 'fr');
+
+        languageSelect.disabled = true;
+        setLanguageStatus(window.TKI18n.t('common.loading'));
+
+        try {
+          const { error } = await client
+            .from('user_settings')
+            .update({ language: safeValue })
+            .eq('user_id', targetUserId);
+
+          if (error) {
+            console.error('Erreur UPDATE user_settings.language full:', error);
+            languageSelect.value = previousValue;
+            languageSelect.dataset.previousValue = previousValue;
+            if (currentSettings) {
+              currentSettings.language = previousValue;
+            }
+            languageSelect.disabled = false;
+            await window.TKI18n.setLanguage(previousValue);
+            setLanguageStatus(window.TKI18n.t('common.error'), 'error');
+            return false;
+          }
+
+          languageSelect.dataset.previousValue = safeValue;
+          if (currentSettings) {
+            currentSettings.language = safeValue;
+          }
+          languageSelect.disabled = false;
+          await window.TKI18n.setLanguage(safeValue);
+          setLanguageStatus(window.TKI18n.t('common.save'));
+          window.setTimeout(() => {
+            setLanguageStatus('');
+          }, 2000);
+          return true;
+        } catch (error) {
+          console.error('Erreur UPDATE user_settings.language full:', error);
+          languageSelect.value = previousValue;
+          languageSelect.dataset.previousValue = previousValue;
+          if (currentSettings) {
+            currentSettings.language = previousValue;
+          }
+          languageSelect.disabled = false;
+          await window.TKI18n.setLanguage(previousValue);
+          setLanguageStatus(window.TKI18n.t('common.error'), 'error');
+          return false;
+        }
+      }
+
+      switches.forEach((input) => {
+        input.addEventListener('change', async () => {
+          const column = input.dataset.column;
+          const previousValue = input.dataset.previousValue === 'true';
+          const value = input.checked;
+
+          input.disabled = true;
+          setSaveStatus(window.TKI18n.t('common.loading'));
+
+          const ok = await saveSinglePreference(column, value);
+
+          input.disabled = false;
+
+          if (!ok) {
+            input.checked = previousValue;
+            input.dataset.previousValue = String(previousValue);
+            setSaveStatus(window.TKI18n.t('common.error'), 'error');
+            return;
+          }
+
+          input.dataset.previousValue = String(value);
+          setSaveStatus(window.TKI18n.t('common.save'));
+          window.setTimeout(() => {
+            setSaveStatus('');
+          }, 2000);
+        });
+      });
+
+      languageSelect?.addEventListener('change', async () => {
+        const requestedValue = languageSelect.value;
+        if (!allowedLanguages.includes(requestedValue)) {
+          const previousValue = window.TKI18n.normalizeLanguage(languageSelect.dataset.previousValue || 'fr');
+          languageSelect.value = previousValue;
+          setLanguageStatus(window.TKI18n.t('common.error'), 'error');
+          return;
+        }
+
+        await saveLanguagePreference(requestedValue);
+      });
+
+      try {
+        notificationsLoading.hidden = false;
+        const settings = await ensureCurrentSettings();
+        applySettingsRow(settings);
+        await window.TKI18n.init({
+          language: settings?.language || 'fr'
+        });
+        document.title = window.TKI18n.t('common.settings');
+        notificationsLoading.hidden = true;
+      } catch (error) {
+        notificationsLoading.hidden = true;
+        const errorDetails = error?.message || JSON.stringify(error);
+        console.error('ensure_user_settings page catch:', error);
+        setSaveStatus(`${window.TKI18n.t('common.error')} ${errorDetails}`, 'error');
       }
     })();
   </script>
 </body>
 </html>
+

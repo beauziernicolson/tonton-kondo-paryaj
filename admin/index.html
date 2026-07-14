@@ -130,7 +130,7 @@
       try {
         const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
         if (!currentUser) {
-          window.location.replace('../login-register/login.html');
+          window.tryRedirectToLogin('../login-register/login.html');
           return;
         }
 
@@ -171,3 +171,4 @@
   </script>
 </body>
 </html>
+

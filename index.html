@@ -519,7 +519,12 @@
       <div class="header-actions">
         <div id="authHeaderActions"></div>
         <button class="action-btn" type="button" aria-label="Promotions"><svg class="icon icon-lg"><use href="#i-gift"/></svg><span class="badge">3</span></button>
-        <button class="action-btn" type="button" aria-label="Notifications"><svg class="icon icon-lg"><use href="#i-bell"/></svg><span class="badge">2</span></button>
+        <a href="notifications.html" class="action-btn notifications-link" aria-label="Notifications">
+          <svg class="icon icon-lg">
+            <use href="img/icons.svg#notification-icon"/>
+          </svg>
+          <span class="badge notifications-badge" hidden>0</span>
+        </a>
         <div class="user-menu-wrap" id="userMenuWrap" hidden>
           <button id="userMenuButton" class="action-btn user-button" type="button" aria-label="Menu utilisateur" aria-expanded="false">
             <span class="user-avatar" id="userAvatar">U</span>
@@ -815,6 +820,36 @@
   <script src="js/auth.js"></script>
   <script src="js/auth-guard.js"></script>
   <script>
+    function toggleUserMenu(event) {
+      event?.stopPropagation();
+      const userMenuButton = document.getElementById('userMenuButton');
+      const userMenu = document.getElementById('userMenu');
+      if (!userMenuButton || !userMenu) {
+        return;
+      }
+      const isOpen = userMenu.classList.toggle('open');
+      userMenuButton.setAttribute('aria-expanded', String(Boolean(isOpen)));
+      userMenu.setAttribute('aria-hidden', String(!isOpen));
+    }
+
+    function closeUserMenu(event) {
+      const userMenuWrap = document.getElementById('userMenuWrap');
+      const userMenuButton = document.getElementById('userMenuButton');
+      const userMenu = document.getElementById('userMenu');
+      if (!userMenuWrap || !userMenuButton || !userMenu) {
+        return;
+      }
+      if (userMenuWrap.contains(event?.target)) {
+        return;
+      }
+      userMenu.classList.remove('open');
+      userMenuButton.setAttribute('aria-expanded', 'false');
+      userMenu.setAttribute('aria-hidden', 'true');
+    }
+
+    window.toggleUserMenu = toggleUserMenu;
+    window.closeUserMenu = closeUserMenu;
+
     async function isConnectedForPublicGate() {
       try {
         if (window.getCurrentUserAsync) {
@@ -862,7 +897,7 @@
           if (window.saveRedirectTarget) {
             window.saveRedirectTarget(target);
           }
-          window.location.href = 'login-register/login.html';
+          window.tryRedirectToLogin('login-register/login.html');
         }
       });
     });
@@ -893,13 +928,47 @@
       return displayName;
     }
 
+    function initUserMenuDropdown() {
+      if (!userMenuWrap || !userMenuButton || !userMenu) {
+        return;
+      }
+
+      if (userMenuButton.dataset.menuBound === 'true') {
+        return;
+      }
+
+      userMenuButton.dataset.menuBound = 'true';
+
+      userMenuButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = userMenu.classList.toggle('open');
+        userMenuButton.setAttribute('aria-expanded', String(Boolean(isOpen)));
+        userMenu.setAttribute('aria-hidden', String(!isOpen));
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!userMenuWrap.contains(event.target)) {
+          userMenu.classList.remove('open');
+          userMenuButton.setAttribute('aria-expanded', 'false');
+          userMenu.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      logoutMenuBtn?.addEventListener('click', async () => {
+        const result = await window.logoutUser?.();
+        if (result?.ok) {
+          window.location.reload();
+        }
+      });
+    }
+
     async function updateHeaderAuthState() {
       const isLoggedIn = await isConnectedForPublicGate();
       if (headerAuthBtn) {
         headerAuthBtn.hidden = isLoggedIn;
       }
       if (userMenuWrap) {
-        userMenuWrap.hidden = !isLoggedIn;
+        userMenuWrap.hidden = false;
       }
       if (isLoggedIn && window.getCurrentUserAsync) {
         const user = await window.getCurrentUserAsync();
@@ -912,27 +981,7 @@
       }
     }
 
-    userMenuButton?.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const isOpen = userMenu?.classList.toggle('open');
-      userMenuButton.setAttribute('aria-expanded', String(Boolean(isOpen)));
-      userMenu?.setAttribute('aria-hidden', String(!isOpen));
-    });
-
-    document.addEventListener('click', (event) => {
-      if (!userMenuWrap?.contains(event.target)) {
-        userMenu?.classList.remove('open');
-        userMenuButton?.setAttribute('aria-expanded', 'false');
-        userMenu?.setAttribute('aria-hidden', 'true');
-      }
-    });
-
-    logoutMenuBtn?.addEventListener('click', async () => {
-      const result = await window.logoutUser?.();
-      if (result?.ok) {
-        window.location.reload();
-      }
-    });
+    initUserMenuDropdown();
 
     (async () => {
       await updateHeaderAuthState();
@@ -1147,7 +1196,7 @@
         if (window.saveRedirectTarget) {
           window.saveRedirectTarget('index.html');
         }
-        window.location.href = 'login-register/login.html';
+        window.tryRedirectToLogin('login-register/login.html');
         return;
       }
       console.log('Coupon de pari à ouvrir plus tard');
@@ -1168,3 +1217,4 @@
   </script>
 </body>
 </html>
+
