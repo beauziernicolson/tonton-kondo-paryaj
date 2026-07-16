@@ -834,7 +834,135 @@ a{color:inherit;text-decoration:none}
     }
   }
 </style>
-<meta content="#030b1a" name="theme-color"/></head>
+<meta content="#030b1a" name="theme-color"/>
+<style id="roulette-contrast-mobile-fix">
+  /* Contraste du bandeau principal */
+  .tk-file-roulette .roulette-hero,
+  .tk-file-american-roulette .roulette-hero {
+    color:#fff !important;
+  }
+
+  .tk-file-roulette .roulette-hero .roulette-kicker,
+  .tk-file-american-roulette .roulette-hero .roulette-kicker,
+  .tk-file-roulette .roulette-hero h1,
+  .tk-file-american-roulette .roulette-hero h1,
+  .tk-file-roulette .roulette-hero p,
+  .tk-file-american-roulette .roulette-hero p,
+  .tk-file-roulette .roulette-balance .lbl,
+  .tk-file-american-roulette .roulette-balance .lbl,
+  .tk-file-roulette .roulette-balance .val,
+  .tk-file-american-roulette .roulette-balance .val,
+  .tk-file-roulette .roulette-balance .val span,
+  .tk-file-american-roulette .roulette-balance .val span,
+  .tk-file-roulette .roulette-balance .val small,
+  .tk-file-american-roulette .roulette-balance .val small {
+    color:#fff !important;
+    -webkit-text-fill-color:#fff !important;
+    opacity:1 !important;
+  }
+
+  .tk-file-roulette .roulette-balance,
+  .tk-file-american-roulette .roulette-balance {
+    background:rgba(255,255,255,.10) !important;
+    border-color:rgba(255,255,255,.28) !important;
+  }
+
+  /* Mobile paysage : donner davantage de place à la roue */
+  @media (max-width:900px) and (orientation:landscape) {
+    .tk-file-roulette .roulette-game-grid,
+    .tk-file-american-roulette .roulette-game-grid {
+      grid-template-columns:minmax(310px,.92fr) minmax(480px,1.08fr) !important;
+    }
+
+    .tk-file-roulette .roulette-wheel-column,
+    .tk-file-american-roulette .roulette-wheel-column {
+      padding:6px !important;
+    }
+
+    .tk-file-roulette .roulette-wheel-shell,
+    .tk-file-american-roulette .roulette-wheel-shell {
+      height:calc(100vh - 150px) !important;
+      min-height:300px !important;
+    }
+
+    .tk-file-roulette .roulette-wheel-column .wheel,
+    .tk-file-american-roulette .roulette-wheel-column .wheel {
+      width:min(68vh,390px) !important;
+      max-width:none !important;
+    }
+
+    .tk-file-roulette .roulette-wheel-column .wheel svg text,
+    .tk-file-american-roulette .roulette-wheel-column .wheel svg text {
+      font-size:13px !important;
+      font-weight:900 !important;
+      paint-order:stroke !important;
+      stroke:rgba(0,0,0,.75) !important;
+      stroke-width:1.4px !important;
+      fill:#fff !important;
+    }
+
+    .tk-file-roulette .roulette-hub,
+    .tk-file-american-roulette .roulette-hub {
+      width:68px !important;
+      height:68px !important;
+    }
+
+    .tk-file-roulette .roulette-felt,
+    .tk-file-american-roulette .roulette-felt {
+      padding:6px !important;
+    }
+
+    .tk-file-roulette .roulette-felt .table-grid,
+    .tk-file-american-roulette .roulette-felt .table-grid {
+      grid-template-columns:38px repeat(12,minmax(25px,1fr)) 38px !important;
+      gap:2px !important;
+    }
+
+    .tk-file-roulette .roulette-felt .cell,
+    .tk-file-american-roulette .roulette-felt .cell {
+      min-height:27px !important;
+      padding:2px 1px !important;
+      font-size:9px !important;
+    }
+
+    .tk-file-roulette .roulette-controls,
+    .tk-file-american-roulette .roulette-controls {
+      padding:5px 7px !important;
+    }
+
+    .tk-file-roulette .roulette-controls .chip,
+    .tk-file-american-roulette .roulette-controls .chip {
+      width:31px !important;
+      height:31px !important;
+      font-size:8px !important;
+    }
+
+    .tk-file-roulette .roulette-controls .btn,
+    .tk-file-american-roulette .roulette-controls .btn,
+    .tk-file-roulette .roulette-controls .btn-spin,
+    .tk-file-american-roulette .roulette-controls .btn-spin {
+      min-width:64px !important;
+      height:32px !important;
+      min-height:32px !important;
+      padding:0 7px !important;
+      font-size:9px !important;
+    }
+  }
+
+  @media (max-width:740px) and (orientation:landscape) {
+    .tk-file-roulette .roulette-game-grid,
+    .tk-file-american-roulette .roulette-game-grid {
+      grid-template-columns:minmax(280px,.95fr) minmax(420px,1.05fr) !important;
+    }
+
+    .tk-file-roulette .roulette-wheel-column .wheel,
+    .tk-file-american-roulette .roulette-wheel-column .wheel {
+      width:min(72vh,360px) !important;
+    }
+  }
+</style>
+
+</head>
 <body class="tk-public tk-page-game tk-file-roulette">
 <div class="app">
 <!-- ============ HEADER ============ -->
