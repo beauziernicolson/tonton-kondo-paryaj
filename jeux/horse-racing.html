@@ -687,6 +687,7 @@ Quitter
 <script src="../js/i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
 <script>
   const HORSES = [
     { id: "zekle", number: 1, name: "Zeklè", color: "noir", colorLabel: "Noir", colorHex: "#1a1a1a", image: "../assets/horses/horse-black-run.jpeg", odds: 5.0 },
@@ -826,6 +827,8 @@ Quitter
     amount: 0,
     isPlaying: false,
     lastResult: null,
+    currentUser: null,
+    wallet: null,
   };
 
   const $horseList     = document.getElementById("horse-list");
@@ -1141,27 +1144,59 @@ Quitter
     updateHorseSummary();
   }
 
-  async function waitForSupabaseClient(maxAttempts = 12, delayMs = 250) {
+  async function waitForSupabaseClient(maxAttempts = 20, delayMs = 250) {
+    const isUsableClient = (client) => Boolean(
+      client &&
+      typeof client.from === 'function' &&
+      typeof client.rpc === 'function' &&
+      client.auth &&
+      typeof client.auth.getSession === 'function'
+    );
+
+    if (isUsableClient(window.supabaseClient)) {
+      return window.supabaseClient;
+    }
+
+    if (typeof window.getCurrentUserAsync === 'function') {
+      try {
+        await window.getCurrentUserAsync();
+      } catch (error) {
+        console.warn('Horse Racing : initialisation Supabase en attente.', error);
+      }
+    }
+
     for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
       const client = window.supabaseClient || null;
-      if (client && typeof client.from === 'function') {
+      if (isUsableClient(client)) {
         return client;
       }
-      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      await new Promise((resolve) => window.setTimeout(resolve, delayMs));
     }
-    return window.supabaseClient || null;
+
+    return null;
   }
 
   async function getCurrentHorseRaceUser() {
-    if (horseRaceState.currentUser) {
+    if (horseRaceState.currentUser?.id) {
       return horseRaceState.currentUser;
     }
+
     if (typeof window.getCurrentUserAsync !== 'function') {
+      console.error('Horse Racing : getCurrentUserAsync est indisponible.');
       return null;
     }
-    const currentUser = await window.getCurrentUserAsync();
-    horseRaceState.currentUser = currentUser;
-    return currentUser;
+
+    try {
+      const currentUser = await window.getCurrentUserAsync();
+      if (currentUser?.id) {
+        horseRaceState.currentUser = currentUser;
+        return currentUser;
+      }
+      return null;
+    } catch (error) {
+      console.error('Horse Racing : erreur utilisateur.', error);
+      return null;
+    }
   }
 
   async function refreshHorseRaceBalance({ silent = false } = {}) {
@@ -1218,6 +1253,88 @@ Quitter
     };
   }
 
+  function normalizeHorseRaceResult(rawData) {
+    let result = rawData;
+
+    if (Array.isArray(result)) {
+      result = result[0] || null;
+    }
+
+    if (result && typeof result === 'object') {
+      if (Array.isArray(result.data)) {
+        result = result.data[0] || null;
+      } else if (result.data && typeof result.data === 'object') {
+        result = result.data;
+      } else if (result.result && typeof result.result === 'object') {
+        result = result.result;
+      }
+    }
+
+    if (!result || typeof result !== 'object') {
+      return null;
+    }
+
+    const nestedWinner =
+      result.winner && typeof result.winner === 'object'
+        ? result.winner
+        : null;
+
+    const winnerId =
+      result.winner_id ??
+      result.winnerId ??
+      result.winning_horse_id ??
+      result.winningHorseId ??
+      result.horse_id ??
+      nestedWinner?.id ??
+      nestedWinner?.horse_id ??
+      null;
+
+    if (!winnerId) {
+      return null;
+    }
+
+    return {
+      ...result,
+      winner_id: String(winnerId),
+      ticket_number:
+        result.ticket_number ??
+        result.ticketNumber ??
+        result.ticket ??
+        result.round_id ??
+        result.roundId ??
+        '—',
+      amount:
+        Number(
+          result.amount ??
+          result.bet_amount ??
+          result.stake ??
+          horseRaceState.amount ??
+          0
+        ),
+      gain:
+        Number(
+          result.gain ??
+          result.win_amount ??
+          result.payout ??
+          result.winnings ??
+          0
+        ),
+      odds:
+        Number(
+          result.odds ??
+          result.multiplier ??
+          nestedWinner?.odds ??
+          horseRaceState.selectedHorse?.odds ??
+          0
+        ),
+      status:
+        result.status ??
+        result.result_status ??
+        result.outcome ??
+        null,
+    };
+  }
+
   async function playHorseRace() {
     if (horseRaceState.isPlaying) return;
     if (!horseRaceState.selectedHorse) {
@@ -1261,20 +1378,45 @@ Quitter
       });
 
       if (error) {
-        throw error;
-      }
-      if (!data || !data.winner_id) {
-        throw new Error('Résultat de course invalide.');
+        const rpcMessage = [
+          error.message,
+          error.details,
+          error.hint,
+          error.code ? `Code : ${error.code}` : null,
+        ].filter(Boolean).join(' — ');
+
+        throw new Error(
+          rpcMessage || 'La RPC play_horse_race a retourné une erreur.'
+        );
       }
 
-      await animateHorseRace(data);
-      showHorseRaceResult(data);
+      const raceResult = normalizeHorseRaceResult(data);
+
+      if (!raceResult) {
+        console.error('Réponse brute play_horse_race :', data);
+        throw new Error(
+          'La course a été traitée, mais la réponse ne contient aucun cheval gagnant.'
+        );
+      }
+
+      await animateHorseRace(raceResult);
+      showHorseRaceResult(raceResult);
       await refreshHorseRaceBalance({ silent: true });
-      setFeedback('Kous terminée.', 'success');
+      setFeedback('Course terminée.', 'success');
       setRaceStatus('Fini');
     } catch (error) {
-      setFeedback(error?.message || 'Erreur pendant la course. Réessayez.', 'error');
+      const message =
+        error?.message ||
+        'Erreur inconnue pendant la course.';
+
+      console.error('Horse Racing — erreur de course :', error);
+
+      setFeedback(message, 'error');
       setRaceStatus('Erreur');
+
+      $raceMessage.className = 'horse-race-message loss';
+      $raceMessage.textContent = message;
+      $raceQuitBtn.style.display = 'inline-flex';
     } finally {
       horseRaceState.isPlaying = false;
       $startBtn.disabled = false;
@@ -1284,17 +1426,9 @@ Quitter
   }
 
   async function initializeHorseRaceAuth() {
-    setFeedback('Vérification de la connexion en cours...', 'warn');
+    setFeedback('Vérification de votre connexion...', 'warn');
     setRaceStatus('Chargement');
     $balance.textContent = 'Chargement du solde...';
-
-    const client = await waitForSupabaseClient();
-    if (!client) {
-      setFeedback('La connexion Supabase est indisponible. Rechargez la page.', 'error');
-      $balance.textContent = 'Solde indisponible';
-      setRaceStatus('Erreur');
-      return;
-    }
 
     if (typeof window.getCurrentUserAsync !== 'function') {
       setFeedback('Le système d’authentification est indisponible.', 'error');
@@ -1303,21 +1437,53 @@ Quitter
       return;
     }
 
-    const currentUser = await getCurrentHorseRaceUser();
-    if (!currentUser?.id) {
-      setFeedback('Vous devez être connecté pour jouer.', 'error');
-      $balance.textContent = 'Connectez-vous pour jouer.';
-      setRaceStatus('Hors ligne');
-      return;
-    }
+    try {
+      const currentUser = await getCurrentHorseRaceUser();
 
-    await refreshHorseRaceBalance({ silent: false });
-    setFeedback('Prêt à courir !', 'success');
-    setRaceStatus('Prêt');
+      if (!currentUser?.id) {
+        setFeedback('Vous devez être connecté pour jouer.', 'error');
+        $balance.textContent = 'Connectez-vous pour jouer.';
+        setRaceStatus('Hors ligne');
+        return;
+      }
+
+      const client = await waitForSupabaseClient();
+
+      if (!client || typeof client.from !== 'function' || typeof client.rpc !== 'function') {
+        setFeedback('Impossible d’initialiser la connexion Supabase.', 'error');
+        $balance.textContent = 'Solde indisponible';
+        setRaceStatus('Erreur');
+        return;
+      }
+
+      const wallet = await refreshHorseRaceBalance({ silent: false });
+
+      if (!wallet) {
+        setFeedback('Utilisateur connecté, mais portefeuille introuvable.', 'error');
+        setRaceStatus('Erreur portefeuille');
+        return;
+      }
+
+      setFeedback('Prêt à courir !', 'success');
+      setRaceStatus('Prêt');
+    } catch (error) {
+      console.error('Horse Racing : erreur initialisation.', error);
+      setFeedback(error?.message || 'Impossible de vérifier votre connexion.', 'error');
+      $balance.textContent = 'Solde indisponible';
+      setRaceStatus('Erreur');
+    }
   }
 
-  initHorseRace();
-  initializeHorseRaceAuth();
+  async function initializeHorseRacePage() {
+    initHorseRace();
+    await initializeHorseRaceAuth();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeHorseRacePage, { once: true });
+  } else {
+    initializeHorseRacePage();
+  }
 </script>
 <script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {

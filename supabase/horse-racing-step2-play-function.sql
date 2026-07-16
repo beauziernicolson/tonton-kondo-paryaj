@@ -1,21 +1,11 @@
-CREATE OR REPLACE FUNCTION public.play_horse_race(
+DROP FUNCTION IF EXISTS public.play_horse_race(UUID, TEXT, NUMERIC);
+
+CREATE FUNCTION public.play_horse_race(
   p_user_id UUID,
   p_horse_id TEXT,
   p_amount NUMERIC
 )
-RETURNS TABLE (
-  ticket_id UUID,
-  ticket_number TEXT,
-  round_id UUID,
-  selected_horse_id TEXT,
-  selected_horse_name TEXT,
-  winner_horse_id TEXT,
-  winner_horse_name TEXT,
-  payout_multiplier NUMERIC,
-  bet_amount NUMERIC,
-  win_amount NUMERIC,
-  status TEXT
-)
+RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public
@@ -36,6 +26,7 @@ DECLARE
   v_ticket_number TEXT;
   v_round_id UUID;
   v_wallet_balance NUMERIC;
+  v_new_balance NUMERIC;
 BEGIN
   IF v_user_id IS NULL THEN
     RAISE EXCEPTION 'p_user_id est requis.';
@@ -218,18 +209,26 @@ BEGIN
   )
   RETURNING id INTO v_round_id;
 
-  RETURN QUERY
-  SELECT
-    v_ticket_id,
-    v_ticket_number,
-    v_round_id,
-    v_horse_id,
-    v_selected_horse_name,
-    v_winner_horse_id,
-    v_winner_horse_name,
-    v_payout_multiplier,
-    v_amount,
-    v_win_amount,
-    v_status;
+  SELECT balance
+    INTO v_new_balance
+    FROM public.wallets
+   WHERE user_id = v_user_id
+   LIMIT 1;
+
+  RETURN jsonb_build_object(
+    'success', true,
+    'ticket_number', v_ticket_number,
+    'selected_horse_id', v_horse_id,
+    'winner_id', v_winner_horse_id,
+    'amount', v_amount,
+    'odds', v_selected_odds,
+    'gain', v_win_amount,
+    'status',
+      CASE
+        WHEN v_horse_id = v_winner_horse_id THEN 'Gagné'
+        ELSE 'Perdu'
+      END,
+    'new_balance', COALESCE(v_new_balance, v_wallet_balance)
+  );
 END;
 $$;
