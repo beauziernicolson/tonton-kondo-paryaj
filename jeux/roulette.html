@@ -224,11 +224,621 @@ a{color:inherit;text-decoration:none}
   .summary h3{font-size:13px}
 }
 </style>
-<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
+<style id="roulette-premium-layout">
+  .tk-file-roulette,
+  .tk-file-american-roulette {
+    --rx-navy:#061a35;
+    --rx-navy-2:#0b2d57;
+    --rx-yellow:#ffd21f;
+    --rx-yellow-2:#f4b900;
+    --rx-page:#edf3f9;
+    --rx-card:#ffffff;
+    --rx-text:#071a35;
+    --rx-muted:#5c6f86;
+    --rx-border:#c8d7e7;
+    background:
+      radial-gradient(circle at 10% 0%,rgba(255,210,31,.10),transparent 28%),
+      linear-gradient(180deg,#f7faff,#eaf1f8)!important;
+    color:var(--rx-text)!important;
+  }
+
+  .tk-file-roulette .app,
+  .tk-file-american-roulette .app {
+    max-width:1480px;
+    padding:16px 18px 40px;
+  }
+
+  .tk-file-roulette .topbar,
+  .tk-file-american-roulette .topbar {
+    margin-bottom:14px;
+  }
+
+  .roulette-stage {
+    display:grid;
+    gap:16px;
+  }
+
+  .roulette-hero {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:18px 22px;
+    border-radius:22px;
+    background:
+      radial-gradient(circle at 85% 15%,rgba(255,210,31,.20),transparent 28%),
+      linear-gradient(135deg,var(--rx-navy),#0b2d57);
+    box-shadow:0 20px 50px rgba(7,26,53,.16);
+  }
+
+  .roulette-kicker {
+    color:var(--rx-yellow);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+  }
+
+  .roulette-hero h1 {
+    margin:5px 0 4px;
+    color:#fff;
+    font-size:clamp(25px,3vw,42px);
+  }
+
+  .roulette-hero p {
+    margin:0;
+    color:#d8e5f3;
+  }
+
+  .roulette-balance {
+    min-width:210px;
+    border-color:rgba(255,255,255,.18)!important;
+    background:rgba(255,255,255,.08)!important;
+    box-shadow:none!important;
+  }
+
+  .roulette-balance .lbl { color:#c8d7e7!important; }
+  .roulette-balance .val { color:var(--rx-yellow)!important; }
+
+  .roulette-game-grid {
+    display:grid;
+    grid-template-columns:minmax(360px,.72fr) minmax(650px,1.28fr);
+    gap:16px;
+    align-items:stretch;
+  }
+
+  .roulette-wheel-column,
+  .roulette-table-column {
+    min-width:0;
+  }
+
+  .roulette-wheel-column {
+    display:grid;
+    align-content:start;
+    gap:12px;
+    padding:18px;
+    border:1px solid var(--rx-border);
+    border-radius:24px;
+    background:
+      radial-gradient(circle at 50% 36%,rgba(255,210,31,.09),transparent 45%),
+      linear-gradient(155deg,#071a35,#041127);
+    box-shadow:0 24px 55px rgba(7,26,53,.20);
+  }
+
+  .roulette-wheel-shell {
+    display:grid;
+    place-items:center;
+    min-height:420px;
+  }
+
+  .roulette-wheel-column .wheel {
+    width:min(100%,430px);
+  }
+
+  .roulette-wheel-column .wheel .ring {
+    background:
+      conic-gradient(from 0deg,#b27a18,#f6d979,#80520e,#f8e4a1,#9a6412,#efd278,#70460c,#f6dc8b);
+    box-shadow:
+      inset 0 0 0 5px rgba(255,255,255,.15),
+      inset 0 0 30px rgba(0,0,0,.75),
+      0 30px 60px rgba(0,0,0,.55),
+      0 0 40px rgba(255,210,31,.18);
+  }
+
+  .roulette-wheel-column .wheel .bevel {
+    inset:13px;
+    background:
+      radial-gradient(circle at 35% 25%,#64481d,#241a0c 48%,#090d16 73%);
+    box-shadow:
+      inset 0 0 0 3px rgba(255,221,115,.18),
+      inset 0 0 38px rgba(0,0,0,.90);
+  }
+
+  .roulette-wheel-column .wheel .track {
+    inset:21px;
+    background:
+      radial-gradient(circle,transparent 59%,#111a2b 60%,#030711 69%,transparent 70%);
+  }
+
+  .roulette-hub {
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index:8;
+    width:88px;
+    height:88px;
+    transform:translate(-50%,-50%);
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 32% 24%,#fff0b8,#d1a43b 43%,#5d3a08 77%);
+    box-shadow:
+      inset 0 0 0 5px rgba(255,255,255,.16),
+      0 12px 30px rgba(0,0,0,.48);
+    pointer-events:none;
+  }
+
+  .roulette-hub span {
+    color:#071a35;
+    font-family:Georgia,serif;
+    font-size:24px;
+    font-weight:900;
+  }
+
+  .roulette-recent {
+    max-width:none;
+  }
+
+  .roulette-table-column {
+    display:grid;
+    grid-template-rows:1fr auto;
+    gap:12px;
+  }
+
+  .roulette-felt {
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    padding:18px;
+    border-radius:24px;
+    background:
+      radial-gradient(ellipse at 50% -20%,#15804a,#075a32 55%,#034321 100%)!important;
+    border:1px solid rgba(255,210,31,.42)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.10),
+      0 24px 55px rgba(7,26,53,.18);
+  }
+
+  .roulette-felt .felt-inner {
+    min-width:0;
+    width:100%;
+  }
+
+  .roulette-felt .table-grid {
+    grid-template-columns:56px repeat(12,minmax(38px,1fr)) 56px;
+  }
+
+  .roulette-felt .cell {
+    min-height:42px;
+    border-color:rgba(255,216,92,.42);
+  }
+
+  .roulette-controls {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:14px 16px;
+    border:1px solid var(--rx-border);
+    border-radius:20px;
+    background:#fff;
+    box-shadow:0 14px 35px rgba(7,26,53,.09);
+  }
+
+  .roulette-chip-list {
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+
+  .roulette-controls .chip {
+    width:48px;
+    height:48px;
+  }
+
+  .roulette-action-buttons {
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .roulette-controls .btn {
+    background:#0a294f;
+    border-color:#0a294f;
+    color:#fff;
+  }
+
+  .roulette-controls .btn-spin {
+    min-width:132px;
+    color:#071a35;
+  }
+
+  .roulette-bottom-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .roulette-summary,
+  .roulette-result-card {
+    min-height:250px;
+    border:1px solid var(--rx-border)!important;
+    background:#fff!important;
+    color:var(--rx-text)!important;
+    box-shadow:0 18px 40px rgba(7,26,53,.10)!important;
+  }
+
+  .roulette-panel-heading {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding-bottom:13px;
+    margin-bottom:8px;
+    border-bottom:1px solid #e1e9f2;
+  }
+
+  .roulette-panel-heading > span {
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:var(--rx-navy);
+    color:var(--rx-yellow);
+    font-weight:900;
+  }
+
+  .roulette-panel-heading h3 {
+    margin:0!important;
+    color:var(--rx-text)!important;
+    font-family:inherit!important;
+    letter-spacing:0!important;
+    text-transform:none!important;
+    font-size:18px!important;
+  }
+
+  .roulette-panel-heading p {
+    margin:3px 0 0;
+    color:var(--rx-muted);
+    font-size:12px;
+  }
+
+  .roulette-summary .row {
+    border-bottom-color:#e4ebf3;
+  }
+
+  .roulette-summary .row .k { color:var(--rx-muted); }
+  .roulette-summary .row .v { color:var(--rx-text); }
+  .roulette-summary .v.gold { color:#9a6800; }
+  .roulette-summary .v.green { color:#08783b; }
+  .roulette-summary .bet-list .item { color:var(--rx-text); }
+  .roulette-summary .empty { color:var(--rx-muted); }
+
+  .roulette-result-content {
+    display:grid;
+    min-height:170px;
+  }
+
+  .roulette-empty-result {
+    display:grid;
+    place-content:center;
+    gap:7px;
+    text-align:center;
+    color:var(--rx-muted);
+  }
+
+  .roulette-empty-result strong {
+    color:var(--rx-text);
+    font-size:18px;
+  }
+
+  .roulette-result-card .result-panel {
+    width:100%;
+    min-width:0;
+    height:100%;
+    display:grid;
+    place-content:center;
+    background:
+      radial-gradient(circle at 50% 25%,rgba(255,210,31,.12),transparent 45%),
+      #f7faff!important;
+    border-color:#d5e0ec!important;
+  }
+
+  .roulette-result-card .result-panel .big {
+    color:#071a35!important;
+  }
+
+  .roulette-orientation-gate {
+    display:none;
+  }
+
+  @media (max-width:1100px) {
+    .roulette-game-grid {
+      grid-template-columns:minmax(300px,.65fr) minmax(590px,1.35fr);
+    }
+
+    .roulette-wheel-shell {
+      min-height:350px;
+    }
+
+    .roulette-wheel-column .wheel {
+      width:min(100%,350px);
+    }
+
+    .roulette-felt .table-grid {
+      grid-template-columns:48px repeat(12,minmax(34px,1fr)) 48px;
+      gap:3px;
+    }
+
+    .roulette-felt .cell {
+      min-height:38px;
+      font-size:13px;
+      padding:7px 2px;
+    }
+  }
+
+  @media (max-width:900px) and (orientation:landscape) {
+    .tk-file-roulette .app,
+    .tk-file-american-roulette .app {
+      max-width:none;
+      padding:8px 10px 18px;
+    }
+
+    .topbar,
+    .tk-primary-nav,
+    .roulette-hero,
+    .footer {
+      display:none!important;
+    }
+
+    .roulette-stage {
+      gap:8px;
+    }
+
+    .roulette-game-grid {
+      grid-template-columns:minmax(250px,.72fr) minmax(530px,1.28fr);
+      gap:8px;
+      min-height:calc(100vh - 116px);
+    }
+
+    .roulette-wheel-column,
+    .roulette-felt {
+      border-radius:16px;
+      padding:9px;
+    }
+
+    .roulette-wheel-shell {
+      min-height:0;
+      height:calc(100vh - 180px);
+    }
+
+    .roulette-wheel-column .wheel {
+      width:min(46vh,290px);
+    }
+
+    .roulette-hub {
+      width:58px;
+      height:58px;
+    }
+
+    .roulette-hub span {
+      font-size:17px;
+    }
+
+    .roulette-recent .num {
+      width:24px;
+      height:24px;
+      font-size:10px;
+    }
+
+    .roulette-table-column {
+      gap:7px;
+    }
+
+    .roulette-felt {
+      overflow:visible;
+    }
+
+    .roulette-felt .tip {
+      margin-bottom:5px;
+      font-size:8px;
+    }
+
+    .roulette-felt .table-grid {
+      grid-template-columns:43px repeat(12,minmax(28px,1fr)) 43px;
+      gap:2px;
+    }
+
+    .roulette-felt .cell {
+      min-height:29px;
+      padding:3px 1px;
+      border-radius:4px;
+      font-size:10px;
+    }
+
+    .roulette-controls {
+      padding:7px 9px;
+      border-radius:14px;
+      gap:8px;
+    }
+
+    .roulette-controls .chip-rack {
+      gap:6px;
+    }
+
+    .roulette-controls .chip-rack .lbl {
+      display:none;
+    }
+
+    .roulette-controls .chip {
+      width:34px;
+      height:34px;
+      font-size:9px;
+    }
+
+    .roulette-action-buttons {
+      gap:5px;
+    }
+
+    .roulette-controls .btn,
+    .roulette-controls .btn-spin {
+      width:auto!important;
+      min-width:74px;
+      height:35px;
+      min-height:35px;
+      padding:0 9px;
+      border-radius:9px;
+      font-size:10px;
+    }
+
+    .roulette-bottom-grid {
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+
+    .roulette-summary,
+    .roulette-result-card {
+      min-height:112px;
+      max-height:130px;
+      overflow:auto;
+      padding:9px;
+      border-radius:14px;
+    }
+
+    .roulette-panel-heading {
+      margin-bottom:3px;
+      padding-bottom:5px;
+      gap:7px;
+    }
+
+    .roulette-panel-heading > span {
+      width:25px;
+      height:25px;
+      border-radius:7px;
+      font-size:10px;
+    }
+
+    .roulette-panel-heading h3 {
+      font-size:12px!important;
+    }
+
+    .roulette-panel-heading p {
+      display:none;
+    }
+
+    .roulette-summary .row {
+      padding:3px 0;
+      font-size:9px;
+    }
+
+    .roulette-summary .bet-list {
+      display:none;
+    }
+
+    .roulette-result-content {
+      min-height:65px;
+    }
+
+    .roulette-empty-result strong {
+      font-size:11px;
+    }
+
+    .roulette-empty-result span {
+      font-size:9px;
+    }
+
+    .roulette-result-card .result-panel {
+      padding:5px;
+    }
+
+    .roulette-result-card .result-panel .big {
+      font-size:20px!important;
+    }
+  }
+
+  @media (max-width:900px) and (orientation:portrait) {
+    body {
+      overflow:hidden!important;
+    }
+
+    .roulette-orientation-gate {
+      position:fixed;
+      inset:0;
+      z-index:999999;
+      display:grid;
+      place-items:center;
+      padding:22px;
+      background:
+        radial-gradient(circle at 50% 18%,rgba(255,210,31,.16),transparent 32%),
+        #061a35;
+    }
+
+    .roulette-orientation-card {
+      width:min(100%,390px);
+      padding:30px 24px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:26px;
+      background:rgba(255,255,255,.07);
+      box-shadow:0 30px 80px rgba(0,0,0,.35);
+      text-align:center;
+    }
+
+    .roulette-orientation-card h2 {
+      margin:22px 0 8px;
+      color:#fff;
+      font-size:27px;
+    }
+
+    .roulette-orientation-card p {
+      margin:0;
+      color:#c8d7e7;
+      line-height:1.55;
+    }
+
+    .phone-rotate-icon {
+      position:relative;
+      width:72px;
+      height:112px;
+      margin:auto;
+      border:4px solid var(--rx-yellow);
+      border-radius:15px;
+      animation:roulette-phone-turn 1.7s ease-in-out infinite;
+    }
+
+    .phone-rotate-icon span {
+      position:absolute;
+      left:50%;
+      bottom:7px;
+      width:18px;
+      height:3px;
+      transform:translateX(-50%);
+      border-radius:99px;
+      background:var(--rx-yellow);
+    }
+
+    @keyframes roulette-phone-turn {
+      0%,20% { transform:rotate(0deg); }
+      70%,100% { transform:rotate(90deg); }
+    }
+  }
+</style>
+<meta content="#030b1a" name="theme-color"/></head>
 <body class="tk-public tk-page-game tk-file-roulette">
 <div class="app">
 <!-- ============ HEADER ============ -->
-<header class="header">
+<header class="topbar">
 <a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
 <img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
 <span class="brand-text">
@@ -238,68 +848,109 @@ a{color:inherit;text-decoration:none}
 </a>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<a class="back-link" href="games.html">← Retour aux jeux</a>
-<a class="back-link" href="help-roulette.html" style="margin-left:8px;">📘 Comprendre les règles</a>
-<div class="balance">
-<div class="lbl">Balance</div>
-<div class="val"><span id="balance">Chargement du solde...</span> <small>HTG</small></div>
-</div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<a class="back-btn" href="help-roulette.html">Comprendre les règles</a>
+<span class="pill">Roulette européenne</span>
 </div>
 </header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-<!-- ============ MAIN GRID ============ -->
-<div class="grid">
-<!-- Wheel column -->
-<section class="wheel-wrap">
-<div class="panel" style="padding:14px">
-<div class="wheel" id="wheel">
-<div class="glow"></div>
-<div class="ring"></div>
-<div class="bevel"></div>
-<div class="track"></div>
-<div class="face" id="wheelFace">
-<svg id="wheelSvg" viewbox="0 0 400 400"></svg>
+<div class="roulette-orientation-gate" id="rouletteOrientationGate" aria-hidden="true">
+  <div class="roulette-orientation-card">
+    <div class="phone-rotate-icon" aria-hidden="true">
+      <span></span>
+    </div>
+    <h2>Tournez votre téléphone</h2>
+    <p>La roulette se joue en mode paysage pour afficher la roue et le tapis de mises correctement.</p>
+  </div>
 </div>
-<div class="ball-orbit" id="ballOrbit"><div class="ball"></div></div>
-<div class="pointer"></div>
-</div>
-</div>
-<div class="recent" id="recent"></div>
-<div id="resultPanel"></div>
-</section>
-<!-- Table column -->
-<section style="display:flex;flex-direction:column;gap:14px">
-<div class="felt">
-<div class="tip">
-<span>Place your bets · Chip <b id="tipChip">50</b></span>
-<span>European Roulette · 0–36</span>
-</div>
-<div class="felt-inner" id="bettingTable"></div>
-</div>
-<div class="panel">
-<div class="controls-row">
-<div class="chip-rack">
-<span class="lbl">Chips</span>
-<div id="chipRack" style="display:flex;gap:10px"></div>
-</div>
-<div style="display:flex;gap:8px;flex-wrap:wrap">
-<button class="btn" id="btnClear">Clear</button>
-<button class="btn" id="btnRepeat">Repeat</button>
-<button class="btn-spin" disabled="" id="btnSpin">Spin</button>
-</div>
-</div>
-</div>
-</section>
-</div>
-<div class="grid" style="margin-top:18px">
-<aside class="panel summary">
-<h3>Résumé des mises</h3>
-<div class="row"><span class="k">Balance</span><span class="v gold" id="sumBalance">Chargement du solde...</span></div>
-<div class="row"><span class="k">Total misé</span><span class="v" id="sumBet">0</span></div>
-<div class="row"><span class="k">Gain potentiel</span><span class="v green" id="sumWin">0</span></div>
-<div class="row"><span class="k">Dernier numéro</span><span class="v" id="sumLast">—</span></div>
-<div class="bet-list" id="betList"><div class="empty">Aucune mise placée.</div></div>
-</aside>
-</div>
+
+<main class="roulette-stage">
+  <section class="roulette-hero">
+    <div>
+      <span class="roulette-kicker">Jeu en direct</span>
+      <h1>Roulette européenne</h1>
+      <p>Choisissez votre jeton, placez vos mises puis lancez la roue.</p>
+    </div>
+    <div class="balance roulette-balance">
+      <div class="lbl">Solde disponible</div>
+      <div class="val"><span id="balance">Chargement du solde...</span> <small>HTG</small></div>
+    </div>
+  </section>
+
+  <section class="roulette-game-grid">
+    <article class="roulette-wheel-column">
+      <div class="roulette-wheel-shell">
+        <div class="wheel" id="wheel">
+          <div class="glow"></div>
+          <div class="ring"></div>
+          <div class="bevel"></div>
+          <div class="track"></div>
+          <div class="face" id="wheelFace">
+            <svg id="wheelSvg" viewbox="0 0 400 400"></svg>
+          </div>
+          <div class="ball-orbit" id="ballOrbit"><div class="ball"></div></div>
+          <div class="pointer"></div>
+          <div class="roulette-hub"><span>TK</span></div>
+        </div>
+      </div>
+      <div class="recent roulette-recent" id="recent"></div>
+    </article>
+
+    <article class="roulette-table-column">
+      <div class="felt roulette-felt">
+        <div class="tip">
+          <span>Placez vos mises · Jeton <b id="tipChip">50</b></span>
+          <span>Roulette européenne · 0–36</span>
+        </div>
+        <div class="felt-inner" id="bettingTable"></div>
+      </div>
+
+      <div class="roulette-controls">
+        <div class="chip-rack">
+          <span class="lbl">Jetons</span>
+          <div id="chipRack" class="roulette-chip-list"></div>
+        </div>
+        <div class="roulette-action-buttons">
+          <button class="btn" id="btnClear">Effacer</button>
+          <button class="btn" id="btnRepeat">Répéter</button>
+          <button class="btn-spin" disabled id="btnSpin">Lancer</button>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="roulette-bottom-grid">
+    <aside class="panel summary roulette-summary">
+      <div class="roulette-panel-heading">
+        <span>01</span>
+        <div>
+          <h3>Résumé des mises</h3>
+          <p>Vos mises actives avant le lancement.</p>
+        </div>
+      </div>
+      <div class="row"><span class="k">Solde</span><span class="v gold" id="sumBalance">Chargement du solde...</span></div>
+      <div class="row"><span class="k">Total misé</span><span class="v" id="sumBet">0</span></div>
+      <div class="row"><span class="k">Gain potentiel</span><span class="v green" id="sumWin">0</span></div>
+      <div class="row"><span class="k">Dernier numéro</span><span class="v" id="sumLast">—</span></div>
+      <div class="bet-list" id="betList"><div class="empty">Aucune mise placée.</div></div>
+    </aside>
+
+    <aside class="panel roulette-result-card">
+      <div class="roulette-panel-heading">
+        <span>02</span>
+        <div>
+          <h3>Résultat</h3>
+          <p>Le numéro gagnant et votre gain apparaîtront ici.</p>
+        </div>
+      </div>
+      <div id="resultPanel" class="roulette-result-content">
+        <div class="roulette-empty-result">
+          <strong>En attente du lancement</strong>
+          <span>Placez une mise puis appuyez sur Lancer.</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
 <div class="footer">
     Jouez, suivez vos tickets et consultez vos résultats en temps réel.
   </div>
@@ -851,5 +1502,44 @@ document.addEventListener("DOMContentLoaded", ()=>{ void initRoulette(); });
     }
   });
 </script>
+
+<script id="roulette-landscape-helper">
+(function () {
+  const gate = document.getElementById('rouletteOrientationGate');
+
+  function syncOrientationGate() {
+    if (!gate) return;
+    const portraitMobile =
+      window.matchMedia('(max-width: 900px)').matches &&
+      window.matchMedia('(orientation: portrait)').matches;
+    gate.setAttribute('aria-hidden', portraitMobile ? 'false' : 'true');
+  }
+
+  async function requestRouletteLandscape() {
+    try {
+      if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      }
+      if (screen.orientation && typeof screen.orientation.lock === 'function') {
+        await screen.orientation.lock('landscape');
+      }
+    } catch (error) {
+      // Certains navigateurs mobiles ne permettent pas le verrouillage.
+      // L'écran d'orientation reste alors la solution de secours.
+    }
+  }
+
+  document.addEventListener('click', function (event) {
+    if (event.target.closest('#btnSpin')) {
+      requestRouletteLandscape();
+    }
+  });
+
+  window.addEventListener('resize', syncOrientationGate);
+  window.addEventListener('orientationchange', syncOrientationGate);
+  syncOrientationGate();
+})();
+</script>
+
 </body>
 </html>

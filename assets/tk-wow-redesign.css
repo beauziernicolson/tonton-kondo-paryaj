@@ -393,7 +393,9 @@ input::placeholder,textarea::placeholder{color:#7d899b!important;opacity:1!impor
   .mobile-header,.topbar,header:not(.pk-header),.pk-header,
   .bottom-nav,footer,.site-footer,.wow-command,.wow-hero-stage,
   .wow-payments,.dark-panel,.navy-panel,.game-stage,.roulette-board,
-  .betting-board,.race-stage
+  .betting-board,.race-stage,
+  .roulette-hero,.roulette-balance,.roulette-hero h1,.roulette-hero p,
+  .roulette-kicker,.roulette-balance .lbl,.roulette-balance .val
 ) :where(h1,h2,h3,h4,h5,h6,strong,b,label,legend,p,span,small,li,td,th,a){
   color:#fff!important;
 }
@@ -402,9 +404,11 @@ input::placeholder,textarea::placeholder{color:#7d899b!important;opacity:1!impor
   .mobile-header,.topbar,header:not(.pk-header),.pk-header,
   .bottom-nav,footer,.site-footer,.wow-command,.wow-hero-stage,
   .wow-payments,.dark-panel,.navy-panel,.game-stage,.roulette-board,
-  .betting-board,.race-stage
+  .betting-board,.race-stage,
+  .roulette-hero,.roulette-balance,.roulette-hero h1,.roulette-hero p,
+  .roulette-kicker,.roulette-balance .lbl,.roulette-balance .val
 ) :where(.muted,.desc,.helper-text,.hint,.note,small,p){
-  color:#c0ccdc!important;
+  color:#ffffff!important;
 }
 
 /* Preserve yellow accent text on dark surfaces. */

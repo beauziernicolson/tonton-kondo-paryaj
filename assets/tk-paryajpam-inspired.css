@@ -208,8 +208,8 @@ body.tk-page-index .wow-hero{
 body.tk-page-index .wow-hero-copy{padding:54px 52px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;position:relative!important;z-index:2}
 body.tk-page-index .wow-kicker{color:var(--tk-yellow)!important;font-size:12px!important;font-weight:900!important;text-transform:uppercase!important;letter-spacing:.16em!important}
 body.tk-page-index .wow-hero h1{margin:16px 0 18px!important;color:#fff!important;font-size:clamp(42px,5vw,72px)!important;line-height:.94!important;letter-spacing:-.055em!important;max-width:680px}
-body.tk-page-index .wow-hero h1 span{color:var(--tk-yellow)!important}
-body.tk-page-index .wow-hero p{max-width:570px!important;color:#b7c4d6!important;font-size:16px!important;line-height:1.7!important}
+body.tk-page-index .wow-hero h1 span{color:#fff!important}
+body.tk-page-index .wow-hero p{max-width:570px!important;color:#fff!important;font-size:16px!important;line-height:1.7!important}
 body.tk-page-index .wow-hero-actions{display:flex!important;flex-wrap:wrap!important;gap:12px!important;margin-top:26px!important}
 body.tk-page-index .wow-btn{min-height:46px!important;padding:0 20px!important;border-radius:9px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;font-weight:850!important}
 body.tk-page-index .wow-btn-primary{background:var(--tk-yellow)!important;color:var(--tk-navy-950)!important;border:1px solid var(--tk-yellow)!important}
