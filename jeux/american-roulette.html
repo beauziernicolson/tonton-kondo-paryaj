@@ -123,7 +123,7 @@ a{color:inherit;text-decoration:none}
 .controls-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
 .chip-rack{display:flex;align-items:center;gap:10px}
 .chip-rack .lbl{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
-.btn{height:44px;padding:0 16px;border-radius:12px;background:rgba(30,40,64,.7);border:1px solid var(--border);color:#dbe1f3;font-weight:600;font-size:14px;transition:background .15s}
+.btn{height:44px;padding:0 16px;border-radius:12px;background:rgba(30,40,64,.7);border:1px solid var(--border);color:#071a35;font-weight:600;font-size:14px;transition:background .15s}
 .btn:hover:not(:disabled){background:rgba(40,52,84,.9)}
 .btn-spin{height:50px;padding:0 32px;border-radius:16px;background:var(--gradient-gold);color:#1b2540;font-weight:900;letter-spacing:.2em;text-transform:uppercase;font-family:var(--font-display);box-shadow:var(--shadow-gold),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -3px 0 rgba(0,0,0,.25);transition:transform .15s}
 .btn-spin:hover:not(:disabled){transform:scale(1.03)}
@@ -139,7 +139,7 @@ a{color:inherit;text-decoration:none}
 .summary .v.gold{color:#f6d27a}
 .summary .v.green{color:#9be8a4}
 .bet-list{margin-top:10px;max-height:240px;overflow:auto;min-width:0}
-.bet-list .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;font-size:13px;padding:6px 0;color:#cfd6ec;min-width:0}
+.bet-list .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;font-size:13px;padding:6px 0;color:#071a35;min-width:0}
 .bet-list .empty{color:var(--muted);font-style:italic;font-size:13px;padding:8px 0}
 
 .footer{margin-top:24px;text-align:center;font-size:11px;color:var(--muted)}
@@ -966,6 +966,206 @@ a{color:inherit;text-decoration:none}
   }
 </style>
 
+
+<style id="roulette-layout-result-sync-fix">
+  /* Paysage mobile : aucune partie du tapis ne doit sortir de l'écran */
+  @media (max-width: 900px) and (orientation: landscape) {
+    .tk-file-roulette,
+    .tk-file-american-roulette,
+    .tk-file-roulette .app,
+    .tk-file-american-roulette .app,
+    .tk-file-roulette .roulette-stage,
+    .tk-file-american-roulette .roulette-stage {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow-x: hidden !important;
+    }
+
+    .tk-file-roulette .roulette-game-grid,
+    .tk-file-american-roulette .roulette-game-grid {
+      width: 100% !important;
+      min-width: 0 !important;
+      grid-template-columns: minmax(250px, 40vw) minmax(0, 1fr) !important;
+      align-items: stretch !important;
+    }
+
+    .tk-file-roulette .roulette-wheel-column,
+    .tk-file-american-roulette .roulette-wheel-column,
+    .tk-file-roulette .roulette-table-column,
+    .tk-file-american-roulette .roulette-table-column,
+    .tk-file-roulette .roulette-felt,
+    .tk-file-american-roulette .roulette-felt,
+    .tk-file-roulette .roulette-controls,
+    .tk-file-american-roulette .roulette-controls {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+    }
+
+    .tk-file-roulette .roulette-wheel-column .wheel,
+    .tk-file-american-roulette .roulette-wheel-column .wheel {
+      width: min(65vh, 38vw, 370px) !important;
+    }
+
+    .tk-file-roulette .roulette-felt .felt-inner,
+    .tk-file-american-roulette .roulette-felt .felt-inner {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    .tk-file-roulette .roulette-felt .table-grid,
+    .tk-file-american-roulette .roulette-felt .table-grid {
+      width: 100% !important;
+      grid-template-columns: 31px repeat(12, minmax(18px, 1fr)) 31px !important;
+      gap: 2px !important;
+    }
+
+    .tk-file-roulette .roulette-felt .row-dozens,
+    .tk-file-american-roulette .roulette-felt .row-dozens,
+    .tk-file-roulette .roulette-felt .row-outside,
+    .tk-file-american-roulette .roulette-felt .row-outside {
+      min-width: 0 !important;
+      width: auto !important;
+    }
+
+    .tk-file-roulette .roulette-felt .cell,
+    .tk-file-american-roulette .roulette-felt .cell {
+      min-width: 0 !important;
+      min-height: 26px !important;
+      padding: 2px 0 !important;
+      font-size: 8.5px !important;
+    }
+
+    .tk-file-roulette .roulette-controls,
+    .tk-file-american-roulette .roulette-controls {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+    }
+
+    .tk-file-roulette .roulette-chip-list,
+    .tk-file-american-roulette .roulette-chip-list {
+      min-width: 0 !important;
+      gap: 4px !important;
+    }
+
+    .tk-file-roulette .roulette-controls .chip,
+    .tk-file-american-roulette .roulette-controls .chip {
+      width: 29px !important;
+      height: 29px !important;
+      flex: 0 0 29px !important;
+    }
+
+    .tk-file-roulette .roulette-action-buttons,
+    .tk-file-american-roulette .roulette-action-buttons {
+      flex-wrap: nowrap !important;
+      min-width: 0 !important;
+    }
+
+    .tk-file-roulette .roulette-controls .btn,
+    .tk-file-american-roulette .roulette-controls .btn,
+    .tk-file-roulette .roulette-controls .btn-spin,
+    .tk-file-american-roulette .roulette-controls .btn-spin {
+      min-width: 56px !important;
+      padding-inline: 6px !important;
+    }
+
+    .tk-file-roulette .roulette-bottom-grid,
+    .tk-file-american-roulette .roulette-bottom-grid {
+      width: 100% !important;
+      min-width: 0 !important;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    }
+
+    .tk-file-roulette .roulette-summary,
+    .tk-file-american-roulette .roulette-summary,
+    .tk-file-roulette .roulette-result-card,
+    .tk-file-american-roulette .roulette-result-card {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+  }
+
+  @media (max-width: 720px) and (orientation: landscape) {
+    .tk-file-roulette .roulette-game-grid,
+    .tk-file-american-roulette .roulette-game-grid {
+      grid-template-columns: minmax(225px, 38vw) minmax(0, 1fr) !important;
+    }
+
+    .tk-file-roulette .roulette-wheel-column .wheel,
+    .tk-file-american-roulette .roulette-wheel-column .wheel {
+      width: min(62vh, 36vw, 320px) !important;
+    }
+
+    .tk-file-roulette .roulette-felt .table-grid,
+    .tk-file-american-roulette .roulette-felt .table-grid {
+      grid-template-columns: 27px repeat(12, minmax(15px, 1fr)) 27px !important;
+    }
+
+    .tk-file-roulette .roulette-controls .chip,
+    .tk-file-american-roulette .roulette-controls .chip {
+      width: 26px !important;
+      height: 26px !important;
+      flex-basis: 26px !important;
+      font-size: 7px !important;
+    }
+  }
+</style>
+
+
+<style id="roulette-navy-information-text">
+  /* Bandeau d'information au-dessus du tapis */
+  .tk-file-roulette .roulette-felt .tip,
+  .tk-file-american-roulette .roulette-felt .tip {
+    padding:8px 10px;
+    border:1px solid rgba(7,26,53,.14);
+    border-radius:10px;
+    background:rgba(255,255,255,.94);
+    color:#071a35 !important;
+    text-shadow:none !important;
+  }
+
+  .tk-file-roulette .roulette-felt .tip span,
+  .tk-file-american-roulette .roulette-felt .tip span,
+  .tk-file-roulette .roulette-felt .tip b,
+  .tk-file-american-roulette .roulette-felt .tip b {
+    color:#071a35 !important;
+    -webkit-text-fill-color:#071a35 !important;
+    opacity:1 !important;
+  }
+
+  /* Tous les libellés informatifs du résultat */
+  .tk-file-roulette .roulette-result-card .result-panel,
+  .tk-file-american-roulette .roulette-result-card .result-panel,
+  .tk-file-roulette .roulette-result-card .result-panel div,
+  .tk-file-american-roulette .roulette-result-card .result-panel div,
+  .tk-file-roulette .roulette-result-card .result-panel span,
+  .tk-file-american-roulette .roulette-result-card .result-panel span,
+  .tk-file-roulette .roulette-result-card .result-panel strong,
+  .tk-file-american-roulette .roulette-result-card .result-panel strong {
+    color:#071a35;
+  }
+
+  .tk-file-roulette .roulette-result-card .result-panel .win,
+  .tk-file-american-roulette .roulette-result-card .result-panel .win {
+    color:#08783b !important;
+  }
+
+  .tk-file-roulette .roulette-result-card .result-panel .loss,
+  .tk-file-american-roulette .roulette-result-card .result-panel .loss {
+    color:#a2212a !important;
+  }
+
+  @media (max-width:900px) and (orientation:landscape) {
+    .tk-file-roulette .roulette-felt .tip,
+    .tk-file-american-roulette .roulette-felt .tip {
+      padding:4px 6px;
+      border-radius:6px;
+    }
+  }
+</style>
+
 </head>
 <body class="tk-public tk-page-game tk-file-american-roulette">
 <div class="app">
@@ -1309,11 +1509,11 @@ function showAmericanBackendResultPanel(result){
       <div class="${result.total_win_amount > 0 ? 'win' : 'loss'}">
         ${result.total_win_amount > 0 ? 'Gagné' : 'Perdu'} · ${result.total_win_amount > 0 ? '+' : ''}${formatCurrency(result.total_win_amount)} HTG
       </div>
-      <div style="margin-top:8px;color:#dbe1f3;font-size:13px">Couleur : <strong>${String(result.winning_color || '—')}</strong></div>
-      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Total misé : <strong>${formatCurrency(result.total_bet_amount)} HTG</strong></div>
-      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Gain total : <strong>${formatCurrency(result.total_win_amount)} HTG</strong></div>
-      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Statut : <strong>${String(result.status || '—')}</strong></div>
-      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Ticket : <strong>${String(result.ticket_number || '—')}</strong></div>
+      <div style="margin-top:8px;color:#071a35;font-size:13px">Couleur : <strong>${String(result.winning_color || '—')}</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">Total misé : <strong>${formatCurrency(result.total_bet_amount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">Gain total : <strong>${formatCurrency(result.total_win_amount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">Statut : <strong>${String(result.status || '—')}</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">Ticket : <strong>${String(result.ticket_number || '—')}</strong></div>
       <div style="margin-top:10px;color:#f6d27a;font-size:12px">Mises backend :</div>
       ${betsMarkup}
     </div>`;
@@ -1712,18 +1912,42 @@ async function playAmericanRoulettePlaceholder(){
 function animateAmericanRouletteToSlot(slot){
   const face = document.getElementById("wheelFace");
   const orbit = document.getElementById("ballOrbit");
-  const seg = 360/WHEEL_ORDER.length;
-  const idx = WHEEL_ORDER.indexOf(String(slot));
-  const target = -(idx*seg);
-  const newWheel = state.wheelRot + 360*6 + (target - (state.wheelRot % 360));
-  const newBall  = state.ballRot - 360*9 - (target - (state.ballRot % 360));
+  const seg = 360 / WHEEL_ORDER.length;
+  const winningValue = String(slot);
+  const idx = WHEEL_ORDER.indexOf(winningValue);
+
+  if (idx < 0) {
+    console.error("Numéro gagnant absent de WHEEL_ORDER :", winningValue);
+    return;
+  }
+
+  /*
+    Le segment gagnant est amené exactement sous le pointeur fixe, en haut.
+    La bille termine elle aussi à 0° visuel (sous le même pointeur).
+    Auparavant, la bille recevait l'angle inverse du segment, ce qui créait
+    un faux numéro visuel différent de celui renvoyé par Supabase.
+  */
+  const targetWheelAngle = -(idx * seg);
+  const currentWheelModulo = ((state.wheelRot % 360) + 360) % 360;
+  const desiredWheelModulo = ((targetWheelAngle % 360) + 360) % 360;
+  const wheelCorrection =
+    (desiredWheelModulo - currentWheelModulo + 360) % 360;
+
+  const currentBallModulo = ((state.ballRot % 360) + 360) % 360;
+  const ballCorrectionToTop = (360 - currentBallModulo) % 360;
+
+  const newWheel = state.wheelRot + (360 * 6) + wheelCorrection;
+  const newBall = state.ballRot - (360 * 9) - ballCorrectionToTop;
+
   state.wheelRot = newWheel;
   state.ballRot = newBall;
+
   face.classList.add("spinning");
   orbit.classList.add("spinning");
-  face.style.transform  = `rotate(${newWheel}deg)`;
+  face.style.transform = `rotate(${newWheel}deg)`;
   orbit.style.transform = `rotate(${newBall}deg)`;
-  setTimeout(()=>{
+
+  setTimeout(() => {
     face.classList.remove("spinning");
     orbit.classList.remove("spinning");
   }, 5100);
@@ -1740,10 +1964,10 @@ function showAmericanResultPanel(result){
     <div class="result-panel">
       <div class="big" style="color:${color}">${result.winningNumber}</div>
       <div class="${result.totalWinAmount > 0 ? 'win' : 'loss'}">${result.totalWinAmount > 0 ? 'Gagné' : 'Perdu'} · ${result.totalWinAmount > 0 ? '+' : ''}${formatCurrency(result.totalWinAmount)} HTG</div>
-      <div style="margin-top:8px;color:#dbe1f3;font-size:13px">Couleur : <strong>${result.winningColor}</strong></div>
-      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Total misé : <strong>${formatCurrency(result.totalBetAmount)} HTG</strong></div>
-      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Statut : <strong>${result.status}</strong></div>
-      <div style="margin-top:4px;color:#dbe1f3;font-size:13px">Ticket : <strong>${result.ticketNumber}</strong></div>
+      <div style="margin-top:8px;color:#071a35;font-size:13px">Couleur : <strong>${result.winningColor}</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">Total misé : <strong>${formatCurrency(result.totalBetAmount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">Statut : <strong>${result.status}</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">Ticket : <strong>${result.ticketNumber}</strong></div>
       <div style="margin-top:6px;color:#f6d27a;font-size:12px">${result.walletMessage || ''}</div>
       ${detailMarkup}
     </div>`;
