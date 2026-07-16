@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Tableau de bord admin</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Tableau de bord admin</title>
+<style>
     :root {
       --bg:#020813;
       --panel:rgba(8,24,43,.96);
@@ -65,56 +66,53 @@
     @media (max-width:1024px) { .hero-card { grid-template-columns:1fr; } .stats-grid { grid-template-columns:repeat(2,1fr); } }
     @media (max-width:760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .stats-grid, .grid { grid-template-columns:1fr; } }
   </style>
-</head>
+<link data-tk-redesign="wow-white-navy-v1" href="../assets/tk-wow-redesign.css" rel="stylesheet"/></head>
 <body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html">
-        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Administration</span>
-        </span>
-      </a>
-      <span class="pill">Tableau de bord admin</span>
-    </header>
-
-    <section class="hero-card">
-      <article>
-        <div class="eyebrow">Espace privé</div>
-        <h1>Tableau de bord admin</h1>
-        <p class="lede">Accédez rapidement aux modules de gestion de la plateforme. Les actions sensibles restent réservées aux profils admin et super_admin.</p>
-      </article>
-      <article class="panel">
-        <div class="stats-grid" id="stats-grid">
-          <div class="stat-card"><small>Dépôts en attente</small><strong id="pending-deposits">—</strong><span>Demandes à valider</span></div>
-          <div class="stat-card"><small>Retraits en attente</small><strong id="pending-withdrawals">—</strong><span>Demandes à traiter</span></div>
-          <div class="stat-card"><small>Tickets en attente</small><strong id="pending-tickets">—</strong><span>Tickets ouverts / à analyser</span></div>
-          <div class="stat-card"><small>Résultats publiés aujourd’hui</small><strong id="published-results">—</strong><span>Résultats Borlette validés</span></div>
-        </div>
-        <p class="text-small" style="margin-top:10px;">Les statistiques sont chargées si les tables de gestion sont disponibles ; sinon, la page affiche uniquement les liens de navigation.</p>
-      </article>
-    </section>
-
-    <section class="panel">
-      <div class="eyebrow">Navigation</div>
-      <div class="grid">
-        <a class="nav-card" href="results.html"><strong>Résultats</strong><span>Publier et gérer les résultats Borlette.</span><span class="meta">Admin résultats</span></a>
-        <a class="nav-card" href="draw-schedules.html"><strong>Tirages</strong><span>Gérer les tirages actifs par jeu.</span><span class="meta">Planning des tirages</span></a>
-        <a class="nav-card" href="deposits.html"><strong>Dépôts</strong><span>Valider les demandes de dépôt.</span><span class="meta">Finance</span></a>
-        <a class="nav-card" href="withdrawals.html"><strong>Retraits</strong><span>Suivre et approuver les retraits.</span><span class="meta">Finance</span></a>
-        <a class="nav-card" href="transactions.html"><strong>Transactions</strong><span>Consulter les flux de paiement et de gain.</span><span class="meta">Audit</span></a>
-        <a class="nav-card" href="../tickets.html"><strong>Tickets</strong><span>Consulter les tickets des joueurs.</span><span class="meta">Support</span></a>
-        <a class="nav-card" href="../index.html"><strong>Retour accueil</strong><span>Revenir au site public.</span><span class="meta">Front office</span></a>
-      </div>
-      <p class="note" style="margin-top:14px;">Si certaines pages ne sont pas disponibles dans votre instance, les liens restants restent accessibles.</p>
-    </section>
-  </main>
-
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script>
+<main class="app">
+<header class="topbar">
+<a class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/logo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Administration</span>
+</span>
+</a>
+<span class="pill">Tableau de bord admin</span>
+</header>
+<section class="hero-card">
+<article>
+<div class="eyebrow">Espace privé</div>
+<h1>Tableau de bord admin</h1>
+<p class="lede">Accédez rapidement aux modules de gestion de la plateforme. Les actions sensibles restent réservées aux profils admin et super_admin.</p>
+</article>
+<article class="panel">
+<div class="stats-grid" id="stats-grid">
+<div class="stat-card"><small>Dépôts en attente</small><strong id="pending-deposits">—</strong><span>Demandes à valider</span></div>
+<div class="stat-card"><small>Retraits en attente</small><strong id="pending-withdrawals">—</strong><span>Demandes à traiter</span></div>
+<div class="stat-card"><small>Tickets en attente</small><strong id="pending-tickets">—</strong><span>Tickets ouverts / à analyser</span></div>
+<div class="stat-card"><small>Résultats publiés aujourd’hui</small><strong id="published-results">—</strong><span>Résultats Borlette validés</span></div>
+</div>
+<p class="text-small" style="margin-top:10px;">Les statistiques sont chargées si les tables de gestion sont disponibles ; sinon, la page affiche uniquement les liens de navigation.</p>
+</article>
+</section>
+<section class="panel">
+<div class="eyebrow">Navigation</div>
+<div class="grid">
+<a class="nav-card" href="results.html"><strong>Résultats</strong><span>Publier et gérer les résultats Borlette.</span><span class="meta">Admin résultats</span></a>
+<a class="nav-card" href="draw-schedules.html"><strong>Tirages</strong><span>Gérer les tirages actifs par jeu.</span><span class="meta">Planning des tirages</span></a>
+<a class="nav-card" href="deposits.html"><strong>Dépôts</strong><span>Valider les demandes de dépôt.</span><span class="meta">Finance</span></a>
+<a class="nav-card" href="withdrawals.html"><strong>Retraits</strong><span>Suivre et approuver les retraits.</span><span class="meta">Finance</span></a>
+<a class="nav-card" href="transactions.html"><strong>Transactions</strong><span>Consulter les flux de paiement et de gain.</span><span class="meta">Audit</span></a>
+<a class="nav-card" href="../tickets.html"><strong>Tickets</strong><span>Consulter les tickets des joueurs.</span><span class="meta">Support</span></a>
+<a class="nav-card" href="../index.html"><strong>Retour accueil</strong><span>Revenir au site public.</span><span class="meta">Front office</span></a>
+</div>
+<p class="note" style="margin-top:14px;">Si certaines pages ne sont pas disponibles dans votre instance, les liens restants restent accessibles.</p>
+</section>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script>
     (async function init() {
       const pendingDepositsEl = document.getElementById('pending-deposits');
       const pendingWithdrawalsEl = document.getElementById('pending-withdrawals');
@@ -170,7 +168,7 @@
       }
     })();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -179,4 +177,3 @@
 </script>
 </body>
 </html>
-

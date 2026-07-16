@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Retraits admin</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Retraits admin</title>
+<style>
     :root {
       --bg:#020813;
       --panel:rgba(8,24,43,.96);
@@ -63,74 +64,71 @@
     @media (max-width: 1080px) { .hero-card { grid-template-columns:1fr; } }
     @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } table { display:block; overflow-x:auto; } }
   </style>
-</head>
+<link data-tk-redesign="wow-white-navy-v1" href="../assets/tk-wow-redesign.css" rel="stylesheet"/></head>
 <body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../admin/index.html">
-        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Paryaj</span>
-        </span>
-      </a>
-      <span class="pill">Admin — Retraits</span>
-    </header>
-
-    <section class="hero-card">
-      <article class="panel">
-        <div class="eyebrow">Phase 3.3</div>
-        <h1>Gestion des retraits</h1>
-        <p>Consultez les demandes de retrait en attente et approuvez ou refusez-les. Le wallet ne sera pas modifié directement depuis cette page.</p>
-        <span class="mini-chip">🔐 Accès admin / super_admin</span>
-        <span class="mini-chip">💸 Vérification du solde</span>
-      </article>
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <h2>État</h2>
-            <p>Validation des demandes de retrait.</p>
-          </div>
-        </div>
-        <div id="feedback-box" class="feedback warn">Chargement des demandes…</div>
-        <div id="access-denied" class="access-box" hidden>Accès refusé. Cette page est réservée aux admins et super_admin.</div>
-      </article>
-    </section>
-
-    <section class="layout-grid">
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <h2>Demandes de retrait</h2>
-            <p>Liste des demandes avec client, méthode et actions admin.</p>
-          </div>
-        </div>
-        <div class="table-card">
-          <table>
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th>Email</th>
-                <th>Montant</th>
-                <th>Méthode</th>
-                <th>Téléphone</th>
-                <th>Statut</th>
-                <th>Date</th>
-                <th>Note admin</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="withdrawals-table-body"></tbody>
-          </table>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script>
+<main class="app">
+<header class="topbar">
+<a class="brand" href="../admin/index.html">
+<img alt="Logo Tonton Kondo" src="../assets/logo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<span class="pill">Admin — Retraits</span>
+</header>
+<section class="hero-card">
+<article class="panel">
+<div class="eyebrow">Phase 3.3</div>
+<h1>Gestion des retraits</h1>
+<p>Consultez les demandes de retrait en attente et approuvez ou refusez-les. Le wallet ne sera pas modifié directement depuis cette page.</p>
+<span class="mini-chip">🔐 Accès admin / super_admin</span>
+<span class="mini-chip">💸 Vérification du solde</span>
+</article>
+<article class="panel">
+<div class="panel-head">
+<div>
+<h2>État</h2>
+<p>Validation des demandes de retrait.</p>
+</div>
+</div>
+<div class="feedback warn" id="feedback-box">Chargement des demandes…</div>
+<div class="access-box" hidden="" id="access-denied">Accès refusé. Cette page est réservée aux admins et super_admin.</div>
+</article>
+</section>
+<section class="layout-grid">
+<article class="panel">
+<div class="panel-head">
+<div>
+<h2>Demandes de retrait</h2>
+<p>Liste des demandes avec client, méthode et actions admin.</p>
+</div>
+</div>
+<div class="table-card">
+<table>
+<thead>
+<tr>
+<th>Client</th>
+<th>Email</th>
+<th>Montant</th>
+<th>Méthode</th>
+<th>Téléphone</th>
+<th>Statut</th>
+<th>Date</th>
+<th>Note admin</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="withdrawals-table-body"></tbody>
+</table>
+</div>
+</article>
+</section>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script>
     const feedbackBox = document.getElementById('feedback-box');
     const accessDeniedBox = document.getElementById('access-denied');
     const withdrawalsBody = document.getElementById('withdrawals-table-body');
@@ -320,7 +318,7 @@
 
     loadWithdrawals();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -329,4 +327,3 @@
 </script>
 </body>
 </html>
-

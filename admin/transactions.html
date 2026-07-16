@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Transactions Admin</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Transactions Admin</title>
+<style>
     :root {
       --bg: #020813;
       --panel: rgba(8, 24, 43, 0.96);
@@ -195,195 +196,190 @@
       table { min-width: 760px; }
     }
   </style>
-</head>
+<link data-tk-redesign="wow-white-navy-v1" href="../assets/tk-wow-redesign.css" rel="stylesheet"/></head>
 <body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../admin/index.html">
-        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Administration</span>
-        </span>
-      </a>
-      <span class="chip">Transactions • Vue admin prototype</span>
-    </header>
-
-    <section class="hero">
-      <article class="panel">
-        <div class="eyebrow">Espace admin</div>
-        <h1>Gestion des transactions financières</h1>
-        <p>Préparation statique pour les comptes de dépôt, retrait, mise, gain et commission. Cette page est un support d’interface pour la phase suivante.</p>
-        <div class="badge-line">
-          <span class="badge gold">Dépôts</span>
-          <span class="badge red">Retraits</span>
-          <span class="badge">Mises</span>
-          <span class="badge green">Gains</span>
-          <span class="badge">Commissions</span>
-        </div>
-      </article>
-
-      <article class="panel quick-panel">
-        <div class="mini-card">
-          <strong>Rôle attendu</strong>
-          <span>Admin / Super Admin — préparation de la gestion financière.</span>
-        </div>
-        <div class="mini-card">
-          <strong>Mode actuel</strong>
-          <span>Prototype statique, aucune intégration Supabase ni validation réelle.</span>
-        </div>
-        <div class="mini-card">
-          <strong>Actions disponibles</strong>
-          <span>Voir, Approuver, Rejeter, filtrer et consulter les détails de chaque transaction.</span>
-        </div>
-      </article>
-    </section>
-
-    <section class="panel">
-      <div class="eyebrow">Statistiques rapides</div>
-      <div class="stats-grid">
-        <article class="stat-card"><small>Total transactions</small><strong>128</strong><span>Dernier mois</span></article>
-        <article class="stat-card"><small>Dépôts validés</small><strong>42</strong><span>+8% vs. semaine dernière</span></article>
-        <article class="stat-card"><small>Retraits en attente</small><strong>9</strong><span>3 à vérifier</span></article>
-        <article class="stat-card"><small>Montant traité</small><strong>1,24M FCFA</strong><span>Somme totale en consultation</span></article>
-      </div>
-    </section>
-
-    <section class="panel" style="margin-top: 18px;">
-      <div class="eyebrow">Filtres</div>
-      <div class="filters">
-        <div class="field">
-          <label for="search">Recherche</label>
-          <input id="search" type="search" placeholder="Nom, téléphone, référence..." />
-        </div>
-        <div class="field">
-          <label for="type">Type</label>
-          <select id="type">
-            <option>Tous</option>
-            <option>deposit</option>
-            <option>withdrawal</option>
-            <option>bet</option>
-            <option>win</option>
-            <option>refund</option>
-            <option>commission</option>
-            <option>adjustment</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="status">Statut</label>
-          <select id="status">
-            <option>Tous</option>
-            <option>pending</option>
-            <option>approved</option>
-            <option>rejected</option>
-            <option>completed</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>&nbsp;</label>
-          <button class="btn btn-primary" type="button">Appliquer les filtres</button>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Référence</th>
-              <th>Client</th>
-              <th>Type</th>
-              <th>Montant</th>
-              <th>Statut</th>
-              <th>Créé le</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>TRX-10021</td>
-              <td>Jean Kouassi<br><small style="color:var(--muted);">+229 97 00 00 00</small></td>
-              <td><span class="pill deposit">deposit</span></td>
-              <td>25 000 FCFA</td>
-              <td><span class="pill">—</span></td>
-              <td>13 juin 2026</td>
-              <td>
-                <div class="actions">
-                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10021')">Voir</button>
-                  <button class="btn btn-success" type="button">Approuver</button>
-                  <button class="btn btn-danger" type="button">Rejeter</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>TRX-10022</td>
-              <td>Marie Delice<br><small style="color:var(--muted);">+229 96 11 22 33</small></td>
-              <td><span class="pill withdrawal">withdrawal</span></td>
-              <td>8 500 FCFA</td>
-              <td><span class="pill pending">pending</span></td>
-              <td>13 juin 2026</td>
-              <td>
-                <div class="actions">
-                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10022')">Voir</button>
-                  <button class="btn btn-success" type="button">Approuver</button>
-                  <button class="btn btn-danger" type="button">Rejeter</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>TRX-10023</td>
-              <td>Fils A. Abel<br><small style="color:var(--muted);">+229 94 44 55 66</small></td>
-              <td><span class="pill bet">bet</span></td>
-              <td>3 200 FCFA</td>
-              <td><span class="pill completed">completed</span></td>
-              <td>12 juin 2026</td>
-              <td>
-                <div class="actions">
-                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10023')">Voir</button>
-                  <button class="btn btn-success" type="button">Approuver</button>
-                  <button class="btn btn-danger" type="button">Rejeter</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>TRX-10024</td>
-              <td>Yvette Saint<br><small style="color:var(--muted);">+229 95 77 88 99</small></td>
-              <td><span class="pill win">win</span></td>
-              <td>18 400 FCFA</td>
-              <td><span class="pill">—</span></td>
-              <td>12 juin 2026</td>
-              <td>
-                <div class="actions">
-                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10024')">Voir</button>
-                  <button class="btn btn-success" type="button">Approuver</button>
-                  <button class="btn btn-danger" type="button">Rejeter</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>TRX-10025</td>
-              <td>Romain L. Yao<br><small style="color:var(--muted);">+229 90 30 40 50</small></td>
-              <td><span class="pill commission">commission</span></td>
-              <td>1 200 FCFA</td>
-              <td><span class="pill rejected">rejected</span></td>
-              <td>11 juin 2026</td>
-              <td>
-                <div class="actions">
-                  <button class="btn btn-secondary" type="button" onclick="openModal('TRX-10025')">Voir</button>
-                  <button class="btn btn-success" type="button">Approuver</button>
-                  <button class="btn btn-danger" type="button">Rejeter</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="footer-note">Prototype statique — aucun appel Supabase ni validation réelle n’est effectué.</p>
-    </section>
-  </main>
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script>
+<main class="app">
+<header class="topbar">
+<a class="brand" href="../admin/index.html">
+<img alt="Logo Tonton Kondo" src="../assets/logo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Administration</span>
+</span>
+</a>
+<span class="chip">Transactions • Vue admin prototype</span>
+</header>
+<section class="hero">
+<article class="panel">
+<div class="eyebrow">Espace admin</div>
+<h1>Gestion des transactions financières</h1>
+<p>Préparation statique pour les comptes de dépôt, retrait, mise, gain et commission. Cette page est un support d’interface pour la phase suivante.</p>
+<div class="badge-line">
+<span class="badge gold">Dépôts</span>
+<span class="badge red">Retraits</span>
+<span class="badge">Mises</span>
+<span class="badge green">Gains</span>
+<span class="badge">Commissions</span>
+</div>
+</article>
+<article class="panel quick-panel">
+<div class="mini-card">
+<strong>Rôle attendu</strong>
+<span>Admin / Super Admin — préparation de la gestion financière.</span>
+</div>
+<div class="mini-card">
+<strong>Mode actuel</strong>
+<span>Prototype statique, aucune intégration Supabase ni validation réelle.</span>
+</div>
+<div class="mini-card">
+<strong>Actions disponibles</strong>
+<span>Voir, Approuver, Rejeter, filtrer et consulter les détails de chaque transaction.</span>
+</div>
+</article>
+</section>
+<section class="panel">
+<div class="eyebrow">Statistiques rapides</div>
+<div class="stats-grid">
+<article class="stat-card"><small>Total transactions</small><strong>128</strong><span>Dernier mois</span></article>
+<article class="stat-card"><small>Dépôts validés</small><strong>42</strong><span>+8% vs. semaine dernière</span></article>
+<article class="stat-card"><small>Retraits en attente</small><strong>9</strong><span>3 à vérifier</span></article>
+<article class="stat-card"><small>Montant traité</small><strong>1,24M FCFA</strong><span>Somme totale en consultation</span></article>
+</div>
+</section>
+<section class="panel" style="margin-top: 18px;">
+<div class="eyebrow">Filtres</div>
+<div class="filters">
+<div class="field">
+<label for="search">Recherche</label>
+<input id="search" placeholder="Nom, téléphone, référence..." type="search"/>
+</div>
+<div class="field">
+<label for="type">Type</label>
+<select id="type">
+<option>Tous</option>
+<option>deposit</option>
+<option>withdrawal</option>
+<option>bet</option>
+<option>win</option>
+<option>refund</option>
+<option>commission</option>
+<option>adjustment</option>
+</select>
+</div>
+<div class="field">
+<label for="status">Statut</label>
+<select id="status">
+<option>Tous</option>
+<option>pending</option>
+<option>approved</option>
+<option>rejected</option>
+<option>completed</option>
+</select>
+</div>
+<div class="field">
+<label> </label>
+<button class="btn btn-primary" type="button">Appliquer les filtres</button>
+</div>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Référence</th>
+<th>Client</th>
+<th>Type</th>
+<th>Montant</th>
+<th>Statut</th>
+<th>Créé le</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRX-10021</td>
+<td>Jean Kouassi<br/><small style="color:var(--muted);">+229 97 00 00 00</small></td>
+<td><span class="pill deposit">deposit</span></td>
+<td>25 000 FCFA</td>
+<td><span class="pill">—</span></td>
+<td>13 juin 2026</td>
+<td>
+<div class="actions">
+<button class="btn btn-secondary" onclick="openModal('TRX-10021')" type="button">Voir</button>
+<button class="btn btn-success" type="button">Approuver</button>
+<button class="btn btn-danger" type="button">Rejeter</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>TRX-10022</td>
+<td>Marie Delice<br/><small style="color:var(--muted);">+229 96 11 22 33</small></td>
+<td><span class="pill withdrawal">withdrawal</span></td>
+<td>8 500 FCFA</td>
+<td><span class="pill pending">pending</span></td>
+<td>13 juin 2026</td>
+<td>
+<div class="actions">
+<button class="btn btn-secondary" onclick="openModal('TRX-10022')" type="button">Voir</button>
+<button class="btn btn-success" type="button">Approuver</button>
+<button class="btn btn-danger" type="button">Rejeter</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>TRX-10023</td>
+<td>Fils A. Abel<br/><small style="color:var(--muted);">+229 94 44 55 66</small></td>
+<td><span class="pill bet">bet</span></td>
+<td>3 200 FCFA</td>
+<td><span class="pill completed">completed</span></td>
+<td>12 juin 2026</td>
+<td>
+<div class="actions">
+<button class="btn btn-secondary" onclick="openModal('TRX-10023')" type="button">Voir</button>
+<button class="btn btn-success" type="button">Approuver</button>
+<button class="btn btn-danger" type="button">Rejeter</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>TRX-10024</td>
+<td>Yvette Saint<br/><small style="color:var(--muted);">+229 95 77 88 99</small></td>
+<td><span class="pill win">win</span></td>
+<td>18 400 FCFA</td>
+<td><span class="pill">—</span></td>
+<td>12 juin 2026</td>
+<td>
+<div class="actions">
+<button class="btn btn-secondary" onclick="openModal('TRX-10024')" type="button">Voir</button>
+<button class="btn btn-success" type="button">Approuver</button>
+<button class="btn btn-danger" type="button">Rejeter</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>TRX-10025</td>
+<td>Romain L. Yao<br/><small style="color:var(--muted);">+229 90 30 40 50</small></td>
+<td><span class="pill commission">commission</span></td>
+<td>1 200 FCFA</td>
+<td><span class="pill rejected">rejected</span></td>
+<td>11 juin 2026</td>
+<td>
+<div class="actions">
+<button class="btn btn-secondary" onclick="openModal('TRX-10025')" type="button">Voir</button>
+<button class="btn btn-success" type="button">Approuver</button>
+<button class="btn btn-danger" type="button">Rejeter</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="footer-note">Prototype statique — aucun appel Supabase ni validation réelle n’est effectué.</p>
+</section>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script>
     (async () => {
       const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
       if (!currentUser) {
@@ -391,31 +387,29 @@
       }
     })();
   </script>
-
-  <div class="modal-backdrop" id="transactionModal" aria-hidden="true">
-    <aside class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-head">
-        <h2 id="modalTitle">Détail transaction</h2>
-        <button class="btn btn-secondary" type="button" onclick="closeModal()">Fermer</button>
-      </div>
-      <div class="modal-grid">
-        <article class="detail-box"><span>Référence</span><strong>TRX-10021</strong></article>
-        <article class="detail-box"><span>Type</span><strong>Dépot</strong></article>
-        <article class="detail-box"><span>Montant</span><strong>25 000 FCFA</strong></article>
-        <article class="detail-box"><span>Statut</span><strong>Approuvé</strong></article>
-        <article class="detail-box"><span>Client</span><strong>Jean Kouassi</strong></article>
-        <article class="detail-box"><span>Créé par</span><strong>Admin principal</strong></article>
-        <article class="detail-box"><span>Description</span><strong>Dépot utilisateur — prototype d’interface</strong></article>
-        <article class="detail-box"><span>Méthode</span><strong>MonCash</strong></article>
-      </div>
-      <div class="actions" style="margin-top: 12px; justify-content: flex-start;">
-        <button class="btn btn-success" type="button">Approuver</button>
-        <button class="btn btn-danger" type="button">Rejeter</button>
-      </div>
-    </aside>
-  </div>
-
-  <script>
+<div aria-hidden="true" class="modal-backdrop" id="transactionModal">
+<aside aria-labelledby="modalTitle" aria-modal="true" class="modal" role="dialog">
+<div class="modal-head">
+<h2 id="modalTitle">Détail transaction</h2>
+<button class="btn btn-secondary" onclick="closeModal()" type="button">Fermer</button>
+</div>
+<div class="modal-grid">
+<article class="detail-box"><span>Référence</span><strong>TRX-10021</strong></article>
+<article class="detail-box"><span>Type</span><strong>Dépot</strong></article>
+<article class="detail-box"><span>Montant</span><strong>25 000 FCFA</strong></article>
+<article class="detail-box"><span>Statut</span><strong>Approuvé</strong></article>
+<article class="detail-box"><span>Client</span><strong>Jean Kouassi</strong></article>
+<article class="detail-box"><span>Créé par</span><strong>Admin principal</strong></article>
+<article class="detail-box"><span>Description</span><strong>Dépot utilisateur — prototype d’interface</strong></article>
+<article class="detail-box"><span>Méthode</span><strong>MonCash</strong></article>
+</div>
+<div class="actions" style="margin-top: 12px; justify-content: flex-start;">
+<button class="btn btn-success" type="button">Approuver</button>
+<button class="btn btn-danger" type="button">Rejeter</button>
+</div>
+</aside>
+</div>
+<script>
     function openModal(ref) {
       const modal = document.getElementById('transactionModal');
       modal.classList.add('open');
@@ -433,7 +427,7 @@
       if (event.target === this) closeModal();
     });
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -442,4 +436,3 @@
 </script>
 </body>
 </html>
-

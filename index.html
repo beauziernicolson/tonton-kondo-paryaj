@@ -1,12 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="La plateforme de paris en ligne Tonton Kondo. Accédez rapidement à tous nos jeux de loterie, borlette et casino sécurisés." />
-  <title>Tonton Kondo Paryaj — Index</title>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="La plateforme de paris en ligne Tonton Kondo. Accédez rapidement à tous nos jeux de loterie, borlette et casino sécurisés." name="description"/>
+<title>Tonton Kondo Paryaj — Index</title>
+<style>
     :root{
       --bg:#020813;
       --bg-2:#061426;
@@ -497,330 +497,198 @@
       .social-link{width:44px;height:44px;border-radius:14px;font-size:18px;}
     }
   </style>
-</head>
-<body>
-  <div class="app">
-    <header class="mobile-header" aria-label="En-tête principal">
-      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
-        <div class="brand-block">
-          <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
-          <div class="brand-text">
-            <span class="brand-top">TONTON</span>
-            <span class="brand-middle">KONDO</span>
-            <span class="brand-bottom">PARYAJ</span>
-          </div>
-        </div>
-      </a>
 
-      <div class="wallet-chip" aria-label="Solde utilisateur">
-        <span><strong id="wallet-balance">Chargement…</strong><span id="wallet-label">Solde disponible</span></span>
-      </div>
-
-      <div class="header-actions">
-        <div id="authHeaderActions"></div>
-        <button class="action-btn" type="button" aria-label="Promotions"><svg class="icon icon-lg"><use href="#i-gift"/></svg><span class="badge">3</span></button>
-        <a href="notifications.html" class="action-btn notifications-link" aria-label="Notifications">
-          <svg class="icon icon-lg">
-            <use href="img/icons.svg#notification-icon"/>
-          </svg>
-          <span class="badge notifications-badge" hidden>0</span>
-        </a>
-        <div class="user-menu-wrap" id="userMenuWrap" hidden>
-          <button id="userMenuButton" class="action-btn user-button" type="button" aria-label="Menu utilisateur" aria-expanded="false">
-            <span class="user-avatar" id="userAvatar">U</span>
-          </button>
-          <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
-            <a class="user-menu-link" href="tickets.html">Tickets</a>
-            <a class="user-menu-link" href="history.html">Historique</a>
-            <a class="user-menu-link" href="results.html">Résultats</a>
-            <a class="user-menu-link" href="deposit.html">Dépôt</a>
-            <a class="user-menu-link" href="withdraw.html">Retrait</a>
-            <a class="user-menu-link" href="wallet.html">Portefeuille</a>
-            <a class="user-menu-link" href="profile.html">Profil</a>
-            <a class="user-menu-link" href="settings.html">Paramètres</a>
-            <div class="user-menu-divider"></div>
-            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button">Déconnexion</button>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section class="hero" aria-label="Présentation principale">
-      <img src="assets/heroimage.png" alt="Hero Tonton Kondo" class="hero-image" />
-      <h1>PARYAJ <span>TONTON KONDO</span></h1>
-      <p>La plateforme de paris et jeux en ligne conçue pour un parcours joueur clair, rapide et professionnel.</p>
-      <div class="hero-actions" id="heroActions">
-        <a class="btn-primary" href="jeux/games.html">Parier maintenant <span>→</span></a>
-        <a class="btn-secondary" href="dashboard.html">Tableau de bord</a>
-      </div>
-    </section>
-    <div class="slider-dots" aria-hidden="true"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-
-    <section class="stats-grid" aria-label="Statistiques du joueur">
-      <article class="stat-card"><span class="stat-icon gold"><svg class="icon icon-lg"><use href="#i-wallet"/></svg></span><small>Solde</small><strong id="index-wallet-balance">Chargement…</strong><span id="index-wallet-caption">Disponible</span></article>
-      <article class="stat-card"><span class="stat-icon green"><svg class="icon icon-lg"><use href="#i-ticket"/></svg></span><small>Tickets</small><strong id="activeTicketsCount">Chargement...</strong><span id="ticketsSummary">Chargement...</span></article>
-      <article class="stat-card"><span class="stat-icon blue"><svg class="icon icon-lg"><use href="#i-chart"/></svg></span><small>Gains du jour</small><strong id="dailyWinsAmount">Chargement...</strong><span id="dailyBetsAmount">Chargement...</span></article>
-      <article class="stat-card"><span class="stat-icon purple"><svg class="icon icon-lg"><use href="#i-gift"/></svg></span><small>Bonus</small><strong>12 %</strong><span>Promotion</span></article>
-    </section>
-
-    <section aria-labelledby="popular-games-title">
-      <div class="section-head"><h2 class="section-title" id="popular-games-title"><svg class="section-icon"><use href="#i-star"/></svg>Jeux populaires</h2><a class="see-all" href="jeux/games.html">Voir tous <span>›</span></a></div>
-      <div class="games-carousel" data-games-carousel>
-        <div class="games-nav" aria-hidden="true">
-          <button class="games-nav-btn" type="button" data-games-prev aria-label="Jeux précédents">‹</button>
-          <button class="games-nav-btn" type="button" data-games-next aria-label="Jeux suivants">›</button>
-        </div>
-        <div class="games-row" id="popularGamesRow">
-        <a class="game-card" href="jeux/borlette.html">
-          <div class="game-image-wrap">
-            <img src="assets/Lotterie.png" alt="Borlette" />
-          </div>
-          <div class="game-info">
-            <strong>Borlette</strong>
-            <span>Un jeu rapide avec des gains immédiats.</span>
-          </div>
-        </a>
-        <a class="game-card" href="jeux/mariage.html">
-          <div class="game-image-wrap">
-            <img src="assets/mariage.png" alt="Mariage" />
-          </div>
-          <div class="game-info">
-            <strong>Mariage</strong>
-            <span>Une expérience de tirage simple et élégante.</span>
-          </div>
-        </a>
-        <a class="game-card" href="jeux/lotto3.html">
-          <div class="game-image-wrap">
-            <img src="assets/lo3.png" alt="Lotto 3" />
-          </div>
-          <div class="game-info">
-            <strong>Lotto 3</strong>
-            <span>Un format accessible pour des paris rapides.</span>
-          </div>
-        </a>
-        <a class="game-card" href="jeux/lotto4.html">
-          <div class="game-image-wrap">
-            <img src="assets/lo4.png" alt="Lotto 4" />
-          </div>
-          <div class="game-info">
-            <strong>Lotto 4</strong>
-            <span>Des combinaisons plus larges pour plus d’options.</span>
-          </div>
-        </a>
-        <a class="game-card" href="jeux/lotto5.html">
-          <div class="game-image-wrap">
-            <img src="assets/lo5.png" alt="Lotto 5" />
-          </div>
-          <div class="game-info">
-            <strong>Lotto 5</strong>
-            <span>Un jeu premium avec un rythme de jeu fluide.</span>
-          </div>
-        </a>
-        <a class="game-card" href="jeux/keno.html">
-          <div class="game-image-wrap">
-            <img src="assets/keno.png" alt="Keno" />
-          </div>
-          <div class="game-info">
-            <strong>Keno</strong>
-            <span>Choisissez vos numéros et suivez le tirage.</span>
-          </div>
-        </a>
-      </div>
-      </div>
-      <div class="games-dots" aria-hidden="true" data-games-dots></div>
-    </section>
-
-    <section aria-labelledby="sports-title">
-      <div class="section-head"><h2 class="section-title" id="sports-title"><svg class="section-icon"><use href="#i-trophy"/></svg>Paris sportifs</h2><a class="see-all" href="jeux/games.html">Voir les jeux <span>›</span></a></div>
-      <div class="sports-coming-soon">
-        <p>Notre module de paris sportifs sera activé après intégration officielle des données sportives.</p>
-      </div>
-    </section>
-
-    <!-- SECTION CTA AVANT FOOTER -->
-    <section class="final-cta">
-      <div class="final-cta-content">
-        <span>Une plateforme locale pensée pour les joueurs</span>
-        <h2>Jouez. Gagnez.<br><strong>Profitez d’un espace simple et fiable.</strong></h2>
-        <p>Découvrez une plateforme locale pensée pour les joueurs en Haïti.</p>
-      </div>
-
-      <div class="final-cta-visual">
-        <img
-          src="assets/hero2.png"
-          alt="Promotion Tonton Kondo"
-          class="cta-image"
-        >
-      </div>
-    </section>
-
-    <!-- SECTION AVANTAGES -->
-    <section class="trust-grid">
-      <article>
-        <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.2 2.8 7.8 7 10 4.2-2.2 7-5.8 7-10V6l-7-3Z"/><path d="m9.5 12 1.8 1.8 3.2-3.5"/></svg></span>
-        <strong>Transactions protégées</strong>
-        <p>Des opérations sécurisées et contrôlées.</p>
-      </article>
-
-      <article>
-        <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2 4 6v6c0 5 3.4 8.7 9 10 5.6-1.3 9-5 9-10V6l-9-4Z"/><path d="M12 7v5l3 2"/></svg></span>
-        <strong>Rapide &amp; Fiable</strong>
-        <p>Mises instantanées et paiements rapides.</p>
-      </article>
-
-      <article>
-        <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0v4a1 1 0 0 1-1 1h-2"/><path d="M7 15h10a2 2 0 0 1 2 2v1H5v-1a2 2 0 0 1 2-2Z"/><path d="M9 19v1m6-1v1"/></svg></span>
-        <strong>Support client disponible</strong>
-        <p>Une assistance à votre disposition pour vous accompagner.</p>
-      </article>
-
-      <article>
-        <span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 8 7H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3l4 4V3Z"/><path d="M16 8a3 3 0 1 1 0 6"/></svg></span>
-        <strong>Bonus Exclusifs</strong>
-        <p>Des offres spéciales chaque semaine.</p>
-      </article>
-    </section>
-
-    <!-- MOYENS DE PAIEMENT -->
-    <section class="payment-section">
-      <h2>Moyens de paiement</h2>
-
-      <div class="payment-grid">
-        <div class="payment-card">
-          <h3>NatCash</h3>
-          <img src="assets/natcash.jpg" alt="NatCash" class="payment-logo">
-        </div>
-        <div class="payment-card">
-          <h3>MonCash</h3>
-          <img src="assets/moncash.png" alt="MonCash" class="payment-logo">
-        </div>
-        <div class="payment-card">
-          <h3>Sogebank</h3>
-          <img src="assets/sogebank.png" alt="Sogebank" class="payment-logo">
-        </div>
-        <div class="payment-card">
-          <h3>PayCash</h3>
-          <img src="assets/paycash.png" alt="PayCash" class="payment-logo">
-        </div>
-        <div class="payment-card">
-          <h3>Zelle</h3>
-          <img src="assets/zelle.png" alt="Zelle" class="payment-logo">
-        </div>
-        <div class="payment-card">
-          <h3>Western Union</h3>
-          <!-- Fichier image manquant : assets/western-union.png -->
-          <img src="assets/western-union.png" alt="Western Union" class="payment-logo">
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <img src="assets/reallogo.png" alt="Logo Tonton Kondo">
-          <p>La plateforme de paris et jeux en ligne conçue pour un parcours joueur clair, rapide et professionnel.</p>
-        </div>
-
-        <div class="footer-accordion">
-          <button class="footer-accordion-trigger" type="button" aria-expanded="false">
-            <span>Paris</span>
-            <span class="footer-accordion-icon">⌄</span>
-          </button>
-          <div class="footer-accordion-content">
-            <a href="index.html">Accueil</a>
-            <a href="results.html">Résultats</a>
-            <a href="jeux/games.html">Jeux</a>
-            <a href="tickets.html">Tickets</a>
-          </div>
-        </div>
-
-        <div class="footer-accordion">
-          <button class="footer-accordion-trigger" type="button" aria-expanded="false">
-            <span>Jeux</span>
-            <span class="footer-accordion-icon">⌄</span>
-          </button>
-          <div class="footer-accordion-content">
-            <a href="jeux/games.html">Tous les jeux</a>
-            <a href="jeux/borlette.html">Borlette</a>
-            <a href="jeux/mariage.html">Mariage</a>
-            <a href="jeux/lotto3.html">Lotto 3</a>
-            <a href="jeux/lotto4.html">Lotto 4</a>
-            <a href="jeux/lotto5.html">Lotto 5</a>
-          </div>
-        </div>
-
-        <div class="footer-accordion">
-          <button class="footer-accordion-trigger" type="button" aria-expanded="false">
-            <span>Compte</span>
-            <span class="footer-accordion-icon">⌄</span>
-          </button>
-          <div class="footer-accordion-content">
-            <a href="profile.html">Profil</a>
-            <a href="history.html">Historique</a>
-            <a href="wallet.html">Portefeuille</a>
-            <a href="deposit.html">Dépôt</a>
-            <a href="withdraw.html">Retrait</a>
-            <a href="tickets.html">Mes tickets</a>
-          </div>
-        </div>
-
-        <div class="footer-accordion">
-          <button class="footer-accordion-trigger" type="button" aria-expanded="false">
-            <span>Aide</span>
-            <span class="footer-accordion-icon">⌄</span>
-          </button>
-          <div class="footer-accordion-content">
-            <a href="index.html">Accueil</a>
-            <a href="results.html">Résultats</a>
-            <a href="tickets.html">Tickets</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>© 2025 Tonton Kondo Paryaj. Tous droits réservés.</p>
-        <p><strong>18+</strong> Jeu responsable. Pariez avec modération.</p>
-        <p>🔒 Plateforme sécurisée. Vos données sont protégées.</p>
-      </div>
-    </footer>
-  </div>
-
-  <button class="floating-coupon-btn" type="button" aria-label="Ouvrir le coupon de pari">
-    <span class="coupon-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span>
-    <span class="coupon-text">Coupon de pari</span>
-    <span class="coupon-badge">3</span>
-  </button>
-  <button class="back-to-top" id="backToTop" type="button" aria-label="Retour en haut">↑</button>
-
-  <nav class="bottom-nav" aria-label="Navigation mobile principale">
-    <a class="bottom-link active" href="index.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>Accueil</a>
-    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dices-icon lucide-dices"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg></span>Jeux</a>
-    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volleyball-icon lucide-volleyball"><path d="M11 7a16 16 20 0 1 10.98 4.362"/><path d="M12 12a13 13 0 0 1-8.66 5"/><path d="M16.83 13.634a16 16 0 0 1-9.267 7.328"/><path d="M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10"/><path d="M8.17 15.366a16 16 0 0 1-1.713-11.69"/><circle cx="12" cy="12" r="10"/></svg></span>Jeux</a>
-    <a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-signal-icon lucide-signal"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg></span>Résultats</a>
-    <a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span>Portefeuille</a>
-  </nav>
-
-  <!-- SVG sprite inline : aucune dépendance externe, maintenable par un autre développeur. -->
-  <svg width="0" height="0" style="position:absolute;visibility:hidden" aria-hidden="true">
-    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></symbol>
-    <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></symbol>
-    <symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m12 7 4 3-1.5 5h-5L8 10l4-3Z"/><path d="M12 7V3M8 10 4.5 8M16 10l3.5-2M9.5 15 7 20M14.5 15l2.5 5"/></symbol>
-    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="5" rx="1"/><rect x="12" y="7" width="3" height="9" rx="1"/><rect x="17" y="4" width="3" height="12" rx="1"/></symbol>
-    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></symbol>
-    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7h15a2 2 0 0 1 2 2v10H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h13"/><path d="M16 13h5"/><circle cx="17" cy="13" r="1"/></symbol>
-    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7Z"/><path d="M13 5v14"/></symbol>
-    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol>
-    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></symbol>
-    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0V4Z"/><path d="M8 6H4a3 3 0 0 0 3 3h1"/><path d="M16 6h4a3 3 0 0 1-3 3h-1"/><path d="M12 12v5"/><path d="M8 21h8"/><path d="M10 17h4"/></symbol>
-  </svg>
-
-  <script src="js/i18n.js"></script>
-  <script src="js/auth-config.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/auth-guard.js"></script>
-  <script>
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-index tk-file-index">
+<div class="app">
+<header aria-label="En-tête principal" class="mobile-header">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="index.html">
+<div class="brand-block">
+<img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
+<div class="brand-text">
+<span class="brand-top">TONTON</span>
+<span class="brand-middle">KONDO</span>
+<span class="brand-bottom">PARYAJ</span>
+</div>
+</div>
+</a>
+<div aria-label="Solde utilisateur" class="wallet-chip">
+<span><strong id="wallet-balance">Chargement…</strong><span id="wallet-label">Solde disponible</span></span>
+</div>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<button aria-label="Promotions" class="action-btn" type="button"><svg class="icon icon-lg"><use href="#i-gift"></use></svg><span class="badge">3</span></button>
+<a aria-label="Notifications" class="action-btn notifications-link" href="notifications.html">
+<svg class="icon icon-lg">
+<use href="img/icons.svg#notification-icon"></use>
+</svg>
+<span class="badge notifications-badge" hidden="">0</span>
+</a>
+<div class="user-menu-wrap" hidden="" id="userMenuWrap">
+<button aria-expanded="false" aria-label="Menu utilisateur" class="action-btn user-button" id="userMenuButton" type="button">
+<span class="user-avatar" id="userAvatar">U</span>
+</button>
+<div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
+<a class="user-menu-link" href="tickets.html">Tickets</a>
+<a class="user-menu-link" href="history.html">Historique</a>
+<a class="user-menu-link" href="results.html">Résultats</a>
+<a class="user-menu-link" href="deposit.html">Dépôt</a>
+<a class="user-menu-link" href="withdraw.html">Retrait</a>
+<a class="user-menu-link" href="wallet.html">Portefeuille</a>
+<a class="user-menu-link" href="profile.html">Profil</a>
+<a class="user-menu-link" href="settings.html">Paramètres</a>
+<div class="user-menu-divider"></div>
+<button class="user-menu-link user-menu-logout" id="logoutMenuBtn" type="button">Déconnexion</button>
+</div>
+</div>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a class="is-active" href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<main class="wow-home" id="main-content">
+<section aria-labelledby="wow-hero-title" class="wow-hero">
+<div class="wow-hero-copy">
+<span class="wow-kicker">Une nouvelle façon de jouer</span>
+<h1 id="wow-hero-title">Tout votre univers.<br/><span>Un seul mouvement.</span></h1>
+<p>Choisissez un jeu, suivez vos tickets et gérez votre solde depuis une expérience fluide pensée pour aller droit à l’essentiel.</p>
+<div class="wow-hero-actions" id="heroActions">
+<a class="wow-btn wow-btn-primary" href="jeux/games.html">Explorer les jeux <span aria-hidden="true">↗</span></a>
+<a class="wow-btn wow-btn-ghost" href="dashboard.html">Ouvrir mon espace</a>
+</div>
+<div aria-label="Avantages de la plateforme" class="wow-proof-line">
+<span><b>01</b> Simple à utiliser</span>
+<span><b>02</b> Paiements locaux</span>
+<span><b>03</b> Suivi instantané</span>
+</div>
+</div>
+<div aria-label="Aperçu des jeux" class="wow-hero-stage">
+<div class="wow-stage-mark">TK</div>
+<img alt="Univers Tonton Kondo" class="wow-stage-image" src="assets/heroimage.png"/>
+<div class="wow-stage-note wow-stage-note-top"><small>À la une</small><strong>Borlette &amp; Lotto</strong></div>
+<div class="wow-stage-note wow-stage-note-bottom"><span class="wow-live-dot"></span><strong>Expérience disponible 24/7</strong></div>
+</div>
+</section>
+<section aria-label="Résumé du compte joueur" class="wow-command">
+<div class="wow-command-intro">
+<span>Votre espace</span>
+<strong>Tout voir en un coup d’œil</strong>
+</div>
+<article class="wow-metric wow-metric-balance">
+<small>Solde disponible</small>
+<strong id="index-wallet-balance">Chargement…</strong>
+<span id="index-wallet-caption">Disponible pour jouer ou retirer</span>
+</article>
+<article class="wow-metric">
+<small>Tickets actifs</small>
+<strong id="activeTicketsCount">Chargement...</strong>
+<span id="ticketsSummary">Chargement...</span>
+</article>
+<article class="wow-metric">
+<small>Activité du jour</small>
+<strong id="dailyWinsAmount">Chargement...</strong>
+<span id="dailyBetsAmount">Chargement...</span>
+</article>
+<a aria-label="Ouvrir le portefeuille" class="wow-command-link" href="wallet.html">→</a>
+</section>
+<section aria-labelledby="popular-games-title" class="wow-discover">
+<div class="wow-section-copy">
+<span class="wow-section-index">01 / DÉCOUVRIR</span>
+<h2 id="popular-games-title">Choisissez votre rythme.</h2>
+<p>Des jeux rapides, des tirages familiers et une interface qui vous laisse toujours comprendre où vous êtes.</p>
+<a class="wow-text-link" href="jeux/games.html">Voir tous les jeux <span>→</span></a>
+</div>
+<div class="wow-games-panel games-carousel" data-games-carousel="">
+<div class="wow-games-toolbar">
+<span>Sélection du moment</span>
+<div class="games-nav">
+<button aria-label="Jeux précédents" class="games-nav-btn" data-games-prev="" type="button">←</button>
+<button aria-label="Jeux suivants" class="games-nav-btn" data-games-next="" type="button">→</button>
+</div>
+</div>
+<div class="games-row wow-games-row" id="popularGamesRow">
+<a class="wow-game wow-game-featured" href="jeux/borlette.html"><img alt="Borlette" src="assets/Lotterie.png"/><div><span>Classique local</span><strong>Borlette</strong><p>Composez vos numéros et suivez vos tirages.</p></div><b>01</b></a>
+<a class="wow-game" href="jeux/mariage.html"><img alt="Mariage" src="assets/mariage.png"/><div><span>Combinaison</span><strong>Mariage</strong><p>Deux numéros, une combinaison simple.</p></div><b>02</b></a>
+<a class="wow-game" href="jeux/lotto3.html"><img alt="Lotto 3" src="assets/lo3.png"/><div><span>Format rapide</span><strong>Lotto 3</strong><p>Trois chiffres pour jouer sans détour.</p></div><b>03</b></a>
+<a class="wow-game" href="jeux/lotto4.html"><img alt="Lotto 4" src="assets/lo4.png"/><div><span>Plus de choix</span><strong>Lotto 4</strong><p>Un format élargi pour vos combinaisons.</p></div><b>04</b></a>
+<a class="wow-game" href="jeux/lotto5.html"><img alt="Lotto 5" src="assets/lo5.png"/><div><span>Grand format</span><strong>Lotto 5</strong><p>Cinq chiffres, une expérience plus intense.</p></div><b>05</b></a>
+<a class="wow-game" href="jeux/keno.html"><img alt="Keno" src="assets/keno.png"/><div><span>Tirage instantané</span><strong>Keno</strong><p>Sélectionnez, validez, puis suivez le résultat.</p></div><b>06</b></a>
+</div>
+<div aria-hidden="true" class="games-dots" data-games-dots=""></div>
+</div>
+</section>
+<section aria-labelledby="wow-flow-title" class="wow-flow">
+<div class="wow-flow-visual"><img alt="Expérience Tonton Kondo" src="assets/hero2.png"/><span>De l’idée au ticket en quelques secondes.</span></div>
+<div class="wow-flow-copy">
+<span class="wow-section-index">02 / COMMENT ÇA MARCHE</span>
+<h2 id="wow-flow-title">Jouez sans vous perdre.</h2>
+<ol>
+<li><b>01</b><div><strong>Choisissez</strong><span>Accédez directement au jeu qui vous intéresse.</span></div></li>
+<li><b>02</b><div><strong>Validez</strong><span>Contrôlez votre sélection et votre mise avant confirmation.</span></div></li>
+<li><b>03</b><div><strong>Suivez</strong><span>Retrouvez votre ticket, son statut et le résultat au même endroit.</span></div></li>
+</ol>
+<a class="wow-btn wow-btn-primary" href="jeux/games.html">Commencer maintenant</a>
+</div>
+</section>
+<section aria-labelledby="wow-essentials-title" class="wow-essentials">
+<div class="wow-essentials-head"><span class="wow-section-index">03 / L’ESSENTIEL</span><h2 id="wow-essentials-title">Moins de bruit.<br/>Plus de contrôle.</h2></div>
+<div class="wow-essentials-list">
+<article><span>01</span><strong>Portefeuille clair</strong><p>Votre solde, vos dépôts et vos retraits restent faciles à retrouver.</p><a href="wallet.html">Ouvrir →</a></article>
+<article><span>02</span><strong>Tickets centralisés</strong><p>Consultez vos tickets récents, leurs détails et leurs statuts.</p><a href="tickets.html">Consulter →</a></article>
+<article><span>03</span><strong>Résultats accessibles</strong><p>Retrouvez les tirages publiés sans chercher dans plusieurs écrans.</p><a href="results.html">Voir les résultats →</a></article>
+</div>
+</section>
+<section aria-labelledby="wow-payments-title" class="wow-payments">
+<div><span class="wow-section-index">04 / PAIEMENTS</span><h2 id="wow-payments-title">Des moyens que vous connaissez déjà.</h2><p>Déposez ou retirez avec les solutions disponibles sur votre marché.</p></div>
+<div class="wow-payment-logos">
+<figure><img alt="NatCash" src="assets/natcash.jpg"/><figcaption>NatCash</figcaption></figure>
+<figure><img alt="MonCash" src="assets/moncash.png"/><figcaption>MonCash</figcaption></figure>
+<figure><img alt="Sogebank" src="assets/sogebank.png"/><figcaption>Sogebank</figcaption></figure>
+<figure><img alt="PayCash" src="assets/paycash.png"/><figcaption>PayCash</figcaption></figure>
+<figure><img alt="Zelle" src="assets/zelle.png"/><figcaption>Zelle</figcaption></figure>
+</div>
+</section>
+<section aria-label="Appel à l’action final" class="wow-final">
+<span>Prêt à commencer ?</span>
+<h2>Votre prochain ticket<br/>commence ici.</h2>
+<div><a class="wow-btn wow-btn-primary" href="jeux/games.html">Explorer les jeux</a><a class="wow-btn wow-btn-light" href="login-register/login.html">Se connecter</a></div>
+</section>
+<footer class="wow-footer">
+<div class="wow-footer-brand"><img alt="Logo Tonton Kondo" src="assets/reallogo.png"/><p>Une expérience de jeu claire, locale et conçue autour de l’essentiel.</p></div>
+<div class="wow-footer-links"><div><strong>Explorer</strong><a href="jeux/games.html">Jeux</a><a href="results.html">Résultats</a><a href="tickets.html">Tickets</a></div><div><strong>Compte</strong><a href="wallet.html">Portefeuille</a><a href="profile.html">Profil</a><a href="settings.html">Paramètres</a></div><div><strong>Actions</strong><a href="deposit.html">Dépôt</a><a href="withdraw.html">Retrait</a><a href="history.html">Historique</a></div></div>
+<div class="wow-footer-bottom"><span>© 2026 Tonton Kondo</span><span>18+ • Jouez avec modération</span><span>Vos données sont protégées</span></div>
+</footer>
+</main>
+</div>
+<button aria-label="Ouvrir le coupon de pari" class="floating-coupon-btn" type="button">
+<span class="coupon-icon"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="12" rx="2" width="20" x="2" y="6"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01"></path><path d="M18 12h.01"></path></svg></span>
+<span class="coupon-text">Coupon de pari</span>
+<span class="coupon-badge">3</span>
+</button>
+<button aria-label="Retour en haut" class="back-to-top" id="backToTop" type="button">↑</button>
+<nav aria-label="Navigation mobile principale" class="bottom-nav">
+<a class="bottom-link active" href="index.html"><span class="nav-icon-wrap"><svg class="lucide lucide-house-icon lucide-house" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span>Accueil</a>
+<a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg class="lucide lucide-dices-icon lucide-dices" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="12" rx="2" ry="2" width="12" x="2" y="10"></rect><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"></path><path d="M6 18h.01"></path><path d="M10 14h.01"></path><path d="M15 6h.01"></path><path d="M18 9h.01"></path></svg></span>Jeux</a>
+<a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg class="lucide lucide-volleyball-icon lucide-volleyball" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11 7a16 16 20 0 1 10.98 4.362"></path><path d="M12 12a13 13 0 0 1-8.66 5"></path><path d="M16.83 13.634a16 16 0 0 1-9.267 7.328"></path><path d="M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10"></path><path d="M8.17 15.366a16 16 0 0 1-1.713-11.69"></path><circle cx="12" cy="12" r="10"></circle></svg></span>Jeux</a>
+<a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg class="lucide lucide-signal-icon lucide-signal" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M2 20h.01"></path><path d="M7 20v-4"></path><path d="M12 20v-8"></path><path d="M17 20V8"></path><path d="M22 4v16"></path></svg></span>Résultats</a>
+<a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="12" rx="2" width="20" x="2" y="6"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01"></path><path d="M18 12h.01"></path></svg></span>Portefeuille</a>
+</nav>
+<!-- SVG sprite inline : aucune dépendance externe, maintenable par un autre développeur. -->
+<svg aria-hidden="true" height="0" style="position:absolute;visibility:hidden" width="0">
+<symbol id="i-home" viewbox="0 0 24 24"><path d="m3 10 9-7 9 7"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></symbol>
+<symbol id="i-dice" viewbox="0 0 24 24"><rect height="18" rx="4" width="18" x="3" y="3"></rect><circle cx="8" cy="8" r="1"></circle><circle cx="16" cy="8" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="8" cy="16" r="1"></circle><circle cx="16" cy="16" r="1"></circle></symbol>
+<symbol id="i-ball" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m12 7 4 3-1.5 5h-5L8 10l4-3Z"></path><path d="M12 7V3M8 10 4.5 8M16 10l3.5-2M9.5 15 7 20M14.5 15l2.5 5"></path></symbol>
+<symbol id="i-chart" viewbox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><rect height="5" rx="1" width="3" x="7" y="11"></rect><rect height="9" rx="1" width="3" x="12" y="7"></rect><rect height="12" rx="1" width="3" x="17" y="4"></rect></symbol>
+<symbol id="i-briefcase" viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="7"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><path d="M3 12h18"></path></symbol>
+<symbol id="i-wallet" viewbox="0 0 24 24"><path d="M4 7h15a2 2 0 0 1 2 2v10H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h13"></path><path d="M16 13h5"></path><circle cx="17" cy="13" r="1"></circle></symbol>
+<symbol id="i-ticket" viewbox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7Z"></path><path d="M13 5v14"></path></symbol>
+<symbol id="i-gift" viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></symbol>
+<symbol id="i-bell" viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></symbol>
+<symbol id="i-star" viewbox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></symbol>
+<symbol id="i-trophy" viewbox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0V4Z"></path><path d="M8 6H4a3 3 0 0 0 3 3h1"></path><path d="M16 6h4a3 3 0 0 1-3 3h-1"></path><path d="M12 12v5"></path><path d="M8 21h8"></path><path d="M10 17h4"></path></symbol>
+</svg>
+<script src="js/i18n.js"></script>
+<script src="js/auth-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
     function toggleUserMenu(event) {
       event?.stopPropagation();
       const userMenuButton = document.getElementById('userMenuButton');
@@ -1216,7 +1084,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -1225,4 +1093,3 @@
 </script>
 </body>
 </html>
-

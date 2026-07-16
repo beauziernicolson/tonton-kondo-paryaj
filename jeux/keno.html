@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Keno</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Keno</title>
+<style>
     :root {
       --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0;
       --gold:#ffd21f; --gold-2:#ffb900; --green:#46e36f; --red:#ff5d6c; --shadow:0 24px 60px rgba(0,0,0,.45);
@@ -76,109 +77,894 @@
     @media (max-width: 768px) { .grid-cell { grid-template-columns:repeat(10,minmax(0,1fr)); gap:6px; } .number-btn { min-height:40px; padding:8px 0; font-size:12px; } }
     @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .drawing-zone { grid-template-columns:repeat(auto-fit, minmax(40px, 1fr)); gap:6px; min-height:auto; padding:12px; } .ball { width:40px; height:40px; font-size:13px; } }
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo"><img src="../assets/reallogo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
-      <div class="header-actions">
-        <div id="authHeaderActions"></div>
-        <a class="back-btn" href="games.html">← Retour aux jeux</a>
-        <span class="pill">Keno</span>
-      </div>
-    </header>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
+<style id="keno-page-redesign">
+  .tk-file-keno {
+    --kn-navy:#071a35;
+    --kn-navy-2:#0c2d57;
+    --kn-yellow:#ffd21f;
+    --kn-yellow-2:#ffbf00;
+    --kn-page:#f4f7fb;
+    --kn-white:#ffffff;
+    --kn-text:#071a35;
+    --kn-muted:#526781;
+    --kn-border:#cbd8e8;
+    --kn-shadow:0 18px 45px rgba(7,26,53,.10);
+  }
 
-    <section class="hero-card">
-      <article>
-        <div class="eyebrow">Nouveau jeu</div>
-        <h1>Keno</h1>
-        <p>Choisissez vos numéros, placez votre mise et tentez votre chance instantanément.</p>
-        <div class="mini-chip">Sélectionnez entre 5 et 10 numéros</div>
-        <a class="help-link" href="help-keno.html" style="display:inline-flex; margin-top:12px; color:var(--gold); text-decoration:underline; font-size:13px;">Comprendre les règles</a>
-      </article>
-      <article class="field-grid">
-        <div class="field-card">
-          <label>Numéros choisis</label>
-          <div class="grid-info"><strong id="selected-count">0 / 10</strong><span id="warning-text"></span></div>
-          <div id="number-grid" class="grid-cell"></div>
-        </div>
-        <div class="field-card">
-          <label for="stake-input">Montant de la mise</label>
-          <input id="stake-input" type="number" min="1" placeholder="Montant de la mise" />
-          <div class="button-row">
-            <button id="quick-pick-btn" class="btn" type="button">Quick Pick</button>
-            <button id="clear-btn" class="btn" type="button">Effacer</button>
-            <button id="play-btn" class="btn btn-primary" type="button">Jouer</button>
-          </div>
-          <div id="feedback-box" class="feedback">Sélectionnez vos numéros puis validez.</div>
-        </div>
-      </article>
-    </section>
+  .tk-file-keno {
+    color:var(--kn-text)!important;
+    background:var(--kn-page)!important;
+  }
 
-    <section class="drawing-machine" id="drawing-machine" style="display:none;">
-      <div class="drawing-header">
-        <h2>Machine de tirage</h2>
-        <div class="match-counter" id="live-match-counter">Matchs : 0</div>
-      </div>
-      <div class="drawing-zone" id="drawing-zone"></div>
-    </section>
+  .tk-file-keno .app {
+    width:min(100%,1280px);
+    padding:18px 18px 48px;
+  }
 
-    <section class="content-grid">
-      <article class="panel result-card">
-        <div class="panel-head"><div><h2>Résultat Keno</h2><p>Affichage du résultat après validation du tirage.</p></div></div>
-        <div class="result-row"><span>Numéros choisis</span><strong id="chosen-numbers">Aucun</strong></div>
-        <div class="result-row"><span>Numéros tirés</span><strong id="drawn-numbers">En attente du résultat</strong></div>
-        <div class="result-row"><span>Matchs</span><strong id="matches-count">-</strong></div>
-        <div class="result-row"><span>Gain</span><strong id="gain-amount">-</strong></div>
-        <div class="result-row"><span>Ticket</span><strong id="ticket-number">-</strong></div>
-        <div class="result-row"><span>Mise</span><strong id="bet-amount">-</strong></div>
-        <div class="result-row"><span>Multiplicateur</span><strong id="payout-multiplier">-</strong></div>
-        <div class="result-row"><span>Statut</span><strong id="status-text">-</strong></div>
-      </article>
-      <article class="panel">
-        <div class="panel-head"><div><h2>Table de paiement</h2><p>Les gains sont affichés ici pour une expérience claire et professionnelle.</p></div></div>
-        <table class="payout-table">
-          <thead><tr><th>Numéros choisis</th><th>Matchs</th><th>Gain</th></tr></thead>
-          <tbody>
-            <tr><td>5</td><td>3</td><td>mise × 2</td></tr>
-            <tr><td>5</td><td>4</td><td>mise × 10</td></tr>
-            <tr><td>5</td><td>5</td><td>mise × 50</td></tr>
-            <tr><td>6</td><td>3</td><td>mise × 1</td></tr>
-            <tr><td>6</td><td>4</td><td>mise × 5</td></tr>
-            <tr><td>6</td><td>5</td><td>mise × 25</td></tr>
-            <tr><td>6</td><td>6</td><td>mise × 100</td></tr>
-            <tr><td>7</td><td>4</td><td>mise × 3</td></tr>
-            <tr><td>7</td><td>5</td><td>mise × 15</td></tr>
-            <tr><td>7</td><td>6</td><td>mise × 75</td></tr>
-            <tr><td>7</td><td>7</td><td>mise × 250</td></tr>
-            <tr><td>8</td><td>4</td><td>mise × 2</td></tr>
-            <tr><td>8</td><td>5</td><td>mise × 10</td></tr>
-            <tr><td>8</td><td>6</td><td>mise × 50</td></tr>
-            <tr><td>8</td><td>7</td><td>mise × 200</td></tr>
-            <tr><td>8</td><td>8</td><td>mise × 500</td></tr>
-            <tr><td>9</td><td>5</td><td>mise × 5</td></tr>
-            <tr><td>9</td><td>6</td><td>mise × 25</td></tr>
-            <tr><td>9</td><td>7</td><td>mise × 100</td></tr>
-            <tr><td>9</td><td>8</td><td>mise × 500</td></tr>
-            <tr><td>9</td><td>9</td><td>mise × 1000</td></tr>
-            <tr><td>10</td><td>5</td><td>mise × 2</td></tr>
-            <tr><td>10</td><td>6</td><td>mise × 10</td></tr>
-            <tr><td>10</td><td>7</td><td>mise × 50</td></tr>
-            <tr><td>10</td><td>8</td><td>mise × 250</td></tr>
-            <tr><td>10</td><td>9</td><td>mise × 1000</td></tr>
-            <tr><td>10</td><td>10</td><td>mise × 5000</td></tr>
-          </tbody>
-        </table>
-        <div class="panel-note">Le tirage sera confirmé lors de la validation pour une expérience fluide.</div>
-      </article>
-    </section>
-  </main>
+  .tk-file-keno .keno-hero {
+    display:block!important;
+    margin-bottom:18px;
+    padding:24px 28px;
+    border:0!important;
+    border-radius:22px;
+    background:
+      radial-gradient(circle at 92% 15%,rgba(255,210,31,.18),transparent 24%),
+      linear-gradient(135deg,var(--kn-navy),#0a2447)!important;
+    box-shadow:0 20px 50px rgba(7,26,53,.18);
+  }
 
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
-  <script>
+  .tk-file-keno .keno-hero h1 {
+    margin:0 0 8px;
+    color:#fff!important;
+    font-size:clamp(30px,4vw,48px);
+  }
+
+  .tk-file-keno .keno-hero p {
+    max-width:760px;
+    color:#dce8f6!important;
+  }
+
+  .tk-file-keno .keno-hero-actions {
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:16px;
+  }
+
+  .tk-file-keno .keno-hero .mini-chip {
+    margin:0;
+    border-color:#c9d7e8!important;
+    background:#eaf3ff!important;
+    color:#0b2c52!important;
+  }
+
+  .tk-file-keno .keno-help-link {
+    color:var(--kn-yellow)!important;
+    font-weight:800;
+    text-decoration:none!important;
+  }
+
+  .tk-file-keno .keno-layout {
+    display:grid;
+    grid-template-columns:minmax(0,1.22fr) minmax(340px,.78fr);
+    align-items:start;
+    gap:18px;
+  }
+
+  .tk-file-keno .keno-panel {
+    padding:18px;
+    border:1px solid var(--kn-border)!important;
+    border-radius:22px;
+    background:var(--kn-white)!important;
+    box-shadow:var(--kn-shadow);
+    color:var(--kn-text)!important;
+  }
+
+  .tk-file-keno .keno-side {
+    display:grid;
+    gap:18px;
+    position:sticky;
+    top:16px;
+  }
+
+  .tk-file-keno .panel-head {
+    padding-bottom:13px;
+    margin-bottom:14px;
+    border-bottom:1px solid #e2e9f2;
+  }
+
+  .tk-file-keno .panel-head h2,
+  .tk-file-keno .field-card label,
+  .tk-file-keno .result-row,
+  .tk-file-keno .result-row strong {
+    color:var(--kn-text)!important;
+  }
+
+  .tk-file-keno .panel-head p,
+  .tk-file-keno .field-card .note,
+  .tk-file-keno .panel-note {
+    color:var(--kn-muted)!important;
+  }
+
+  .tk-file-keno .field-card {
+    padding:14px;
+    border:1px solid var(--kn-border)!important;
+    border-radius:18px;
+    background:#fff!important;
+  }
+
+  .tk-file-keno .grid-info {
+    margin-bottom:12px;
+  }
+
+  .tk-file-keno .grid-info strong {
+    color:var(--kn-navy-2)!important;
+  }
+
+  .tk-file-keno .grid-cell {
+    display:grid!important;
+    grid-template-columns:repeat(10,minmax(0,1fr))!important;
+    gap:6px;
+  }
+
+  .tk-file-keno .number-btn {
+    min-width:0;
+    min-height:40px;
+    padding:4px 2px;
+    border:1px solid #b8c9dd!important;
+    border-radius:10px;
+    background:#fff!important;
+    color:var(--kn-text)!important;
+    font-size:13px;
+    font-weight:800;
+    box-shadow:0 4px 10px rgba(7,26,53,.04);
+  }
+
+  .tk-file-keno .number-btn:hover {
+    border-color:var(--kn-yellow-2)!important;
+    background:#fff8d8!important;
+    transform:translateY(-1px);
+  }
+
+  .tk-file-keno .number-btn.active {
+    border-color:var(--kn-yellow-2)!important;
+    background:linear-gradient(180deg,var(--kn-yellow),var(--kn-yellow-2))!important;
+    color:#07111f!important;
+    box-shadow:0 8px 18px rgba(255,191,0,.20);
+  }
+
+  .tk-file-keno .keno-controls input {
+    min-height:48px;
+    border:1px solid var(--kn-border)!important;
+    background:#fff!important;
+    color:var(--kn-text)!important;
+  }
+
+  .tk-file-keno .button-row {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .tk-file-keno .button-row .btn-primary {
+    grid-column:1 / -1;
+  }
+
+  .tk-file-keno .btn {
+    border-color:var(--kn-border)!important;
+    background:#fff!important;
+    color:var(--kn-text)!important;
+  }
+
+  .tk-file-keno .btn-primary {
+    min-height:50px;
+    border:0!important;
+    background:linear-gradient(180deg,var(--kn-yellow),var(--kn-yellow-2))!important;
+    color:#07111f!important;
+    box-shadow:0 10px 24px rgba(255,191,0,.22);
+  }
+
+  .tk-file-keno .feedback {
+    border-color:var(--kn-border)!important;
+    background:#f8fbff!important;
+    color:var(--kn-muted)!important;
+  }
+
+  .tk-file-keno .feedback.success {
+    border-color:#80d8a1!important;
+    background:#ecfbf1!important;
+    color:#0a6f38!important;
+  }
+
+  .tk-file-keno .feedback.warn {
+    border-color:#f2ca5e!important;
+    background:#fff8df!important;
+    color:#755500!important;
+  }
+
+  .tk-file-keno .feedback.error {
+    border-color:#f4a4aa!important;
+    background:#fff0f1!important;
+    color:#a31927!important;
+  }
+
+  .tk-file-keno .keno-bottom {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:18px;
+  }
+
+  .tk-file-keno .result-row {
+    border-color:var(--kn-border)!important;
+    background:#f8fbff!important;
+  }
+
+  .tk-file-keno .payout-wrap {
+    overflow-x:auto;
+  }
+
+  .tk-file-keno .payout-table {
+    min-width:520px;
+  }
+
+  .tk-file-keno .payout-table th {
+    color:var(--kn-navy-2)!important;
+  }
+
+  .tk-file-keno .payout-table td {
+    color:var(--kn-muted)!important;
+    border-bottom-color:#e2e9f2!important;
+  }
+
+  .tk-file-keno .drawing-machine {
+    margin-top:18px;
+    margin-bottom:0;
+    padding:18px;
+    border:1px solid var(--kn-border)!important;
+    border-radius:22px;
+    background:#fff!important;
+    box-shadow:var(--kn-shadow);
+    color:var(--kn-text)!important;
+  }
+
+  .tk-file-keno .drawing-header h2 {
+    color:var(--kn-text)!important;
+  }
+
+  .tk-file-keno .match-counter {
+    border-color:#f2ca5e!important;
+    background:#fff8df!important;
+    color:#755500!important;
+  }
+
+  .tk-file-keno .drawing-zone {
+    border-color:var(--kn-border)!important;
+    background:#f8fbff!important;
+  }
+
+  .tk-file-keno .ball {
+    border-color:#b8c9dd!important;
+    background:#fff!important;
+    color:var(--kn-text)!important;
+  }
+
+  .tk-file-keno .ball.match {
+    border-color:#80d8a1!important;
+    background:#ecfbf1!important;
+    color:#0a6f38!important;
+  }
+
+  @media(max-width:980px) {
+    .tk-file-keno .keno-layout {
+      grid-template-columns:1fr;
+    }
+
+    .tk-file-keno .keno-side {
+      position:static;
+      grid-template-columns:1fr 1fr;
+    }
+
+    .tk-file-keno .keno-bottom {
+      grid-template-columns:1fr;
+    }
+  }
+
+  @media(max-width:760px) {
+    .tk-file-keno .app {
+      padding:12px 10px 32px;
+    }
+
+    .tk-file-keno .keno-hero {
+      padding:20px 18px;
+      border-radius:18px;
+    }
+
+    .tk-file-keno .keno-layout {
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .tk-file-keno .keno-grid-panel {
+      order:1;
+      width:100%;
+    }
+
+    .tk-file-keno .keno-side {
+      order:2;
+      width:100%;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:14px;
+    }
+
+    .tk-file-keno .keno-panel {
+      padding:12px;
+      border-radius:18px;
+    }
+
+    .tk-file-keno .grid-cell {
+      grid-template-columns:repeat(10,minmax(0,1fr))!important;
+      gap:3px;
+    }
+
+    .tk-file-keno .number-btn {
+      min-height:32px;
+      padding:2px 0;
+      border-radius:7px;
+      font-size:10.5px;
+      line-height:1;
+    }
+
+    .tk-file-keno .button-row {
+      grid-template-columns:1fr;
+    }
+
+    .tk-file-keno .button-row .btn-primary {
+      grid-column:auto;
+    }
+
+    .tk-file-keno .drawing-zone {
+      grid-template-columns:repeat(8,minmax(0,1fr));
+      gap:6px;
+      min-height:auto;
+      padding:10px;
+    }
+
+    .tk-file-keno .ball {
+      width:36px;
+      height:36px;
+      font-size:12px;
+    }
+  }
+
+  @media(max-width:420px) {
+    .tk-file-keno .grid-cell {
+      gap:2px;
+    }
+
+    .tk-file-keno .number-btn {
+      min-height:30px;
+      font-size:10px;
+    }
+  }
+
+  @media(max-width:360px) {
+    .tk-file-keno .app {
+      padding-left:7px;
+      padding-right:7px;
+    }
+
+    .tk-file-keno .keno-panel {
+      padding:9px;
+    }
+
+    .tk-file-keno .number-btn {
+      min-height:28px;
+      font-size:9.3px;
+    }
+  }
+
+  /* Machine de tirage en fenêtre superposée */
+  .tk-file-keno .keno-draw-modal {
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    margin:0;
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  .tk-file-keno .keno-draw-modal.is-open {
+    display:flex!important;
+  }
+
+  .tk-file-keno .keno-draw-backdrop {
+    position:absolute;
+    inset:0;
+    background:rgba(3,11,26,.78);
+    backdrop-filter:blur(8px);
+  }
+
+  .tk-file-keno .keno-draw-dialog {
+    position:relative;
+    z-index:1;
+    width:min(920px,100%);
+    max-height:calc(100vh - 40px);
+    overflow:auto;
+    padding:22px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:24px;
+    background:#fff;
+    box-shadow:0 30px 90px rgba(0,0,0,.38);
+    color:var(--kn-text);
+  }
+
+  .tk-file-keno .keno-draw-dialog .drawing-header {
+    gap:16px;
+  }
+
+  .tk-file-keno .keno-draw-subtitle {
+    margin:4px 0 0;
+    color:var(--kn-muted);
+    font-size:13px;
+  }
+
+  .tk-file-keno .keno-draw-dialog .drawing-zone {
+    margin-top:16px;
+    min-height:230px;
+    grid-template-columns:repeat(10,minmax(0,1fr));
+  }
+
+  .tk-file-keno .keno-draw-message {
+    margin-top:16px;
+    padding:14px 16px;
+    border:1px solid var(--kn-border);
+    border-radius:14px;
+    background:#f8fbff;
+    color:var(--kn-text);
+    font-weight:800;
+    text-align:center;
+  }
+
+  .tk-file-keno .keno-draw-message.win {
+    border-color:#80d8a1;
+    background:#ecfbf1;
+    color:#0a6f38;
+  }
+
+  .tk-file-keno .keno-draw-message.loss {
+    border-color:#f2ca5e;
+    background:#fff8df;
+    color:#755500;
+  }
+
+  .tk-file-keno .keno-quit-button {
+    width:100%;
+    margin-top:14px;
+  }
+
+  body.keno-modal-open {
+    overflow:hidden;
+  }
+
+  @media(max-width:760px) {
+    .tk-file-keno .keno-draw-modal {
+      padding:10px;
+    }
+
+    .tk-file-keno .keno-draw-dialog {
+      max-height:calc(100vh - 20px);
+      padding:14px;
+      border-radius:18px;
+    }
+
+    .tk-file-keno .keno-draw-dialog .drawing-header {
+      align-items:flex-start;
+      flex-direction:column;
+    }
+
+    .tk-file-keno .keno-draw-dialog .drawing-zone {
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:8px;
+      min-height:0;
+    }
+
+    .tk-file-keno .keno-draw-dialog .ball {
+      width:44px;
+      height:44px;
+      font-size:14px;
+      justify-self:center;
+    }
+  }
+
+
+  /* Table de paiement compacte */
+  .tk-file-keno .payout-accordion {
+    display:grid;
+    gap:10px;
+    margin-top:4px;
+  }
+
+  .tk-file-keno .payout-group {
+    border:1px solid var(--kn-border);
+    border-radius:14px;
+    background:#f8fbff;
+    overflow:hidden;
+  }
+
+  .tk-file-keno .payout-group summary {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:13px 14px;
+    list-style:none;
+    cursor:pointer;
+    color:var(--kn-text);
+    font-weight:800;
+  }
+
+  .tk-file-keno .payout-group summary::-webkit-details-marker {
+    display:none;
+  }
+
+  .tk-file-keno .payout-group summary::after {
+    content:"+";
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:28px;
+    height:28px;
+    border-radius:999px;
+    background:#fff;
+    border:1px solid var(--kn-border);
+    color:var(--kn-navy-2);
+    font-size:18px;
+    line-height:1;
+    flex:0 0 auto;
+  }
+
+  .tk-file-keno .payout-group[open] summary::after {
+    content:"−";
+  }
+
+  .tk-file-keno .payout-group[open] summary {
+    border-bottom:1px solid var(--kn-border);
+    background:#fff8df;
+  }
+
+  .tk-file-keno .payout-group-title {
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .tk-file-keno .payout-group-title strong {
+    color:var(--kn-navy-2);
+  }
+
+  .tk-file-keno .payout-group-title span {
+    color:var(--kn-muted);
+    font-size:12px;
+    font-weight:700;
+  }
+
+  .tk-file-keno .payout-mini-list {
+    display:grid;
+    gap:0;
+    padding:4px 14px 10px;
+  }
+
+  .tk-file-keno .payout-mini-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:9px 0;
+    border-bottom:1px solid #e2e9f2;
+    color:var(--kn-muted);
+    font-size:13px;
+  }
+
+  .tk-file-keno .payout-mini-row:last-child {
+    border-bottom:0;
+  }
+
+  .tk-file-keno .payout-mini-row strong {
+    color:var(--kn-text);
+  }
+
+  .tk-file-keno .payout-mini-row span:last-child {
+    color:var(--kn-navy-2);
+    font-weight:800;
+    white-space:nowrap;
+  }
+
+  @media(max-width:760px) {
+    .tk-file-keno .payout-group summary {
+      padding:12px;
+    }
+
+    .tk-file-keno .payout-mini-list {
+      padding:4px 12px 8px;
+    }
+
+    .tk-file-keno .payout-mini-row {
+      font-size:12px;
+    }
+  }
+
+
+  .tk-file-keno .keno-left-stack {
+    display:grid;
+    gap:18px;
+    align-content:start;
+    min-width:0;
+  }
+
+  .tk-file-keno .keno-left-stack .payout-accordion {
+    margin-top:0;
+  }
+
+  @media(max-width:760px) {
+    .tk-file-keno .keno-left-stack {
+      order:1;
+      width:100%;
+      gap:14px;
+    }
+
+    .tk-file-keno .keno-side {
+      order:2;
+    }
+  }
+
+
+  /* Ordre mobile uniquement :
+     1. grille, 2. mise/actions, 3. résultat, 4. table de paiement. */
+  @media(max-width:760px) {
+    .tk-file-keno .keno-layout {
+      display:flex;
+      flex-direction:column;
+    }
+
+    .tk-file-keno .keno-left-stack,
+    .tk-file-keno .keno-side {
+      display:contents;
+    }
+
+    .tk-file-keno .keno-grid-panel {
+      order:1;
+      width:100%;
+    }
+
+    .tk-file-keno .keno-controls {
+      order:2;
+      width:100%;
+    }
+
+    .tk-file-keno .result-card {
+      order:3;
+      width:100%;
+    }
+
+    .tk-file-keno .keno-payout-panel {
+      order:4;
+      width:100%;
+    }
+  }
+
+</style>
+<meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-keno">
+<main class="app">
+<header class="topbar">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html"><img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<span class="pill">Keno</span>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="hero-card keno-hero">
+<article>
+<div class="eyebrow">Jeu instantané</div>
+<h1>Keno</h1>
+<p>Choisissez entre 5 et 10 numéros parmi 80, placez votre mise et lancez le tirage.</p>
+<div class="keno-hero-actions">
+<div class="mini-chip">Sélectionnez entre 5 et 10 numéros</div>
+<a class="keno-help-link" href="help-keno.html">Comprendre les règles</a>
+</div>
+</article>
+</section>
+
+<section class="keno-layout">
+<div class="keno-left-stack">
+<article class="keno-panel keno-grid-panel">
+<div class="panel-head">
+<div>
+<h2>Choisissez vos numéros</h2>
+<p>Sélectionnez entre 5 et 10 numéros parmi les 80 disponibles.</p>
+</div>
+</div>
+
+<div class="field-card">
+<label>Numéros choisis</label>
+<div class="grid-info">
+<strong id="selected-count">0 / 10</strong>
+<span id="warning-text"></span>
+</div>
+<div class="grid-cell" id="number-grid"></div>
+</div>
+</article>
+<article class="keno-panel keno-payout-panel">
+<div class="panel-head">
+<div>
+<h2>Table de paiement</h2>
+<p>Consultez les multiplicateurs selon vos matchs.</p>
+</div>
+</div>
+
+<div class="payout-accordion">
+<details class="payout-group" open>
+<summary>
+<span class="payout-group-title"><strong>5 numéros</strong><span>3 niveaux de gain</span></span>
+</summary>
+<div class="payout-mini-list">
+<div class="payout-mini-row"><span><strong>3</strong> matchs</span><span>Mise × 2</span></div>
+<div class="payout-mini-row"><span><strong>4</strong> matchs</span><span>Mise × 10</span></div>
+<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 50</span></div>
+</div>
+</details>
+
+<details class="payout-group">
+<summary>
+<span class="payout-group-title"><strong>6 numéros</strong><span>4 niveaux de gain</span></span>
+</summary>
+<div class="payout-mini-list">
+<div class="payout-mini-row"><span><strong>3</strong> matchs</span><span>Mise × 1</span></div>
+<div class="payout-mini-row"><span><strong>4</strong> matchs</span><span>Mise × 5</span></div>
+<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 25</span></div>
+<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 100</span></div>
+</div>
+</details>
+
+<details class="payout-group">
+<summary>
+<span class="payout-group-title"><strong>7 numéros</strong><span>4 niveaux de gain</span></span>
+</summary>
+<div class="payout-mini-list">
+<div class="payout-mini-row"><span><strong>4</strong> matchs</span><span>Mise × 3</span></div>
+<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 15</span></div>
+<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 75</span></div>
+<div class="payout-mini-row"><span><strong>7</strong> matchs</span><span>Mise × 250</span></div>
+</div>
+</details>
+
+<details class="payout-group">
+<summary>
+<span class="payout-group-title"><strong>8 numéros</strong><span>5 niveaux de gain</span></span>
+</summary>
+<div class="payout-mini-list">
+<div class="payout-mini-row"><span><strong>4</strong> matchs</span><span>Mise × 2</span></div>
+<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 10</span></div>
+<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 50</span></div>
+<div class="payout-mini-row"><span><strong>7</strong> matchs</span><span>Mise × 200</span></div>
+<div class="payout-mini-row"><span><strong>8</strong> matchs</span><span>Mise × 500</span></div>
+</div>
+</details>
+
+<details class="payout-group">
+<summary>
+<span class="payout-group-title"><strong>9 numéros</strong><span>5 niveaux de gain</span></span>
+</summary>
+<div class="payout-mini-list">
+<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 5</span></div>
+<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 25</span></div>
+<div class="payout-mini-row"><span><strong>7</strong> matchs</span><span>Mise × 100</span></div>
+<div class="payout-mini-row"><span><strong>8</strong> matchs</span><span>Mise × 500</span></div>
+<div class="payout-mini-row"><span><strong>9</strong> matchs</span><span>Mise × 1000</span></div>
+</div>
+</details>
+
+<details class="payout-group">
+<summary>
+<span class="payout-group-title"><strong>10 numéros</strong><span>6 niveaux de gain</span></span>
+</summary>
+<div class="payout-mini-list">
+<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 2</span></div>
+<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 10</span></div>
+<div class="payout-mini-row"><span><strong>7</strong> matchs</span><span>Mise × 50</span></div>
+<div class="payout-mini-row"><span><strong>8</strong> matchs</span><span>Mise × 250</span></div>
+<div class="payout-mini-row"><span><strong>9</strong> matchs</span><span>Mise × 1000</span></div>
+<div class="payout-mini-row"><span><strong>10</strong> matchs</span><span>Mise × 5000</span></div>
+</div>
+</details>
+</div>
+<div class="panel-note">Ouvrez uniquement la catégorie correspondant au nombre de numéros joués.</div>
+</article>
+</div>
+
+<aside class="keno-side">
+<article class="keno-panel keno-controls">
+<div class="panel-head">
+<div>
+<h2>Mise et actions</h2>
+<p>Définissez votre mise, puis lancez la partie.</p>
+</div>
+</div>
+
+<div class="field-card">
+<label for="stake-input">Montant de la mise</label>
+<input id="stake-input" min="1" placeholder="Montant de la mise" type="number"/>
+<div class="button-row">
+<button class="btn" id="quick-pick-btn" type="button">Quick Pick</button>
+<button class="btn" id="clear-btn" type="button">Effacer</button>
+<button class="btn btn-primary" id="play-btn" type="button">Jouer</button>
+</div>
+<div class="feedback" id="feedback-box">Sélectionnez vos numéros puis validez.</div>
+</div>
+</article>
+
+<article class="keno-panel result-card">
+<div class="panel-head">
+<div>
+<h2>Résultat Keno</h2>
+<p>Le résultat de votre partie apparaîtra ici.</p>
+</div>
+</div>
+<div class="result-row"><span>Numéros choisis</span><strong id="chosen-numbers">Aucun</strong></div>
+<div class="result-row"><span>Numéros tirés</span><strong id="drawn-numbers">En attente du résultat</strong></div>
+<div class="result-row"><span>Matchs</span><strong id="matches-count">-</strong></div>
+<div class="result-row"><span>Gain</span><strong id="gain-amount">-</strong></div>
+<div class="result-row"><span>Ticket</span><strong id="ticket-number">-</strong></div>
+<div class="result-row"><span>Mise</span><strong id="bet-amount">-</strong></div>
+<div class="result-row"><span>Multiplicateur</span><strong id="payout-multiplier">-</strong></div>
+<div class="result-row"><span>Statut</span><strong id="status-text">-</strong></div>
+</article>
+</aside>
+</section>
+
+<section aria-hidden="true" class="drawing-machine keno-draw-modal" id="drawing-machine" style="display:none;">
+<div class="keno-draw-backdrop"></div>
+<div aria-labelledby="keno-draw-title" aria-modal="true" class="keno-draw-dialog" role="dialog">
+<div class="drawing-header">
+<div>
+<div class="eyebrow">Tirage en direct</div>
+<h2 id="keno-draw-title">Machine de tirage</h2>
+<p class="keno-draw-subtitle">Les numéros apparaissent un à un.</p>
+</div>
+<div class="match-counter" id="live-match-counter">Matchs : 0</div>
+</div>
+
+<div class="drawing-zone" id="drawing-zone"></div>
+
+<div aria-live="polite" class="keno-draw-message" id="keno-draw-message">
+Bonne chance ! Le tirage commence.
+</div>
+
+<button class="btn btn-primary keno-quit-button" id="keno-quit-btn" style="display:none;" type="button">
+Quitter
+</button>
+</div>
+</section>
+
+
+
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script>
     const selectedNumbers = [];
     const numberGrid = document.getElementById('number-grid');
     const selectedCount = document.getElementById('selected-count');
@@ -199,6 +985,8 @@
     const drawingMachine = document.getElementById('drawing-machine');
     const drawingZone = document.getElementById('drawing-zone');
     const liveMatchCounter = document.getElementById('live-match-counter');
+    const drawMessage = document.getElementById('keno-draw-message');
+    const quitDrawBtn = document.getElementById('keno-quit-btn');
 
     function setFeedback(message, type) {
       feedbackBox.className = 'feedback';
@@ -304,6 +1092,23 @@
       return window.getCurrentUser ? window.getCurrentUser() : null;
     }
 
+    function openKenoDrawModal() {
+      drawingMachine.style.display = 'flex';
+      drawingMachine.classList.add('is-open');
+      drawingMachine.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('keno-modal-open');
+      quitDrawBtn.style.display = 'none';
+      drawMessage.className = 'keno-draw-message';
+      drawMessage.textContent = 'Bonne chance ! Le tirage commence.';
+    }
+
+    function closeKenoDrawModal() {
+      drawingMachine.classList.remove('is-open');
+      drawingMachine.style.display = 'none';
+      drawingMachine.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('keno-modal-open');
+    }
+
     function resetKenoResult() {
       chosenNumbersEl.textContent = selectedNumbers.length ? selectedNumbers.join(', ') : 'Aucun';
       drawnNumbersEl.textContent = 'En attente du backend';
@@ -314,8 +1119,13 @@
       payoutMultiplierEl.textContent = '-';
       statusTextEl.textContent = '-';
       drawingMachine.style.display = 'none';
+      drawingMachine.classList.remove('is-open');
+      drawingMachine.setAttribute('aria-hidden', 'true');
       drawingZone.innerHTML = '';
       liveMatchCounter.textContent = 'Matchs : 0';
+      quitDrawBtn.style.display = 'none';
+      drawMessage.className = 'keno-draw-message';
+      drawMessage.textContent = 'Bonne chance ! Le tirage commence.';
     }
 
     function renderBall(number, isMatch) {
@@ -339,8 +1149,8 @@
         return;
       }
 
-      // Afficher la machine de tirage
-      drawingMachine.style.display = 'block';
+      // Afficher la machine de tirage dans une fenêtre superposée
+      openKenoDrawModal();
       drawingZone.innerHTML = '';
       liveMatchCounter.textContent = 'Matchs : 0';
       setFeedback('Tirage en cours...', 'warn');
@@ -381,11 +1191,16 @@
         return renderDrawnNumber(n, isMatch);
       }).join('');
 
-      // Message final
-      const finalMessage = result.win_amount > 0 
-        ? `Félicitations, vous avez gagné ${Number(result.win_amount).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG` 
-        : 'Pas de gain cette fois. Réessayez.';
-      setFeedback(finalMessage, result.win_amount > 0 ? 'success' : 'warn');
+      // Message final dans la fenêtre de tirage
+      const hasWon = Number(result.win_amount || 0) > 0;
+      const finalMessage = hasWon
+        ? `Félicitations ! Vous avez gagné ${Number(result.win_amount).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG 🎉`
+        : 'Pas de gain cette fois, mais ne vous découragez pas. Votre prochaine partie peut être la bonne !';
+
+      drawMessage.className = `keno-draw-message ${hasWon ? 'win' : 'loss'}`;
+      drawMessage.textContent = finalMessage;
+      quitDrawBtn.style.display = 'inline-flex';
+      setFeedback(finalMessage, hasWon ? 'success' : 'warn');
     }
 
     async function playKeno() {
@@ -468,11 +1283,12 @@
     quickPickBtn.addEventListener('click', quickPick);
     clearBtn.addEventListener('click', clearSelection);
     playBtn.addEventListener('click', playKeno);
+    quitDrawBtn.addEventListener('click', closeKenoDrawModal);
 
     renderGrid();
     resetKenoResult();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="ht">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Course Cheval - Tonton Kondo</title>
 <style>
   :root {
@@ -306,63 +307,385 @@
     .btn { min-width: 100%; }
   }
 </style>
-</head>
-<body id="horse-race-page">
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
+<style id="horse-racing-redesign">
+.topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
 
-<header>
-  <div class="brand">
-    <div class="brand-badge">TK</div>
-    <div>Tonton Kondo</div>
-  </div>
-  <div class="balance">
-    <span>💰</span>
-    <span>Balans:</span>
-    <span id="user-balance">Solde démo</span>
-  </div>
-</header>
+.brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
 
+.brand img {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      object-fit: contain;
+      background: rgba(255,255,255,.04);
+      padding: 6px;
+      border: 1px solid var(--line);
+    }
+
+.brand-text strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: .04em;
+    }
+
+.brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .35em;
+    }
+
+.pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(8,24,43,.92);
+      color: #fff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+.header-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+.back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(8,24,43,.92);
+      color: #fff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+@media (max-width: 740px) {
+  .topbar { flex-direction: column; align-items: flex-start; }
+}
+
+.tk-file-horse-racing {
+  --hr-navy:#071a35; --hr-navy-2:#0c2d57; --hr-yellow:#ffd21f;
+  --hr-yellow-2:#ffbf00; --hr-page:#f4f7fb; --hr-text:#071a35;
+  --hr-muted:#526781; --hr-border:#cbd8e8; --hr-shadow:0 18px 45px rgba(7,26,53,.10);
+  background:var(--hr-page)!important; color:var(--hr-text)!important;
+}
+.tk-file-horse-racing main { width:min(100%,1280px); max-width:none; padding:18px 18px 48px; }
+.tk-file-horse-racing .horse-hero {
+  margin-bottom:18px; padding:24px 28px; border-radius:22px;
+  background:radial-gradient(circle at 92% 15%,rgba(255,210,31,.18),transparent 24%),linear-gradient(135deg,var(--hr-navy),#0a2447)!important;
+  box-shadow:0 20px 50px rgba(7,26,53,.18);
+}
+.tk-file-horse-racing .horse-hero .title {
+  margin:0 0 8px; text-align:left; color:#fff!important; background:none!important;
+  -webkit-text-fill-color:initial; font-size:clamp(30px,4vw,46px);
+}
+.tk-file-horse-racing .horse-hero .subtitle { margin:0; max-width:760px; text-align:left; color:#dce8f6!important; }
+.tk-file-horse-racing .horse-layout {
+  display:grid; grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr); gap:18px; align-items:start;
+}
+.tk-file-horse-racing .horse-selection-panel,
+.tk-file-horse-racing .bet-panel,
+.tk-file-horse-racing .track-wrap {
+  border:1px solid var(--hr-border)!important; border-radius:22px; background:#fff!important;
+  color:var(--hr-text)!important; box-shadow:var(--hr-shadow);
+}
+.tk-file-horse-racing .horse-selection-panel { padding:18px; }
+.tk-file-horse-racing .bet-panel { position:sticky; top:16px; padding:18px; margin:0; }
+.tk-file-horse-racing .horse-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:0; }
+.tk-file-horse-racing .horse-card {
+  border-color:var(--hr-border)!important; background:#fff!important; color:var(--hr-text)!important;
+  box-shadow:0 8px 20px rgba(7,26,53,.06);
+}
+.tk-file-horse-racing .horse-card:hover { border-color:var(--hr-yellow-2)!important; }
+.tk-file-horse-racing .horse-card.selected { border-color:var(--hr-yellow-2)!important; box-shadow:0 0 0 2px rgba(255,191,0,.20),0 12px 28px rgba(7,26,53,.10); }
+.tk-file-horse-racing .horse-card.winner { border-color:#80d8a1!important; }
+.tk-file-horse-racing .horse-num { background:#f1f6fc!important; color:var(--hr-navy-2)!important; }
+.tk-file-horse-racing .horse-odds { background:linear-gradient(180deg,var(--hr-yellow),var(--hr-yellow-2))!important; color:#07111f!important; }
+.tk-file-horse-racing .horse-name { color:var(--hr-text)!important; }
+.tk-file-horse-racing .horse-color-label,
+.tk-file-horse-racing .summary-row .k,
+.tk-file-horse-racing .amount-wrap label,
+.tk-file-horse-racing .feedback { color:var(--hr-muted)!important; }
+.tk-file-horse-racing .summary-row .v { color:var(--hr-navy-2)!important; }
+.tk-file-horse-racing input#bet-amount { border-color:var(--hr-border)!important; background:#fff!important; color:var(--hr-text)!important; }
+.tk-file-horse-racing .btn-secondary { border:1px solid var(--hr-border)!important; background:#fff!important; color:var(--hr-text)!important; }
+.tk-file-horse-racing .btn-primary { background:linear-gradient(180deg,var(--hr-yellow),var(--hr-yellow-2))!important; color:#07111f!important; }
+.tk-file-horse-racing .balance-card {
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+  padding:12px 14px; border:1px solid var(--hr-border); border-radius:14px; background:#f8fbff;
+}
+.tk-file-horse-racing .balance-card span { color:var(--hr-muted); }
+.tk-file-horse-racing .balance-card strong { color:var(--hr-navy-2); }
+.tk-file-horse-racing .track-wrap { margin-top:18px; padding:18px; overflow:hidden; }
+.tk-file-horse-racing .track-header { color:var(--hr-text)!important; }
+.tk-file-horse-racing .leader-badge { border-color:var(--hr-border)!important; background:#f8fbff!important; color:var(--hr-navy-2)!important; }
+.tk-file-horse-racing .lane { background:linear-gradient(180deg,#dff4e7,#cdebd8)!important; border:1px solid #b8d6c3; }
+.tk-file-horse-racing .lane-num { background:var(--hr-navy)!important; color:var(--hr-yellow)!important; }
+.tk-file-horse-racing .runner__label,
+.tk-file-horse-racing .horse-runner__label { background:var(--hr-navy)!important; color:var(--hr-yellow)!important; }
+.tk-file-horse-racing .race-result { border-color:var(--hr-border)!important; background:#f8fbff!important; color:var(--hr-text)!important; }
+.tk-file-horse-racing .race-result h3 { color:var(--hr-navy-2)!important; }
+
+@media(max-width:980px) {
+  .tk-file-horse-racing .horse-layout { grid-template-columns:1fr; }
+  .tk-file-horse-racing .bet-panel { position:static; }
+}
+@media(max-width:760px) {
+  .tk-file-horse-racing main { padding:12px 10px 32px; }
+  .tk-file-horse-racing .horse-hero { padding:20px 18px; border-radius:18px; }
+  .tk-file-horse-racing .horse-layout { display:flex; flex-direction:column; gap:14px; }
+  .tk-file-horse-racing .horse-selection-panel { order:1; width:100%; padding:12px; border-radius:18px; }
+  .tk-file-horse-racing .bet-panel { order:2; width:100%; padding:14px; border-radius:18px; }
+  .tk-file-horse-racing .horse-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .tk-file-horse-racing .horse-card { padding:10px; border-radius:14px; }
+  .tk-file-horse-racing .horse-visual { height:72px; margin:18px 0 8px; }
+  .tk-file-horse-racing .horse-name { font-size:14px; }
+  .tk-file-horse-racing .horse-color-label { font-size:10px; }
+  .tk-file-horse-racing .amount-wrap { flex-direction:column; align-items:stretch; }
+  .tk-file-horse-racing .amount-wrap label { min-width:0; }
+  .tk-file-horse-racing .actions { display:grid; grid-template-columns:1fr 1fr; }
+  .tk-file-horse-racing .btn { min-width:0; min-height:48px; padding:12px 10px; }
+  .tk-file-horse-racing .track-wrap { margin-top:14px; padding:12px 8px; border-radius:18px; }
+  .tk-file-horse-racing .track-header { align-items:flex-start; flex-direction:column; gap:8px; }
+  .tk-file-horse-racing .track-header > div { width:100%; justify-content:space-between; }
+  .tk-file-horse-racing .lane { height:40px; margin-bottom:6px; }
+  .tk-file-horse-racing .runner, .tk-file-horse-racing .horse-runner { left:32px; width:58px; height:38px; }
+  .tk-file-horse-racing .lane-num { left:5px; width:22px; height:22px; font-size:10px; }
+  .tk-file-horse-racing .finish-line { right:3px; width:6px; }
+}
+@media(max-width:390px) {
+  .tk-file-horse-racing .horse-grid { gap:6px; }
+  .tk-file-horse-racing .horse-card { padding:8px; }
+  .tk-file-horse-racing .horse-visual { height:64px; }
+  .tk-file-horse-racing .actions { grid-template-columns:1fr; }
+}
+
+.tk-file-horse-racing .horse-race-modal {
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.tk-file-horse-racing .horse-race-modal.is-open {
+  display:flex!important;
+}
+
+.tk-file-horse-racing .horse-race-backdrop {
+  position:absolute;
+  inset:0;
+  background:rgba(3,11,26,.80);
+  backdrop-filter:blur(8px);
+}
+
+.tk-file-horse-racing .horse-race-dialog {
+  position:relative;
+  z-index:1;
+  width:min(1050px,100%);
+  max-height:calc(100vh - 40px);
+  overflow:auto;
+  padding:22px;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 30px 90px rgba(0,0,0,.40);
+}
+
+.tk-file-horse-racing .horse-race-dialog .track-header {
+  margin-bottom:12px;
+}
+
+.tk-file-horse-racing .horse-race-dialog .track-header h2 {
+  margin:4px 0 0;
+  color:var(--hr-text);
+}
+
+.tk-file-horse-racing .horse-race-track-popup {
+  margin-top:12px;
+  padding:14px;
+  border-radius:18px;
+  background:#f8fbff!important;
+  box-shadow:none;
+}
+
+.tk-file-horse-racing .horse-race-message {
+  margin-top:14px;
+  padding:14px 16px;
+  border:1px solid var(--hr-border);
+  border-radius:14px;
+  background:#f8fbff;
+  color:var(--hr-text);
+  text-align:center;
+  font-weight:800;
+}
+
+.tk-file-horse-racing .horse-race-message.win {
+  border-color:#80d8a1;
+  background:#ecfbf1;
+  color:#0a6f38;
+}
+
+.tk-file-horse-racing .horse-race-message.loss {
+  border-color:#f2ca5e;
+  background:#fff8df;
+  color:#755500;
+}
+
+.tk-file-horse-racing .horse-race-quit-btn {
+  width:100%;
+  margin-top:14px;
+}
+
+body.horse-race-modal-open {
+  overflow:hidden;
+}
+
+@media(max-width:760px) {
+  .tk-file-horse-racing .horse-race-modal {
+    padding:10px;
+  }
+
+  .tk-file-horse-racing .horse-race-dialog {
+    max-height:calc(100vh - 20px);
+    padding:14px;
+    border-radius:18px;
+  }
+
+  .tk-file-horse-racing .horse-race-dialog .track-header {
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .tk-file-horse-racing .horse-race-dialog .track-header > div:last-child {
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .tk-file-horse-racing .horse-race-track-popup {
+    padding:10px 6px;
+  }
+
+  .tk-file-horse-racing .horse-race-dialog .lane {
+    height:38px;
+  }
+
+  .tk-file-horse-racing .horse-race-dialog .runner,
+  .tk-file-horse-racing .horse-race-dialog .horse-runner {
+    width:54px;
+    height:36px;
+  }
+}
+
+</style>
+<meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-horse-racing" id="horse-race-page">
+<header class="topbar">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<span class="pill">Course Cheval</span>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <main>
-  <h1 class="title">Chwazi yon chwal</h1>
-  <p class="subtitle">Chwazi chwal ou, mete montan ou, epi kòmanse kous la!</p>
+<section class="horse-hero">
+<h1 class="title">Course Cheval</h1>
+<p class="subtitle">Choisissez votre cheval, définissez votre mise, puis lancez la course.</p>
+</section>
 
-  <div class="horse-grid" id="horse-list"></div>
+<section class="horse-layout">
+<article class="horse-selection-panel">
+<div class="horse-grid" id="horse-list"></div>
+</article>
 
-  <div class="bet-panel">
-    <div class="summary-row">
-      <div><span class="k">Chwal chwazi:</span> <span class="v" id="selected-horse">Okenn</span></div>
-      <div><span class="k">Cote:</span> <span class="v" id="selected-odds">—</span></div>
-    </div>
-    <div class="summary-row">
-      <div><span class="k">Gain potansyèl:</span> <span class="v" id="potential-gain">0 HTG</span></div>
-      <div><span class="k">Status:</span> <span class="v" id="race-status">Pare</span></div>
-    </div>
-    <div class="amount-wrap">
-      <label for="bet-amount">Montan mize</label>
-      <input type="number" id="bet-amount" min="1" placeholder="0" />
-    </div>
-    <div class="actions">
-      <button class="btn btn-secondary" id="clear-race-btn">Efase tout</button>
-      <button class="btn btn-primary" id="start-race-btn">Kòmanse</button>
-    </div>
-    <div class="feedback" id="feedback-message"></div>
-  </div>
+<aside class="bet-panel">
+<div class="balance-card"><span>Solde disponible</span><strong id="user-balance">Chargement...</strong></div>
+<div class="summary-row">
+<div><span class="k">Cheval choisi :</span> <span class="v" id="selected-horse">Aucun</span></div>
+<div><span class="k">Cote :</span> <span class="v" id="selected-odds">—</span></div>
+</div>
+<div class="summary-row">
+<div><span class="k">Gain potentiel :</span> <span class="v" id="potential-gain">0 HTG</span></div>
+<div><span class="k">Statut :</span> <span class="v" id="race-status">Prêt</span></div>
+</div>
+<div class="amount-wrap">
+<label for="bet-amount">Montant de la mise</label>
+<input id="bet-amount" min="1" placeholder="0" type="number"/>
+</div>
+<div class="actions">
+<button class="btn btn-secondary" id="clear-race-btn">Effacer</button>
+<button class="btn btn-primary" id="start-race-btn">Commencer</button>
+</div>
+<div class="feedback" id="feedback-message"></div>
+</aside>
+</section>
 
-  <div class="track-wrap">
-    <div class="track-header">
-      <span>🏁 Piste kous la</span>
-      <div style="display:flex;gap:10px;align-items:center">
-        <span id="race-status-inline">Pare</span>
-        <span id="race-timer">00:10</span>
-      </div>
-    </div>
-    <div class="leader-badge" id="leader-badge">En tête : —</div>
-    <div id="race-track"></div>
-    <div class="race-result" id="race-result"></div>
-  </div>
+<section aria-hidden="true" class="horse-race-modal" id="horse-race-modal">
+<div class="horse-race-backdrop"></div>
+<div aria-modal="true" class="horse-race-dialog" role="dialog">
+<div class="track-header">
+<div>
+<div class="eyebrow">Course en direct</div>
+<h2>Piste de course</h2>
+</div>
+<div style="display:flex;gap:10px;align-items:center">
+<span id="race-status-inline">Prêt</span>
+<span id="race-timer">00:10</span>
+</div>
+</div>
+
+<div class="leader-badge" id="leader-badge">En tête : —</div>
+<div class="track-wrap horse-race-track-popup">
+<div id="race-track"></div>
+</div>
+
+<div class="race-result" id="race-result"></div>
+
+<div aria-live="polite" class="horse-race-message" id="horse-race-message">
+Bonne chance ! La course va commencer.
+</div>
+
+<button class="btn btn-primary horse-race-quit-btn" id="horse-race-quit-btn" style="display:none;" type="button">
+Quitter
+</button>
+</div>
+</section>
 </main>
-
 <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
+<script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script>
   const HORSES = [
@@ -518,6 +841,24 @@
   const $selectedOdds   = document.getElementById("selected-odds");
   const $status        = document.getElementById("race-status");
   const $statusInline   = document.getElementById("race-status-inline");
+  const $raceModal      = document.getElementById("horse-race-modal");
+  const $raceMessage    = document.getElementById("horse-race-message");
+  const $raceQuitBtn    = document.getElementById("horse-race-quit-btn");
+
+  function openHorseRaceModal() {
+    $raceModal.classList.add("is-open");
+    $raceModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("horse-race-modal-open");
+    $raceQuitBtn.style.display = "none";
+    $raceMessage.className = "horse-race-message";
+    $raceMessage.textContent = "Bonne chance ! La course va commencer.";
+  }
+
+  function closeHorseRaceModal() {
+    $raceModal.classList.remove("is-open");
+    $raceModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("horse-race-modal-open");
+  }
 
   function initHorseRace() {
     renderHorseCards();
@@ -528,6 +869,7 @@
     });
     $clearBtn.addEventListener("click", clearHorseSelection);
     $startBtn.addEventListener("click", playHorseRace);
+    $raceQuitBtn.addEventListener("click", closeHorseRaceModal);
     updateHorseSummary();
   }
 
@@ -760,6 +1102,16 @@
     $result.classList.add('show');
     horseRaceState.lastResult = result;
     updateHorseCardState();
+
+    const hasWon = gainAmount > 0;
+    if (hasWon) {
+      $raceMessage.className = 'horse-race-message win';
+      $raceMessage.textContent = `Félicitations ! Votre cheval a gagné et vous remportez ${gainAmount.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG 🎉`;
+    } else {
+      $raceMessage.className = 'horse-race-message loss';
+      $raceMessage.textContent = `Votre cheval n'a pas gagné cette fois. Ne vous découragez pas, la prochaine course peut être la bonne !`;
+    }
+    $raceQuitBtn.style.display = 'inline-flex';
   }
 
   async function playHorseRacePlaceholder() {
@@ -774,6 +1126,7 @@
     $result.classList.remove('show');
     setFeedback('Kous la ap kouri...', 'warn');
 
+    openHorseRaceModal();
     resetRunners();
     horseRaceState.lastResult = null;
     updateHorseCardState();
@@ -894,6 +1247,7 @@
     $clearBtn.disabled = true;
     setRaceStatus('Kous la kòmanse...');
     setFeedback('Envoi de la mise au backend...', 'warn');
+    openHorseRaceModal();
     resetRunners();
     $result.classList.remove('show');
     horseRaceState.lastResult = null;
@@ -965,7 +1319,7 @@
   initHorseRace();
   initializeHorseRaceAuth();
 </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });

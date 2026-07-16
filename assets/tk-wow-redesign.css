@@ -1,0 +1,595 @@
+/*
+  Tonton Kondo — WOW White / Navy / Yellow Design System
+  Visual-only redesign. Existing IDs, links, scripts and business logic are preserved.
+*/
+:root{
+  --tk-navy-950:#061328;
+  --tk-navy-900:#0a1b35;
+  --tk-navy-800:#102849;
+  --tk-navy-700:#17385f;
+  --tk-blue-100:#eaf2fb;
+  --tk-blue-50:#f5f8fc;
+  --tk-white:#ffffff;
+  --tk-paper:#fbfcfe;
+  --tk-yellow:#ffd11a;
+  --tk-yellow-strong:#f2b900;
+  --tk-ink:#0a1730;
+  --tk-muted:#62708a;
+  --tk-line:#dce5f0;
+  --tk-line-strong:#c9d6e6;
+  --tk-success:#12805c;
+  --tk-danger:#c9334d;
+  --tk-shadow-sm:0 8px 24px rgba(13,34,66,.07);
+  --tk-shadow-md:0 20px 55px rgba(13,34,66,.11);
+  --tk-radius-sm:10px;
+  --tk-radius-md:16px;
+  --tk-radius-lg:24px;
+  --tk-content:1240px;
+}
+
+html{color-scheme:light!important;background:var(--tk-paper)!important;scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{
+  margin:0!important;
+  min-height:100vh!important;
+  overflow-x:hidden!important;
+  color:var(--tk-ink)!important;
+  background:
+    radial-gradient(circle at 100% -10%, rgba(255,209,26,.14), transparent 27rem),
+    linear-gradient(180deg,#fff 0,#f8fbff 32%,#f3f7fc 100%)!important;
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif!important;
+  line-height:1.55!important;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(rgba(10,27,53,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(10,27,53,.025) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,black,transparent 72%);
+}
+::selection{background:var(--tk-yellow);color:var(--tk-navy-950)}
+img{max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+
+/* Main shells */
+.app,.shell,.page,main,.auth-page{
+  width:min(calc(100% - 32px),var(--tk-content))!important;
+  margin-inline:auto!important;
+}
+main{padding-block:28px 64px!important}
+.app,.shell,.page{padding-top:24px!important;padding-bottom:72px!important}
+
+/* Global header: a strong navy band, not a floating AI card */
+.mobile-header,.topbar,header:not(.pk-header){
+  width:100%!important;
+  min-height:76px!important;
+  padding:12px clamp(16px,3vw,34px)!important;
+  margin:0 0 32px!important;
+  border:0!important;
+  border-bottom:4px solid var(--tk-yellow)!important;
+  border-radius:0!important;
+  background:var(--tk-navy-950)!important;
+  color:#fff!important;
+  box-shadow:0 12px 34px rgba(6,19,40,.16)!important;
+}
+body>.mobile-header,body>.topbar,body>header:not(.pk-header){width:100%!important}
+.brand,.brand-text,.brand-top,.brand-middle,.brand-bottom{color:#fff!important}
+.brand img,.brand-icon{filter:none!important;background:#fff!important;border-radius:12px!important;padding:5px!important;box-shadow:none!important}
+.brand-text strong,.brand-top,.brand-middle{font-weight:900!important;letter-spacing:-.02em!important}
+.brand-middle{color:var(--tk-yellow)!important}
+.brand-bottom,.brand-text span{color:#b9c7da!important;letter-spacing:.18em!important}
+.header-actions{gap:10px!important}
+.action-btn,.user-button{
+  border:1px solid rgba(255,255,255,.18)!important;
+  background:rgba(255,255,255,.08)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+.action-btn:hover,.user-button:hover{background:var(--tk-yellow)!important;color:var(--tk-navy-950)!important;border-color:var(--tk-yellow)!important;transform:translateY(-2px)}
+.wallet-chip,.balance{
+  border:1px solid rgba(255,255,255,.17)!important;
+  background:rgba(255,255,255,.08)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+.wallet-chip span,.balance span{color:#c7d2e0!important}
+.notifications-badge,.badge:not(.status-badge){background:var(--tk-yellow)!important;color:var(--tk-navy-950)!important;border:2px solid var(--tk-navy-950)!important}
+
+/* Navigation */
+nav a,.bottom-link,.user-menu-link{transition:.2s ease}
+.user-menu{
+  border:1px solid var(--tk-line)!important;background:#fff!important;color:var(--tk-ink)!important;
+  box-shadow:var(--tk-shadow-md)!important;border-radius:16px!important;
+}
+.user-menu-link:hover{background:var(--tk-blue-50)!important;color:var(--tk-navy-900)!important}
+.user-menu-divider{border-color:var(--tk-line)!important}
+.user-menu-logout{color:var(--tk-danger)!important}
+.bottom-nav{
+  position:fixed!important;left:50%!important;bottom:14px!important;transform:translateX(-50%)!important;
+  width:min(calc(100% - 24px),620px)!important;padding:8px!important;z-index:100!important;
+  border:1px solid rgba(255,255,255,.18)!important;border-radius:20px!important;
+  background:rgba(6,19,40,.94)!important;backdrop-filter:blur(18px)!important;
+  box-shadow:0 18px 45px rgba(6,19,40,.24)!important;
+}
+.bottom-link{color:#c7d2e0!important;border-radius:13px!important}
+.bottom-link.active,.bottom-link:hover{background:var(--tk-yellow)!important;color:var(--tk-navy-950)!important}
+.nav-icon-wrap{background:transparent!important;color:inherit!important}
+
+/* Typography & editorial hierarchy */
+h1,h2,h3,h4,.panel-title{color:var(--tk-navy-950)!important;letter-spacing:-.035em!important;text-wrap:balance}
+h1{font-size:clamp(2.35rem,6vw,5.5rem)!important;line-height:.98!important;font-weight:950!important}
+h2{font-size:clamp(1.55rem,3vw,2.55rem)!important;line-height:1.08!important;font-weight:900!important}
+h3{font-weight:850!important}
+p,.muted,.desc,.helper-text,.note{color:var(--tk-muted)!important}
+.eyebrow,.gold{color:var(--tk-yellow-strong)!important;font-weight:900!important;letter-spacing:.14em!important;text-transform:uppercase!important}
+
+/* Hero: wide editorial stage with unexpected offset accents */
+.hero,.hero-card,.welcome-card,.intro-row{
+  position:relative!important;overflow:hidden!important;
+  border:1px solid var(--tk-line)!important;border-radius:var(--tk-radius-lg)!important;
+  background:#fff!important;color:var(--tk-ink)!important;
+  box-shadow:var(--tk-shadow-md)!important;
+}
+.hero::before,.hero-card::before,.welcome-card::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:8px;background:var(--tk-yellow);z-index:1;
+}
+.hero::after,.hero-card::after,.welcome-card::after{
+  content:"";position:absolute;width:260px;height:260px;border:54px solid rgba(255,209,26,.10);border-radius:50%;right:-110px;top:-130px;pointer-events:none;
+}
+.hero,.hero-card{padding:clamp(28px,5vw,68px)!important;min-height:340px!important}
+.hero img,.hero-card img{border-radius:18px!important;box-shadow:0 28px 60px rgba(6,19,40,.14)!important}
+
+/* Panels/cards: restrained, sharp, varied */
+.panel,.card,.mini-card,.stat-card,.summary-card,.summary-tile,.notice-card,.table-card,.field-card,.method-card,.payment-card,.game-card,.benefit-card,.info-item,.quick-item,.nav-card,.detail-box,.callout,.support-strip,.trust-item,.status-item,.coupon-list,.notification-row{
+  border:1px solid var(--tk-line)!important;
+  background:#fff!important;
+  color:var(--tk-ink)!important;
+  box-shadow:var(--tk-shadow-sm)!important;
+  border-radius:var(--tk-radius-md)!important;
+}
+.panel,.card,.notice-card,.table-card,.callout{padding:clamp(18px,2.5vw,30px)!important}
+.panel-head{border-bottom:1px solid var(--tk-line)!important;padding-bottom:14px!important;margin-bottom:20px!important}
+.grid,.stats-grid,.summary-grid,.field-grid,.info-grid,.content-grid,.layout-grid{gap:16px!important}
+.stat-card,.summary-card,.summary-tile{
+  min-height:132px!important;padding:20px!important;border-radius:14px!important;
+  box-shadow:none!important;border-top:4px solid var(--tk-navy-900)!important;
+}
+.stat-card:nth-child(even),.summary-card:nth-child(even),.summary-tile:nth-child(even){border-top-color:var(--tk-yellow)!important}
+.stat-icon,.summary-icon,.quick-icon,.icon,.icon-lg{
+  color:var(--tk-navy-900)!important;background:var(--tk-blue-100)!important;border-radius:12px!important;
+}
+
+/* Games: magazine tiles rather than casino cards */
+.games-row,.game-grid,.horse-grid{gap:18px!important}
+.game-card{
+  overflow:hidden!important;padding:0!important;border-radius:18px!important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important;
+}
+.game-card:hover{transform:translateY(-7px)!important;box-shadow:0 26px 50px rgba(13,34,66,.15)!important;border-color:var(--tk-navy-800)!important}
+.game-card img,.game-image-wrap img{width:100%!important;aspect-ratio:16/10!important;object-fit:cover!important;border-radius:0!important}
+.game-info,.game-card>div:not(.game-image-wrap){padding:18px!important}
+.game-card .btn{width:100%!important;margin-top:12px!important}
+
+/* Buttons */
+.btn,button:not(.setting-switch):not(.user-button):not(.action-btn):not(.digit-btn),.deposit-btn,.back-btn,.ghost-btn{
+  min-height:46px!important;padding:11px 19px!important;border-radius:11px!important;
+  border:1px solid var(--tk-navy-900)!important;background:var(--tk-navy-900)!important;color:#fff!important;
+  box-shadow:none!important;font-weight:800!important;letter-spacing:-.01em!important;
+  transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease!important;
+}
+.btn:hover,button:not(.setting-switch):not(.user-button):not(.action-btn):not(.digit-btn):hover{transform:translateY(-2px)!important;box-shadow:0 10px 24px rgba(10,27,53,.15)!important}
+.btn-primary,.deposit-btn,.btn-success{background:var(--tk-yellow)!important;color:var(--tk-navy-950)!important;border-color:var(--tk-yellow)!important}
+.btn-secondary,.ghost-btn,.back-btn{background:#fff!important;color:var(--tk-navy-900)!important;border-color:var(--tk-line-strong)!important}
+.btn-danger{background:#fff!important;color:var(--tk-danger)!important;border-color:#f0bac4!important}
+
+/* Forms */
+input,select,textarea,.form-input{
+  width:100%;min-height:48px!important;padding:12px 14px!important;
+  color:var(--tk-ink)!important;background:#fff!important;
+  border:1px solid var(--tk-line-strong)!important;border-radius:11px!important;
+  outline:none!important;box-shadow:0 0 0 0 rgba(255,209,26,0)!important;
+}
+input:focus,select:focus,textarea:focus,.form-input:focus{border-color:var(--tk-yellow-strong)!important;box-shadow:0 0 0 4px rgba(255,209,26,.18)!important}
+label,.label,.form-label{color:var(--tk-navy-900)!important;font-weight:800!important}
+::placeholder{color:#93a0b4!important}
+.field-card{padding:18px!important;box-shadow:none!important}
+
+/* Filters, chips, badges */
+.pill,.mini-chip,.tag,.tag-pill,.filter-btn,.filter-chip,.ticket-filter-btn,.value-pill,.pk-chip,.badge-tag{
+  border:1px solid var(--tk-line-strong)!important;background:#fff!important;color:var(--tk-navy-800)!important;
+  border-radius:999px!important;box-shadow:none!important;
+}
+.pill.active,.filter-btn.active,.filter-chip.active,.ticket-filter-btn.active,.tag.active{background:var(--tk-navy-900)!important;color:#fff!important;border-color:var(--tk-navy-900)!important}
+.status-badge{border-radius:999px!important;font-weight:850!important}
+
+/* Tables */
+table{width:100%!important;border-collapse:separate!important;border-spacing:0!important;background:#fff!important;color:var(--tk-ink)!important}
+thead th{background:var(--tk-navy-950)!important;color:#fff!important;text-align:left!important;padding:14px!important;border:0!important}
+tbody td{padding:14px!important;border-bottom:1px solid var(--tk-line)!important;color:var(--tk-ink)!important}
+tbody tr:hover td{background:var(--tk-blue-50)!important}
+
+/* Notifications / settings */
+.notification-row.unread{border-left:5px solid var(--tk-yellow)!important;background:#fffdf3!important}
+.notification-copy h3{color:var(--tk-navy-950)!important}
+.setting-switch{background:transparent!important;border:0!important;box-shadow:none!important}
+.switch-track{background:#ced8e6!important;border:1px solid var(--tk-line-strong)!important}
+.setting-switch:checked+.switch-track,.setting-switch:checked~.switch-track{background:var(--tk-navy-900)!important}
+.switch-thumb{background:#fff!important;box-shadow:0 2px 8px rgba(0,0,0,.2)!important}
+
+/* Game play pages */
+.pk-header{background:var(--tk-navy-950)!important;color:#fff!important;border-bottom:4px solid var(--tk-yellow)!important;box-shadow:0 12px 34px rgba(6,19,40,.16)!important}
+.digit-btn,.pk-bet-btn,.number-grid button{
+  background:#fff!important;color:var(--tk-navy-900)!important;border:1px solid var(--tk-line-strong)!important;border-radius:10px!important;box-shadow:none!important;
+}
+.digit-btn:hover,.digit-btn.active,.digit-btn.selected,.pk-bet-btn:hover,.pk-bet-btn.active,.number-grid button:hover,.number-grid button.active,.number-grid button.selected{
+  background:var(--tk-yellow)!important;color:var(--tk-navy-950)!important;border-color:var(--tk-yellow)!important;
+}
+.digit-slot,.digit-display{background:#fff!important;color:var(--tk-navy-950)!important;border:2px solid var(--tk-line-strong)!important;border-radius:12px!important}
+
+/* Auth pages */
+.auth-page{min-height:100vh!important;display:grid!important;place-items:center!important;background:linear-gradient(120deg,#fff 0 58%,var(--tk-navy-950) 58% 100%)!important}
+.auth-card{background:#fff!important;color:var(--tk-ink)!important;border:1px solid var(--tk-line)!important;border-radius:24px!important;box-shadow:0 32px 80px rgba(6,19,40,.19)!important}
+
+/* Footer */
+footer,.site-footer{
+  margin-top:56px!important;padding:48px clamp(20px,4vw,60px)!important;
+  background:var(--tk-navy-950)!important;color:#fff!important;border-top:6px solid var(--tk-yellow)!important;
+}
+footer h2,footer h3,footer h4,footer strong,.site-footer h2,.site-footer h3{color:#fff!important}
+footer p,footer a,.site-footer p,.site-footer a{color:#c0ccdc!important}
+footer a:hover{color:var(--tk-yellow)!important}
+
+/* Empty/error states */
+.empty-state,.empty-history,.feedback{border:1px dashed var(--tk-line-strong)!important;background:#fff!important;color:var(--tk-muted)!important;border-radius:16px!important}
+.warn{color:#8a6410!important;background:#fff9db!important;border-color:#f5d86b!important}
+.green{color:var(--tk-success)!important}.red{color:var(--tk-danger)!important}
+
+/* Motion, subtle and premium */
+@media (prefers-reduced-motion:no-preference){
+  .panel,.card,.game-card,.stat-card,.summary-card,.quick-item,.action-btn,.btn{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease!important}
+}
+
+/* Tablet */
+@media (max-width:900px){
+  .hero,.hero-card{grid-template-columns:1fr!important;min-height:auto!important}
+  .stats-grid,.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .content-grid,.layout-grid,.main-grid{grid-template-columns:1fr!important}
+  .auth-page{background:linear-gradient(180deg,#fff 0 70%,var(--tk-navy-950) 70% 100%)!important}
+}
+
+/* Mobile first refinements */
+@media (max-width:640px){
+  :root{--tk-radius-lg:18px;--tk-radius-md:13px}
+  .app,.shell,.page,main,.auth-page{width:min(calc(100% - 20px),var(--tk-content))!important}
+  .mobile-header,.topbar,header:not(.pk-header){margin-inline:-10px!important;width:calc(100% + 20px)!important;padding:10px 12px!important;min-height:68px!important}
+  .brand-icon,.brand img{width:43px!important;height:43px!important}
+  .brand-top,.brand-middle,.brand-text strong{font-size:16px!important}
+  .brand-bottom,.brand-text span{font-size:8px!important;letter-spacing:.12em!important}
+  .wallet-chip{display:none!important}
+  .hero,.hero-card{padding:28px 22px!important;border-radius:18px!important}
+  h1{font-size:clamp(2.15rem,12vw,3.6rem)!important}
+  h2{font-size:1.55rem!important}
+  .stats-grid,.summary-grid,.field-grid,.info-grid{grid-template-columns:1fr!important}
+  .grid{grid-template-columns:1fr!important}
+  .games-row,.game-grid,.horse-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .game-info,.game-card>div:not(.game-image-wrap){padding:12px!important}
+  .game-card h3{font-size:1rem!important}
+  .game-card p{font-size:.82rem!important}
+  .panel,.card,.notice-card,.table-card,.callout{padding:17px!important}
+  .bottom-nav{bottom:8px!important}
+  table{min-width:620px!important}
+  .table-card{overflow-x:auto!important}
+  .btn,button:not(.setting-switch):not(.user-button):not(.action-btn):not(.digit-btn){min-height:44px!important}
+}
+
+@media (max-width:390px){
+  .games-row,.game-grid,.horse-grid{grid-template-columns:1fr!important}
+  .header-actions{gap:5px!important}
+  .action-btn,.user-button{width:38px!important;height:38px!important}
+}
+
+/* Large displays */
+@media (min-width:1500px){
+  :root{--tk-content:1420px}
+  body{font-size:17px!important}
+  .hero,.hero-card{min-height:430px!important}
+}
+
+/* =========================================================
+   CONTRAST HOTFIX — White / Navy redesign
+   Keeps all text readable on light surfaces while preserving
+   white text inside intentionally dark navy components.
+   ========================================================= */
+
+/* Default readable copy on the light application canvas. */
+main,
+.app,
+.shell,
+.page,
+.auth-page{
+  color:var(--tk-ink)!important;
+}
+
+/* Light surfaces created by the global redesign. */
+:where(
+  .panel,.card,.mini-card,.stat-card,.summary-card,.summary-tile,
+  .notice-card,.table-card,.field-card,.method-card,.payment-card,
+  .game-card,.benefit-card,.info-item,.quick-item,.nav-card,
+  .detail-box,.detail-card,.callout,.support-strip,.trust-item,
+  .status-item,.coupon-list,.notification-row,.history-item,
+  .state-box,.empty-state,.empty-history,.feedback,.access-box,
+  .auth-card,.user-menu,.modal-content,.modal-card,.dialog,
+  .filter-bar,.filters,.toolbar,.form-card,.bet-item,.keno-stat-item
+) :where(h1,h2,h3,h4,h5,h6,strong,b,label,legend,td,th,li,dt,dd,span){
+  color:var(--tk-ink)!important;
+}
+
+:where(
+  .panel,.card,.mini-card,.stat-card,.summary-card,.summary-tile,
+  .notice-card,.table-card,.field-card,.method-card,.payment-card,
+  .game-card,.benefit-card,.info-item,.quick-item,.nav-card,
+  .detail-box,.detail-card,.callout,.support-strip,.trust-item,
+  .status-item,.coupon-list,.notification-row,.history-item,
+  .state-box,.empty-state,.empty-history,.feedback,.access-box,
+  .auth-card,.user-menu,.modal-content,.modal-card,.dialog,
+  .filter-bar,.filters,.toolbar,.form-card,.bet-item,.keno-stat-item
+) :where(p,small,.muted,.desc,.helper-text,.hint,.note,.lede,.label){
+  color:var(--tk-muted)!important;
+}
+
+/* Tables and form content were the most common sources of white-on-white text. */
+table,thead,tbody,tfoot,tr,td,th{
+  color:var(--tk-ink)!important;
+}
+th{
+  color:var(--tk-muted)!important;
+  background:var(--tk-blue-50)!important;
+}
+td{background:#fff!important}
+label,.label,legend{color:var(--tk-navy-900)!important}
+input,select,textarea,option{
+  color:var(--tk-ink)!important;
+  background:#fff!important;
+}
+input::placeholder,textarea::placeholder{color:#7d899b!important;opacity:1!important}
+
+/* Common values, totals and headings inside white cards. */
+.stat-card strong,.summary-card strong,.summary-tile strong,
+.mini-card strong,.nav-card strong,.detail-row span:last-child,
+.bet-item strong,.keno-stat-item-value,.game-info strong,
+.payment-card h3,.history-item strong,.info-item strong{
+  color:var(--tk-navy-950)!important;
+}
+
+/* Filters and neutral pills on white backgrounds. */
+.filter-btn,.tab-btn,.pill:not(.pending):not(.approved):not(.rejected):not(.won):not(.lost):not(.paid),
+.inline-btn,.chip-btn{
+  color:var(--tk-navy-900)!important;
+  background:#fff!important;
+  border-color:var(--tk-line-strong)!important;
+}
+.filter-btn.active,.tab-btn.active{
+  color:var(--tk-navy-950)!important;
+  background:var(--tk-yellow)!important;
+  border-color:var(--tk-yellow)!important;
+}
+
+/* Status colors remain readable on the light theme. */
+.badge.pending,.pill.pending,.status-badge.pending{
+  color:#735500!important;background:#fff6c7!important;border-color:#e8c748!important;
+}
+.badge.approved,.pill.approved,.status-badge.approved,
+.badge.won,.pill.won,.status-badge.won,.badge.paid,.pill.paid,.status-badge.paid{
+  color:#086143!important;background:#e5f8f0!important;border-color:#87d5b9!important;
+}
+.badge.rejected,.pill.rejected,.status-badge.rejected,
+.badge.lost,.pill.lost,.status-badge.lost,.badge.failed,.pill.failed,.status-badge.failed{
+  color:#9d2339!important;background:#fff0f3!important;border-color:#e9a5b1!important;
+}
+
+/* Intentionally dark navy surfaces: restore light typography after the rules above. */
+:where(
+  .mobile-header,.topbar,header:not(.pk-header),.pk-header,
+  .bottom-nav,footer,.site-footer,.wow-command,.wow-hero-stage,
+  .wow-payments,.dark-panel,.navy-panel,.game-stage,.roulette-board,
+  .betting-board,.race-stage
+) :where(h1,h2,h3,h4,h5,h6,strong,b,label,legend,p,span,small,li,td,th,a){
+  color:#fff!important;
+}
+
+:where(
+  .mobile-header,.topbar,header:not(.pk-header),.pk-header,
+  .bottom-nav,footer,.site-footer,.wow-command,.wow-hero-stage,
+  .wow-payments,.dark-panel,.navy-panel,.game-stage,.roulette-board,
+  .betting-board,.race-stage
+) :where(.muted,.desc,.helper-text,.hint,.note,small,p){
+  color:#c0ccdc!important;
+}
+
+/* Preserve yellow accent text on dark surfaces. */
+:where(.mobile-header,.topbar,.pk-header,.bottom-nav,footer,.site-footer,.wow-command,.wow-hero-stage,.wow-payments)
+:where(.gold,.eyebrow,.active,.accent){
+  color:var(--tk-yellow)!important;
+}
+
+/* Index-specific dark blocks. */
+.wow-command :where(strong,b),
+.wow-hero-stage :where(strong,b),
+.wow-payments :where(h1,h2,h3,h4,strong,b),
+.wow-footer :where(h1,h2,h3,h4,strong,b){color:#fff!important}
+.wow-command :where(span,small,p),
+.wow-hero-stage :where(span,small,p),
+.wow-payments :where(span,small,p){color:#c0ccdc!important}
+.wow-footer :where(h1,h2,h3,h4,strong,b){color:var(--tk-navy-950)!important}
+.wow-footer :where(span,small,p,a){color:var(--tk-muted)!important}
+
+/* Native select menu readability. */
+select option{color:#0a1730!important;background:#fff!important}
+
+/* =========================================================
+   RESPONSIVE & DARK-SURFACE POLISH — July 2026
+   Global visual-only layer. It preserves IDs, links and JS.
+   ========================================================= */
+
+/* Navy areas: white body copy, yellow labels and active accents. */
+:where(
+  .mobile-header,.topbar,header:not(.pk-header),.pk-header,.bottom-nav,
+  footer,.site-footer,.wow-command,.wow-hero-stage,.wow-payments,
+  .dark-panel,.navy-panel,.game-stage,.roulette-board,.betting-board,
+  .race-stage,.hero-dark,.panel-dark,.sidebar,.admin-sidebar
+){color:#fff!important}
+
+:where(
+  .mobile-header,.topbar,header:not(.pk-header),.pk-header,.bottom-nav,
+  footer,.site-footer,.wow-command,.wow-hero-stage,.wow-payments,
+  .dark-panel,.navy-panel,.game-stage,.roulette-board,.betting-board,
+  .race-stage,.hero-dark,.panel-dark,.sidebar,.admin-sidebar
+) :where(h1,h2,h3,h4,h5,h6,strong,b,.title,.panel-title){color:#fff!important}
+
+:where(
+  .mobile-header,.topbar,header:not(.pk-header),.pk-header,.bottom-nav,
+  footer,.site-footer,.wow-command,.wow-hero-stage,.wow-payments,
+  .dark-panel,.navy-panel,.game-stage,.roulette-board,.betting-board,
+  .race-stage,.hero-dark,.panel-dark,.sidebar,.admin-sidebar
+) :where(.eyebrow,.kicker,.label,.caption,.section-label,.gold,.accent,.active,[aria-current="page"]){color:var(--tk-yellow)!important}
+
+:where(
+  .mobile-header,.topbar,header:not(.pk-header),.pk-header,.bottom-nav,
+  footer,.site-footer,.wow-command,.wow-hero-stage,.wow-payments,
+  .dark-panel,.navy-panel,.game-stage,.roulette-board,.betting-board,
+  .race-stage,.hero-dark,.panel-dark,.sidebar,.admin-sidebar
+) :where(p,small,.muted,.desc,.helper-text,.hint,.note,span:not(.badge):not(.status-badge):not(.notifications-badge)){color:#d6dfeb!important}
+
+/* Yellow CTA on navy always stays navy for readability. */
+:where(.mobile-header,.topbar,.pk-header,.bottom-nav,footer,.site-footer,.dark-panel,.navy-panel)
+:where(.btn-primary,.active,.bottom-link.active,.filter-btn.active,.tab-btn.active){color:var(--tk-navy-950)!important}
+
+/* Universal layout safety. */
+html,body{max-width:100%;overflow-x:hidden!important}
+img,svg,video,canvas{max-width:100%;height:auto}
+pre,code{max-width:100%;overflow:auto}
+iframe{max-width:100%}
+.flex,.row,.toolbar,.panel-head,.section-head,.actions,.header-actions{min-width:0}
+.grid>*,:where(.content-grid,.layout-grid,.main-grid,.stats-grid,.summary-grid,.field-grid,.info-grid,.game-grid,.games-row,.horse-grid)>*{min-width:0}
+
+/* Long controls become horizontally scrollable rather than breaking the page. */
+:where(.filters,.filter-row,.tabs,.tab-list,.ticket-filters,.chips,.category-tabs,.game-tabs){
+  max-width:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;white-space:nowrap;
+}
+:where(.filters,.filter-row,.tabs,.tab-list,.ticket-filters,.chips,.category-tabs,.game-tabs)::-webkit-scrollbar{display:none}
+:where(.filters,.filter-row,.tabs,.tab-list,.ticket-filters,.chips,.category-tabs,.game-tabs)>*{flex:0 0 auto}
+
+/* Desktop/tablet structure improvements. */
+@media (max-width:1100px){
+  .app,.shell,.page,main,.auth-page{width:min(calc(100% - 28px),var(--tk-content))!important}
+  .content-grid,.layout-grid,.main-grid,.dashboard-grid,.profile-grid,.wallet-grid{grid-template-columns:1fr!important}
+  .stats-grid,.summary-grid,.info-grid,.field-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .game-grid,.games-row,.horse-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .hero,.hero-card,.welcome-card,.intro-row{grid-template-columns:1fr!important}
+  .hero-visual,.hero-media{order:-1;max-height:420px;overflow:hidden}
+  .hero-visual img,.hero-media img{width:100%;height:100%;object-fit:cover}
+  .sidebar,.admin-sidebar{position:static!important;width:100%!important;min-height:auto!important}
+  .admin-layout,.agent-layout{grid-template-columns:1fr!important}
+}
+
+/* Tablet: simplify dense toolbars and tables. */
+@media (max-width:820px){
+  main{padding-block:18px 96px!important}
+  .app,.shell,.page{padding-top:16px!important;padding-bottom:100px!important}
+  .mobile-header,.topbar,header:not(.pk-header){
+    display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+    align-items:center!important;gap:10px!important;margin-bottom:20px!important;
+  }
+  .header-actions{justify-self:end;flex-wrap:nowrap!important}
+  .wallet-chip,.balance{display:none!important}
+  .brand-bottom,.brand-text span{display:none!important}
+  .panel-head,.section-head,.toolbar{
+    align-items:flex-start!important;flex-direction:column!important;gap:12px!important;
+  }
+  .panel-head>.actions,.section-head>.actions,.toolbar>.actions{width:100%!important;display:flex!important;overflow-x:auto!important;scrollbar-width:none}
+  .panel-head>.actions>* ,.section-head>.actions>* ,.toolbar>.actions>*{flex:0 0 auto}
+  .table-card,.table-wrap,.table-container{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}
+  table{min-width:680px!important}
+  .modal,.modal-card,.modal-content,.dialog{width:min(calc(100vw - 28px),620px)!important;max-height:88vh!important;overflow:auto!important}
+  .auth-page{width:100%!important;padding:24px 14px 80px!important;background:#f7f9fc!important}
+  .auth-card{width:min(100%,620px)!important;padding:clamp(22px,5vw,38px)!important}
+  footer,.site-footer{padding-bottom:120px!important}
+}
+
+/* Mobile: decisive simplification and touch-first spacing. */
+@media (max-width:640px){
+  body{font-size:15px!important}
+  .app,.shell,.page,main{width:min(calc(100% - 18px),var(--tk-content))!important}
+  .mobile-header,.topbar,header:not(.pk-header){
+    margin-inline:-9px!important;width:calc(100% + 18px)!important;
+    min-height:62px!important;padding:9px 10px!important;border-bottom-width:3px!important;
+  }
+  .brand{min-width:0!important}.brand-block{gap:8px!important}
+  .brand-icon,.brand img{width:40px!important;height:40px!important;border-radius:9px!important}
+  .brand-top,.brand-middle,.brand-text strong{font-size:14px!important;line-height:1.05!important}
+  .header-actions{gap:4px!important}
+  .action-btn,.user-button{width:38px!important;height:38px!important;flex:0 0 38px!important}
+  .header-actions .action-btn:nth-of-type(n+3){display:none!important}
+  h1{font-size:clamp(2rem,11vw,3.15rem)!important;line-height:1!important}
+  h2{font-size:clamp(1.4rem,7vw,1.85rem)!important}
+  h3{font-size:1.05rem!important}
+  .hero,.hero-card,.welcome-card,.intro-row{padding:24px 18px!important;min-height:auto!important;border-radius:16px!important}
+  .hero::after,.hero-card::after,.welcome-card::after{width:160px!important;height:160px!important;border-width:30px!important}
+  .hero-actions,.actions,.button-row,.form-actions{display:grid!important;grid-template-columns:1fr!important;width:100%!important;gap:9px!important}
+  .hero-actions>* ,.actions>* ,.button-row>* ,.form-actions>*{width:100%!important;justify-content:center!important}
+  .stats-grid,.summary-grid,.field-grid,.info-grid,.content-grid,.layout-grid,.main-grid{grid-template-columns:1fr!important;gap:10px!important}
+  .stat-card,.summary-card,.summary-tile{min-height:104px!important;padding:15px!important}
+  .panel,.card,.notice-card,.table-card,.callout,.field-card{padding:15px!important;border-radius:13px!important}
+  .game-grid,.games-row,.horse-grid{
+    display:flex!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;
+    gap:12px!important;padding-bottom:8px!important;scrollbar-width:none!important;
+  }
+  .game-grid::-webkit-scrollbar,.games-row::-webkit-scrollbar,.horse-grid::-webkit-scrollbar{display:none}
+  .game-grid>.game-card,.games-row>.game-card,.horse-grid>.horse-card{
+    flex:0 0 min(82vw,310px)!important;scroll-snap-align:start!important;min-width:0!important;
+  }
+  .game-card img,.game-image-wrap img{aspect-ratio:16/9!important}
+  .game-info,.game-card>div:not(.game-image-wrap){padding:14px!important}
+  input,select,textarea,.form-input{font-size:16px!important;min-height:48px!important}
+  .form-grid,.form-row,.input-row{grid-template-columns:1fr!important;gap:12px!important}
+  .bottom-nav{
+    width:calc(100% - 16px)!important;bottom:6px!important;padding:6px!important;border-radius:16px!important;
+    gap:2px!important;
+  }
+  .bottom-link{min-width:0!important;padding:7px 4px!important;font-size:10px!important}
+  .bottom-link svg,.bottom-link .nav-icon-wrap{width:21px!important;height:21px!important}
+  .bottom-link span:not(.nav-icon-wrap){max-width:68px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+  table{min-width:620px!important;font-size:13px!important}
+  thead th,tbody td{padding:11px!important}
+  .user-menu{position:fixed!important;left:10px!important;right:10px!important;top:70px!important;width:auto!important;max-height:calc(100vh - 90px)!important;overflow:auto!important}
+  .desktop-only,.hide-mobile,.secondary-visual,.decorative-only{display:none!important}
+}
+
+/* Very small phones. */
+@media (max-width:390px){
+  .brand-text{max-width:105px!important}.brand-top,.brand-middle,.brand-text strong{font-size:13px!important}
+  .header-actions .action-btn:nth-of-type(n+2){display:none!important}
+  h1{font-size:2rem!important}
+  .hero,.hero-card,.welcome-card,.intro-row{padding:21px 15px!important}
+  .game-grid>.game-card,.games-row>.game-card,.horse-grid>.horse-card{flex-basis:86vw!important}
+  .bottom-link{font-size:9px!important}
+  .bottom-link span:not(.nav-icon-wrap){max-width:56px!important}
+}
+
+/* Landscape phones: keep content usable without giant vertical blocks. */
+@media (max-height:520px) and (orientation:landscape){
+  .mobile-header,.topbar,header:not(.pk-header){position:static!important}
+  .hero,.hero-card{min-height:auto!important;padding-block:20px!important}
+  .bottom-nav{position:static!important;transform:none!important;margin:20px auto!important}
+  .user-menu{max-height:70vh!important}
+}
+
+/* Large screens / television: prevent content from stretching too far. */
+@media (min-width:1600px){
+  :root{--tk-content:1480px}
+  .content-grid,.layout-grid,.main-grid{gap:24px!important}
+  .game-grid,.games-row,.horse-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .stats-grid,.summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}

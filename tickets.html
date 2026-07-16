@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Historique de vos tickets et résultats sur votre espace joueur Tonton Kondo." />
-  <title>Tonton Kondo — Tickets</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Historique de vos tickets et résultats sur votre espace joueur Tonton Kondo." name="description"/>
+<title>Tonton Kondo — Tickets</title>
+<style>
     :root {
       --bg:#020813;
       --panel:rgba(8,24,43,.96);
@@ -719,168 +720,156 @@
     }
 
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="mobile-header" aria-label="En-tête principal">
-      <a class="brand" href="index.html" aria-label="Accueil Tonton Kondo">
-        <div class="brand-block">
-          <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
-          <div class="brand-text">
-            <span class="brand-top">TONTON</span>
-            <span class="brand-middle">KONDO</span>
-            <span class="brand-bottom">PARYAJ</span>
-          </div>
-        </div>
-      </a>
-
-      <div class="wallet-chip" aria-label="Solde utilisateur">
-        <span><strong id="header-wallet-balance">Chargement…</strong><span id="wallet-label">Solde disponible</span></span>
-      </div>
-
-      <div class="header-actions">
-        <div id="authHeaderActions"></div>
-        <!-- Promotions -->
-        <button class="action-btn" type="button" aria-label="Promotions">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
-            <rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/>
-          </svg>
-          <span class="header-badge">3</span>
-        </button>
-        <!-- Notifications -->
-        <a href="notifications.html" class="action-btn notifications-link" aria-label="Notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
-            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>
-          </svg>
-          <span class="badge notifications-badge" hidden>0</span>
-        </a>
-
-        <!-- Menu utilisateur interactif -->
-        <div class="user-menu-wrap" id="userMenuWrap" hidden>
-          <button id="userMenuButton" class="action-btn user-button" type="button" aria-label="Menu utilisateur" aria-expanded="false">
-            <span class="user-avatar" id="userAvatar">U</span>
-          </button>
-          <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
-            <a class="user-menu-link" href="tickets.html">Tickets</a>
-            <a class="user-menu-link" href="history.html">Historique</a>
-            <a class="user-menu-link" href="results.html">Résultats</a>
-            <a class="user-menu-link" href="deposit.html">Dépôt</a>
-            <a class="user-menu-link" href="withdraw.html">Retrait</a>
-            <a class="user-menu-link" href="wallet.html">Portefeuille</a>
-            <a class="user-menu-link" href="profile.html">Profil</a>
-            <a class="user-menu-link" href="settings.html">Paramètres</a>
-            <div class="user-menu-divider"></div>
-            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button">Déconnexion</button>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section class="hero-card">
-      <article>
-        <div class="eyebrow">Historique</div>
-        <h1>Mes tickets</h1>
-        <p>Consultez vos tickets en un coup d’œil et suivez les résultats rapidement.</p>
-      </article>
-      <article class="summary-grid">
-        <div class="summary-card">
-          <div class="summary-icon">🎟️</div>
-          <small>Tickets</small>
-          <strong id="ticket-count">0</strong>
-          <span>Tickets de jeu enregistrés</span>
-        </div>
-        <div class="summary-card">
-          <div class="summary-icon">💰</div>
-          <small>Montant total</small>
-          <strong id="ticket-total">0 HTG</strong>
-          <span>Somme des tickets affichés</span>
-        </div>
-        <div class="summary-card">
-          <div class="summary-icon">📌</div>
-          <small>Statut</small>
-          <strong id="status-summary">—</strong>
-          <span>Dernier état visible</span>
-        </div>
-      </article>
-    </section>
-
-    <section class="content-grid">
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <h2>Liste des tickets</h2>
-            <p>Suivi en direct de vos tickets de jeux.</p>
-          </div>
-          <button id="refresh-tickets-btn" class="btn btn-primary" type="button">Rafraîchir mes tickets</button>
-        </div>
-        <div class="ticket-toolbar">
-          <input
-            id="ticket-search"
-            type="search"
-            placeholder="Rechercher un ticket..."
-            autocomplete="off"
-          />
-          <select id="ticket-game-filter" aria-label="Filtrer par jeu">
-            <option value="all">Tous les jeux</option>
-            <option value="borlette">Borlette</option>
-            <option value="mariage">Mariage</option>
-            <option value="lotto3">Lotto 3</option>
-            <option value="lotto4">Lotto 4</option>
-            <option value="lotto5">Lotto 5</option>
-            <option value="keno">Keno</option>
-            <option value="roulette">Roulette Européenne</option>
-            <option value="american_roulette">Roulette Américaine</option>
-            <option value="lucky6">Lucky 6</option>
-            <option value="penalty">Penalty</option>
-            <option value="horse_racing">Course Cheval</option>
-          </select>
-        </div>
-        <div class="ticket-filters" id="ticket-filters" role="group" aria-label="Filtres des tickets">
-          <button type="button" class="ticket-filter-btn active" data-ticket-filter="all">Tous</button>
-          <button type="button" class="ticket-filter-btn" data-ticket-filter="pending">En attente</button>
-          <button type="button" class="ticket-filter-btn" data-ticket-filter="won">Gagnés</button>
-          <button type="button" class="ticket-filter-btn" data-ticket-filter="lost">Perdus</button>
-          <button type="button" class="ticket-filter-btn" data-ticket-filter="paid">Payés</button>
-          <button type="button" class="ticket-filter-btn" data-ticket-filter="completed">Terminés</button>
-          <button type="button" class="ticket-filter-btn" data-ticket-filter="cancelled">Annulés</button>
-        </div>
-        <div id="ticket-state" class="state-box">Chargement de vos tickets…</div>
-        <div id="ticket-list" class="ticket-list" aria-live="polite"></div>
-        <div id="tickets-load-more-wrap" class="load-more-wrap" hidden>
-          <div class="load-more-info" id="tickets-load-more-info"></div>
-          <button id="tickets-load-more-btn" class="btn" type="button">Charger plus</button>
-        </div>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <h2>Détails du ticket</h2>
-            <p>Sélectionnez un ticket pour voir ses lignes.</p>
-          </div>
-        </div>
-        <div id="details-panel" class="details-panel">
-          <div class="details-card">
-            <h3>Aucun ticket sélectionné</h3>
-            <p>Choisissez un ticket pour voir ses détails.</p>
-          </div>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <nav class="bottom-nav" aria-label="Navigation mobile principale">
-    <a class="bottom-link" href="index.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>Accueil</a>
-    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg></span>Jeux</a>
-    <a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg></span>Résultats</a>
-    <a class="bottom-link active" href="tickets.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7Z"/><path d="M13 5v14"/></svg></span>Tickets</a>
-    <a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span>Portefeuille</a>
-  </nav>
-  <script src="js/i18n.js"></script>
-  <script src="js/auth-config.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/auth-guard.js"></script>
-  <script>
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-account tk-file-tickets">
+<main class="app">
+<header aria-label="En-tête principal" class="mobile-header">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="index.html">
+<div class="brand-block">
+<img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
+<div class="brand-text">
+<span class="brand-top">TONTON</span>
+<span class="brand-middle">KONDO</span>
+<span class="brand-bottom">PARYAJ</span>
+</div>
+</div>
+</a>
+<div aria-label="Solde utilisateur" class="wallet-chip">
+<span><strong id="header-wallet-balance">Chargement…</strong><span id="wallet-label">Solde disponible</span></span>
+</div>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<!-- Promotions -->
+<button aria-label="Promotions" class="action-btn" type="button">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:24px; height:24px;" viewbox="0 0 24 24">
+<rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path>
+</svg>
+<span class="header-badge">3</span>
+</button>
+<!-- Notifications -->
+<a aria-label="Notifications" class="action-btn notifications-link" href="notifications.html">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:24px; height:24px;" viewbox="0 0 24 24">
+<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path>
+</svg>
+<span class="badge notifications-badge" hidden="">0</span>
+</a>
+<!-- Menu utilisateur interactif -->
+<div class="user-menu-wrap" hidden="" id="userMenuWrap">
+<button aria-expanded="false" aria-label="Menu utilisateur" class="action-btn user-button" id="userMenuButton" type="button">
+<span class="user-avatar" id="userAvatar">U</span>
+</button>
+<div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
+<a class="user-menu-link" href="tickets.html">Tickets</a>
+<a class="user-menu-link" href="history.html">Historique</a>
+<a class="user-menu-link" href="results.html">Résultats</a>
+<a class="user-menu-link" href="deposit.html">Dépôt</a>
+<a class="user-menu-link" href="withdraw.html">Retrait</a>
+<a class="user-menu-link" href="wallet.html">Portefeuille</a>
+<a class="user-menu-link" href="profile.html">Profil</a>
+<a class="user-menu-link" href="settings.html">Paramètres</a>
+<div class="user-menu-divider"></div>
+<button class="user-menu-link user-menu-logout" id="logoutMenuBtn" type="button">Déconnexion</button>
+</div>
+</div>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a class="is-active" href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="hero-card">
+<article>
+<div class="eyebrow">Historique</div>
+<h1>Mes tickets</h1>
+<p>Consultez vos tickets en un coup d’œil et suivez les résultats rapidement.</p>
+</article>
+<article class="summary-grid">
+<div class="summary-card">
+<div class="summary-icon">🎟️</div>
+<small>Tickets</small>
+<strong id="ticket-count">0</strong>
+<span>Tickets de jeu enregistrés</span>
+</div>
+<div class="summary-card">
+<div class="summary-icon">💰</div>
+<small>Montant total</small>
+<strong id="ticket-total">0 HTG</strong>
+<span>Somme des tickets affichés</span>
+</div>
+<div class="summary-card">
+<div class="summary-icon">📌</div>
+<small>Statut</small>
+<strong id="status-summary">—</strong>
+<span>Dernier état visible</span>
+</div>
+</article>
+</section>
+<section class="content-grid">
+<article class="panel">
+<div class="panel-head">
+<div>
+<h2>Liste des tickets</h2>
+<p>Suivi en direct de vos tickets de jeux.</p>
+</div>
+<button class="btn btn-primary" id="refresh-tickets-btn" type="button">Rafraîchir mes tickets</button>
+</div>
+<div class="ticket-toolbar">
+<input autocomplete="off" id="ticket-search" placeholder="Rechercher un ticket..." type="search"/>
+<select aria-label="Filtrer par jeu" id="ticket-game-filter">
+<option value="all">Tous les jeux</option>
+<option value="borlette">Borlette</option>
+<option value="mariage">Mariage</option>
+<option value="lotto3">Lotto 3</option>
+<option value="lotto4">Lotto 4</option>
+<option value="lotto5">Lotto 5</option>
+<option value="keno">Keno</option>
+<option value="roulette">Roulette Européenne</option>
+<option value="american_roulette">Roulette Américaine</option>
+<option value="lucky6">Lucky 6</option>
+<option value="penalty">Penalty</option>
+<option value="horse_racing">Course Cheval</option>
+</select>
+</div>
+<div aria-label="Filtres des tickets" class="ticket-filters" id="ticket-filters" role="group">
+<button class="ticket-filter-btn active" data-ticket-filter="all" type="button">Tous</button>
+<button class="ticket-filter-btn" data-ticket-filter="pending" type="button">En attente</button>
+<button class="ticket-filter-btn" data-ticket-filter="won" type="button">Gagnés</button>
+<button class="ticket-filter-btn" data-ticket-filter="lost" type="button">Perdus</button>
+<button class="ticket-filter-btn" data-ticket-filter="paid" type="button">Payés</button>
+<button class="ticket-filter-btn" data-ticket-filter="completed" type="button">Terminés</button>
+<button class="ticket-filter-btn" data-ticket-filter="cancelled" type="button">Annulés</button>
+</div>
+<div class="state-box" id="ticket-state">Chargement de vos tickets…</div>
+<div aria-live="polite" class="ticket-list" id="ticket-list"></div>
+<div class="load-more-wrap" hidden="" id="tickets-load-more-wrap">
+<div class="load-more-info" id="tickets-load-more-info"></div>
+<button class="btn" id="tickets-load-more-btn" type="button">Charger plus</button>
+</div>
+</article>
+<article class="panel">
+<div class="panel-head">
+<div>
+<h2>Détails du ticket</h2>
+<p>Sélectionnez un ticket pour voir ses lignes.</p>
+</div>
+</div>
+<div class="details-panel" id="details-panel">
+<div class="details-card">
+<h3>Aucun ticket sélectionné</h3>
+<p>Choisissez un ticket pour voir ses détails.</p>
+</div>
+</div>
+</article>
+</section>
+</main>
+<nav aria-label="Navigation mobile principale" class="bottom-nav">
+<a class="bottom-link" href="index.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span>Accueil</a>
+<a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect height="12" rx="2" ry="2" width="12" x="2" y="10"></rect><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"></path><path d="M6 18h.01"></path><path d="M10 14h.01"></path><path d="M15 6h.01"></path><path d="M18 9h.01"></path></svg></span>Jeux</a>
+<a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 20h.01"></path><path d="M7 20v-4"></path><path d="M12 20v-8"></path><path d="M17 20V8"></path><path d="M22 4v16"></path></svg></span>Résultats</a>
+<a class="bottom-link active" href="tickets.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7Z"></path><path d="M13 5v14"></path></svg></span>Tickets</a>
+<a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect height="12" rx="2" width="20" x="2" y="6"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01"></path><path d="M18 12h.01"></path></svg></span>Portefeuille</a>
+</nav>
+<script src="js/i18n.js"></script>
+<script src="js/auth-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
     (function () {
       const ticketList = document.getElementById('ticket-list');
       const ticketState = document.getElementById('ticket-state');
@@ -1761,7 +1750,7 @@
       }
     })();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -1770,4 +1759,3 @@
 </script>
 </body>
 </html>
-

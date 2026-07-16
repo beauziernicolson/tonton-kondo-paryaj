@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"/>
 <title>Penalty — Tonton Kondo</title>
 <style>
   /* =========================================================
@@ -467,117 +468,523 @@
     .pk-amount-row .pk-chip:last-child { grid-column: span 2; }
   }
 </style>
-</head>
-<body>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><style id="borlette-header-exact-copy">
+.topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+.brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+.brand img {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      object-fit: contain;
+      background: rgba(255,255,255,.04);
+      padding: 6px;
+      border: 1px solid var(--line);
+    }
+
+.brand-text strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: .04em;
+    }
+
+.brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .35em;
+    }
+
+.pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(8,24,43,.92);
+      color: #fff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+.header-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+.back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(8,24,43,.92);
+      color: #fff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+@media (max-width: 740px) {
+  .topbar { flex-direction: column; align-items: flex-start; }
+}
+</style>
+<style id="penalty-responsive-redesign">
+  /* Design commun Tonton Kondo — conserve la structure desktop existante */
+  .tk-file-penalty {
+    --pk-navy:#071a35;
+    --pk-navy-2:#0c2d57;
+    --pk-yellow:#ffd21f;
+    --pk-yellow-2:#ffbf00;
+    --pk-page:#f4f7fb;
+    --pk-white:#ffffff;
+    --pk-text:#071a35;
+    --pk-muted:#526781;
+    --pk-border:#cbd8e8;
+    --pk-shadow:0 18px 45px rgba(7,26,53,.10);
+  }
+
+  .tk-file-penalty {
+    background:var(--pk-page)!important;
+    color:var(--pk-text)!important;
+  }
+
+  .tk-file-penalty #penalty-page {
+    width:min(100%,1280px);
+  }
+
+  .tk-file-penalty .pk-header,
+  .tk-file-penalty .pk-card {
+    border-color:var(--pk-border)!important;
+    background:#fff!important;
+    color:var(--pk-text)!important;
+    box-shadow:var(--pk-shadow);
+    backdrop-filter:none;
+  }
+
+  .tk-file-penalty .brand,
+  .tk-file-penalty .brand-text strong {
+    color:var(--pk-text)!important;
+  }
+
+  .tk-file-penalty .brand-text span,
+  .tk-file-penalty .pk-balance,
+  .tk-file-penalty .pk-controls h3,
+  .tk-file-penalty .pk-empty,
+  .tk-file-penalty .pk-total span {
+    color:var(--pk-muted)!important;
+  }
+
+  .tk-file-penalty .pk-back-link {
+    border-color:var(--pk-border)!important;
+    background:#f8fbff!important;
+    color:var(--pk-navy-2)!important;
+  }
+
+  .tk-file-penalty .pk-balance strong,
+  .tk-file-penalty .pk-total strong,
+  .tk-file-penalty .pk-bet-row .amount {
+    color:var(--pk-navy-2)!important;
+  }
+
+  .tk-file-penalty .pk-stadium {
+    background:
+      radial-gradient(ellipse at 50% 120%,rgba(20,137,76,.42),transparent 60%),
+      linear-gradient(180deg,#f8fbff,#eef4fb)!important;
+  }
+
+  .tk-file-penalty .pk-post-zone {
+    border-color:var(--pk-border)!important;
+    background:#f8fbff;
+    color:var(--pk-muted)!important;
+  }
+
+  .tk-file-penalty .pk-amount-input {
+    border-color:var(--pk-border)!important;
+    background:#fff!important;
+    color:var(--pk-text)!important;
+  }
+
+  .tk-file-penalty .pk-chip {
+    border-color:var(--pk-border)!important;
+    background:#f8fbff!important;
+    color:var(--pk-text)!important;
+  }
+
+  .tk-file-penalty .pk-chip:hover {
+    background:#fff8df!important;
+  }
+
+  .tk-file-penalty .pk-bet-row {
+    border-color:var(--pk-border)!important;
+    background:#f8fbff!important;
+    color:var(--pk-text)!important;
+  }
+
+  .tk-file-penalty .pk-total {
+    border-color:#f2ca5e!important;
+    background:#fff8df!important;
+  }
+
+  .tk-file-penalty #result-panel {
+    border-color:var(--pk-border)!important;
+    background:#f8fbff!important;
+    color:var(--pk-text)!important;
+  }
+
+  .tk-file-penalty .pk-result-cell {
+    background:#fff!important;
+    border:1px solid var(--pk-border);
+  }
+
+  /* Mobile / petits écrans */
+  @media(max-width:760px) {
+    .tk-file-penalty #penalty-page {
+      padding:10px 8px 28px;
+    }
+
+    .tk-file-penalty .pk-header {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      padding:12px;
+      border-radius:18px;
+      margin-bottom:12px;
+    }
+
+    .tk-file-penalty .brand {
+      width:100%;
+    }
+
+    .tk-file-penalty .brand img {
+      width:44px;
+      height:44px;
+      border-radius:12px;
+    }
+
+    .tk-file-penalty .pk-header > .pk-actions {
+      width:100%;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:0;
+    }
+
+    .tk-file-penalty .pk-back-link {
+      width:100%;
+      justify-content:center;
+      min-height:42px;
+      padding:8px 10px;
+      font-size:12px;
+      margin-left:0!important;
+    }
+
+    .tk-file-penalty .pk-balance {
+      grid-column:1 / -1;
+      align-items:flex-start;
+      padding:10px 12px;
+      border:1px solid var(--pk-border);
+      border-radius:12px;
+      background:#f8fbff;
+    }
+
+    .tk-file-penalty .pk-layout {
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .tk-file-penalty .pk-stadium {
+      order:1;
+      padding:12px 8px 14px;
+      border-radius:18px;
+    }
+
+    .tk-file-penalty .pk-summary {
+      order:2;
+      padding:14px;
+      border-radius:18px;
+    }
+
+    .tk-file-penalty .pk-goal {
+      padding:8px;
+      border-width:4px;
+      border-radius:14px 14px 8px 8px;
+    }
+
+    .tk-file-penalty .pk-goal::before {
+      inset:5px;
+      background-size:12px 12px;
+    }
+
+    .tk-file-penalty #penalty-grid {
+      grid-template-columns:repeat(8,minmax(0,1fr));
+      grid-template-rows:repeat(3,minmax(42px,1fr));
+      gap:3px;
+      aspect-ratio:auto;
+    }
+
+    .tk-file-penalty .pk-sector {
+      min-width:0;
+      min-height:42px;
+      padding:2px 1px;
+      border-radius:7px;
+    }
+
+    .tk-file-penalty .pk-sector .num {
+      font-size:11px;
+    }
+
+    .tk-file-penalty .pk-sector .amt {
+      max-width:100%;
+      padding:1px 3px;
+      font-size:8px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .tk-file-penalty .pk-ball {
+      width:18px;
+      height:18px;
+      bottom:-34px;
+    }
+
+    .tk-file-penalty .pk-posts {
+      margin-top:8px;
+      gap:5px;
+    }
+
+    .tk-file-penalty .pk-post-zone {
+      padding:7px 3px;
+      font-size:10px;
+    }
+
+    .tk-file-penalty .pk-controls {
+      margin-top:14px;
+    }
+
+    .tk-file-penalty .pk-controls h3 {
+      margin-bottom:8px;
+      font-size:11px;
+    }
+
+    .tk-file-penalty .pk-amount-row {
+      grid-template-columns:1fr 48px 48px;
+      gap:6px;
+      margin-bottom:8px;
+    }
+
+    .tk-file-penalty .pk-amount-input {
+      min-width:0;
+      padding:11px 10px;
+      font-size:15px;
+    }
+
+    .tk-file-penalty .pk-chip {
+      min-height:44px;
+      padding:0 8px;
+    }
+
+    .tk-file-penalty .pk-quick {
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:5px;
+      margin-bottom:12px;
+    }
+
+    .tk-file-penalty .pk-quick .pk-chip {
+      min-width:0;
+      padding:9px 2px;
+      font-size:12px;
+    }
+
+    .tk-file-penalty .pk-groups {
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:7px;
+    }
+
+    .tk-file-penalty .pk-bet-btn {
+      min-height:54px;
+      padding:9px 5px;
+      border-radius:10px;
+      font-size:12px;
+    }
+
+    .tk-file-penalty .pk-actions {
+      grid-template-columns:1fr 1.4fr;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .tk-file-penalty .pk-btn {
+      min-height:48px;
+      padding:12px 8px;
+      font-size:14px;
+    }
+
+    .tk-file-penalty #bets-summary {
+      max-height:240px;
+    }
+
+    .tk-file-penalty .pk-result-grid {
+      grid-template-columns:1fr 1fr;
+    }
+  }
+
+  @media(max-width:390px) {
+    .tk-file-penalty #penalty-page {
+      padding-left:6px;
+      padding-right:6px;
+    }
+
+    .tk-file-penalty .pk-header > .pk-actions {
+      grid-template-columns:1fr;
+    }
+
+    .tk-file-penalty .pk-balance {
+      grid-column:auto;
+    }
+
+    .tk-file-penalty #penalty-grid {
+      grid-template-rows:repeat(3,minmax(38px,1fr));
+      gap:2px;
+    }
+
+    .tk-file-penalty .pk-sector {
+      min-height:38px;
+    }
+
+    .tk-file-penalty .pk-sector .num {
+      font-size:10px;
+    }
+
+    .tk-file-penalty .pk-sector .amt {
+      font-size:7px;
+    }
+
+    .tk-file-penalty .pk-quick {
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .tk-file-penalty .pk-result-grid {
+      grid-template-columns:1fr;
+    }
+  }
+</style>
+<meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-penalty">
 <main id="penalty-page">
-
-  <!-- ============ HEADER ============ -->
-  <header class="pk-header">
-    <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
-      <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-      <span class="brand-text">
-        <strong>Tonton Kondo</strong>
-        <span>Paryaj</span>
-      </span>
-    </a>
-    <div class="pk-actions">
-      <a class="pk-back-link" href="games.html">← Retour aux jeux</a>
-      <a class="pk-back-link" href="help-penalty.html" style="margin-left:8px;">📘 Comprendre les règles</a>
-      <div class="pk-balance">
-        <span>Solde</span>
-        <strong id="user-balance">Solde en cours...</strong>
-      </div>
-    </div>
-  </header>
-
-  <!-- ============ LAYOUT ============ -->
-  <div class="pk-layout">
-
-    <!-- LEFT: Goal + controls -->
-    <section class="pk-card pk-stadium">
-      <div class="pk-goal">
-        <div id="penalty-grid" aria-label="Grille de tir penalty"></div>
-        <div class="pk-ball" id="pk-ball"></div>
-      </div>
-
-      <div class="pk-posts">
-        <div class="pk-post-zone">↘ Poto (poteau)</div>
-        <div class="pk-post-zone">✗ Rate / Kenbe</div>
-      </div>
-
-      <!-- Bet controls -->
-      <div class="pk-controls">
-        <h3>Montant de la mise</h3>
-        <div class="pk-amount-row">
-          <input id="bet-amount" class="pk-amount-input" type="number" min="1" value="50" inputmode="numeric" />
-          <button class="pk-chip" data-amount-action="dec">−</button>
-          <button class="pk-chip" data-amount-action="inc">+</button>
-        </div>
-
-        <div class="pk-quick">
-          <button class="pk-chip" data-amount-set="25">25</button>
-          <button class="pk-chip" data-amount-set="50">50</button>
-          <button class="pk-chip" data-amount-set="100">100</button>
-          <button class="pk-chip" data-amount-set="500">500</button>
-        </div>
-
-        <h3>Mises spéciales</h3>
-        <div class="pk-groups">
-          <button class="pk-bet-btn green" data-bet-type="range" data-bet-value="1-8">
+<!-- ============ HEADER ============ -->
+<header class="topbar">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<span class="pill">Penalty</span>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<!-- ============ LAYOUT ============ -->
+<div class="pk-layout">
+<!-- LEFT: Goal + controls -->
+<section class="pk-card pk-stadium">
+<div class="pk-goal">
+<div aria-label="Grille de tir penalty" id="penalty-grid"></div>
+<div class="pk-ball" id="pk-ball"></div>
+</div>
+<div class="pk-posts">
+<div class="pk-post-zone">↘ Poto (poteau)</div>
+<div class="pk-post-zone">✗ Rate / Kenbe</div>
+</div>
+<!-- Bet controls -->
+<div class="pk-controls">
+<h3>Montant de la mise</h3>
+<div class="pk-amount-row">
+<input class="pk-amount-input" id="bet-amount" inputmode="numeric" min="1" type="number" value="50"/>
+<button class="pk-chip" data-amount-action="dec">−</button>
+<button class="pk-chip" data-amount-action="inc">+</button>
+</div>
+<div class="pk-quick">
+<button class="pk-chip" data-amount-set="25">25</button>
+<button class="pk-chip" data-amount-set="50">50</button>
+<button class="pk-chip" data-amount-set="100">100</button>
+<button class="pk-chip" data-amount-set="500">500</button>
+</div>
+<h3>Mises spéciales</h3>
+<div class="pk-groups">
+<button class="pk-bet-btn green" data-bet-type="range" data-bet-value="1-8">
             1 – 8 <small>x2.5</small>
-          </button>
-          <button class="pk-bet-btn green" data-bet-type="range" data-bet-value="9-16">
+</button>
+<button class="pk-bet-btn green" data-bet-type="range" data-bet-value="9-16">
             9 – 16 <small>x2.5</small>
-          </button>
-          <button class="pk-bet-btn green" data-bet-type="range" data-bet-value="17-24">
+</button>
+<button class="pk-bet-btn green" data-bet-type="range" data-bet-value="17-24">
             17 – 24 <small>x2.5</small>
-          </button>
-          <button class="pk-bet-btn purple" data-bet-type="random" data-bet-value="random">
+</button>
+<button class="pk-bet-btn purple" data-bet-type="random" data-bet-value="random">
             Hasard <small>x1.5</small>
-          </button>
-          <button class="pk-bet-btn yellow" data-bet-type="color" data-bet-value="yellow">
+</button>
+<button class="pk-bet-btn yellow" data-bet-type="color" data-bet-value="yellow">
             Jòn <small>x1.8</small>
-          </button>
-          <button class="pk-bet-btn blue" data-bet-type="color" data-bet-value="blue">
+</button>
+<button class="pk-bet-btn blue" data-bet-type="color" data-bet-value="blue">
             Blu <small>x1.8</small>
-          </button>
-          <button class="pk-bet-btn red" data-bet-type="event" data-bet-value="post">
+</button>
+<button class="pk-bet-btn red" data-bet-type="event" data-bet-value="post">
             Poto <small>x5</small>
-          </button>
-          <button class="pk-bet-btn red" data-bet-type="event" data-bet-value="miss">
+</button>
+<button class="pk-bet-btn red" data-bet-type="event" data-bet-value="miss">
             Rate / Kenbe <small>x3</small>
-          </button>
-        </div>
-
-        <div class="pk-actions">
-          <button id="clear-bets-btn" class="pk-btn pk-btn-clear">Effacer</button>
-          <button id="draw-btn" class="pk-btn pk-btn-draw">⚽ Tirage</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- RIGHT: Summary -->
-    <aside class="pk-card pk-summary">
-      <h2>Résumé des mises</h2>
-      <div id="bets-summary">
-        <div class="pk-empty">Aucune mise pour l'instant.<br/>Clique sur un secteur ou un bouton.</div>
-      </div>
-      <div class="pk-total">
-        <span>Total misé</span>
-        <strong id="total-bet">0 HTG</strong>
-      </div>
-
-      <div id="result-panel"></div>
-      <div id="feedback-message"></div>
-    </aside>
-
-  </div>
+</button>
+</div>
+<div class="pk-actions">
+<button class="pk-btn pk-btn-clear" id="clear-bets-btn">Effacer</button>
+<button class="pk-btn pk-btn-draw" id="draw-btn">⚽ Tirage</button>
+</div>
+</div>
+</section>
+<!-- RIGHT: Summary -->
+<aside class="pk-card pk-summary">
+<h2>Résumé des mises</h2>
+<div id="bets-summary">
+<div class="pk-empty">Aucune mise pour l'instant.<br/>Clique sur un secteur ou un bouton.</div>
+</div>
+<div class="pk-total">
+<span>Total misé</span>
+<strong id="total-bet">0 HTG</strong>
+</div>
+<div id="result-panel"></div>
+<div id="feedback-message"></div>
+</aside>
+</div>
 </main>
-
 <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
+<script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
+<script src="../js/auth-guard.js"></script>
 <script>
 /* =========================================================================
    PENALTY — Logique frontend (placeholder, prêt pour Supabase)
@@ -1091,7 +1498,7 @@ function showFeedback(msg, level = 'info') {
    =========================================================== */
 document.addEventListener('DOMContentLoaded', initPenalty);
 </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });

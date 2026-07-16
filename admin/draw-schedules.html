@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Tirages</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Tirages</title>
+<style>
     :root { --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0; --gold:#ffd21f; --green:#46e36f; --red:#ff6677; --shadow:0 24px 60px rgba(0,0,0,.45); }
     * { box-sizing:border-box; }
     body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background: radial-gradient(circle at 85% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 10% 8%, rgba(57,168,255,.12), transparent 24%), linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%); }
@@ -48,95 +49,92 @@
     @media (max-width: 1080px){ .hero{grid-template-columns:1fr;} }
     @media (max-width: 760px){ .app{padding:12px 12px 28px;} .topbar{flex-direction:column; align-items:flex-start;} table{display:block; overflow-x:auto;} }
   </style>
-</head>
+<link data-tk-redesign="wow-white-navy-v1" href="../assets/tk-wow-redesign.css" rel="stylesheet"/></head>
 <body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
-      <span class="pill">Admin — tirages centralisés</span>
-    </header>
-
-    <section class="hero">
-      <article>
-        <div class="eyebrow">Phase 5.1</div>
-        <h1>Gestion centralisée des tirages</h1>
-        <p class="lede">Gérez les tirages disponibles pour les jeux depuis une seule source. Les pages Borlette, Mariage et Résultats pourront ensuite les lire dynamiquement.</p>
-        <span class="mini-chip">🧩 <strong>Supabase</strong> — table draw_schedules</span>
-      </article>
-      <article class="panel" style="padding:14px;">
-        <div class="field-grid">
-          <div class="field-card">
-            <div class="label"><span>Jeu</span></div>
-            <select id="game-type-filter">
-              <option value="all">Tous les jeux</option>
-              <option value="borlette">Borlette</option>
-              <option value="mariage">Mariage</option>
-              <option value="lotto3">Lotto 3</option>
-              <option value="lotto4">Lotto 4</option>
-              <option value="lotto5">Lotto 5</option>
-            </select>
-          </div>
-          <div class="field-card">
-            <div class="label"><span>Nom du tirage</span></div>
-            <input id="draw-name-input" type="text" placeholder="Ex. New York Midday" />
-          </div>
-          <div class="field-card">
-            <div class="label"><span>Libellé affiché</span></div>
-            <input id="display-name-input" type="text" placeholder="Ex. New York Midday" />
-          </div>
-          <div class="field-card">
-            <div class="label"><span>Jeu</span></div>
-            <select id="new-game-type-input">
-              <option value="borlette">Borlette</option>
-              <option value="mariage">Mariage</option>
-              <option value="lotto3">Lotto 3</option>
-              <option value="lotto4">Lotto 4</option>
-              <option value="lotto5">Lotto 5</option>
-            </select>
-          </div>
-          <div class="field-card">
-            <div class="label"><span>Heure</span></div>
-            <input id="draw-time-input" type="time" />
-          </div>
-          <div class="field-card">
-            <div class="label"><span>Ordre</span></div>
-            <input id="sort-order-input" type="number" value="0" />
-          </div>
-          <div class="btn-row">
-            <button id="save-btn" class="btn btn-primary" type="button">Ajouter / modifier</button>
-            <button id="refresh-btn" class="btn" type="button">Actualiser</button>
-          </div>
-          <div id="feedback-box" class="feedback warn">Chargement des tirages…</div>
-        </div>
-      </article>
-    </section>
-
-    <section class="panel">
-      <div class="field-grid">
-        <div class="table-card">
-          <table>
-            <thead>
-              <tr>
-                <th>Jeu</th>
-                <th>Tirage</th>
-                <th>Affichage</th>
-                <th>Heure</th>
-                <th>Ordre</th>
-                <th>Statut</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="draw-schedules-body"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script>
+<main class="app">
+<header class="topbar">
+<a class="brand" href="../index.html"><img alt="Logo Tonton Kondo" src="../assets/logo.png"/><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+<span class="pill">Admin — tirages centralisés</span>
+</header>
+<section class="hero">
+<article>
+<div class="eyebrow">Phase 5.1</div>
+<h1>Gestion centralisée des tirages</h1>
+<p class="lede">Gérez les tirages disponibles pour les jeux depuis une seule source. Les pages Borlette, Mariage et Résultats pourront ensuite les lire dynamiquement.</p>
+<span class="mini-chip">🧩 <strong>Supabase</strong> — table draw_schedules</span>
+</article>
+<article class="panel" style="padding:14px;">
+<div class="field-grid">
+<div class="field-card">
+<div class="label"><span>Jeu</span></div>
+<select id="game-type-filter">
+<option value="all">Tous les jeux</option>
+<option value="borlette">Borlette</option>
+<option value="mariage">Mariage</option>
+<option value="lotto3">Lotto 3</option>
+<option value="lotto4">Lotto 4</option>
+<option value="lotto5">Lotto 5</option>
+</select>
+</div>
+<div class="field-card">
+<div class="label"><span>Nom du tirage</span></div>
+<input id="draw-name-input" placeholder="Ex. New York Midday" type="text"/>
+</div>
+<div class="field-card">
+<div class="label"><span>Libellé affiché</span></div>
+<input id="display-name-input" placeholder="Ex. New York Midday" type="text"/>
+</div>
+<div class="field-card">
+<div class="label"><span>Jeu</span></div>
+<select id="new-game-type-input">
+<option value="borlette">Borlette</option>
+<option value="mariage">Mariage</option>
+<option value="lotto3">Lotto 3</option>
+<option value="lotto4">Lotto 4</option>
+<option value="lotto5">Lotto 5</option>
+</select>
+</div>
+<div class="field-card">
+<div class="label"><span>Heure</span></div>
+<input id="draw-time-input" type="time"/>
+</div>
+<div class="field-card">
+<div class="label"><span>Ordre</span></div>
+<input id="sort-order-input" type="number" value="0"/>
+</div>
+<div class="btn-row">
+<button class="btn btn-primary" id="save-btn" type="button">Ajouter / modifier</button>
+<button class="btn" id="refresh-btn" type="button">Actualiser</button>
+</div>
+<div class="feedback warn" id="feedback-box">Chargement des tirages…</div>
+</div>
+</article>
+</section>
+<section class="panel">
+<div class="field-grid">
+<div class="table-card">
+<table>
+<thead>
+<tr>
+<th>Jeu</th>
+<th>Tirage</th>
+<th>Affichage</th>
+<th>Heure</th>
+<th>Ordre</th>
+<th>Statut</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="draw-schedules-body"></tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script>
     (function () {
       const feedbackBox = document.getElementById('feedback-box');
       const body = document.getElementById('draw-schedules-body');
@@ -306,7 +304,7 @@
       })();
     })();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -315,4 +313,3 @@
 </script>
 </body>
 </html>
-

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo</title>
+<style>
     :root{--bg:#020813;--panel:#07182b;--line:rgba(255,255,255,.10);--text:#f5f7fb;--muted:#aebbd0;--gold:#ffd21f;--gold-2:#ffb900;--blue:#39a8ff;--shadow:0 22px 52px rgba(0,0,0,.34);--bottom-nav-height:86px}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;color:var(--text);font-family:"Segoe UI",Arial,sans-serif;line-height:1.5;background:radial-gradient(circle at 82% 0%,rgba(255,210,31,.09),transparent 18%),radial-gradient(circle at 10% 7%,rgba(57,168,255,.15),transparent 24%),linear-gradient(180deg,#010610 0%,#061426 48%,#020813 100%)} a{color:inherit;text-decoration:none} button{font:inherit;cursor:pointer} img{max-width:100%;display:block}.app{width:min(100%,1200px);margin:0 auto;padding:18px 16px 42px}
     .mobile-header{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:8px 0 16px;border-bottom:1px solid var(--line);margin-bottom:24px}.brand{display:flex;align-items:center;min-width:0}.brand-block{display:flex;align-items:center;gap:12px}.brand-icon{width:56px;height:56px;object-fit:contain;flex-shrink:0}.brand-text{display:flex;flex-direction:column;line-height:1}.brand-top,.brand-middle{display:block;font-weight:900;font-size:22px;letter-spacing:.04em}.brand-top{color:#fff}.brand-middle{color:var(--gold)}.brand-bottom{position:relative;display:block;margin-top:4px;text-align:center;color:#d7dde8;font-size:9px;font-weight:800;letter-spacing:.5em}.brand-bottom:before,.brand-bottom:after{content:"";position:absolute;top:50%;width:22px;height:1px;background:rgba(255,255,255,.35)}.brand-bottom:before{right:100%;margin-right:8px}.brand-bottom:after{left:100%;margin-left:8px}
@@ -17,190 +18,184 @@
     @media(max-width:980px){.intro-row,.main-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.games-row{grid-template-columns:repeat(3,1fr)}.support-strip{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:760px){body{padding-bottom:var(--bottom-nav-height)}.app{width:min(100%,430px);padding:14px 12px calc(var(--bottom-nav-height) + 18px)}.mobile-header{grid-template-columns:1fr auto;margin-bottom:18px}.brand-icon{width:44px;height:44px}.brand-top,.brand-middle{font-size:18px}.brand-bottom{font-size:8px}.header-actions{gap:7px}.action-btn{width:40px;height:40px}.welcome-card{padding:20px;min-height:138px}.welcome-card h1{font-size:24px}.welcome-card p{font-size:14px}.balance-card{padding:16px}.balance-card strong{font-size:23px}.stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{min-height:118px;padding:13px}.stat-icon{width:38px;height:38px}.stat-card strong{font-size:20px}.panel{padding:15px;border-radius:22px}.empty-history{min-height:130px;justify-content:flex-start;padding:16px}.empty-history-inner{align-items:flex-start}.history-item{grid-template-columns:auto 1fr;align-items:start}.history-meta{grid-column:2;justify-items:start;grid-template-columns:repeat(2,auto);gap:8px;align-items:center;margin-top:6px}.history-date{grid-column:1/-1;justify-self:start}.quick-buttons .btn{flex:1 1 calc(50% - 6px)}.quick-buttons .btn:last-child{flex-basis:100%}.games-row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin-inline:-2px}.games-row::-webkit-scrollbar{display:none}.game-card{flex:0 0 112px;min-height:132px;scroll-snap-align:start}.game-card img{height:70px}.support-strip{display:none}.bottom-nav{display:grid}}
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="mobile-header" data-i18n-aria-label="common.main_header">
-      <a class="brand" href="index.html" data-i18n-aria-label="common.home">
-        <div class="brand-block">
-          <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
-          <div class="brand-text">
-            <span class="brand-top">TONTON</span>
-            <span class="brand-middle">KONDO</span>
-            <span class="brand-bottom">PARYAJ</span>
-          </div>
-        </div>
-      </a>
-      <div class="wallet-chip" data-i18n-aria-label="common.user_balance">
-        <span>
-          <strong id="wallet-balance" data-i18n="common.player_space_loading"></strong>
-          <span id="wallet-label" data-i18n="dashboard.available_balance"></span>
-        </span>
-      </div>
-      <div class="header-actions">
-        <div id="authHeaderActions"></div>
-        <button class="action-btn" type="button" data-i18n-aria-label="common.promotions">
-          <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/></svg>
-          <span class="badge">3</span>
-        </button>
-        <a href="notifications.html" class="action-btn notifications-link" data-i18n-aria-label="common.notifications">
-          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
-          <span class="badge notifications-badge" hidden>0</span>
-        </a>
-        <div class="user-menu-wrap" id="userMenuWrap" hidden>
-          <button id="userMenuButton" class="action-btn user-button" type="button" data-i18n-aria-label="common.user_menu" aria-expanded="false">
-            <span class="user-avatar" id="userAvatar">TK</span>
-          </button>
-          <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
-            <a class="user-menu-link" href="tickets.html" data-i18n="common.tickets"></a>
-            <a class="user-menu-link" href="history.html" data-i18n="common.history"></a>
-            <a class="user-menu-link" href="results.html" data-i18n="common.results"></a>
-            <a class="user-menu-link" href="deposit.html" data-i18n="common.deposit"></a>
-            <a class="user-menu-link" href="withdraw.html" data-i18n="common.withdraw"></a>
-            <a class="user-menu-link" href="wallet.html" data-i18n="common.wallet"></a>
-            <a class="user-menu-link" href="profile.html" data-i18n="common.profile"></a>
-            <a class="user-menu-link" href="settings.html" data-i18n="common.settings"></a>
-            <div class="user-menu-divider"></div>
-            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button" data-i18n="common.logout"></button>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section class="shell">
-      <div class="intro-row">
-        <article class="welcome-card">
-          <span class="eyebrow" data-i18n="dashboard.title"></span>
-          <h1><span data-dashboard-greeting data-i18n="dashboard.greeting" data-i18n-vars='{"name":"Joueur"}'></span></h1>
-          <p data-i18n="dashboard.subtitle"></p>
-          <div class="welcome-footer">
-            <div class="profile-badge">
-              <div class="profile-avatar" data-dashboard-avatar>U</div>
-              <div class="profile-copy">
-                <strong data-dashboard-name data-i18n="common.player_space_loading"></strong>
-                <span data-dashboard-email data-i18n="common.player_space_loading"></span>
-              </div>
-            </div>
-            <div class="profile-meta">
-              <span class="tag-pill" data-dashboard-status-chip data-i18n="common.account_verified"></span>
-              <span class="tag-pill muted"><span data-i18n="common.role"></span> : <strong data-dashboard-role data-i18n="common.client">client</strong></span>
-              <span class="tag-pill muted"><span data-i18n="common.status"></span> : <strong data-dashboard-status data-i18n="common.active">active</strong></span>
-            </div>
-          </div>
-        </article>
-        <article class="balance-card">
-          <div class="balance-top">
-            <div>
-              <small data-i18n="dashboard.available_balance"></small>
-              <strong data-dashboard-balance-card data-i18n="common.player_space_loading"></strong>
-            </div>
-            <a class="deposit-btn" href="deposit.html" data-i18n="dashboard.deposit"></a>
-          </div>
-        </article>
-      </div>
-
-      <section class="stats-grid" data-i18n-aria-label="common.stats">
-        <article class="stat-card">
-          <span class="stat-icon gold"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M7 7V5h10v2"/><path d="M9 12h6"/></svg></span>
-          <small data-i18n="dashboard.total_tickets"></small>
-          <strong data-dashboard-tickets>0 HTG</strong>
-        </article>
-        <article class="stat-card">
-          <span class="stat-icon gold"><svg viewBox="0 0 24 24"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M5 6H3a4 4 0 0 0 4 4"/><path d="M19 6h2a4 4 0 0 1-4 4"/></svg></span>
-          <small data-i18n="dashboard.total_wins"></small>
-          <strong data-dashboard-gains>0 HTG</strong>
-        </article>
-        <article class="stat-card">
-          <span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15v-4"/><path d="M12 15V8"/><path d="M16 15v-6"/></svg></span>
-          <small data-i18n="dashboard.total_wins"></small>
-          <strong>0 HTG</strong>
-        </article>
-        <article class="stat-card">
-          <span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><path d="M16 7V5a2 2 0 0 0-2-2H8"/><path d="M18 13h.01"/></svg></span>
-          <small data-i18n="common.currency"></small>
-          <strong data-dashboard-currency>HTG</strong>
-          <span data-i18n="dashboard.account_status"></span>
-        </article>
-      </section>
-
-      <section class="main-grid">
-        <article class="panel">
-          <div class="panel-head">
-            <div>
-              <h2 data-i18n="dashboard.recent_activity"></h2>
-              <span data-i18n="dashboard.recent_activity_subtitle"></span>
-            </div>
-            <a class="panel-link" href="history.html" data-i18n="dashboard.view_all"></a>
-          </div>
-          <div class="empty-history" data-dashboard-transactions>
-            <div class="empty-history-inner">
-              <span class="empty-icon"><svg viewBox="0 0 24 24"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
-              <div>
-                <strong data-i18n="dashboard.no_activity"></strong>
-                <p data-i18n="common.no_recent_activity_description"></p>
-              </div>
-            </div>
-          </div>
-        </article>
-        <article class="panel">
-          <div class="panel-head">
-            <div>
-              <h2 data-i18n="dashboard.quick_actions"></h2>
-              <span data-i18n="dashboard.quick_actions_subtitle"></span>
-            </div>
-          </div>
-          <div class="quick-list">
-            <a class="quick-item" href="deposit.html"><span class="quick-icon gold"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span><span><strong data-i18n="dashboard.deposit"></strong><span data-i18n="common.deposit_description"></span></span><span class="quick-arrow">→</span></a>
-            <a class="quick-item" href="withdraw.html"><span class="quick-icon gold"><svg viewBox="0 0 24 24"><path d="M12 21V9"/><path d="m7 14 5-5 5 5"/><path d="M5 3h14"/></svg></span><span><strong data-i18n="dashboard.withdraw"></strong><span data-i18n="common.withdraw_description"></span></span><span class="quick-arrow">→</span></a>
-            <a class="quick-item" href="jeux/games.html"><span class="quick-icon"><svg viewBox="0 0 24 24"><path d="M6 12h4"/><path d="M8 10v4"/><path d="M15 13h.01"/><path d="M18 11h.01"/><rect x="3" y="8" width="18" height="10" rx="5"/></svg></span><span><strong data-i18n="dashboard.play_now"></strong><span data-i18n="common.play_description"></span></span><span class="quick-arrow">→</span></a>
-          </div>
-          <div class="quick-buttons">
-            <a class="btn btn-primary" href="deposit.html" data-i18n="dashboard.deposit"></a>
-            <a class="btn" href="withdraw.html" data-i18n="dashboard.withdraw"></a>
-            <a class="btn" href="jeux/games.html" data-i18n="dashboard.play_now"></a>
-          </div>
-        </article>
-      </section>
-
-      <section class="panel" data-i18n-aria-label="dashboard.popular_games">
-        <div class="panel-head">
-          <div>
-            <h2 data-i18n="dashboard.popular_games"></h2>
-            <span data-i18n="dashboard.popular_games_description"></span>
-          </div>
-          <a class="panel-link" href="jeux/games.html" data-i18n="dashboard.view_all"></a>
-        </div>
-        <div class="games-row">
-          <a class="game-card" href="jeux/borlette.html"><img src="assets/Lotterie.png" alt="Borlette"><strong>Borlette</strong></a>
-          <a class="game-card" href="jeux/mariage.html"><img src="assets/mariage.png" alt="Mariage"><strong>Mariage</strong></a>
-          <a class="game-card" href="jeux/lotto3.html"><img src="assets/lo3.png" alt="Lotto 3"><strong>Lotto 3</strong></a>
-          <a class="game-card" href="jeux/lotto4.html"><img src="assets/lo4.png" alt="Lotto 4"><strong>Lotto 4</strong></a>
-          <a class="game-card" href="jeux/keno.html"><img src="assets/keno.png" alt="Keno"><strong>Keno</strong></a>
-          <a class="game-card" href="jeux/roulette.html"><img src="assets/roulette.png" alt="Roulette"><strong>Roulette</strong></a>
-        </div>
-      </section>
-
-      <section class="support-strip" data-i18n-aria-label="common.trust_info">
-        <article class="notice-card"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.2 2.8 7.8 7 10 4.2-2.2 7-5.8 7-10V6l-7-3Z"/></svg><div><strong data-i18n="common.protected"></strong><span data-i18n="common.protected_description"></span></div></article>
-        <article class="notice-card"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M7 17v2h10v-2"/></svg><div><strong data-i18n="common.payments"></strong><span data-i18n="common.payments_description"></span></div></article>
-        <article class="notice-card"><svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0v4"/><path d="M6 14h2v5H6z"/><path d="M16 14h2v5h-2z"/></svg><div><strong data-i18n="common.support"></strong><span data-i18n="common.support_description"></span></div></article>
-        <article class="notice-card"><svg viewBox="0 0 24 24"><path d="M12 3 8 7H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3l4 4V3Z"/><path d="M16 8a3 3 0 1 1 0 6"/></svg><div><strong data-i18n="common.clear"></strong><span data-i18n="common.clear_description"></span></div></article>
-      </section>
-    </section>
-  </main>
-
-  <nav class="bottom-nav" data-i18n-aria-label="common.mobile_navigation">
-    <a class="bottom-link active" href="index.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span data-i18n="common.home"></span></a>
-    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg></span><span data-i18n="common.games"></span></a>
-    <a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><path d="M11 7a16 16 20 0 1 10.98 4.362"/><path d="M12 12a13 13 0 0 1-8.66 5"/><path d="M16.83 13.634a16 16 0 0 1-9.267 7.328"/><path d="M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10"/><path d="M8.17 15.366a16 16 0 0 1-1.713-11.69"/><circle cx="12" cy="12" r="10"/></svg></span><span data-i18n="common.games"></span></a>
-    <a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg></span><span data-i18n="common.results"></span></a>
-    <a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg></span><span data-i18n="common.wallet"></span></a>
-  </nav>
-  <script src="js/i18n.js"></script>
-  <script src="js/auth-config.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/auth-guard.js"></script>
-  <script>
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-account tk-file-dashboard">
+<main class="app">
+<header class="mobile-header" data-i18n-aria-label="common.main_header">
+<a class="brand" data-i18n-aria-label="common.home" href="index.html">
+<div class="brand-block">
+<img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
+<div class="brand-text">
+<span class="brand-top">TONTON</span>
+<span class="brand-middle">KONDO</span>
+<span class="brand-bottom">PARYAJ</span>
+</div>
+</div>
+</a>
+<div class="wallet-chip" data-i18n-aria-label="common.user_balance">
+<span>
+<strong data-i18n="common.player_space_loading" id="wallet-balance"></strong>
+<span data-i18n="dashboard.available_balance" id="wallet-label"></span>
+</span>
+</div>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
+<span class="badge">3</span>
+</button>
+<a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
+<svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
+<span class="badge notifications-badge" hidden="">0</span>
+</a>
+<div class="user-menu-wrap" hidden="" id="userMenuWrap">
+<button aria-expanded="false" class="action-btn user-button" data-i18n-aria-label="common.user_menu" id="userMenuButton" type="button">
+<span class="user-avatar" id="userAvatar">TK</span>
+</button>
+<div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
+<a class="user-menu-link" data-i18n="common.tickets" href="tickets.html"></a>
+<a class="user-menu-link" data-i18n="common.history" href="history.html"></a>
+<a class="user-menu-link" data-i18n="common.results" href="results.html"></a>
+<a class="user-menu-link" data-i18n="common.deposit" href="deposit.html"></a>
+<a class="user-menu-link" data-i18n="common.withdraw" href="withdraw.html"></a>
+<a class="user-menu-link" data-i18n="common.wallet" href="wallet.html"></a>
+<a class="user-menu-link" data-i18n="common.profile" href="profile.html"></a>
+<a class="user-menu-link" data-i18n="common.settings" href="settings.html"></a>
+<div class="user-menu-divider"></div>
+<button class="user-menu-link user-menu-logout" data-i18n="common.logout" id="logoutMenuBtn" type="button"></button>
+</div>
+</div>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="shell">
+<div class="intro-row">
+<article class="welcome-card">
+<span class="eyebrow" data-i18n="dashboard.title"></span>
+<h1><span data-dashboard-greeting="" data-i18n="dashboard.greeting" data-i18n-vars='{"name":"Joueur"}'></span></h1>
+<p data-i18n="dashboard.subtitle"></p>
+<div class="welcome-footer">
+<div class="profile-badge">
+<div class="profile-avatar" data-dashboard-avatar="">U</div>
+<div class="profile-copy">
+<strong data-dashboard-name="" data-i18n="common.player_space_loading"></strong>
+<span data-dashboard-email="" data-i18n="common.player_space_loading"></span>
+</div>
+</div>
+<div class="profile-meta">
+<span class="tag-pill" data-dashboard-status-chip="" data-i18n="common.account_verified"></span>
+<span class="tag-pill muted"><span data-i18n="common.role"></span> : <strong data-dashboard-role="" data-i18n="common.client">client</strong></span>
+<span class="tag-pill muted"><span data-i18n="common.status"></span> : <strong data-dashboard-status="" data-i18n="common.active">active</strong></span>
+</div>
+</div>
+</article>
+<article class="balance-card">
+<div class="balance-top">
+<div>
+<small data-i18n="dashboard.available_balance"></small>
+<strong data-dashboard-balance-card="" data-i18n="common.player_space_loading"></strong>
+</div>
+<a class="deposit-btn" data-i18n="dashboard.deposit" href="deposit.html"></a>
+</div>
+</article>
+</div>
+<section class="stats-grid" data-i18n-aria-label="common.stats">
+<article class="stat-card">
+<span class="stat-icon gold"><svg viewbox="0 0 24 24"><path d="M4 7h16v10H4z"></path><path d="M7 7V5h10v2"></path><path d="M9 12h6"></path></svg></span>
+<small data-i18n="dashboard.total_tickets"></small>
+<strong data-dashboard-tickets="">0 HTG</strong>
+</article>
+<article class="stat-card">
+<span class="stat-icon gold"><svg viewbox="0 0 24 24"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v5a5 5 0 0 1-10 0z"></path><path d="M5 6H3a4 4 0 0 0 4 4"></path><path d="M19 6h2a4 4 0 0 1-4 4"></path></svg></span>
+<small data-i18n="dashboard.total_wins"></small>
+<strong data-dashboard-gains="">0 HTG</strong>
+</article>
+<article class="stat-card">
+<span class="stat-icon"><svg viewbox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15v-4"></path><path d="M12 15V8"></path><path d="M16 15v-6"></path></svg></span>
+<small data-i18n="dashboard.total_wins"></small>
+<strong>0 HTG</strong>
+</article>
+<article class="stat-card">
+<span class="stat-icon"><svg viewbox="0 0 24 24"><path d="M6 7h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"></path><path d="M16 7V5a2 2 0 0 0-2-2H8"></path><path d="M18 13h.01"></path></svg></span>
+<small data-i18n="common.currency"></small>
+<strong data-dashboard-currency="">HTG</strong>
+<span data-i18n="dashboard.account_status"></span>
+</article>
+</section>
+<section class="main-grid">
+<article class="panel">
+<div class="panel-head">
+<div>
+<h2 data-i18n="dashboard.recent_activity"></h2>
+<span data-i18n="dashboard.recent_activity_subtitle"></span>
+</div>
+<a class="panel-link" data-i18n="dashboard.view_all" href="history.html"></a>
+</div>
+<div class="empty-history" data-dashboard-transactions="">
+<div class="empty-history-inner">
+<span class="empty-icon"><svg viewbox="0 0 24 24"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="9"></circle></svg></span>
+<div>
+<strong data-i18n="dashboard.no_activity"></strong>
+<p data-i18n="common.no_recent_activity_description"></p>
+</div>
+</div>
+</div>
+</article>
+<article class="panel">
+<div class="panel-head">
+<div>
+<h2 data-i18n="dashboard.quick_actions"></h2>
+<span data-i18n="dashboard.quick_actions_subtitle"></span>
+</div>
+</div>
+<div class="quick-list">
+<a class="quick-item" href="deposit.html"><span class="quick-icon gold"><svg viewbox="0 0 24 24"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg></span><span><strong data-i18n="dashboard.deposit"></strong><span data-i18n="common.deposit_description"></span></span><span class="quick-arrow">→</span></a>
+<a class="quick-item" href="withdraw.html"><span class="quick-icon gold"><svg viewbox="0 0 24 24"><path d="M12 21V9"></path><path d="m7 14 5-5 5 5"></path><path d="M5 3h14"></path></svg></span><span><strong data-i18n="dashboard.withdraw"></strong><span data-i18n="common.withdraw_description"></span></span><span class="quick-arrow">→</span></a>
+<a class="quick-item" href="jeux/games.html"><span class="quick-icon"><svg viewbox="0 0 24 24"><path d="M6 12h4"></path><path d="M8 10v4"></path><path d="M15 13h.01"></path><path d="M18 11h.01"></path><rect height="10" rx="5" width="18" x="3" y="8"></rect></svg></span><span><strong data-i18n="dashboard.play_now"></strong><span data-i18n="common.play_description"></span></span><span class="quick-arrow">→</span></a>
+</div>
+<div class="quick-buttons">
+<a class="btn btn-primary" data-i18n="dashboard.deposit" href="deposit.html"></a>
+<a class="btn" data-i18n="dashboard.withdraw" href="withdraw.html"></a>
+<a class="btn" data-i18n="dashboard.play_now" href="jeux/games.html"></a>
+</div>
+</article>
+</section>
+<section class="panel" data-i18n-aria-label="dashboard.popular_games">
+<div class="panel-head">
+<div>
+<h2 data-i18n="dashboard.popular_games"></h2>
+<span data-i18n="dashboard.popular_games_description"></span>
+</div>
+<a class="panel-link" data-i18n="dashboard.view_all" href="jeux/games.html"></a>
+</div>
+<div class="games-row">
+<a class="game-card" href="jeux/borlette.html"><img alt="Borlette" src="assets/Lotterie.png"/><strong>Borlette</strong></a>
+<a class="game-card" href="jeux/mariage.html"><img alt="Mariage" src="assets/mariage.png"/><strong>Mariage</strong></a>
+<a class="game-card" href="jeux/lotto3.html"><img alt="Lotto 3" src="assets/lo3.png"/><strong>Lotto 3</strong></a>
+<a class="game-card" href="jeux/lotto4.html"><img alt="Lotto 4" src="assets/lo4.png"/><strong>Lotto 4</strong></a>
+<a class="game-card" href="jeux/keno.html"><img alt="Keno" src="assets/keno.png"/><strong>Keno</strong></a>
+<a class="game-card" href="jeux/roulette.html"><img alt="Roulette" src="assets/roulette.png"/><strong>Roulette</strong></a>
+</div>
+</section>
+<section class="support-strip" data-i18n-aria-label="common.trust_info">
+<article class="notice-card"><svg viewbox="0 0 24 24"><path d="M12 3 5 6v5c0 4.2 2.8 7.8 7 10 4.2-2.2 7-5.8 7-10V6l-7-3Z"></path></svg><div><strong data-i18n="common.protected"></strong><span data-i18n="common.protected_description"></span></div></article>
+<article class="notice-card"><svg viewbox="0 0 24 24"><path d="M4 7h16v10H4z"></path><path d="M7 17v2h10v-2"></path></svg><div><strong data-i18n="common.payments"></strong><span data-i18n="common.payments_description"></span></div></article>
+<article class="notice-card"><svg viewbox="0 0 24 24"><path d="M4 10a8 8 0 0 1 16 0v4"></path><path d="M6 14h2v5H6z"></path><path d="M16 14h2v5h-2z"></path></svg><div><strong data-i18n="common.support"></strong><span data-i18n="common.support_description"></span></div></article>
+<article class="notice-card"><svg viewbox="0 0 24 24"><path d="M12 3 8 7H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3l4 4V3Z"></path><path d="M16 8a3 3 0 1 1 0 6"></path></svg><div><strong data-i18n="common.clear"></strong><span data-i18n="common.clear_description"></span></div></article>
+</section>
+</section>
+</main>
+<nav class="bottom-nav" data-i18n-aria-label="common.mobile_navigation">
+<a class="bottom-link active" href="index.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span><span data-i18n="common.home"></span></a>
+<a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24"><rect height="12" rx="2" ry="2" width="12" x="2" y="10"></rect><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"></path><path d="M6 18h.01"></path><path d="M10 14h.01"></path><path d="M15 6h.01"></path><path d="M18 9h.01"></path></svg></span><span data-i18n="common.games"></span></a>
+<a class="bottom-link" href="jeux/games.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24"><path d="M11 7a16 16 20 0 1 10.98 4.362"></path><path d="M12 12a13 13 0 0 1-8.66 5"></path><path d="M16.83 13.634a16 16 0 0 1-9.267 7.328"></path><path d="M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10"></path><path d="M8.17 15.366a16 16 0 0 1-1.713-11.69"></path><circle cx="12" cy="12" r="10"></circle></svg></span><span data-i18n="common.games"></span></a>
+<a class="bottom-link" href="results.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24"><path d="M2 20h.01"></path><path d="M7 20v-4"></path><path d="M12 20v-8"></path><path d="M17 20V8"></path><path d="M22 4v16"></path></svg></span><span data-i18n="common.results"></span></a>
+<a class="bottom-link" href="wallet.html"><span class="nav-icon-wrap"><svg viewbox="0 0 24 24"><rect height="12" rx="2" width="20" x="2" y="6"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01"></path><path d="M18 12h.01"></path></svg></span><span data-i18n="common.wallet"></span></a>
+</nav>
+<script src="js/i18n.js"></script>
+<script src="js/auth-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
     const dashboardTranslationState = {
       dashboardData: null,
       quickHistoryItems: []
@@ -560,4 +555,3 @@
   </script>
 </body>
 </html>
-

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Lucky 6</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Lucky 6</title>
+<style>
     :root {
       --bg: #020813;
       --panel: rgba(8, 24, 43, 0.96);
@@ -460,132 +461,567 @@
       .summary-row, .result-row { flex-direction: column; align-items: flex-start; }
     }
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="topbar">
-      <a class="back-link" href="games.html">← Retour aux jeux</a>
-      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
-        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Paryaj</span>
-        </span>
-      </a>
-    </header>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
+<style id="lucky6-redesign">
+.topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
 
-    <section class="hero-card">
-      <article>
-        <div class="eyebrow">Jeu disponible</div>
-        <h2>Choisissez 6 numéros parmi 48</h2>
-        <a href="help-lucky6.html" style="display:inline-flex; margin-top:8px; color:var(--gold); text-decoration:underline; font-size:13px;">Comprendre les règles</a>
-        <p>Le système tire 35 boules. Plus vos 6 numéros sortent tôt, plus le gain est grand.</p>
-        <ul class="rules-list">
-          <li>Choisissez exactement 6 numéros parmi 48.</li>
-          <li>Le tirage est confirmé et affiché une fois votre ticket validé.</li>
-          <li>Le gain dépend de la position de sortie du 6e match.</li>
-        </ul>
-      </article>
-      <article class="field-card">
-        <label for="stake-input">Montant de la mise</label>
-        <input id="stake-input" type="number" min="1" step="1" value="100" />
-        <div class="button-row" style="margin-top: 10px;">
-          <button id="quick-pick-btn" class="btn" type="button">Sélection rapide</button>
-          <button id="clear-btn" class="btn" type="button">Effacer</button>
-          <button id="play-btn" class="btn btn-primary" type="button">Jouer</button>
-        </div>
-        <div id="feedback-box" class="feedback">Choisissez 6 numéros puis lancez le tirage.</div>
-      </article>
-    </section>
+.brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
 
-    <section class="content-grid">
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <h3>Grille de sélection</h3>
-            <p>Choisissez exactement 6 numéros. Un clic de nouveau les retire.</p>
-          </div>
-        </div>
-        <div class="grid-meta">
-          <strong id="selected-count">0/6 sélectionnés</strong>
-          <span id="selection-hint">Choisissez vos 6 numéros</span>
-        </div>
-        <div id="number-grid" class="number-grid"></div>
-      </article>
+.brand img {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      object-fit: contain;
+      background: rgba(255,255,255,.04);
+      padding: 6px;
+      border: 1px solid var(--line);
+    }
 
-      <article class="panel summary-card">
-        <div class="panel-head">
-          <div>
-            <h3>Résumé</h3>
-            <p>À jour avec votre choix actuel.</p>
-          </div>
-        </div>
-        <div class="summary-row"><span>Numéros choisis</span><strong id="selected-numbers">Aucun</strong></div>
-        <div class="summary-row"><span>Nombre sélectionné</span><strong id="summary-count">0/6</strong></div>
-        <div class="summary-row"><span>Montant de la mise</span><strong id="summary-stake">100 HTG</strong></div>
-        <div class="summary-row"><span>Gain potentiel indicatif</span><strong id="summary-potential">0 HTG</strong></div>
-      </article>
-    </section>
+.brand-text strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: .04em;
+    }
 
-    <section class="drawing-machine">
-      <div class="drawing-header">
-        <h3>Zone de tirage</h3>
-        <div class="match-counter" id="match-counter">Matches : 0/6</div>
-      </div>
-      <div id="drawing-zone" class="drawing-zone"></div>
-    </section>
+.brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .35em;
+    }
 
-    <section class="content-grid" style="margin-top: 16px;">
-      <article class="panel result-card">
-        <div class="panel-head">
-          <div>
-            <h3>Résultat final</h3>
-            <p>Résultat publié dans votre espace joueur.</p>
-          </div>
-        </div>
-        <div class="result-row"><span>Ticket</span><strong id="result-ticket">—</strong></div>
-        <div class="result-row"><span>Numéros choisis</span><strong id="result-selected">Aucun</strong></div>
-        <div class="result-row"><span>Tirage complet</span><strong id="result-draw">En attente</strong></div>
-        <div class="result-row"><span>Matches</span><strong id="result-matches">0/6</strong></div>
-        <div class="result-row"><span>Position du 6e match</span><strong id="result-position">—</strong></div>
-        <div class="result-row"><span>Multiplicateur</span><strong id="result-multiplier">—</strong></div>
-        <div class="result-row"><span>Mise</span><strong id="result-stake">0 HTG</strong></div>
-        <div class="result-row"><span>Gain estimé</span><strong id="result-gain">0 HTG</strong></div>
-        <div class="result-row"><span>Statut</span><strong id="result-status">En attente</strong></div>
-      </article>
+.pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(8,24,43,.92);
+      color: #fff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+    }
 
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <h3>Table de paiement</h3>
-            <p>Informations utiles pour suivre vos gains potentiels.</p>
-          </div>
-        </div>
-        <table class="payout-table">
-          <thead>
-            <tr>
-              <th>Position du 6e match</th>
-              <th>Multiplicateur</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>6 à 10</td><td>x50</td></tr>
-            <tr><td>11 à 15</td><td>x15</td></tr>
-            <tr><td>16 à 20</td><td>x5</td></tr>
-            <tr><td>21 à 25</td><td>x2</td></tr>
-            <tr><td>26 à 30</td><td>x1.2</td></tr>
-            <tr><td>31 à 35</td><td>x0.5</td></tr>
-          </tbody>
-        </table>
-      </article>
-    </section>
-  </main>
+.header-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
-  <script>
+.back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: rgba(8,24,43,.92);
+      color: #fff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+@media (max-width: 740px) {
+  .topbar { flex-direction: column; align-items: flex-start; }
+}
+
+.tk-file-lucky6 {
+  --lk-navy:#071a35;
+  --lk-navy-2:#0c2d57;
+  --lk-yellow:#ffd21f;
+  --lk-yellow-2:#ffbf00;
+  --lk-page:#f4f7fb;
+  --lk-white:#fff;
+  --lk-text:#071a35;
+  --lk-muted:#526781;
+  --lk-border:#cbd8e8;
+  --lk-shadow:0 18px 45px rgba(7,26,53,.10);
+  background:var(--lk-page)!important;
+  color:var(--lk-text)!important;
+}
+
+.tk-file-lucky6 .app {
+  width:min(100%,1280px);
+  padding:18px 18px 48px;
+}
+
+.tk-file-lucky6 .hero-card {
+  display:block!important;
+  margin-bottom:18px;
+  padding:24px 28px;
+  border:0!important;
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 92% 15%,rgba(255,210,31,.18),transparent 24%),
+    linear-gradient(135deg,var(--lk-navy),#0a2447)!important;
+  box-shadow:0 20px 50px rgba(7,26,53,.18);
+}
+
+.tk-file-lucky6 .hero-card h2 {
+  color:#fff!important;
+  font-size:clamp(30px,4vw,46px);
+}
+
+.tk-file-lucky6 .hero-card p {
+  color:#dce8f6!important;
+  max-width:760px;
+}
+
+.tk-file-lucky6 .lucky-help {
+  display:inline-flex;
+  margin-top:14px;
+  color:var(--lk-yellow)!important;
+  font-weight:800;
+  text-decoration:none!important;
+}
+
+.tk-file-lucky6 .lucky-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(340px,.82fr);
+  gap:18px;
+  align-items:start;
+}
+
+.tk-file-lucky6 .lucky-left,
+.tk-file-lucky6 .lucky-right {
+  display:grid;
+  gap:18px;
+}
+
+.tk-file-lucky6 .lucky-right {
+  position:sticky;
+  top:16px;
+}
+
+.tk-file-lucky6 .panel,
+.tk-file-lucky6 .field-card {
+  border-color:var(--lk-border)!important;
+  background:#fff!important;
+  color:var(--lk-text)!important;
+  box-shadow:var(--lk-shadow);
+}
+
+.tk-file-lucky6 .panel {
+  border-radius:22px;
+  padding:18px;
+}
+
+.tk-file-lucky6 .field-card {
+  border-radius:18px;
+  padding:14px;
+}
+
+.tk-file-lucky6 .panel-head {
+  padding-bottom:13px;
+  margin-bottom:14px;
+  border-bottom:1px solid #e2e9f2;
+}
+
+.tk-file-lucky6 .panel-head h3,
+.tk-file-lucky6 .field-card label,
+.tk-file-lucky6 .summary-row,
+.tk-file-lucky6 .result-row {
+  color:var(--lk-text)!important;
+}
+
+.tk-file-lucky6 .panel-head p,
+.tk-file-lucky6 .field-card .note,
+.tk-file-lucky6 .summary-row,
+.tk-file-lucky6 .result-row {
+  color:var(--lk-muted)!important;
+}
+
+.tk-file-lucky6 .number-grid {
+  display:grid!important;
+  grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  gap:7px;
+}
+
+.tk-file-lucky6 .number-btn {
+  min-width:0;
+  min-height:44px;
+  border:1px solid #b8c9dd!important;
+  background:#fff!important;
+  color:var(--lk-text)!important;
+  box-shadow:0 4px 10px rgba(7,26,53,.04);
+}
+
+.tk-file-lucky6 .number-btn.active {
+  border-color:var(--lk-yellow-2)!important;
+  background:linear-gradient(180deg,var(--lk-yellow),var(--lk-yellow-2))!important;
+  color:#07111f!important;
+}
+
+.tk-file-lucky6 .field-card input {
+  min-height:48px;
+  border-color:var(--lk-border)!important;
+  background:#fff!important;
+  color:var(--lk-text)!important;
+}
+
+.tk-file-lucky6 .btn {
+  border-color:var(--lk-border)!important;
+  background:#fff!important;
+  color:var(--lk-text)!important;
+}
+
+.tk-file-lucky6 .btn-primary {
+  min-height:50px;
+  border:0!important;
+  background:linear-gradient(180deg,var(--lk-yellow),var(--lk-yellow-2))!important;
+  color:#07111f!important;
+}
+
+.tk-file-lucky6 .summary-row,
+.tk-file-lucky6 .result-row {
+  border-color:var(--lk-border)!important;
+  background:#f8fbff!important;
+}
+
+.tk-file-lucky6 .feedback {
+  border-color:var(--lk-border)!important;
+  background:#f8fbff!important;
+  color:var(--lk-muted)!important;
+}
+
+.tk-file-lucky6 .payout-table-wrap {
+  overflow-x:auto;
+}
+
+.tk-file-lucky6 .payout-table {
+  min-width:420px;
+}
+
+.tk-file-lucky6 .payout-table th {
+  color:var(--lk-navy-2)!important;
+}
+
+.tk-file-lucky6 .payout-table td {
+  color:var(--lk-muted)!important;
+  border-bottom-color:#e2e9f2!important;
+}
+
+/* Popup tirage */
+.tk-file-lucky6 .lucky-draw-modal {
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.tk-file-lucky6 .lucky-draw-modal.is-open { display:flex!important; }
+
+.tk-file-lucky6 .lucky-draw-backdrop {
+  position:absolute;
+  inset:0;
+  background:rgba(3,11,26,.78);
+  backdrop-filter:blur(8px);
+}
+
+.tk-file-lucky6 .lucky-draw-dialog {
+  position:relative;
+  z-index:1;
+  width:min(920px,100%);
+  max-height:calc(100vh - 40px);
+  overflow:auto;
+  padding:22px;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 30px 90px rgba(0,0,0,.38);
+}
+
+.tk-file-lucky6 .drawing-zone {
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  background:#f8fbff!important;
+  border-color:var(--lk-border)!important;
+}
+
+.tk-file-lucky6 .ball {
+  border-color:#b8c9dd!important;
+  background:#fff!important;
+  color:var(--lk-text)!important;
+}
+
+.tk-file-lucky6 .ball.match {
+  border-color:#80d8a1!important;
+  background:#ecfbf1!important;
+  color:#0a6f38!important;
+}
+
+.tk-file-lucky6 .lucky-draw-message {
+  margin-top:16px;
+  padding:14px 16px;
+  border:1px solid var(--lk-border);
+  border-radius:14px;
+  background:#f8fbff;
+  color:var(--lk-text);
+  text-align:center;
+  font-weight:800;
+}
+
+.tk-file-lucky6 .lucky-draw-message.win {
+  border-color:#80d8a1;
+  background:#ecfbf1;
+  color:#0a6f38;
+}
+
+.tk-file-lucky6 .lucky-draw-message.loss {
+  border-color:#f2ca5e;
+  background:#fff8df;
+  color:#755500;
+}
+
+.tk-file-lucky6 .lucky-quit-btn {
+  width:100%;
+  margin-top:14px;
+}
+
+body.lucky6-modal-open { overflow:hidden; }
+
+@media(max-width:980px) {
+  .tk-file-lucky6 .lucky-layout {
+    grid-template-columns:1fr;
+  }
+  .tk-file-lucky6 .lucky-right {
+    position:static;
+  }
+}
+
+@media(max-width:760px) {
+  .tk-file-lucky6 .app {
+    padding:12px 10px 32px;
+  }
+
+  .tk-file-lucky6 .hero-card {
+    padding:20px 18px;
+    border-radius:18px;
+  }
+
+  .tk-file-lucky6 .lucky-layout {
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .tk-file-lucky6 .lucky-left,
+  .tk-file-lucky6 .lucky-right {
+    display:contents;
+  }
+
+  .tk-file-lucky6 .lucky-grid-panel { order:1; width:100%; }
+  .tk-file-lucky6 .lucky-controls { order:2; width:100%; }
+  .tk-file-lucky6 .lucky-summary { order:3; width:100%; }
+  .tk-file-lucky6 .lucky-result { order:4; width:100%; }
+  .tk-file-lucky6 .lucky-payout { order:5; width:100%; }
+
+  .tk-file-lucky6 .panel {
+    padding:12px;
+    border-radius:18px;
+  }
+
+  .tk-file-lucky6 .number-grid {
+    grid-template-columns:repeat(8,minmax(0,1fr))!important;
+    gap:4px;
+  }
+
+  .tk-file-lucky6 .number-btn {
+    min-height:36px;
+    font-size:11px;
+  }
+
+  .tk-file-lucky6 .button-row {
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .tk-file-lucky6 .lucky-draw-modal {
+    padding:10px;
+  }
+
+  .tk-file-lucky6 .lucky-draw-dialog {
+    max-height:calc(100vh - 20px);
+    padding:14px;
+    border-radius:18px;
+  }
+
+  .tk-file-lucky6 .drawing-zone {
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    min-height:0;
+  }
+}
+
+@media(max-width:390px) {
+  .tk-file-lucky6 .number-grid {
+    gap:3px;
+  }
+  .tk-file-lucky6 .number-btn {
+    min-height:33px;
+    font-size:10px;
+  }
+}
+</style>
+<meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-lucky6">
+<main class="app">
+<header class="topbar">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<span class="pill">Lucky 6</span>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="hero-card">
+<article>
+<div class="eyebrow">Jeu disponible</div>
+<h2>Lucky 6</h2>
+<p>Choisissez exactement 6 numéros parmi 48. Le système tire 35 boules et votre gain dépend de la position du sixième match.</p>
+<a class="lucky-help" href="help-lucky6.html">Comprendre les règles</a>
+</article>
+</section>
+
+<section class="lucky-layout">
+<div class="lucky-left">
+<article class="panel lucky-grid-panel">
+<div class="panel-head">
+<div>
+<h3>Grille de sélection</h3>
+<p>Choisissez exactement 6 numéros parmi 48.</p>
+</div>
+</div>
+<div class="grid-meta">
+<strong id="selected-count">0/6 sélectionnés</strong>
+<span id="selection-hint">Choisissez vos 6 numéros</span>
+</div>
+<div class="number-grid" id="number-grid"></div>
+</article>
+
+<article class="panel lucky-result">
+<div class="panel-head">
+<div>
+<h3>Résultat final</h3>
+<p>Votre dernier résultat Lucky 6.</p>
+</div>
+</div>
+<div class="result-card">
+<div class="result-row"><span>Ticket</span><strong id="result-ticket">—</strong></div>
+<div class="result-row"><span>Numéros choisis</span><strong id="result-selected">Aucun</strong></div>
+<div class="result-row"><span>Tirage complet</span><strong id="result-draw">En attente</strong></div>
+<div class="result-row"><span>Matches</span><strong id="result-matches">0/6</strong></div>
+<div class="result-row"><span>Position du 6e match</span><strong id="result-position">—</strong></div>
+<div class="result-row"><span>Multiplicateur</span><strong id="result-multiplier">—</strong></div>
+<div class="result-row"><span>Mise</span><strong id="result-stake">0 HTG</strong></div>
+<div class="result-row"><span>Gain estimé</span><strong id="result-gain">0 HTG</strong></div>
+<div class="result-row"><span>Statut</span><strong id="result-status">En attente</strong></div>
+</div>
+</article>
+
+<article class="panel lucky-payout">
+<div class="panel-head">
+<div>
+<h3>Table de paiement</h3>
+<p>Multiplicateur selon la position du sixième match.</p>
+</div>
+</div>
+<div class="payout-table-wrap">
+<table class="payout-table">
+<thead><tr><th>Position</th><th>Multiplicateur</th></tr></thead>
+<tbody>
+<tr><td>6 à 10</td><td>x50</td></tr>
+<tr><td>11 à 15</td><td>x15</td></tr>
+<tr><td>16 à 20</td><td>x5</td></tr>
+<tr><td>21 à 25</td><td>x2</td></tr>
+<tr><td>26 à 30</td><td>x1.2</td></tr>
+<tr><td>31 à 35</td><td>x0.5</td></tr>
+</tbody>
+</table>
+</div>
+</article>
+</div>
+
+<aside class="lucky-right">
+<article class="panel lucky-controls">
+<div class="panel-head">
+<div>
+<h3>Mise et actions</h3>
+<p>Définissez votre mise puis lancez la partie.</p>
+</div>
+</div>
+<div class="field-card">
+<label for="stake-input">Montant de la mise</label>
+<input id="stake-input" min="1" step="1" type="number" value="100"/>
+<div class="button-row" style="margin-top:10px;">
+<button class="btn" id="quick-pick-btn" type="button">Sélection rapide</button>
+<button class="btn" id="clear-btn" type="button">Effacer</button>
+<button class="btn btn-primary" id="play-btn" type="button">Jouer</button>
+</div>
+<div class="feedback" id="feedback-box">Choisissez 6 numéros puis lancez le tirage.</div>
+</div>
+</article>
+
+<article class="panel summary-card lucky-summary">
+<div class="panel-head">
+<div>
+<h3>Résumé</h3>
+<p>À jour avec votre sélection actuelle.</p>
+</div>
+</div>
+<div class="summary-row"><span>Numéros choisis</span><strong id="selected-numbers">Aucun</strong></div>
+<div class="summary-row"><span>Nombre sélectionné</span><strong id="summary-count">0/6</strong></div>
+<div class="summary-row"><span>Montant de la mise</span><strong id="summary-stake">100 HTG</strong></div>
+<div class="summary-row"><span>Gain potentiel indicatif</span><strong id="summary-potential">0 HTG</strong></div>
+</article>
+</aside>
+</section>
+
+<section aria-hidden="true" class="lucky-draw-modal" id="lucky-draw-modal">
+<div class="lucky-draw-backdrop"></div>
+<div aria-modal="true" class="lucky-draw-dialog" role="dialog">
+<div class="drawing-header">
+<div>
+<div class="eyebrow">Tirage en direct</div>
+<h3>Machine de tirage Lucky 6</h3>
+</div>
+<div class="match-counter" id="match-counter">Matches : 0/6</div>
+</div>
+<div class="drawing-zone" id="drawing-zone"></div>
+<div aria-live="polite" class="lucky-draw-message" id="lucky-draw-message">Bonne chance !</div>
+<button class="btn btn-primary lucky-quit-btn" id="lucky-quit-btn" style="display:none;" type="button">Quitter</button>
+</div>
+</section>
+
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script>
     const selectedNumbers = [];
     const numberGrid = document.getElementById('number-grid');
     const selectedCount = document.getElementById('selected-count');
@@ -610,6 +1046,9 @@
     const resultStake = document.getElementById('result-stake');
     const resultGain = document.getElementById('result-gain');
     const resultStatus = document.getElementById('result-status');
+    const luckyDrawModal = document.getElementById('lucky-draw-modal');
+    const luckyDrawMessage = document.getElementById('lucky-draw-message');
+    const luckyQuitBtn = document.getElementById('lucky-quit-btn');
 
     let currentUser = null;
     let isPlaying = false;
@@ -647,6 +1086,7 @@
       quickPickBtn.addEventListener('click', quickPickLucky6);
       clearBtn.addEventListener('click', clearLucky6Selection);
       playBtn.addEventListener('click', playLucky6);
+      luckyQuitBtn.addEventListener('click', closeLucky6Modal);
       numberGrid.addEventListener('click', (event) => {
         const button = event.target.closest('button[data-number]');
         if (!button) return;
@@ -743,7 +1183,23 @@
       return draw;
     }
 
+    function openLucky6Modal() {
+      luckyDrawModal.classList.add('is-open');
+      luckyDrawModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lucky6-modal-open');
+      luckyQuitBtn.style.display = 'none';
+      luckyDrawMessage.className = 'lucky-draw-message';
+      luckyDrawMessage.textContent = 'Bonne chance ! Le tirage commence.';
+    }
+
+    function closeLucky6Modal() {
+      luckyDrawModal.classList.remove('is-open');
+      luckyDrawModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lucky6-modal-open');
+    }
+
     function animateLucky6Draw(drawNumbers) {
+      openLucky6Modal();
       drawingZone.innerHTML = '';
       matchCounter.textContent = 'Matches : 0/6';
       const selectedSet = new Set(selectedNumbers);
@@ -870,15 +1326,22 @@
       resultStatus.style.color = statusLabel === 'Gagné' ? '#46e36f' : '#ff5d6c';
 
       if (statusLabel === 'Gagné') {
-        setFeedback(`Tirage terminé. Gain de ${gainLabel}.`, 'success');
+        const message = `Félicitations ! Vous avez gagné ${gainLabel} 🎉`;
+        luckyDrawMessage.className = 'lucky-draw-message win';
+        luckyDrawMessage.textContent = message;
+        setFeedback(message, 'success');
       } else {
-        setFeedback(`Tirage terminé. ${statusLabel} : seulement ${matchesLabel} match(s).`, 'warn');
+        const message = `Pas de gain cette fois. Vous avez obtenu ${matchesLabel} match(s), continuez à tenter votre chance !`;
+        luckyDrawMessage.className = 'lucky-draw-message loss';
+        luckyDrawMessage.textContent = message;
+        setFeedback(message, 'warn');
       }
+      luckyQuitBtn.style.display = 'inline-flex';
     }
 
     initLucky6();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });

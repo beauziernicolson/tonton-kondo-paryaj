@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Guide simple et clair pour comprendre les règles de la Borlette sur Tonton Kondo." />
-  <title>Tonton Kondo — Help Borlette</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Guide simple et clair pour comprendre les règles de la Borlette sur Tonton Kondo." name="description"/>
+<title>Tonton Kondo — Help Borlette</title>
+<style>
     :root {
       --bg:#020813;
       --panel:rgba(8,24,43,.96);
@@ -95,126 +96,117 @@
     @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .example-grid { grid-template-columns:1fr; } }
     @media (max-width: 520px) { .pill { display:none; } }
   </style>
-  <script src="../js/i18n.js"></script>
-</head>
-<body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html">
-        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Paryaj</span>
-        </span>
-      </a>
-      <div class="action-row">
-        <a class="btn btn-secondary" href="games.html">Retour aux jeux</a>
-        <span class="pill">Guide Borlette</span>
-      </div>
-    </header>
-
-    <section class="hero-card">
-      <div class="eyebrow">Aide</div>
-      <h1>Comment jouer à la Borlette ?</h1>
-      <p class="lede">La Borlette est simple à comprendre. Voici un guide clair, étape par étape, comme si on l’expliquait à un enfant de 12 ans.</p>
-      <div class="action-row">
-        <a class="btn btn-primary" href="borlette.html">Retour à Borlette</a>
-        <a class="btn btn-secondary" href="../tickets.html">Voir mes tickets</a>
-      </div>
-    </section>
-
-    <section class="grid">
-      <article class="panel">
-        <h2>1. C’est quoi la Borlette ?</h2>
-        <p>La Borlette est un jeu où le joueur choisit une boule entre 00 et 99. Le tirage est publié ensuite, et si la boule que tu as choisie sort parmi les 3 lots gagnants, tu peux gagner.</p>
-        <span class="highlight">Une boule = une chance de gagner.</span>
-      </article>
-
-      <article class="panel">
-        <h2>2. Comment jouer ?</h2>
-        <ul>
-          <li>Choisir un tirage.</li>
-          <li>Choisir une boule entre 00 et 99.</li>
-          <li>Choisir une mise, par exemple 10 HTG.</li>
-          <li>Valider le ticket pour l’enregistrer.</li>
-        </ul>
-      </article>
-
-      <article class="panel">
-        <h2>3. Les 3 lots gagnants</h2>
-        <p>À chaque tirage, il y a 3 boules gagnantes :</p>
-        <ul>
-          <li>1er lot</li>
-          <li>2e lot</li>
-          <li>3e lot</li>
-        </ul>
-        <p>La boule que tu as jouée peut donc gagner selon sa place dans ces 3 résultats.</p>
-      </article>
-
-      <article class="panel">
-        <h2>4. Combien on gagne ?</h2>
-        <ul>
-          <li>1er lot = 60 fois la mise</li>
-          <li>2e lot = 20 fois la mise</li>
-          <li>3e lot = 10 fois la mise</li>
-        </ul>
-        <p>Exemple simple : si tu joues 10 HTG sur la boule 26 :</p>
-        <div class="example-grid">
-          <div class="mini-card"><strong>26 au 1er lot</strong><span>10 × 60 = 600 HTG</span></div>
-          <div class="mini-card"><strong>26 au 2e lot</strong><span>10 × 20 = 200 HTG</span></div>
-          <div class="mini-card"><strong>26 au 3e lot</strong><span>10 × 10 = 100 HTG</span></div>
-          <div class="mini-card"><strong>26 absent</strong><span>Tu perds ta mise de 10 HTG</span></div>
-        </div>
-      </article>
-    </section>
-
-    <section class="card" style="margin-top:18px;">
-      <h2 style="margin-top:0; font-size:20px;">5. Exemple complet</h2>
-      <div class="example-box">
-        <strong>Wallet avant : 500 HTG</strong>
-        <p>Tu joues la boule 26 avec une mise de 10 HTG.</p>
-        <p>Après validation : Wallet = 490 HTG</p>
-        <p>Résultat du tirage :</p>
-        <ul>
-          <li>1er lot = 26</li>
-          <li>2e lot = 14</li>
-          <li>3e lot = 89</li>
-        </ul>
-        <p>Comme 26 est 1er lot, ton gain est de 600 HTG.</p>
-        <p>Wallet final = 490 + 600 = 1090 HTG.</p>
-      </div>
-    </section>
-
-    <section class="grid" style="margin-top:18px;">
-      <article class="panel">
-        <h2>6. Important à comprendre</h2>
-        <ul>
-          <li>La mise est retirée au moment où tu valides le ticket.</li>
-          <li>Si tu gagnes, le gain est ajouté automatiquement.</li>
-          <li>Si tu perds, tu ne récupères pas la mise.</li>
-          <li>Un ticket en attente veut dire que le résultat n’est pas encore publié.</li>
-          <li>Un ticket payé veut dire que le gain a déjà été ajouté au wallet.</li>
-        </ul>
-      </article>
-
-      <article class="panel">
-        <h2>7. Statuts des tickets</h2>
-        <div class="status-list">
-          <div class="status-item"><strong>En attente</strong><span>Le résultat n’est pas encore publié.</span></div>
-          <div class="status-item"><strong>Gagné</strong><span>Le ticket a gagné un lot.</span></div>
-          <div class="status-item"><strong>Perdu</strong><span>Le ticket n’a pas gagné.</span></div>
-          <div class="status-item"><strong>Payé</strong><span>Le gain a déjà été ajouté au wallet.</span></div>
-        </div>
-      </article>
-
-      <article class="panel" style="grid-column: 1 / -1;">
-        <h2>8. Jeu responsable</h2>
-        <p>Joue seulement avec l’argent que tu peux te permettre de perdre.</p>
-        <p class="note">Cette page explique uniquement les règles. La logique métier, le wallet et les résultats restent inchangés.</p>
-      </article>
-    </section>
-  </main>
-<script data-tk-i18n-auto-init>
+<script src="../js/i18n.js"></script>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-help tk-file-help-borlette">
+<main class="app">
+<header class="topbar">
+<a class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<div class="action-row">
+<a class="btn btn-secondary" href="games.html">Retour aux jeux</a>
+<span class="pill">Guide Borlette</span>
+</div>
+</header>
+<section class="hero-card">
+<div class="eyebrow">Aide</div>
+<h1>Comment jouer à la Borlette ?</h1>
+<p class="lede">La Borlette est simple à comprendre. Voici un guide clair, étape par étape, comme si on l’expliquait à un enfant de 12 ans.</p>
+<div class="action-row">
+<a class="btn btn-primary" href="borlette.html">Retour à Borlette</a>
+<a class="btn btn-secondary" href="../tickets.html">Voir mes tickets</a>
+</div>
+</section>
+<section class="grid">
+<article class="panel">
+<h2>1. C’est quoi la Borlette ?</h2>
+<p>La Borlette est un jeu où le joueur choisit une boule entre 00 et 99. Le tirage est publié ensuite, et si la boule que tu as choisie sort parmi les 3 lots gagnants, tu peux gagner.</p>
+<span class="highlight">Une boule = une chance de gagner.</span>
+</article>
+<article class="panel">
+<h2>2. Comment jouer ?</h2>
+<ul>
+<li>Choisir un tirage.</li>
+<li>Choisir une boule entre 00 et 99.</li>
+<li>Choisir une mise, par exemple 10 HTG.</li>
+<li>Valider le ticket pour l’enregistrer.</li>
+</ul>
+</article>
+<article class="panel">
+<h2>3. Les 3 lots gagnants</h2>
+<p>À chaque tirage, il y a 3 boules gagnantes :</p>
+<ul>
+<li>1er lot</li>
+<li>2e lot</li>
+<li>3e lot</li>
+</ul>
+<p>La boule que tu as jouée peut donc gagner selon sa place dans ces 3 résultats.</p>
+</article>
+<article class="panel">
+<h2>4. Combien on gagne ?</h2>
+<ul>
+<li>1er lot = 60 fois la mise</li>
+<li>2e lot = 20 fois la mise</li>
+<li>3e lot = 10 fois la mise</li>
+</ul>
+<p>Exemple simple : si tu joues 10 HTG sur la boule 26 :</p>
+<div class="example-grid">
+<div class="mini-card"><strong>26 au 1er lot</strong><span>10 × 60 = 600 HTG</span></div>
+<div class="mini-card"><strong>26 au 2e lot</strong><span>10 × 20 = 200 HTG</span></div>
+<div class="mini-card"><strong>26 au 3e lot</strong><span>10 × 10 = 100 HTG</span></div>
+<div class="mini-card"><strong>26 absent</strong><span>Tu perds ta mise de 10 HTG</span></div>
+</div>
+</article>
+</section>
+<section class="card" style="margin-top:18px;">
+<h2 style="margin-top:0; font-size:20px;">5. Exemple complet</h2>
+<div class="example-box">
+<strong>Wallet avant : 500 HTG</strong>
+<p>Tu joues la boule 26 avec une mise de 10 HTG.</p>
+<p>Après validation : Wallet = 490 HTG</p>
+<p>Résultat du tirage :</p>
+<ul>
+<li>1er lot = 26</li>
+<li>2e lot = 14</li>
+<li>3e lot = 89</li>
+</ul>
+<p>Comme 26 est 1er lot, ton gain est de 600 HTG.</p>
+<p>Wallet final = 490 + 600 = 1090 HTG.</p>
+</div>
+</section>
+<section class="grid" style="margin-top:18px;">
+<article class="panel">
+<h2>6. Important à comprendre</h2>
+<ul>
+<li>La mise est retirée au moment où tu valides le ticket.</li>
+<li>Si tu gagnes, le gain est ajouté automatiquement.</li>
+<li>Si tu perds, tu ne récupères pas la mise.</li>
+<li>Un ticket en attente veut dire que le résultat n’est pas encore publié.</li>
+<li>Un ticket payé veut dire que le gain a déjà été ajouté au wallet.</li>
+</ul>
+</article>
+<article class="panel">
+<h2>7. Statuts des tickets</h2>
+<div class="status-list">
+<div class="status-item"><strong>En attente</strong><span>Le résultat n’est pas encore publié.</span></div>
+<div class="status-item"><strong>Gagné</strong><span>Le ticket a gagné un lot.</span></div>
+<div class="status-item"><strong>Perdu</strong><span>Le ticket n’a pas gagné.</span></div>
+<div class="status-item"><strong>Payé</strong><span>Le gain a déjà été ajouté au wallet.</span></div>
+</div>
+</article>
+<article class="panel" style="grid-column: 1 / -1;">
+<h2>8. Jeu responsable</h2>
+<p>Joue seulement avec l’argent que tu peux te permettre de perdre.</p>
+<p class="note">Cette page explique uniquement les règles. La logique métier, le wallet et les résultats restent inchangés.</p>
+</article>
+</section>
+</main>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });

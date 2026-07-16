@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Portefeuille</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Portefeuille</title>
+<style>
     :root {
       --bg:#020813;
       --panel:rgba(8,24,43,.96);
@@ -124,94 +125,88 @@
       .wallet-chip { display: none !important; }
     }
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="mobile-header" data-i18n-aria-label="common.main_header">
-      <a class="brand" href="index.html" data-i18n-aria-label="common.home">
-        <div class="brand-block">
-          <img src="assets/reallogo.png" alt="Tonton Kondo" class="brand-icon" />
-          <div class="brand-text">
-            <span class="brand-top">TONTON</span>
-            <span class="brand-middle">KONDO</span>
-            <span class="brand-bottom">PARYAJ</span>
-          </div>
-        </div>
-      </a>
-
-      <div class="wallet-chip" data-i18n-aria-label="common.user_balance">
-        <span><strong id="header-wallet-balance" data-i18n="wallet.header_balance_loading">Chargement de votre portefeuille…</strong><span id="wallet-label" data-i18n="common.available_balance">Solde disponible</span></span>
-      </div>
-
-      <div class="header-actions">
-        <div id="authHeaderActions"></div>
-        <button class="action-btn" type="button" data-i18n-aria-label="common.promotions">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
-            <rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"/><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"/>
-          </svg>
-          <span class="badge">3</span>
-        </button>
-        <a href="notifications.html" class="action-btn notifications-link" data-i18n-aria-label="common.notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;">
-            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>
-          </svg>
-          <span class="badge notifications-badge" hidden>0</span>
-        </a>
-
-        <div class="user-menu-wrap" id="userMenuWrap" hidden>
-          <button id="userMenuButton" class="action-btn user-button" type="button" data-i18n-aria-label="common.user_menu" aria-expanded="false">
-            <span class="user-avatar" id="userAvatar">U</span>
-          </button>
-          <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
-            <a class="user-menu-link" href="tickets.html" data-i18n="common.tickets"></a>
-            <a class="user-menu-link" href="history.html" data-i18n="common.history"></a>
-            <a class="user-menu-link" href="results.html" data-i18n="common.results"></a>
-            <a class="user-menu-link" href="deposit.html" data-i18n="common.deposit"></a>
-            <a class="user-menu-link" href="withdraw.html" data-i18n="common.withdraw"></a>
-            <a class="user-menu-link" href="wallet.html" data-i18n="common.wallet"></a>
-            <a class="user-menu-link" href="profile.html" data-i18n="common.profile"></a>
-            <a class="user-menu-link" href="settings.html" data-i18n="common.settings"></a>
-            <div class="user-menu-divider"></div>
-            <button id="logoutMenuBtn" class="user-menu-link user-menu-logout" type="button" data-i18n="common.logout"></button>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section class="grid">
-      <article class="panel">
-        <div class="eyebrow" data-i18n="wallet.eyebrow">Portefeuille</div>
-        <h1 data-i18n="wallet.balance_heading">Solde actuel</h1>
-        <p data-i18n="wallet.description">Consultez le solde de votre compte et accédez aux dépôts et retraits.</p>
-        <div class="stat-grid">
-          <div class="stat-card"><small data-i18n="common.available_balance">Solde disponible</small><strong id="wallet-balance" data-i18n="wallet.header_balance_loading">Chargement de votre portefeuille…</strong><span id="wallet-caption" data-i18n="common.available_balance">Solde disponible</span></div>
-          <div class="stat-card"><small data-i18n="common.currency">Devise</small><strong id="wallet-currency" data-i18n="wallet.currency_placeholder">HTG</strong><span data-i18n="wallet.currency_help">Monnaie du wallet</span></div>
-          <div class="stat-card"><small data-i18n="common.status">Statut</small><strong id="wallet-status" data-i18n="wallet.status_placeholder">active</strong><span data-i18n="wallet.status_help">État du portefeuille</span></div>
-        </div>
-        <div class="action-row">
-          <button id="refresh-wallet-btn" class="btn btn-primary" type="button" data-i18n="wallet.refresh_balance">Rafraîchir le solde</button>
-          <a class="btn btn-secondary" href="deposit.html" data-i18n="common.deposit">Dépôt</a>
-          <a class="btn btn-secondary" href="withdraw.html" data-i18n="common.withdraw">Retrait</a>
-          <a class="btn btn-secondary" href="dashboard.html" data-i18n="wallet.back_to_dashboard">Retour au tableau de bord</a>
-        </div>
-      </article>
-
-      <article class="panel">
-        <div class="eyebrow" data-i18n="wallet.transactions_eyebrow">Transactions</div>
-        <h1 data-i18n="wallet.transactions_heading">Derniers mouvements</h1>
-        <p data-i18n="wallet.transactions_description">Historique des transactions de votre portefeuille.</p>
-        <div id="transactions-list" class="list">
-          <div class="item"><strong data-i18n="wallet.loading_transactions">Chargement de votre portefeuille…</strong><span data-i18n="wallet.loading_transactions_subtitle">Chargement de vos mouvements récents…</span></div>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <script src="js/i18n.js"></script>
-  <script src="js/auth-config.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/auth-guard.js"></script>
-  <script>
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-account tk-file-wallet">
+<main class="app">
+<header class="mobile-header" data-i18n-aria-label="common.main_header">
+<a class="brand" data-i18n-aria-label="common.home" href="index.html">
+<div class="brand-block">
+<img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
+<div class="brand-text">
+<span class="brand-top">TONTON</span>
+<span class="brand-middle">KONDO</span>
+<span class="brand-bottom">PARYAJ</span>
+</div>
+</div>
+</a>
+<div class="wallet-chip" data-i18n-aria-label="common.user_balance">
+<span><strong data-i18n="wallet.header_balance_loading" id="header-wallet-balance">Chargement de votre portefeuille…</strong><span data-i18n="common.available_balance" id="wallet-label">Solde disponible</span></span>
+</div>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:24px; height:24px;" viewbox="0 0 24 24">
+<rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path>
+</svg>
+<span class="badge">3</span>
+</button>
+<a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:24px; height:24px;" viewbox="0 0 24 24">
+<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path>
+</svg>
+<span class="badge notifications-badge" hidden="">0</span>
+</a>
+<div class="user-menu-wrap" hidden="" id="userMenuWrap">
+<button aria-expanded="false" class="action-btn user-button" data-i18n-aria-label="common.user_menu" id="userMenuButton" type="button">
+<span class="user-avatar" id="userAvatar">U</span>
+</button>
+<div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
+<a class="user-menu-link" data-i18n="common.tickets" href="tickets.html"></a>
+<a class="user-menu-link" data-i18n="common.history" href="history.html"></a>
+<a class="user-menu-link" data-i18n="common.results" href="results.html"></a>
+<a class="user-menu-link" data-i18n="common.deposit" href="deposit.html"></a>
+<a class="user-menu-link" data-i18n="common.withdraw" href="withdraw.html"></a>
+<a class="user-menu-link" data-i18n="common.wallet" href="wallet.html"></a>
+<a class="user-menu-link" data-i18n="common.profile" href="profile.html"></a>
+<a class="user-menu-link" data-i18n="common.settings" href="settings.html"></a>
+<div class="user-menu-divider"></div>
+<button class="user-menu-link user-menu-logout" data-i18n="common.logout" id="logoutMenuBtn" type="button"></button>
+</div>
+</div>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a class="is-active" href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="grid">
+<article class="panel">
+<div class="eyebrow" data-i18n="wallet.eyebrow">Portefeuille</div>
+<h1 data-i18n="wallet.balance_heading">Solde actuel</h1>
+<p data-i18n="wallet.description">Consultez le solde de votre compte et accédez aux dépôts et retraits.</p>
+<div class="stat-grid">
+<div class="stat-card"><small data-i18n="common.available_balance">Solde disponible</small><strong data-i18n="wallet.header_balance_loading" id="wallet-balance">Chargement de votre portefeuille…</strong><span data-i18n="common.available_balance" id="wallet-caption">Solde disponible</span></div>
+<div class="stat-card"><small data-i18n="common.currency">Devise</small><strong data-i18n="wallet.currency_placeholder" id="wallet-currency">HTG</strong><span data-i18n="wallet.currency_help">Monnaie du wallet</span></div>
+<div class="stat-card"><small data-i18n="common.status">Statut</small><strong data-i18n="wallet.status_placeholder" id="wallet-status">active</strong><span data-i18n="wallet.status_help">État du portefeuille</span></div>
+</div>
+<div class="action-row">
+<button class="btn btn-primary" data-i18n="wallet.refresh_balance" id="refresh-wallet-btn" type="button">Rafraîchir le solde</button>
+<a class="btn btn-secondary" data-i18n="common.deposit" href="deposit.html">Dépôt</a>
+<a class="btn btn-secondary" data-i18n="common.withdraw" href="withdraw.html">Retrait</a>
+<a class="btn btn-secondary" data-i18n="wallet.back_to_dashboard" href="dashboard.html">Retour au tableau de bord</a>
+</div>
+</article>
+<article class="panel">
+<div class="eyebrow" data-i18n="wallet.transactions_eyebrow">Transactions</div>
+<h1 data-i18n="wallet.transactions_heading">Derniers mouvements</h1>
+<p data-i18n="wallet.transactions_description">Historique des transactions de votre portefeuille.</p>
+<div class="list" id="transactions-list">
+<div class="item"><strong data-i18n="wallet.loading_transactions">Chargement de votre portefeuille…</strong><span data-i18n="wallet.loading_transactions_subtitle">Chargement de vos mouvements récents…</span></div>
+</div>
+</article>
+</section>
+</main>
+<script src="js/i18n.js"></script>
+<script src="js/auth-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
     const refreshWalletBtn = document.getElementById('refresh-wallet-btn');
     const walletPageState = {
       wallet: null,
@@ -502,4 +497,3 @@
   </script>
 </body>
 </html>
-

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Inscription</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Inscription</title>
+<style>
     :root {
       --bg:#020813;
       --panel:rgba(8,24,43,.96);
@@ -78,75 +79,69 @@
     @media (max-width: 980px) { .shell { grid-template-columns:1fr; } .hero-panel { min-height:auto; } }
     @media (max-width: 640px) { .app { padding: 12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .chip { display:none; } .grid { grid-template-columns:1fr; } .form-panel, .hero-panel { padding:18px; border-radius:22px; } }
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html">
-        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Paryaj</span>
-        </span>
-      </a>
-      <span class="chip">Création de compte</span>
-    </header>
-
-    <section class="shell">
-      <article class="panel hero-panel">
-        <div>
-          <span class="badge-tag">Nouveau joueur</span>
-          <h1>Créez votre compte et entrez dans l’univers <span>Tonton Kondo</span>.</h1>
-          <p>Créez votre compte joueur et profitez des services Tonton Kondo.</p>
-        </div>
-        <div>
-          <div class="benefit-card"><strong>Profil complet</strong><span>Gérez votre espace joueur, vos jeux et vos transactions en toute simplicité.</span></div>
-          <div class="benefit-card"><strong>Accès sécurisé</strong><span>Votre compte est protégé par des parcours simples et rassurants à chaque étape.</span></div>
-          <div class="benefit-card"><strong>Expérience premium</strong><span>Une interface pensée pour un parcours joueur fluide sur mobile et sur bureau.</span></div>
-        </div>
-      </article>
-
-      <article class="panel form-panel">
-        <div>
-          <div class="eyebrow">Inscription</div>
-          <h2>Créer mon compte</h2>
-          <p>Renseignez vos informations de base pour lancer votre profil joueur.</p>
-        </div>
-
-        <form id="registerForm" novalidate>
-          <div class="grid">
-            <div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" type="tel" placeholder="50933123456 ou 33123456" required /><span class="hint">Vous utiliserez ce numéro pour vous connecter.</span></div>
-            <div class="field"><label for="full-name">Nom complet</label><input id="full-name" name="full_name" type="text" placeholder="Jean Kouassi" required /></div>
-          </div>
-          <div class="grid">
-            <div class="field"><label for="password">Mot de passe</label><input id="password" name="password" type="password" placeholder="••••••••" required minlength="6" /></div>
-            <div class="field"><label for="confirmPassword">Confirmer le mot de passe</label><input id="confirmPassword" name="confirmPassword" type="password" placeholder="••••••••" required minlength="6" /></div>
-          </div>
-
-          <label class="check">
-            <input type="checkbox" />
-            <span>J’accepte les conditions d’utilisation et la politique de confidentialité du projet Tonton Kondo.</span>
-          </label>
-
-          <button class="btn btn-primary" type="submit">Créer mon compte</button>
-          <button class="btn btn-secondary" type="button" id="googleRegisterBtn">Créer un compte avec Google</button>
-          <a class="btn btn-secondary" href="login.html">J’ai déjà un compte</a>
-        </form>
-
-        <div class="footer-links">
-          <span>Déjà inscrit ?</span>
-          <a class="inline-link" href="login.html">Connexion</a>
-          <span>•</span>
-          <a class="inline-link" href="forgot-password.html">Mot de passe oublié</a>
-        </div>
-      </article>
-    </section>
-  </main>
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
-  <script>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-auth tk-file-register">
+<main class="app">
+<header class="topbar">
+<a class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<span class="chip">Création de compte</span>
+</header>
+<section class="shell">
+<article class="panel hero-panel">
+<div>
+<span class="badge-tag">Nouveau joueur</span>
+<h1>Créez votre compte et entrez dans l’univers <span>Tonton Kondo</span>.</h1>
+<p>Créez votre compte joueur et profitez des services Tonton Kondo.</p>
+</div>
+<div>
+<div class="benefit-card"><strong>Profil complet</strong><span>Gérez votre espace joueur, vos jeux et vos transactions en toute simplicité.</span></div>
+<div class="benefit-card"><strong>Accès sécurisé</strong><span>Votre compte est protégé par des parcours simples et rassurants à chaque étape.</span></div>
+<div class="benefit-card"><strong>Expérience premium</strong><span>Une interface pensée pour un parcours joueur fluide sur mobile et sur bureau.</span></div>
+</div>
+</article>
+<article class="panel form-panel">
+<div>
+<div class="eyebrow">Inscription</div>
+<h2>Créer mon compte</h2>
+<p>Renseignez vos informations de base pour lancer votre profil joueur.</p>
+</div>
+<form id="registerForm" novalidate="">
+<div class="grid">
+<div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" placeholder="50933123456 ou 33123456" required="" type="tel"/><span class="hint">Vous utiliserez ce numéro pour vous connecter.</span></div>
+<div class="field"><label for="full-name">Nom complet</label><input id="full-name" name="full_name" placeholder="Jean Kouassi" required="" type="text"/></div>
+</div>
+<div class="grid">
+<div class="field"><label for="password">Mot de passe</label><input id="password" minlength="6" name="password" placeholder="••••••••" required="" type="password"/></div>
+<div class="field"><label for="confirmPassword">Confirmer le mot de passe</label><input id="confirmPassword" minlength="6" name="confirmPassword" placeholder="••••••••" required="" type="password"/></div>
+</div>
+<label class="check">
+<input type="checkbox"/>
+<span>J’accepte les conditions d’utilisation et la politique de confidentialité du projet Tonton Kondo.</span>
+</label>
+<button class="btn btn-primary" type="submit">Créer mon compte</button>
+<button class="btn btn-secondary" id="googleRegisterBtn" type="button">Créer un compte avec Google</button>
+<a class="btn btn-secondary" href="login.html">J’ai déjà un compte</a>
+</form>
+<div class="footer-links">
+<span>Déjà inscrit ?</span>
+<a class="inline-link" href="login.html">Connexion</a>
+<span>•</span>
+<a class="inline-link" href="forgot-password.html">Mot de passe oublié</a>
+</div>
+</article>
+</section>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script>
     const registerForm = document.getElementById('registerForm');
     const googleRegisterBtn = document.getElementById('googleRegisterBtn');
     const googleDefaultLabel = googleRegisterBtn?.textContent || 'Créer un compte avec Google';
@@ -215,7 +210,7 @@
       }
     });
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });

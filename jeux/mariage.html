@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Mariage</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Mariage</title>
+<style>
     :root {
       --bg:#020813;
       --panel:rgba(8,24,43,.96);
@@ -71,112 +72,197 @@
     @media (max-width: 740px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } .amount-row { flex-direction:column; } .number-grid { grid-template-columns:repeat(5, minmax(0,1fr)); } .coupon-item { flex-direction:column; align-items:flex-start; } }
     @media (max-width: 480px) { .number-grid { grid-template-columns:repeat(4, minmax(0,1fr)); } .pill { display:none; } }
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
-        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Paryaj</span>
-        </span>
-      </a>
-      <div class="header-actions">
-        <div id="authHeaderActions"></div>
-        <a class="back-btn" href="games.html">← Retour aux jeux</a>
-        <span class="pill">Mariage</span>
-      </div>
-    </header>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><style id="mariage-page-redesign">
+.tk-file-mariage{--mg-navy:#071a35;--mg-navy-2:#0c2d57;--mg-yellow:#ffd21f;--mg-yellow-2:#ffbf00;--mg-page:#f4f7fb;--mg-white:#fff;--mg-text:#071a35;--mg-muted:#526781;--mg-border:#cbd8e8;--mg-shadow:0 18px 45px rgba(7,26,53,.10);color:var(--mg-text)!important;background:var(--mg-page)!important}
+.tk-file-mariage .app{width:min(100%,1280px);padding:18px 18px 48px}
+.tk-file-mariage .mariage-hero{margin-bottom:18px;padding:24px 28px;border:0!important;border-radius:22px;background:radial-gradient(circle at 92% 15%,rgba(255,210,31,.18),transparent 24%),linear-gradient(135deg,var(--mg-navy),#0a2447)!important;box-shadow:0 20px 50px rgba(7,26,53,.18)}
+.tk-file-mariage .mariage-hero h1{max-width:720px;margin:6px 0 8px;color:#fff!important;font-size:clamp(30px,4vw,48px)}
+.tk-file-mariage .mariage-hero .lede{max-width:820px;margin:0;color:#dce8f6!important}
+.tk-file-mariage .mariage-hero .hero-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:16px}
+.tk-file-mariage .mariage-hero .mini-chip{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.10);color:#fff!important}
+.tk-file-mariage .mariage-hero .mini-chip strong{color:var(--mg-yellow)!important}
+.tk-file-mariage .mariage-help-link{display:inline-flex;align-items:center;min-height:36px;padding:7px 11px;border:1px solid rgba(255,210,31,.45);border-radius:999px;color:var(--mg-yellow)!important;font-size:12px;font-weight:800;text-decoration:none!important}
+.tk-file-mariage .mariage-workspace{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(350px,.82fr);align-items:start;gap:18px}
+.tk-file-mariage .mariage-panel{padding:18px;border:1px solid var(--mg-border)!important;border-radius:22px;background:#fff!important;box-shadow:var(--mg-shadow);color:var(--mg-text)!important}
+.tk-file-mariage .panel-title{padding-bottom:13px;margin-bottom:14px;border-bottom:1px solid #e2e9f2}
+.tk-file-mariage .panel-title h2,.tk-file-mariage .label,.tk-file-mariage .summary-row,.tk-file-mariage .summary-total,.tk-file-mariage .coupon-left strong,.tk-file-mariage .coupon-amount{color:var(--mg-text)!important}
+.tk-file-mariage .panel-title p,.tk-file-mariage .helper-text,.tk-file-mariage .footer-note,.tk-file-mariage .coupon-left span,.tk-file-mariage .empty-state{color:var(--mg-muted)!important}
+.tk-file-mariage .field-grid{gap:14px}.tk-file-mariage .field-card{padding:14px;border:1px solid var(--mg-border)!important;border-radius:18px;background:#fff!important}
+.tk-file-mariage .mariage-draw-card{background:#f8fbff!important}
+.tk-file-mariage .mariage-draw-card select{min-height:48px;border:1px solid #173b68!important;background:var(--mg-navy-2)!important;color:#fff!important;font-weight:800}
+.tk-file-mariage .mariage-draw-card select option{background:#fff;color:var(--mg-text)}
+.tk-file-mariage .value-pill,.tk-file-mariage .chip-note{border-color:var(--mg-border)!important;background:#f1f6fc!important;color:var(--mg-navy-2)!important}
+.tk-file-mariage .mariage-grids{display:grid;gap:14px}.tk-file-mariage .mariage-grid-card{overflow:hidden}
+.tk-file-mariage .number-grid{display:grid!important;grid-template-columns:repeat(10,minmax(0,1fr))!important;gap:6px}
+.tk-file-mariage .num-btn{min-width:0;min-height:38px;padding:4px 2px;border:1px solid #b8c9dd!important;border-radius:10px;background:#fff!important;color:var(--mg-text)!important;font-size:13px;font-weight:800;box-shadow:0 4px 10px rgba(7,26,53,.04)}
+.tk-file-mariage .num-btn:hover{border-color:var(--mg-yellow-2)!important;background:#fff8d8!important;transform:translateY(-1px)}
+.tk-file-mariage .num-btn.active{border-color:var(--mg-yellow-2)!important;background:linear-gradient(180deg,var(--mg-yellow),var(--mg-yellow-2))!important;color:#07111f!important;box-shadow:0 8px 18px rgba(255,191,0,.20)}
+.tk-file-mariage .mariage-side{position:sticky;top:16px;display:grid;gap:14px}
+.tk-file-mariage .summary{border-color:var(--mg-border)!important;background:#f8fbff!important}.tk-file-mariage .summary-total{border-top-color:#dce5ef!important}
+.tk-file-mariage .coupon-list{min-height:150px;margin-top:12px}.tk-file-mariage .coupon-item,.tk-file-mariage .empty-state{border-color:var(--mg-border)!important;background:#f8fbff!important}
+.tk-file-mariage .btn{border-color:var(--mg-border)!important;background:#fff!important;color:var(--mg-text)!important}
+.tk-file-mariage .btn-primary{min-height:50px;border:0!important;background:linear-gradient(180deg,var(--mg-yellow),var(--mg-yellow-2))!important;color:#07111f!important;box-shadow:0 10px 24px rgba(255,191,0,.22)}
+.tk-file-mariage .btn-danger{border-color:#f0b2b8!important;background:#fff2f3!important;color:#a31927!important}
+.tk-file-mariage .mariage-amount-card input{min-height:48px;border:1px solid var(--mg-border)!important;background:#fff!important;color:var(--mg-text)!important}
+.tk-file-mariage .mariage-amount-card .amount-row{display:grid;grid-template-columns:1fr;gap:10px}.tk-file-mariage .mariage-add-button{width:100%}
+.tk-file-mariage .feedback{margin:0;border-color:var(--mg-border)!important;background:#f8fbff!important;color:var(--mg-muted)!important}.tk-file-mariage .feedback.success{border-color:#80d8a1!important;background:#ecfbf1!important;color:#0a6f38!important}.tk-file-mariage .feedback.warn{border-color:#f2ca5e!important;background:#fff8df!important;color:#755500!important}.tk-file-mariage .feedback.error{border-color:#f4a4aa!important;background:#fff0f1!important;color:#a31927!important}
+@media(max-width:980px){.tk-file-mariage .mariage-workspace{grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);gap:14px}.tk-file-mariage .number-grid{gap:4px}.tk-file-mariage .num-btn{min-height:34px;border-radius:8px;font-size:12px}}
+@media(max-width:760px){
+  .tk-file-mariage .app{
+    padding:12px 10px 32px
+  }
 
-    <section class="card" style="margin-bottom:18px;">
-      <div class="eyebrow">Jeu</div>
-      <h1>Mariage</h1>
-      <p class="lede">Choisissez un tirage, deux numéros, saisissez un montant, ajoutez vos combinaisons au coupon, puis validez votre ticket. Le Mariage dépend des 3 lots Borlette du tirage choisi, l’ordre des numéros ne compte pas, et le gain potentiel est de mise × 5000.</p>
-      <div class="hero-meta">
-        <span class="mini-chip">🎯 <strong>Mariage</strong> = combinaison de deux numéros</span>
-        <span class="mini-chip">🧩 Les deux numéros doivent figurer parmi les 3 lots Borlette</span>
-        <span class="mini-chip">💰 Gain potentiel = mise × 5000</span>
-        <span class="mini-chip">🔐 Débit du wallet au moment de la validation</span>
-      </div>
-    </section>
+  .tk-file-mariage .mariage-hero{
+    padding:20px 18px;
+    border-radius:18px
+  }
 
-    <section class="layout-grid">
-      <article class="card">
-        <div class="panel-title">
-          <div>
-            <h2>Choix du tirage et des numéros</h2>
-            <p>Choisissez un tirage, deux numéros et un montant pour chaque ligne.</p>
-          </div>
-          <span class="chip-note">Coupon</span>
-        </div>
+  .tk-file-mariage .mariage-scroll-shell{
+    width:100%;
+    overflow:visible;
+    padding-bottom:0
+  }
 
-        <div class="field-grid">
-          <article class="field-card">
-            <div class="label"><span>Tirage</span><span class="value-pill">Obligatoire</span></div>
-            <select id="draw-name-select" aria-label="Choisir un tirage Mariage">
-              <option value="">Chargement des tirages…</option>
-            </select>
-            <p class="helper-text">Le tirage choisi sera enregistré avec la combinaison pour la vérification future sur les 3 lots Borlette.</p>
-            <p class="helper-text"><a href="help-mariage.html" style="color:#ffd21f; text-decoration:underline;">Comprendre les règles</a></p>
-          </article>
+  .tk-file-mariage .mariage-workspace{
+    width:100%;
+    grid-template-columns:1fr;
+    gap:14px
+  }
 
-          <article class="field-card">
-            <div class="label"><span>Premier numéro</span><span class="value-pill" id="first-number-pill">00</span></div>
-            <div class="number-grid" id="first-number-grid" aria-label="Premier numéro"></div>
-          </article>
+  .tk-file-mariage .mariage-panel{
+    padding:12px;
+    border-radius:18px
+  }
 
-          <article class="field-card">
-            <div class="label"><span>Deuxième numéro</span><span class="value-pill" id="second-number-pill">00</span></div>
-            <div class="number-grid" id="second-number-grid" aria-label="Deuxième numéro"></div>
-          </article>
+  .tk-file-mariage .mariage-grids{
+    gap:10px
+  }
 
-          <article class="field-card">
-            <div class="label"><span>Montant</span><span class="value-pill">HTG</span></div>
-            <div class="amount-row">
-              <input id="amount-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Montant du ticket" />
-              <button id="add-line-btn" class="btn btn-primary" type="button">Ajouter au coupon</button>
-            </div>
-            <p class="helper-text">Chaque combinaison est ajoutée en une seule ligne avec son tirage et son montant.</p>
-          </article>
-        </div>
+  .tk-file-mariage .mariage-grid-card{
+    padding:9px
+  }
 
-        <div id="feedback-box" class="feedback warn">Choisissez deux numéros, définissez votre mise puis ajoutez la ligne au coupon.</div>
-      </article>
+  .tk-file-mariage .number-grid{
+    width:100%;
+    grid-template-columns:repeat(10,minmax(0,1fr))!important;
+    gap:3px
+  }
 
-      <article class="card">
-        <div class="panel-title">
-          <div>
-            <h2>Coupon en cours</h2>
-            <p>Visualisez vos combinaisons, le tirage et le total à valider.</p>
-          </div>
-          <span class="chip-note">Total</span>
-        </div>
+  .tk-file-mariage .num-btn{
+    width:100%;
+    min-width:0;
+    min-height:32px;
+    padding:2px 0;
+    border-radius:7px;
+    font-size:10.5px;
+    line-height:1
+  }
 
-        <div class="summary">
-          <div class="summary-row"><span>Nombre de lignes</span><strong id="line-count">0</strong></div>
-          <div class="summary-row"><span>Montant total</span><strong id="total-amount">0 HTG</strong></div>
-          <div class="summary-total"><span>Total du ticket</span><strong id="total-display">0 HTG</strong></div>
-        </div>
+  .tk-file-mariage .mariage-side{
+    position:static;
+    width:100%
+  }
 
-        <div id="coupon-list" class="coupon-list" aria-live="polite"></div>
+  .tk-file-mariage .coupon-item{
+    flex-direction:column;
+    align-items:stretch
+  }
 
-        <div class="field-grid" style="margin-top:14px;">
-          <article class="field-card">
-            <div class="label"><span>Validation</span><span class="value-pill">Débit wallet</span></div>
-            <button id="validate-btn" class="btn btn-primary" type="button" style="width:100%;">Valider le ticket</button>
-            <p class="footer-note">Le ticket est enregistré et la validation est traitée de façon sécurisée.</p>
-          </article>
-        </div>
-      </article>
-    </section>
-  </main>
+  .tk-file-mariage .coupon-right{
+    justify-content:space-between
+  }
+}
 
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
-  <script>
+@media(max-width:420px){
+  .tk-file-mariage .mariage-grid-card{
+    padding:8px 7px
+  }
+
+  .tk-file-mariage .number-grid{
+    gap:2px
+  }
+
+  .tk-file-mariage .num-btn{
+    min-height:30px;
+    border-radius:6px;
+    font-size:10px
+  }
+
+  .tk-file-mariage .label{
+    font-size:12px
+  }
+}
+
+@media(max-width:360px){
+  .tk-file-mariage .app{
+    padding-left:7px;
+    padding-right:7px
+  }
+
+  .tk-file-mariage .mariage-panel{
+    padding:9px
+  }
+
+  .tk-file-mariage .mariage-grid-card{
+    padding:7px 5px
+  }
+
+  .tk-file-mariage .number-grid{
+    gap:2px
+  }
+
+  .tk-file-mariage .num-btn{
+    min-height:28px;
+    font-size:9.4px
+  }
+}.tk-file-mariage .num-btn{min-height:30px;font-size:10px}
+</style><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-mariage">
+<main class="app">
+<header class="topbar">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<span class="pill">Mariage</span>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="card mariage-hero">
+<div class="eyebrow">Jeu</div><h1>Mariage</h1>
+<p class="lede">Choisissez un tirage et deux numéros de 00 à 99. Ajoutez vos combinaisons au coupon, puis validez votre ticket.</p>
+<div class="hero-meta"><a class="mariage-help-link" href="help-mariage.html">Comprendre les règles</a></div>
+</section>
+<div class="mariage-scroll-shell"><section class="mariage-workspace">
+<article class="mariage-panel mariage-builder">
+<div class="panel-title"><div><h2>Choix du tirage et des numéros</h2><p>Sélectionnez un tirage, puis choisissez les deux numéros de votre combinaison.</p></div><span class="chip-note">Sélection</span></div>
+<div class="field-grid">
+<article class="field-card mariage-draw-card"><div class="label"><span>Tirage</span><span class="value-pill">Obligatoire</span></div><select aria-label="Choisir un tirage Mariage" id="draw-name-select"><option value="">Chargement des tirages…</option></select><p class="helper-text">Le tirage choisi sera enregistré avec la combinaison pour la vérification future.</p></article>
+<div class="mariage-grids">
+<article class="field-card mariage-grid-card"><div class="label"><span>Premier numéro</span><span class="value-pill" id="first-number-pill">00</span></div><div aria-label="Premier numéro" class="number-grid" id="first-number-grid"></div></article>
+<article class="field-card mariage-grid-card"><div class="label"><span>Deuxième numéro</span><span class="value-pill" id="second-number-pill">00</span></div><div aria-label="Deuxième numéro" class="number-grid" id="second-number-grid"></div></article>
+</div></div></article>
+<aside class="mariage-side"><article class="mariage-panel mariage-coupon">
+<div class="panel-title"><div><h2>Coupon en cours</h2><p>Vos combinaisons et le total du ticket.</p></div><span class="chip-note">Total</span></div>
+<div class="summary"><div class="summary-row"><span>Nombre de lignes</span><strong id="line-count">0</strong></div><div class="summary-row"><span>Montant total</span><strong id="total-amount">0 HTG</strong></div><div class="summary-total"><span>Total du ticket</span><strong id="total-display">0 HTG</strong></div></div>
+<div aria-live="polite" class="coupon-list" id="coupon-list"></div>
+<div class="field-grid" style="margin-top:14px;">
+<article class="field-card"><div class="label"><span>Validation</span><span class="value-pill">En ligne</span></div><button class="btn btn-primary" id="validate-btn" style="width:100%;" type="button">Valider le ticket</button><p class="footer-note">Le ticket est enregistré et traité de façon sécurisée.</p></article>
+<article class="field-card mariage-amount-card"><div class="label"><span>Montant</span><span class="value-pill">HTG</span></div><div class="amount-row"><input aria-label="Montant du ticket" id="amount-input" inputmode="numeric" min="1" step="1" type="number" value="10"/><button class="btn btn-primary mariage-add-button" id="add-line-btn" type="button">Ajouter au coupon</button></div><p class="helper-text">Le montant s'applique à la combinaison sélectionnée.</p></article>
+<div class="feedback warn" id="feedback-box">Choisissez deux numéros, définissez votre mise puis ajoutez la ligne au coupon.</div>
+</div></article></aside>
+</section></div>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script>
     (function () {
       const STORAGE_KEY = 'tonton-kondo-mariage-coupon';
       const firstNumberGrid = document.getElementById('first-number-grid');
@@ -527,7 +613,7 @@
       })();
     })();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -536,4 +622,3 @@
 </script>
 </body>
 </html>
-

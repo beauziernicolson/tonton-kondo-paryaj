@@ -1,11 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo | Connexion / Inscription</title>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo | Connexion / Inscription</title>
+<style>
     :root {
       --bg-dark: #020812;
       --panel: rgba(8, 24, 43, 0.95);
@@ -195,90 +195,78 @@
       .trust-bar { display: none; }
     }
   </style>
-</head>
-<body>
-  <main class="auth-page">
-    <section class="auth-card">
-      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
-        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Paryaj</span>
-        </span>
-      </a>
-
-      <div class="tabs">
-        <button class="tab active" id="loginTab" type="button"><span>↪</span>Connexion</button>
-        <button class="tab" id="signupTab" type="button"><span>👤+</span>Inscription</button>
-      </div>
-
-      <h2 class="auth-title" id="formTitle">Bienvenue sur Tonton Kondo</h2>
-      <p class="auth-subtitle" id="formSubtitle">Accédez à votre compte pour gérer vos jeux, tickets et transactions.</p>
-
-      <form id="authForm" novalidate>
-        <div class="form-group" id="phoneGroup">
-          <label class="form-label" for="phone">Téléphone</label>
-          <div class="input-wrap">
-            <span class="input-icon">📱</span>
-            <input class="form-input" type="tel" id="phone" name="phone" placeholder="50933123456 ou 33123456" />
-          </div>
-          <p class="hint">Connectez-vous avec votre numéro de téléphone.</p>
-        </div>
-
-        <div class="form-group signup-only" id="fullnameGroup" style="display:none;">
-          <label class="form-label" for="fullname">Nom complet</label>
-          <div class="input-wrap">
-            <span class="input-icon">👤</span>
-            <input class="form-input" type="text" id="fullname" name="full_name" placeholder="Entrez votre nom complet" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="password">Mot de passe</label>
-          <div class="input-wrap">
-            <span class="input-icon">🔒</span>
-            <input class="form-input" type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required />
-            <button class="password-toggle" type="button" id="togglePassword" aria-label="Afficher ou masquer le mot de passe">⌧</button>
-          </div>
-        </div>
-
-        <div class="forgot">
-          <a href="forgot-password.html">Mot de passe oublié ?</a>
-        </div>
-
-        <button class="primary-btn" type="submit" id="submitBtn">Se connecter →</button>
-        <div class="form-message" id="formMessage"></div>
-
-        <div class="divider">ou</div>
-
-        <button class="google-btn" type="button" id="googleBtn">
-          <span class="google-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false">
-              <path fill="#4285F4" d="M21.805 10.023H12v4.03h5.383c-.23 1.22-.94 2.26-2.01 2.96l3.25 2.52c1.9-1.74 3.0-4.31 3.0-7.37 0-.66-.06-1.3-.18-1.91z"/>
-              <path fill="#34A853" d="M12 22c2.7 0 4.96-.89 6.62-2.42l-3.25-2.52c-.9.61-2.04.98-3.37.98-2.59 0-4.79-1.75-5.58-4.11L2.98 14.5A9.985 9.985 0 0 0 12 22z"/>
-              <path fill="#FBBC05" d="M6.42 13.93A6.01 6.01 0 0 1 6.42 10.07L2.98 7.5A10.006 10.006 0 0 0 2 12c0 1.64.4 3.19 1.1 4.5l3.32-2.57z"/>
-              <path fill="#EA4335" d="M12 6.04c1.46 0 2.77.5 3.8 1.49l2.83-2.83C16.95 3.18 14.69 2 12 2 7.82 2 4.08 4.46 2.98 7.5l3.44 2.57C6.78 7.98 9.01 6.04 12 6.04z"/>
-            </svg>
-          </span>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-auth tk-file-login">
+<main class="auth-page">
+<section class="auth-card">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<div class="tabs">
+<button class="tab active" id="loginTab" type="button"><span>↪</span>Connexion</button>
+<button class="tab" id="signupTab" type="button"><span>👤+</span>Inscription</button>
+</div>
+<h2 class="auth-title" id="formTitle">Bienvenue sur Tonton Kondo</h2>
+<p class="auth-subtitle" id="formSubtitle">Accédez à votre compte pour gérer vos jeux, tickets et transactions.</p>
+<form id="authForm" novalidate="">
+<div class="form-group" id="phoneGroup">
+<label class="form-label" for="phone">Téléphone</label>
+<div class="input-wrap">
+<span class="input-icon">📱</span>
+<input class="form-input" id="phone" name="phone" placeholder="50933123456 ou 33123456" type="tel"/>
+</div>
+<p class="hint">Connectez-vous avec votre numéro de téléphone.</p>
+</div>
+<div class="form-group signup-only" id="fullnameGroup" style="display:none;">
+<label class="form-label" for="fullname">Nom complet</label>
+<div class="input-wrap">
+<span class="input-icon">👤</span>
+<input class="form-input" id="fullname" name="full_name" placeholder="Entrez votre nom complet" type="text"/>
+</div>
+</div>
+<div class="form-group">
+<label class="form-label" for="password">Mot de passe</label>
+<div class="input-wrap">
+<span class="input-icon">🔒</span>
+<input class="form-input" id="password" name="password" placeholder="Entrez votre mot de passe" required="" type="password"/>
+<button aria-label="Afficher ou masquer le mot de passe" class="password-toggle" id="togglePassword" type="button">⌧</button>
+</div>
+</div>
+<div class="forgot">
+<a href="forgot-password.html">Mot de passe oublié ?</a>
+</div>
+<button class="primary-btn" id="submitBtn" type="submit">Se connecter →</button>
+<div class="form-message" id="formMessage"></div>
+<div class="divider">ou</div>
+<button class="google-btn" id="googleBtn" type="button">
+<span aria-hidden="true" class="google-icon">
+<svg focusable="false" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M21.805 10.023H12v4.03h5.383c-.23 1.22-.94 2.26-2.01 2.96l3.25 2.52c1.9-1.74 3.0-4.31 3.0-7.37 0-.66-.06-1.3-.18-1.91z" fill="#4285F4"></path>
+<path d="M12 22c2.7 0 4.96-.89 6.62-2.42l-3.25-2.52c-.9.61-2.04.98-3.37.98-2.59 0-4.79-1.75-5.58-4.11L2.98 14.5A9.985 9.985 0 0 0 12 22z" fill="#34A853"></path>
+<path d="M6.42 13.93A6.01 6.01 0 0 1 6.42 10.07L2.98 7.5A10.006 10.006 0 0 0 2 12c0 1.64.4 3.19 1.1 4.5l3.32-2.57z" fill="#FBBC05"></path>
+<path d="M12 6.04c1.46 0 2.77.5 3.8 1.49l2.83-2.83C16.95 3.18 14.69 2 12 2 7.82 2 4.08 4.46 2.98 7.5l3.44 2.57C6.78 7.98 9.01 6.04 12 6.04z" fill="#EA4335"></path>
+</svg>
+</span>
           Continuer avec Google
         </button>
-
-        <p class="switch-text" id="switchText">Vous n’avez pas de compte ? <a href="#" id="switchLink">Inscrivez-vous</a></p>
-      </form>
-    </section>
-
-    <section class="trust-bar">
-      <div class="trust-item"><div class="trust-icon">🛡</div><div><p class="trust-title">Sécurisé et fiable</p><p class="trust-desc">Vos données sont protégées</p></div></div>
-      <div class="trust-item"><div class="trust-icon">🏆</div><div><p class="trust-title">Expérience premium</p><p class="trust-desc">Jeux et tirages exclusifs</p></div></div>
-      <div class="trust-item"><div class="trust-icon">🎧</div><div><p class="trust-title">Support 24/7</p><p class="trust-desc">Notre équipe est là pour vous</p></div></div>
-    </section>
-  </main>
-
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
-  <script>
+<p class="switch-text" id="switchText">Vous n’avez pas de compte ? <a href="#" id="switchLink">Inscrivez-vous</a></p>
+</form>
+</section>
+<section class="trust-bar">
+<div class="trust-item"><div class="trust-icon">🛡</div><div><p class="trust-title">Sécurisé et fiable</p><p class="trust-desc">Vos données sont protégées</p></div></div>
+<div class="trust-item"><div class="trust-icon">🏆</div><div><p class="trust-title">Expérience premium</p><p class="trust-desc">Jeux et tirages exclusifs</p></div></div>
+<div class="trust-item"><div class="trust-icon">🎧</div><div><p class="trust-title">Support 24/7</p><p class="trust-desc">Notre équipe est là pour vous</p></div></div>
+</section>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script>
     const body = document.body;
     const loginTab = document.getElementById('loginTab');
     const signupTab = document.getElementById('signupTab');
@@ -414,7 +402,7 @@
 
     setMode('login');
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });

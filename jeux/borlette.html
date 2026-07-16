@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Interface Borlette — sélection de numéros, montant et validation de tickets en ligne." />
-  <title>Tonton Kondo — Borlette</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Interface Borlette — sélection de numéros, montant et validation de tickets en ligne." name="description"/>
+<title>Tonton Kondo — Borlette</title>
+<style>
     :root {
       --bg:#020813;
       --bg-2:#061426;
@@ -464,118 +465,470 @@
       .pill { display: none; }
     }
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
-        <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Paryaj</span>
-        </span>
-      </a>
-      <div class="header-actions">
-        <div id="authHeaderActions"></div>
-        <a class="back-btn" href="games.html">← Retour aux jeux</a>
-        <span class="pill">Borlette</span>
-      </div>
-    </header>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
+<style id="borlette-page-redesign">
+  /* Borlette — refonte visuelle uniquement. Aucun JavaScript métier n'est modifié. */
+  .tk-file-borlette {
+    --br-navy:#071a35;
+    --br-navy-2:#0c2d57;
+    --br-yellow:#ffd21f;
+    --br-yellow-2:#ffbf00;
+    --br-page:#f4f7fb;
+    --br-white:#ffffff;
+    --br-text:#071a35;
+    --br-muted:#526781;
+    --br-border:#cbd8e8;
+    --br-shadow:0 18px 45px rgba(7,26,53,.10);
+  }
 
-    <section class="card" style="margin-bottom:18px;">
-      <div class="eyebrow">Borlette</div>
-      <h1>Borlette</h1>
-      <p class="lede">Choisissez votre numéro, saisissez un montant, ajoutez plusieurs lignes au coupon, consultez le total et validez votre ticket.</p>
-      <div class="hero-meta">
-        <span class="mini-chip">📅 Tirages disponibles</span>
-        <span class="mini-chip">💳 Validation en ligne</span>
-        <span class="mini-chip">🔐 Accès joueur connecté</span>
-        <a class="mini-chip" href="help-borlette.html" style="border-color: rgba(255,210,31,.22); background: rgba(255,210,31,.08); color: #fff7da;">📘 Comprendre les règles</a>
-      </div>
-    </section>
+  .tk-file-borlette {
+    color:var(--br-text) !important;
+    background:var(--br-page) !important;
+  }
 
-    <section class="layout-grid">
-      <article class="card">
-        <div class="panel-title">
-          <div>
-            <h2>Choix du numéro et montant</h2>
-            <p>Sélectionnez un numéro de 00 à 99, puis ajoutez une ligne au coupon.</p>
-          </div>
-          <span class="chip-note">Sélection</span>
-        </div>
+  .tk-file-borlette .app {
+    width:min(100%,1220px);
+    padding:18px 18px 48px;
+  }
 
-        <div class="field-grid">
-          <article class="field-card">
-            <div class="label">
-              <span>Tirage</span>
-              <span class="value-pill">Obligatoire</span>
-            </div>
-            <select id="draw-name-select" class="btn" style="width:100%; text-align:left; background:rgba(255,255,255,.04); border:1px solid var(--line); color:#fff;" aria-label="Choisir un tirage Borlette">
-              <option value="">Chargement des tirages…</option>
-            </select>
-            <p class="helper-text">Le tirage choisi est associé au ticket pour la vérification et le suivi des résultats.</p>
-          </article>
+  .tk-file-borlette .borlette-hero {
+    margin-bottom:18px;
+    padding:24px 28px;
+    border:0 !important;
+    border-radius:22px;
+    background:
+      radial-gradient(circle at 92% 15%,rgba(255,210,31,.18),transparent 24%),
+      linear-gradient(135deg,var(--br-navy),#0a2447) !important;
+    box-shadow:0 20px 50px rgba(7,26,53,.18);
+  }
 
-          <article class="field-card">
-            <div class="label">
-              <span>Numéro sélectionné</span>
-              <span class="value-pill" id="selected-number-pill">00</span>
-            </div>
-            <div class="number-grid" id="number-grid" aria-label="Sélection des numéros de 00 à 99"></div>
-          </article>
+  .tk-file-borlette .borlette-hero h1 {
+    margin:0 0 8px;
+    color:#fff !important;
+    font-size:clamp(30px,4vw,48px);
+  }
 
-          <article class="field-card">
-            <div class="label">
-              <span>Montant</span>
-              <span class="value-pill">HTG</span>
-            </div>
-            <div class="amount-row">
-              <input id="amount-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Montant du ticket" />
-              <button id="add-line-btn" class="btn btn-primary" type="button">Ajouter au coupon</button>
-            </div>
-            <p class="helper-text">Le montant saisi est ajouté au coupon avant validation du ticket.</p>
-          </article>
-        </div>
+  .tk-file-borlette .borlette-hero .lede {
+    max-width:760px;
+    color:#dce8f6 !important;
+  }
 
-        <div id="feedback-box" class="feedback warn">Choisissez un numéro, saisissez un montant puis ajoutez la ligne au coupon.</div>
-      </article>
+  .tk-file-borlette .borlette-hero .hero-meta {
+    margin-top:16px;
+  }
 
-      <article class="card">
-        <div class="panel-title">
-          <div>
-            <h2>Coupon en cours</h2>
-            <p>Validation et suivi du coupon</p>
-          </div>
-          <span class="chip-note">Total à afficher</span>
-        </div>
+  .tk-file-borlette .borlette-help-link {
+    border-color:rgba(255,210,31,.45) !important;
+    background:rgba(255,210,31,.10) !important;
+    color:var(--br-yellow) !important;
+    text-decoration:none !important;
+  }
 
-        <div class="summary">
-          <div class="summary-row"><span>Nombre de lignes</span><strong id="line-count">0</strong></div>
-          <div class="summary-row"><span>Montant total</span><strong id="total-amount">0 HTG</strong></div>
-          <div class="summary-total"><span>Total du ticket</span><strong id="total-display">0 HTG</strong></div>
-        </div>
+  .tk-file-borlette .borlette-workspace {
+    display:grid;
+    grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr);
+    align-items:start;
+    gap:18px;
+  }
 
-        <div id="coupon-list" class="coupon-list" aria-live="polite"></div>
+  .tk-file-borlette .borlette-panel {
+    padding:18px;
+    border:1px solid var(--br-border) !important;
+    border-radius:22px;
+    background:var(--br-white) !important;
+    box-shadow:var(--br-shadow);
+    color:var(--br-text) !important;
+  }
 
-        <div class="field-grid" style="margin-top:14px;">
-          <article class="field-card">
-            <div class="label">
-              <span>Validation</span>
-              <span class="value-pill">En ligne</span>
-            </div>
-            <button id="validate-btn" class="btn btn-primary" type="button" style="width:100%;">Valider le ticket</button>
-            <p class="footer-note">La validation utilise votre portefeuille connecté et enregistre votre ticket de façon sécurisée.</p>
-          </article>
-        </div>
-      </article>
-    </section>
-  </main>
+  .tk-file-borlette .panel-title {
+    padding-bottom:13px;
+    margin-bottom:14px;
+    border-bottom:1px solid #e2e9f2;
+  }
 
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
-  <script>
+  .tk-file-borlette .panel-title h2,
+  .tk-file-borlette .label,
+  .tk-file-borlette .summary-row,
+  .tk-file-borlette .summary-total,
+  .tk-file-borlette .coupon-left strong,
+  .tk-file-borlette .coupon-amount {
+    color:var(--br-text) !important;
+  }
+
+  .tk-file-borlette .panel-title p,
+  .tk-file-borlette .helper-text,
+  .tk-file-borlette .footer-note,
+  .tk-file-borlette .coupon-left span,
+  .tk-file-borlette .empty-state {
+    color:var(--br-muted) !important;
+  }
+
+  .tk-file-borlette .field-grid {
+    gap:14px;
+    margin-bottom:0;
+  }
+
+  .tk-file-borlette .field-card {
+    padding:14px;
+    border:1px solid var(--br-border) !important;
+    border-radius:18px;
+    background:#fff !important;
+  }
+
+  .tk-file-borlette .borlette-draw-card {
+    background:#f8fbff !important;
+  }
+
+  .tk-file-borlette .borlette-draw-card select {
+    width:100%;
+    min-height:48px;
+    padding:0 14px;
+    border:1px solid #173b68 !important;
+    border-radius:12px;
+    background:var(--br-navy-2) !important;
+    color:#fff !important;
+    font-weight:800;
+    text-align:left;
+  }
+
+  .tk-file-borlette .borlette-draw-card select option {
+    background:#fff;
+    color:var(--br-text);
+  }
+
+  .tk-file-borlette .value-pill,
+  .tk-file-borlette .chip-note {
+    border-color:var(--br-border) !important;
+    background:#f1f6fc !important;
+    color:var(--br-navy-2) !important;
+  }
+
+  .tk-file-borlette .number-grid {
+    display:grid !important;
+    grid-template-columns:repeat(10,minmax(0,1fr)) !important;
+    gap:6px;
+  }
+
+  .tk-file-borlette .num-btn {
+    min-width:0;
+    min-height:40px;
+    padding:4px 2px;
+    border:1px solid #b8c9dd !important;
+    border-radius:10px;
+    background:#fff !important;
+    color:var(--br-text) !important;
+    font-size:13px;
+    font-weight:800;
+    box-shadow:0 4px 10px rgba(7,26,53,.04);
+  }
+
+  .tk-file-borlette .num-btn:hover {
+    border-color:var(--br-yellow-2) !important;
+    background:#fff8d8 !important;
+    transform:translateY(-1px);
+  }
+
+  .tk-file-borlette .num-btn.active {
+    border-color:var(--br-yellow-2) !important;
+    background:linear-gradient(180deg,var(--br-yellow),var(--br-yellow-2)) !important;
+    color:#07111f !important;
+    box-shadow:0 8px 18px rgba(255,191,0,.20);
+  }
+
+  .tk-file-borlette .borlette-side {
+    position:sticky;
+    top:16px;
+    display:grid;
+    gap:14px;
+  }
+
+  .tk-file-borlette .summary {
+    border-color:var(--br-border) !important;
+    background:#f8fbff !important;
+  }
+
+  .tk-file-borlette .summary-total {
+    border-top-color:#dce5ef !important;
+  }
+
+  .tk-file-borlette .coupon-list {
+    min-height:150px;
+    margin-top:12px;
+  }
+
+  .tk-file-borlette .coupon-item,
+  .tk-file-borlette .empty-state {
+    border-color:var(--br-border) !important;
+    background:#f8fbff !important;
+  }
+
+  .tk-file-borlette .btn {
+    border-color:var(--br-border) !important;
+    background:#fff !important;
+    color:var(--br-text) !important;
+  }
+
+  .tk-file-borlette .btn-primary {
+    min-height:50px;
+    border:0 !important;
+    background:linear-gradient(180deg,var(--br-yellow),var(--br-yellow-2)) !important;
+    color:#07111f !important;
+    box-shadow:0 10px 24px rgba(255,191,0,.22);
+  }
+
+  .tk-file-borlette .btn-danger {
+    border-color:#f0b2b8 !important;
+    background:#fff2f3 !important;
+    color:#a31927 !important;
+  }
+
+  .tk-file-borlette .borlette-amount-card input {
+    min-height:48px;
+    border:1px solid var(--br-border) !important;
+    background:#fff !important;
+    color:var(--br-text) !important;
+  }
+
+  .tk-file-borlette .borlette-amount-card .amount-row {
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+
+  .tk-file-borlette .borlette-add-button {
+    width:100%;
+  }
+
+  .tk-file-borlette .feedback {
+    margin:0;
+    border-color:var(--br-border) !important;
+    background:#f8fbff !important;
+    color:var(--br-muted) !important;
+  }
+
+  .tk-file-borlette .feedback.success {
+    border-color:#80d8a1 !important;
+    background:#ecfbf1 !important;
+    color:#0a6f38 !important;
+  }
+
+  .tk-file-borlette .feedback.warn {
+    border-color:#f2ca5e !important;
+    background:#fff8df !important;
+    color:#755500 !important;
+  }
+
+  @media(max-width:1020px) {
+    .tk-file-borlette .borlette-workspace {
+      grid-template-columns:1fr;
+    }
+
+    .tk-file-borlette .borlette-side {
+      position:static;
+    }
+  }
+
+  @media(max-width:760px) {
+    .tk-file-borlette .app {
+      padding:12px 10px 32px;
+    }
+
+    .tk-file-borlette .borlette-hero {
+      padding:20px 18px;
+      border-radius:18px;
+    }
+
+    .tk-file-borlette .borlette-workspace {
+      width:100%;
+      grid-template-columns:1fr;
+      gap:14px;
+    }
+
+    .tk-file-borlette .borlette-panel {
+      padding:12px;
+      border-radius:18px;
+    }
+
+    .tk-file-borlette .borlette-grid-card {
+      padding:11px;
+    }
+
+    .tk-file-borlette .number-grid {
+      width:100%;
+      grid-template-columns:repeat(10,minmax(0,1fr)) !important;
+      gap:4px;
+    }
+
+    /* Une seule grille : boutons légèrement plus grands que Mariage. */
+    .tk-file-borlette .num-btn {
+      width:100%;
+      min-width:0;
+      min-height:36px;
+      padding:3px 0;
+      border-radius:8px;
+      font-size:11px;
+      line-height:1;
+    }
+
+    .tk-file-borlette .coupon-item {
+      grid-template-columns:1fr;
+    }
+
+    .tk-file-borlette .coupon-right {
+      justify-content:space-between;
+    }
+  }
+
+  @media(max-width:420px) {
+    .tk-file-borlette .borlette-grid-card {
+      padding:9px 8px;
+    }
+
+    .tk-file-borlette .number-grid {
+      gap:3px;
+    }
+
+    .tk-file-borlette .num-btn {
+      min-height:34px;
+      border-radius:7px;
+      font-size:10.5px;
+    }
+  }
+
+  @media(max-width:360px) {
+    .tk-file-borlette .app {
+      padding-left:7px;
+      padding-right:7px;
+    }
+
+    .tk-file-borlette .borlette-panel {
+      padding:10px;
+    }
+
+    .tk-file-borlette .borlette-grid-card {
+      padding:8px 6px;
+    }
+
+    .tk-file-borlette .number-grid {
+      gap:2px;
+    }
+
+    .tk-file-borlette .num-btn {
+      min-height:32px;
+      font-size:9.8px;
+    }
+  }
+</style>
+<meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-borlette">
+<main class="app">
+<header class="topbar">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<span class="pill">Borlette</span>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="card borlette-hero">
+<div class="eyebrow">Borlette</div>
+<h1>Borlette</h1>
+<p class="lede">Choisissez un tirage et un numéro de 00 à 99. Ajoutez vos lignes au coupon, puis validez votre ticket.</p>
+<div class="hero-meta">
+<a class="mini-chip borlette-help-link" href="help-borlette.html">Comprendre les règles</a>
+</div>
+</section>
+
+<section class="borlette-workspace">
+<article class="borlette-panel borlette-builder">
+<div class="panel-title">
+<div>
+<h2>Choix du numéro</h2>
+<p>Sélectionnez un tirage, puis choisissez votre numéro de 00 à 99.</p>
+</div>
+<span class="chip-note">Sélection</span>
+</div>
+
+<div class="field-grid">
+<article class="field-card borlette-draw-card">
+<div class="label">
+<span>Tirage</span>
+<span class="value-pill">Obligatoire</span>
+</div>
+<select aria-label="Choisir un tirage Borlette" id="draw-name-select">
+<option value="">Chargement des tirages…</option>
+</select>
+<p class="helper-text">Le tirage choisi est associé au ticket pour la vérification et le suivi des résultats.</p>
+</article>
+
+<article class="field-card borlette-grid-card">
+<div class="label">
+<span>Numéro sélectionné</span>
+<span class="value-pill" id="selected-number-pill">00</span>
+</div>
+<div aria-label="Sélection des numéros de 00 à 99" class="number-grid" id="number-grid"></div>
+</article>
+</div>
+</article>
+
+<aside class="borlette-side">
+<article class="borlette-panel borlette-coupon">
+<div class="panel-title">
+<div>
+<h2>Coupon en cours</h2>
+<p>Validation et suivi du coupon.</p>
+</div>
+<span class="chip-note">Total</span>
+</div>
+
+<div class="summary">
+<div class="summary-row"><span>Nombre de lignes</span><strong id="line-count">0</strong></div>
+<div class="summary-row"><span>Montant total</span><strong id="total-amount">0 HTG</strong></div>
+<div class="summary-total"><span>Total du ticket</span><strong id="total-display">0 HTG</strong></div>
+</div>
+
+<div aria-live="polite" class="coupon-list" id="coupon-list"></div>
+
+<div class="field-grid" style="margin-top:14px;">
+<article class="field-card">
+<div class="label">
+<span>Validation</span>
+<span class="value-pill">En ligne</span>
+</div>
+<button class="btn btn-primary" id="validate-btn" style="width:100%;" type="button">Valider le ticket</button>
+<p class="footer-note">La validation utilise votre portefeuille connecté et enregistre votre ticket de façon sécurisée.</p>
+</article>
+
+<article class="field-card borlette-amount-card">
+<div class="label">
+<span>Montant</span>
+<span class="value-pill">HTG</span>
+</div>
+<div class="amount-row">
+<input aria-label="Montant du ticket" id="amount-input" inputmode="numeric" min="1" step="1" type="number" value="10"/>
+<button class="btn btn-primary borlette-add-button" id="add-line-btn" type="button">Ajouter au coupon</button>
+</div>
+<p class="helper-text">Le montant saisi s'applique au numéro sélectionné.</p>
+</article>
+
+<div class="feedback warn" id="feedback-box">Choisissez un numéro, saisissez un montant puis ajoutez la ligne au coupon.</div>
+</div>
+</article>
+</aside>
+</section>
+
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script>
     (function () {
       const numberGrid = document.getElementById('number-grid');
       const selectedNumberPill = document.getElementById('selected-number-pill');
@@ -593,6 +946,7 @@
       let selectedDrawName = 'New York Midday';
       let couponLines = [];
       let currentUser = null;
+      let hasSelectedNumber = false;
 
       function formatNumber(value) {
         return String(value).padStart(2, '0');
@@ -702,6 +1056,7 @@
           btn.setAttribute('aria-pressed', String(value === selectedNumber));
           btn.addEventListener('click', () => {
             selectedNumber = value;
+            hasSelectedNumber = true;
             selectedNumberPill.textContent = value;
             renderNumbers();
             setFeedback(`Numéro ${value} sélectionné. Vous pouvez ajuster le montant puis ajouter la ligne.`, 'warn');
@@ -769,6 +1124,11 @@
           return;
         }
 
+        if (!hasSelectedNumber) {
+          setFeedback('Choisissez d’abord un numéro avant d’ajouter une ligne.', 'warn');
+          return;
+        }
+
         if (!Number.isFinite(rawAmount) || rawAmount <= 0) {
           setFeedback('Entrez un montant valide supérieur à 0 avant d’ajouter une ligne.', 'warn');
           amountInput.focus();
@@ -814,7 +1174,7 @@
         }
 
         if (!couponLines.length) {
-          setFeedback('Aucune ligne à valider. Ajoutez au moins un numéro au coupon.', 'warn');
+          setFeedback('Validez d’abord votre montant en ajoutant une ligne au coupon avant de valider le ticket.', 'warn');
           return;
         }
 
@@ -1046,7 +1406,7 @@
       })();
     })();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -1055,4 +1415,3 @@
 </script>
 </body>
 </html>
-

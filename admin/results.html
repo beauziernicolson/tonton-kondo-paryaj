@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Interface admin pour la saisie manuelle des résultats Borlette." />
-  <title>Tonton Kondo — Résultats admin</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Interface admin pour la saisie manuelle des résultats Borlette." name="description"/>
+<title>Tonton Kondo — Résultats admin</title>
+<style>
     :root {
       --bg:#020813;
       --panel:rgba(8,24,43,.96);
@@ -93,147 +94,143 @@
     @media (max-width: 1080px) { .hero-card, .layout-grid { grid-template-columns:1fr; } }
     @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } table { display:block; overflow-x:auto; } }
   </style>
-</head>
+<link data-tk-redesign="wow-white-navy-v1" href="../assets/tk-wow-redesign.css" rel="stylesheet"/></head>
 <body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html">
-        <img src="../assets/logo.png" alt="Logo Tonton Kondo" />
-        <span class="brand-text">
-          <strong>Tonton Kondo</strong>
-          <span>Paryaj</span>
-        </span>
-      </a>
-      <span class="pill">Admin — résultats Borlette</span>
-    </header>
-
-    <section class="hero-card">
-      <article>
-        <div class="eyebrow">Phase 2.5</div>
-        <h1>Résultats manuels Borlette</h1>
-        <p>Cette page prépare la saisie officielle des tirages Borlette. Pour l’instant, elle enregistre uniquement les résultats manuellement sans calculer les gains ni modifier les tickets.</p>
-        <span class="mini-chip">🧩 <strong>Supabase</strong> — saisie admin</span>
-      </article>
-      <article class="panel" style="padding:14px;">
-        <div class="panel-head">
-          <div>
-            <h2>Ajouter un résultat</h2>
-            <p>Formulaire de saisie manuelle des tirages.</p>
-          </div>
-        </div>
-        <div class="field-grid">
-          <div class="field-card">
-            <div class="label"><span>Jeu</span><span class="muted">Borlette, Lotto 4 ou Lotto 5</span></div>
-            <select id="game-type-input">
-              <option value="borlette">Borlette</option>
-              <option value="lotto4">Lotto 4</option>
-              <option value="lotto5">Lotto 5</option>
-            </select>
-            <p class="muted" style="margin-top:8px; font-size:12px;">Le Mariage est vérifié automatiquement à partir des 3 lots Borlette du même tirage. Lotto 4 publie des lots 2 chiffres distincts. Lotto 5 publie 3 lots (3-2-2 chiffres) avec aperçu des options.</p>
-          </div>
-          <div class="field-card">
-            <div class="label"><span>Nom du tirage</span></div>
-            <select id="draw-name-input">
-              <option value="">Chargement des tirages…</option>
-            </select>
-          </div>
-          <div class="field-card">
-            <div class="label"><span>Date du tirage</span></div>
-            <input id="draw-date-input" type="date" />
-          </div>
-          <div class="field-card borlette-field">
-            <div class="label"><span>1er lot complet Lotto 3</span></div>
-            <input id="first-prize-full-input" type="text" maxlength="3" placeholder="Ex. 742" />
-            <p class="muted" style="margin-top:8px; font-size:12px;">Saisissez 742 pour que le 1er lot Borlette soit auto-rempli avec 42.</p>
-          </div>
-          <div class="field-card borlette-field">
-            <div class="label"><span>1er lot Borlette</span></div>
-            <input id="winning-number-input" type="text" maxlength="16" placeholder="Ex. 42" />
-          </div>
-          <div class="field-card lotto4-field hidden">
-            <div class="label"><span>1er lot Lotto 4</span></div>
-            <input id="lotto4-first-prize-input" type="text" maxlength="2" placeholder="Ex. 71" />
-            <p class="muted" style="margin-top:8px; font-size:12px;">Saisissez exactement 2 chiffres pour le 1er lot.</p>
-          </div>
-          <div class="field-card lotto5-field hidden">
-            <div class="label"><span>1er lot Lotto 5</span></div>
-            <input id="lotto5-first-prize-input" type="text" maxlength="3" placeholder="Ex. 711" />
-            <p class="muted" style="margin-top:8px; font-size:12px;">Saisissez exactement 3 chiffres pour le 1er lot Lotto 5.</p>
-          </div>
-          <div class="field-card borlette-field lotto4-field lotto5-field common-two-digit-field">
-            <div class="label"><span>2e lot</span></div>
-            <input id="second-prize-input" type="text" maxlength="2" placeholder="Ex. 08" />
-          </div>
-          <div class="field-card borlette-field lotto4-field lotto5-field common-two-digit-field">
-            <div class="label"><span>3e lot</span></div>
-            <input id="third-prize-input" type="text" maxlength="2" placeholder="Ex. 87" />
-          </div>
-          <div class="field-card lotto4-field lotto5-field hidden">
-            <div class="label"><span>Aperçu des options Lotto 4 / Lotto 5</span></div>
-            <div id="lotto4-preview-box" class="feedback">Les options Lotto seront affichées ici.</div>
-          </div>
-          <div class="field-card">
-            <div class="label"><span>Statut</span></div>
-            <select id="status-input">
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-          </div>
-          <div class="btn-row">
-            <button id="save-btn" class="btn btn-primary" type="button">Publier le résultat</button>
-            <button id="reset-btn" class="btn btn-secondary" type="button">Réinitialiser</button>
-          </div>
-          <div id="feedback-box" class="feedback warn">Les résultats sont enregistrés manuellement pour l’instant.</div>
-        </div>
-      </article>
-    </section>
-
-    <section class="layout-grid">
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <h2>Résultats récents</h2>
-            <p>Liste des derniers tirages saisis.</p>
-          </div>
-        </div>
-        <div id="results-state" class="feedback">Chargement des résultats…</div>
-        <div class="table-card">
-          <table>
-            <thead>
-              <tr>
-                <th>Tirage</th>
-                <th>Date</th>
-                <th>Résultat</th>
-                <th>Statut</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="results-table-body"></tbody>
-          </table>
-        </div>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <div>
-            <h2>Informations</h2>
-            <p>Ce que cette page prépare.</p>
-          </div>
-        </div>
-        <div class="field-grid">
-          <div class="field-card"><strong>V1</strong><p class="muted">Saisie manuelle par l’admin, sans calcul de gains ni modification des tickets.</p></div>
-          <div class="field-card"><strong>Prochaine étape</strong><p class="muted">Comparer les résultats officiels avec les tickets Borlette pour identifier les gains futurs.</p></div>
-          <div class="field-card"><strong>Rôle</strong><p class="muted">Seuls les admins et super_admin peuvent créer / modifier / supprimer ces résultats.</p></div>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script>
+<main class="app">
+<header class="topbar">
+<a class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/logo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<span class="pill">Admin — résultats Borlette</span>
+</header>
+<section class="hero-card">
+<article>
+<div class="eyebrow">Phase 2.5</div>
+<h1>Résultats manuels Borlette</h1>
+<p>Cette page prépare la saisie officielle des tirages Borlette. Pour l’instant, elle enregistre uniquement les résultats manuellement sans calculer les gains ni modifier les tickets.</p>
+<span class="mini-chip">🧩 <strong>Supabase</strong> — saisie admin</span>
+</article>
+<article class="panel" style="padding:14px;">
+<div class="panel-head">
+<div>
+<h2>Ajouter un résultat</h2>
+<p>Formulaire de saisie manuelle des tirages.</p>
+</div>
+</div>
+<div class="field-grid">
+<div class="field-card">
+<div class="label"><span>Jeu</span><span class="muted">Borlette, Lotto 4 ou Lotto 5</span></div>
+<select id="game-type-input">
+<option value="borlette">Borlette</option>
+<option value="lotto4">Lotto 4</option>
+<option value="lotto5">Lotto 5</option>
+</select>
+<p class="muted" style="margin-top:8px; font-size:12px;">Le Mariage est vérifié automatiquement à partir des 3 lots Borlette du même tirage. Lotto 4 publie des lots 2 chiffres distincts. Lotto 5 publie 3 lots (3-2-2 chiffres) avec aperçu des options.</p>
+</div>
+<div class="field-card">
+<div class="label"><span>Nom du tirage</span></div>
+<select id="draw-name-input">
+<option value="">Chargement des tirages…</option>
+</select>
+</div>
+<div class="field-card">
+<div class="label"><span>Date du tirage</span></div>
+<input id="draw-date-input" type="date"/>
+</div>
+<div class="field-card borlette-field">
+<div class="label"><span>1er lot complet Lotto 3</span></div>
+<input id="first-prize-full-input" maxlength="3" placeholder="Ex. 742" type="text"/>
+<p class="muted" style="margin-top:8px; font-size:12px;">Saisissez 742 pour que le 1er lot Borlette soit auto-rempli avec 42.</p>
+</div>
+<div class="field-card borlette-field">
+<div class="label"><span>1er lot Borlette</span></div>
+<input id="winning-number-input" maxlength="16" placeholder="Ex. 42" type="text"/>
+</div>
+<div class="field-card lotto4-field hidden">
+<div class="label"><span>1er lot Lotto 4</span></div>
+<input id="lotto4-first-prize-input" maxlength="2" placeholder="Ex. 71" type="text"/>
+<p class="muted" style="margin-top:8px; font-size:12px;">Saisissez exactement 2 chiffres pour le 1er lot.</p>
+</div>
+<div class="field-card lotto5-field hidden">
+<div class="label"><span>1er lot Lotto 5</span></div>
+<input id="lotto5-first-prize-input" maxlength="3" placeholder="Ex. 711" type="text"/>
+<p class="muted" style="margin-top:8px; font-size:12px;">Saisissez exactement 3 chiffres pour le 1er lot Lotto 5.</p>
+</div>
+<div class="field-card borlette-field lotto4-field lotto5-field common-two-digit-field">
+<div class="label"><span>2e lot</span></div>
+<input id="second-prize-input" maxlength="2" placeholder="Ex. 08" type="text"/>
+</div>
+<div class="field-card borlette-field lotto4-field lotto5-field common-two-digit-field">
+<div class="label"><span>3e lot</span></div>
+<input id="third-prize-input" maxlength="2" placeholder="Ex. 87" type="text"/>
+</div>
+<div class="field-card lotto4-field lotto5-field hidden">
+<div class="label"><span>Aperçu des options Lotto 4 / Lotto 5</span></div>
+<div class="feedback" id="lotto4-preview-box">Les options Lotto seront affichées ici.</div>
+</div>
+<div class="field-card">
+<div class="label"><span>Statut</span></div>
+<select id="status-input">
+<option value="draft">Draft</option>
+<option value="published">Published</option>
+<option value="cancelled">Cancelled</option>
+</select>
+</div>
+<div class="btn-row">
+<button class="btn btn-primary" id="save-btn" type="button">Publier le résultat</button>
+<button class="btn btn-secondary" id="reset-btn" type="button">Réinitialiser</button>
+</div>
+<div class="feedback warn" id="feedback-box">Les résultats sont enregistrés manuellement pour l’instant.</div>
+</div>
+</article>
+</section>
+<section class="layout-grid">
+<article class="panel">
+<div class="panel-head">
+<div>
+<h2>Résultats récents</h2>
+<p>Liste des derniers tirages saisis.</p>
+</div>
+</div>
+<div class="feedback" id="results-state">Chargement des résultats…</div>
+<div class="table-card">
+<table>
+<thead>
+<tr>
+<th>Tirage</th>
+<th>Date</th>
+<th>Résultat</th>
+<th>Statut</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="results-table-body"></tbody>
+</table>
+</div>
+</article>
+<article class="panel">
+<div class="panel-head">
+<div>
+<h2>Informations</h2>
+<p>Ce que cette page prépare.</p>
+</div>
+</div>
+<div class="field-grid">
+<div class="field-card"><strong>V1</strong><p class="muted">Saisie manuelle par l’admin, sans calcul de gains ni modification des tickets.</p></div>
+<div class="field-card"><strong>Prochaine étape</strong><p class="muted">Comparer les résultats officiels avec les tickets Borlette pour identifier les gains futurs.</p></div>
+<div class="field-card"><strong>Rôle</strong><p class="muted">Seuls les admins et super_admin peuvent créer / modifier / supprimer ces résultats.</p></div>
+</div>
+</article>
+</section>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script>
     (function () {
       const feedbackBox = document.getElementById('feedback-box');
       const resultsState = document.getElementById('results-state');
@@ -699,7 +696,7 @@
       resultsBody.addEventListener('click', handleTableAction);
     })();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -708,4 +705,3 @@
 </script>
 </body>
 </html>
-

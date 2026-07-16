@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>American Roulette — Tonton Kondo / paryaj</title>
 <style>
 /* ============================================================
@@ -227,99 +228,90 @@ a{color:inherit;text-decoration:none}
   .summary h3{font-size:13px}
 }
 </style>
-</head>
-<body>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-american-roulette">
 <div class="app">
-
-  <!-- ============ HEADER ============ -->
-  <header class="header">
-    <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo">
-      <img src="../assets/reallogo.png" alt="Logo Tonton Kondo" />
-      <span class="brand-text">
-        <strong>Tonton Kondo</strong>
-        <span>Paryaj</span>
-      </span>
-    </a>
-    <div class="header-actions">
-        <div id="authHeaderActions"></div>
-      <a class="back-link" href="games.html">← Retour aux jeux</a>
-      <a class="back-link" href="help-american-roulette.html" style="margin-left:8px;">📘 Comprendre les règles</a>
-      <div class="balance">
-        <div class="lbl">Balance</div>
-        <div class="val"><span id="balance">Chargement du solde...</span> <small>HTG</small></div>
-      </div>
-    </div>
-  </header>
-
-  <!-- ============ MAIN GRID ============ -->
-  <div class="grid">
-
-    <!-- Wheel column -->
-    <section class="wheel-wrap">
-      <div class="panel" style="padding:14px">
-        <div class="wheel" id="wheel">
-          <div class="glow"></div>
-          <div class="ring"></div>
-          <div class="bevel"></div>
-          <div class="track"></div>
-          <div class="face" id="wheelFace">
-            <svg viewBox="0 0 400 400" id="wheelSvg"></svg>
-          </div>
-          <div class="ball-orbit" id="ballOrbit"><div class="ball"></div></div>
-          <div class="pointer"></div>
-        </div>
-      </div>
-
-      <div class="recent" id="recent"></div>
-      <div id="resultPanel"></div>
-    </section>
-
-    <!-- Table column -->
-    <section style="display:flex;flex-direction:column;gap:14px">
-      <div class="felt">
-        <div class="tip">
-          <span>Place your bets · Chip <b id="tipChip">50</b></span>
-          <span>American Roulette · 0, 00, 1–36</span>
-        </div>
-        <div class="felt-inner" id="bettingTable"></div>
-      </div>
-
-      <div class="panel">
-        <div class="controls-row">
-          <div class="chip-rack">
-            <span class="lbl">Chips</span>
-            <div id="chipRack" style="display:flex;gap:10px"></div>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn" id="btnClear">Clear</button>
-            <button class="btn" id="btnRepeat">Repeat</button>
-            <button class="btn-spin" id="btnSpin" disabled>Spin</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div class="grid" style="margin-top:18px">
-    <aside class="panel summary">
-      <h3>Résumé des mises</h3>
-      <div class="row"><span class="k">Balance</span><span class="v gold" id="sumBalance">Chargement du solde...</span></div>
-      <div class="row"><span class="k">Total misé</span><span class="v" id="sumBet">0</span></div>
-      <div class="row"><span class="k">Gain potentiel</span><span class="v green" id="sumWin">0</span></div>
-      <div class="row"><span class="k">Dernier numéro</span><span class="v" id="sumLast">—</span></div>
-      <div class="bet-list" id="betList"><div class="empty">Aucune mise placée.</div></div>
-    </aside>
-  </div>
-
-  <div class="footer">
+<!-- ============ HEADER ============ -->
+<header class="header">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+<span class="brand-text">
+<strong>Tonton Kondo</strong>
+<span>Paryaj</span>
+</span>
+</a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-link" href="games.html">← Retour aux jeux</a>
+<a class="back-link" href="help-american-roulette.html" style="margin-left:8px;">📘 Comprendre les règles</a>
+<div class="balance">
+<div class="lbl">Balance</div>
+<div class="val"><span id="balance">Chargement du solde...</span> <small>HTG</small></div>
+</div>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<!-- ============ MAIN GRID ============ -->
+<div class="grid">
+<!-- Wheel column -->
+<section class="wheel-wrap">
+<div class="panel" style="padding:14px">
+<div class="wheel" id="wheel">
+<div class="glow"></div>
+<div class="ring"></div>
+<div class="bevel"></div>
+<div class="track"></div>
+<div class="face" id="wheelFace">
+<svg id="wheelSvg" viewbox="0 0 400 400"></svg>
+</div>
+<div class="ball-orbit" id="ballOrbit"><div class="ball"></div></div>
+<div class="pointer"></div>
+</div>
+</div>
+<div class="recent" id="recent"></div>
+<div id="resultPanel"></div>
+</section>
+<!-- Table column -->
+<section style="display:flex;flex-direction:column;gap:14px">
+<div class="felt">
+<div class="tip">
+<span>Place your bets · Chip <b id="tipChip">50</b></span>
+<span>American Roulette · 0, 00, 1–36</span>
+</div>
+<div class="felt-inner" id="bettingTable"></div>
+</div>
+<div class="panel">
+<div class="controls-row">
+<div class="chip-rack">
+<span class="lbl">Chips</span>
+<div id="chipRack" style="display:flex;gap:10px"></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn" id="btnClear">Clear</button>
+<button class="btn" id="btnRepeat">Repeat</button>
+<button class="btn-spin" disabled="" id="btnSpin">Spin</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="grid" style="margin-top:18px">
+<aside class="panel summary">
+<h3>Résumé des mises</h3>
+<div class="row"><span class="k">Balance</span><span class="v gold" id="sumBalance">Chargement du solde...</span></div>
+<div class="row"><span class="k">Total misé</span><span class="v" id="sumBet">0</span></div>
+<div class="row"><span class="k">Gain potentiel</span><span class="v green" id="sumWin">0</span></div>
+<div class="row"><span class="k">Dernier numéro</span><span class="v" id="sumLast">—</span></div>
+<div class="bet-list" id="betList"><div class="empty">Aucune mise placée.</div></div>
+</aside>
+</div>
+<div class="footer">
     Jouez, suivez vos tickets et consultez vos résultats en temps réel.
   </div>
 </div>
-
 <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
+<script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
+<script src="../js/auth-guard.js"></script>
 <script>
 /* ============================================================
    American Roulette — logique de jeu et mise à jour de l’espace joueur
@@ -981,7 +973,7 @@ function showAmericanResultPanel(result){
 // initialise
 document.addEventListener("DOMContentLoaded", ()=>{ void initAmericanRoulette(); });
 </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });

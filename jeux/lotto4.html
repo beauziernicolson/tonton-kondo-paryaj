@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonton Kondo — Lotto 4</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Lotto 4</title>
+<style>
     :root {
       --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0;
       --gold:#ffd21f; --gold-2:#ffb900; --green:#46e36f; --red:#ff5d6c; --shadow:0 24px 60px rgba(0,0,0,.45);
@@ -66,100 +67,539 @@
     @media (max-width: 768px) { #digit-buttons { grid-template-columns:repeat(10, minmax(0, 1fr)); gap:6px; } #digit-buttons .digit-btn { min-height:42px; padding:8px; font-size:13px; } .digit-slot { min-height:42px; } }
     @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } }
   </style>
-</head>
-<body>
-  <main class="app">
-    <header class="topbar">
-      <a class="brand" href="../index.html" aria-label="Accueil Tonton Kondo"><img src="../assets/reallogo.png" alt="Logo Tonton Kondo" /><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
-      <div class="header-actions">
-        <div id="authHeaderActions"></div>
-        <a class="back-btn" href="games.html">← Retour aux jeux</a>
-        <span class="pill">Lotto 4</span>
-      </div>
-    </header>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><style id="lotto4-page-redesign">
+  /* Lotto 4 — refonte visuelle uniquement. Aucun JavaScript n'est modifié. */
+  .tk-file-lotto4 {
+    --l4-navy: #071a35;
+    --l4-navy-2: #0c2d57;
+    --l4-yellow: #ffd21f;
+    --l4-yellow-2: #ffbf00;
+    --l4-page: #f4f7fb;
+    --l4-white: #ffffff;
+    --l4-text: #071a35;
+    --l4-muted: #526781;
+    --l4-border: #cbd8e8;
+    --l4-shadow: 0 18px 45px rgba(7, 26, 53, .10);
+  }
 
-    <section class="hero-card">
-      <article>
-        <div class="eyebrow">Nouveau jeu</div>
-        <h1>Jouez au Lotto 4</h1>
-        <p>Choisissez un numéro 0000 à 9999, sélectionnez une option et validez votre ticket. Le gain potentiel est mise × 5000.</p>
-        <div id="user-chip" class="mini-chip">👤 Connecté</div>
-        <a class="help-link" href="help-lotto4.html">Comprendre les règles</a>
-      </article>
-      <article class="field-grid">
-        <div class="field-card">
-          <label for="draw-name-select">Tirage</label>
-          <select id="draw-name-select"><option value="">Chargement des tirages…</option></select>
-          <div class="note">Le tirage est utilisé pour lier le ticket au résultat officiel.</div>
-        </div>
-        <div class="field-card">
-          <label for="lotto4-number">Numéro Lotto 4 (4 chiffres)</label>
-          <div class="digit-row-label"><span>Choisissez la position puis le chiffre.</span><button id="clear-number-btn" class="ghost-btn" type="button">Effacer</button></div>
-          <div class="digit-row">
-            <div class="digit-grid" style="grid-template-columns:repeat(4, minmax(0, 1fr));">
-              <button class="digit-slot active" type="button" data-slot="0">_</button>
-              <button class="digit-slot" type="button" data-slot="1">_</button>
-              <button class="digit-slot" type="button" data-slot="2">_</button>
-              <button class="digit-slot" type="button" data-slot="3">_</button>
-            </div>
-            <div class="digit-grid" id="digit-buttons">
-              <button class="digit-btn" type="button" data-digit="0">0</button>
-              <button class="digit-btn" type="button" data-digit="1">1</button>
-              <button class="digit-btn" type="button" data-digit="2">2</button>
-              <button class="digit-btn" type="button" data-digit="3">3</button>
-              <button class="digit-btn" type="button" data-digit="4">4</button>
-              <button class="digit-btn" type="button" data-digit="5">5</button>
-              <button class="digit-btn" type="button" data-digit="6">6</button>
-              <button class="digit-btn" type="button" data-digit="7">7</button>
-              <button class="digit-btn" type="button" data-digit="8">8</button>
-              <button class="digit-btn" type="button" data-digit="9">9</button>
-            </div>
-          </div>
-          <div class="digit-display">Numéro choisi <strong id="lotto4-display">0000</strong></div>
-          <input id="lotto4-number" type="hidden" inputmode="numeric" maxlength="4" value="0000" />
-          <div class="note">Ordre exact obligatoire : 7420 gagne, 0247 perd.</div>
-        </div>
-        <div class="field-card">
-          <label for="option-select">Option Lotto 4</label>
-          <select id="option-select">
-            <option value="">Choisissez une option</option>
-            <option value="option1">Option 1 = 2e lot + 3e lot</option>
-            <option value="option2">Option 2 = 1er lot + 2e lot</option>
-            <option value="option3">Option 3 = 1er lot + 3e lot</option>
-          </select>
-          <div class="note">Chaque ligne doit inclure le numéro, l’option et le montant.</div>
-        </div>
-        <div class="field-card">
-          <label for="amount-input">Montant</label>
-          <input id="amount-input" type="number" min="1" step="1" value="10" />
-        </div>
-        <button id="add-line-btn" class="btn btn-primary" type="button">Ajouter au coupon</button>
-      </article>
-    </section>
+  .tk-file-lotto4 {
+    color: var(--l4-text) !important;
+    background: var(--l4-page) !important;
+  }
 
-    <section class="content-grid">
-      <article class="panel">
-        <div class="panel-head"><div><h2>Coupon Lotto 4</h2><p>Un seul numéro à 4 chiffres par ligne, avec option et mise.</p></div></div>
-        <div id="coupon-list" class="coupon-list"></div>
-        <button id="validate-btn" class="btn btn-primary" type="button" style="width:100%; margin-top:12px;">Valider le ticket</button>
-        <div id="feedback-box" class="feedback">Choisissez un tirage, un numéro 0000-9999 et validez.</div>
-      </article>
-      <article class="panel">
-        <div class="panel-head"><div><h2>Règles du jeu</h2><p>Ce jeu est proposé dans la collection Tonton Kondo.</p></div></div>
-        <div class="field-grid">
-          <div class="field-card"><label>Gain</label><div class="note">Mise × 5000 si le numéro correspond au premier lot complet Borlette.</div></div>
-          <div class="field-card"><label>Ordre exact</label><div class="note">0000 gagne, 9999 gagne, le numéro doit être exactement 4 chiffres.</div></div>
-          <div class="field-card"><label>Débit</label><div class="note">Le solde est débité via apply_transaction au moment de la validation.</div></div>
-        </div>
-      </article>
-    </section>
-  </main>
+  .tk-file-lotto4 .app {
+    width: min(100%, 1220px);
+    padding: 18px 18px 48px;
+  }
 
-  <script src="../js/i18n.js"></script>
-  <script src="../js/auth-config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/auth-guard.js"></script>
-  <script>
+  .tk-file-lotto4 .hero-card.lotto4-hero {
+    display: block !important;
+    min-height: 0;
+    margin-bottom: 18px;
+    padding: 24px 28px;
+    border: 0;
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 92% 15%, rgba(255, 210, 31, .18), transparent 24%),
+      linear-gradient(135deg, var(--l4-navy), #0a2447) !important;
+    box-shadow: 0 20px 50px rgba(7, 26, 53, .18);
+  }
+
+  .tk-file-lotto4 .lotto4-hero h1 {
+    max-width: 720px;
+    margin: 0 0 8px;
+    color: #fff !important;
+    font-size: clamp(30px, 4vw, 48px);
+  }
+
+  .tk-file-lotto4 .lotto4-hero p {
+    max-width: 760px;
+    color: #dce8f6 !important;
+  }
+
+  .tk-file-lotto4 .lotto4-hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .tk-file-lotto4 .lotto4-hero .mini-chip {
+    margin: 0;
+    border-color: #c9d7e8 !important;
+    background: #eaf3ff !important;
+    color: #0b2c52 !important;
+    box-shadow: 0 8px 20px rgba(7,26,51,.10);
+  }
+
+  .tk-file-lotto4 .lotto4-hero .mini-chip strong {
+    color: #0b2c52 !important;
+  }
+
+  .tk-file-lotto4 .lotto4-hero .help-link {
+    margin: 0;
+    color: var(--l4-yellow) !important;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .tk-file-lotto4 .lotto4-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(340px, .88fr);
+    align-items: start;
+    gap: 18px;
+  }
+
+  .tk-file-lotto4 .panel {
+    padding: 18px;
+    border: 1px solid var(--l4-border) !important;
+    border-radius: 22px;
+    background: var(--l4-white) !important;
+    box-shadow: var(--l4-shadow);
+    color: var(--l4-text) !important;
+  }
+
+  .tk-file-lotto4 .panel-head {
+    padding-bottom: 13px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #e2e9f2;
+  }
+
+  .tk-file-lotto4 .panel-head h2,
+  .tk-file-lotto4 .field-card label {
+    color: var(--l4-text) !important;
+  }
+
+  .tk-file-lotto4 .panel-head p,
+  .tk-file-lotto4 .field-card .note,
+  .tk-file-lotto4 .digit-row-label,
+  .tk-file-lotto4 .coupon-item span,
+  .tk-file-lotto4 .empty-state {
+    color: var(--l4-muted) !important;
+  }
+
+  .tk-file-lotto4 .lotto4-builder .field-grid {
+    gap: 14px;
+  }
+
+  .tk-file-lotto4 .field-card {
+    padding: 14px;
+    border: 1px solid var(--l4-border) !important;
+    border-radius: 18px;
+    background: #fff !important;
+  }
+
+  .tk-file-lotto4 .field-card--draw {
+    background: #f8fbff !important;
+  }
+
+  .tk-file-lotto4 .field-card--draw select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid #173b68 !important;
+    border-radius: 12px;
+    background: var(--l4-navy-2) !important;
+    color: #fff !important;
+    font-weight: 800;
+    outline: none;
+  }
+
+  .tk-file-lotto4 .field-card--draw select option {
+    background: #fff;
+    color: var(--l4-text);
+  }
+
+  .tk-file-lotto4 .field-card input {
+    min-height: 48px;
+    border: 1px solid var(--l4-border) !important;
+    border-radius: 12px;
+    background: #fff !important;
+    color: var(--l4-text) !important;
+  }
+
+  .tk-file-lotto4 .digit-row-label {
+    margin-bottom: 10px;
+  }
+
+  .tk-file-lotto4 .digit-row > .digit-grid:first-child {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px;
+  }
+
+  .tk-file-lotto4 .digit-slot {
+    min-height: 52px;
+    border: 1px solid var(--l4-border) !important;
+    border-radius: 12px;
+    background: #fff !important;
+    color: var(--l4-text) !important;
+    font-size: 18px;
+  }
+
+  .tk-file-lotto4 .digit-slot.active {
+    border-color: var(--l4-yellow-2) !important;
+    background: #fff8d8 !important;
+    color: var(--l4-text) !important;
+    box-shadow: 0 0 0 2px rgba(255, 191, 0, .18);
+  }
+
+  .tk-file-lotto4 #digit-buttons {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 9px;
+    margin-top: 12px;
+  }
+
+  .tk-file-lotto4 #digit-buttons .digit-btn {
+    min-height: 48px;
+    padding: 8px;
+    border: 1px solid #b8c9dd !important;
+    border-radius: 12px;
+    background: #fff !important;
+    color: var(--l4-text) !important;
+    font-size: 16px;
+    box-shadow: 0 5px 12px rgba(7, 26, 53, .05);
+  }
+
+  .tk-file-lotto4 #digit-buttons .digit-btn:hover {
+    border-color: var(--l4-yellow-2) !important;
+    background: #fff8d8 !important;
+    transform: translateY(-1px);
+  }
+
+  .tk-file-lotto4 .digit-display {
+    margin-top: 12px;
+    border: 1px solid var(--l4-border) !important;
+    background: #f8fbff !important;
+    color: var(--l4-text) !important;
+  }
+
+  .tk-file-lotto4 .digit-display strong {
+    color: var(--l4-navy-2) !important;
+  }
+
+  .tk-file-lotto4 .ghost-btn {
+    border-color: var(--l4-border) !important;
+    background: #fff !important;
+    color: var(--l4-text) !important;
+  }
+
+  .tk-file-lotto4 .btn-primary {
+    min-height: 50px;
+    border: 0 !important;
+    background: linear-gradient(180deg, var(--l4-yellow), var(--l4-yellow-2)) !important;
+    color: #07111f !important;
+    box-shadow: 0 10px 24px rgba(255, 191, 0, .22);
+  }
+
+  .tk-file-lotto4 .lotto4-add-button {
+    width: 100%;
+  }
+
+  .tk-file-lotto4 .lotto4-coupon {
+    position: sticky;
+    top: 16px;
+  }
+
+  .tk-file-lotto4 .coupon-list {
+    min-height: 180px;
+  }
+
+  .tk-file-lotto4 .coupon-item,
+  .tk-file-lotto4 .empty-state {
+    border-color: var(--l4-border) !important;
+    background: #f8fbff !important;
+  }
+
+  .tk-file-lotto4 .coupon-item strong {
+    color: var(--l4-text) !important;
+  }
+
+  .tk-file-lotto4 .coupon-item .btn {
+    border-color: var(--l4-border) !important;
+    background: #fff !important;
+    color: var(--l4-text) !important;
+  }
+
+  .tk-file-lotto4 .feedback {
+    border-color: var(--l4-border) !important;
+    background: #f8fbff !important;
+    color: var(--l4-muted) !important;
+  }
+
+  .tk-file-lotto4 .feedback.success {
+    border-color: #80d8a1 !important;
+    background: #ecfbf1 !important;
+    color: #0a6f38 !important;
+  }
+
+  .tk-file-lotto4 .feedback.warn {
+    border-color: #f2ca5e !important;
+    background: #fff8df !important;
+    color: #755500 !important;
+  }
+
+  .tk-file-lotto4 .feedback.error {
+    border-color: #f4a4aa !important;
+    background: #fff0f1 !important;
+    color: #a31927 !important;
+  }
+
+  @media (max-width: 900px) {
+    .tk-file-lotto4 .lotto4-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .tk-file-lotto4 .lotto4-coupon {
+      position: static;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .tk-file-lotto4 .app {
+      padding: 12px 12px 32px;
+    }
+
+    .tk-file-lotto4 .hero-card.lotto4-hero {
+      padding: 20px 18px;
+      border-radius: 18px;
+    }
+
+    .tk-file-lotto4 .panel {
+      padding: 14px;
+      border-radius: 18px;
+    }
+
+    .tk-file-lotto4 #digit-buttons {
+      grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+      gap: 7px;
+    }
+
+    .tk-file-lotto4 #digit-buttons .digit-btn {
+      min-height: 44px;
+      padding: 6px;
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .tk-file-lotto4 #digit-buttons {
+      gap: 5px;
+    }
+
+    .tk-file-lotto4 #digit-buttons .digit-btn {
+      min-height: 41px;
+      font-size: 14px;
+    }
+  }
+
+
+  .tk-file-lotto4 .digit-row > .digit-grid:first-child {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .tk-file-lotto4 .field-card--option select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--l4-border) !important;
+    border-radius: 12px;
+    background: #fff !important;
+    color: var(--l4-text) !important;
+    font-weight: 700;
+    outline: none;
+  }
+
+  .tk-file-lotto4 .field-card--option select option {
+    background: #fff;
+    color: var(--l4-text);
+  }
+</style>
+<style id="lotto4-desktop-layout-fix">
+  /* Desktop/tablette : grille seule à gauche, contrôles + coupon à droite. */
+  .tk-file-lotto4 .lotto4-layout {
+    display:grid;
+    grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);
+    align-items:start;
+    gap:18px;
+  }
+
+  .tk-file-lotto4 .lotto4-grid-panel {
+    min-width:0;
+  }
+
+  .tk-file-lotto4 .lotto4-right-stack {
+    display:grid;
+    gap:18px;
+    min-width:0;
+  }
+
+  .tk-file-lotto4 .lotto4-controls,
+  .tk-file-lotto4 .lotto4-coupon {
+    position:static;
+  }
+
+  .tk-file-lotto4 .lotto4-grid-panel .field-card {
+    margin:0;
+  }
+
+  .tk-file-lotto4 .lotto4-controls .field-grid {
+    gap:14px;
+  }
+
+  @media(max-width:900px) {
+    /* Conserve l'ordre mobile déjà validé :
+       tirage/option/montant, grille, puis coupon. */
+    .tk-file-lotto4 .lotto4-layout {
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .tk-file-lotto4 .lotto4-right-stack {
+      display:contents;
+    }
+
+    .tk-file-lotto4 .lotto4-controls {
+      order:1;
+      width:100%;
+    }
+
+    .tk-file-lotto4 .lotto4-grid-panel {
+      order:2;
+      width:100%;
+    }
+
+    .tk-file-lotto4 .lotto4-coupon {
+      order:3;
+      width:100%;
+    }
+  }
+</style>
+<meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-lotto4">
+<main class="app">
+<header class="topbar">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html"><img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<span class="pill">Lotto 4</span>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="hero-card lotto4-hero">
+<article>
+<div class="eyebrow">Nouveau jeu</div>
+<h1>Jouez au Lotto 4</h1>
+<p>Choisissez un numéro 0000 à 9999, sélectionnez une option, misez et validez votre ticket.</p>
+<div class="lotto4-hero-actions">
+<div class="mini-chip" id="user-chip">👤 Connecté</div>
+<a class="help-link" href="help-lotto4.html">Comprendre les règles</a>
+</div>
+</article>
+</section>
+
+<section class="lotto4-layout">
+<article class="panel lotto4-grid-panel">
+<div class="panel-head">
+<div>
+<h2>Numéro Lotto 4</h2>
+<p>Sélectionnez vos 4 chiffres.</p>
+</div>
+</div>
+
+<div class="field-card">
+<label for="lotto4-number">Numéro Lotto 4 (4 chiffres)</label>
+<div class="digit-row-label">
+<span>Choisissez la position, puis le chiffre.</span>
+<button class="ghost-btn" id="clear-number-btn" type="button">Effacer</button>
+</div>
+
+<div class="digit-row">
+<div class="digit-grid" style="grid-template-columns:repeat(4, minmax(0, 1fr));">
+<button class="digit-slot active" data-slot="0" type="button">_</button>
+<button class="digit-slot" data-slot="1" type="button">_</button>
+<button class="digit-slot" data-slot="2" type="button">_</button>
+<button class="digit-slot" data-slot="3" type="button">_</button>
+</div>
+
+<div class="digit-grid" id="digit-buttons">
+<button class="digit-btn" data-digit="0" type="button">0</button>
+<button class="digit-btn" data-digit="1" type="button">1</button>
+<button class="digit-btn" data-digit="2" type="button">2</button>
+<button class="digit-btn" data-digit="3" type="button">3</button>
+<button class="digit-btn" data-digit="4" type="button">4</button>
+<button class="digit-btn" data-digit="5" type="button">5</button>
+<button class="digit-btn" data-digit="6" type="button">6</button>
+<button class="digit-btn" data-digit="7" type="button">7</button>
+<button class="digit-btn" data-digit="8" type="button">8</button>
+<button class="digit-btn" data-digit="9" type="button">9</button>
+</div>
+</div>
+
+<div class="digit-display">Numéro choisi <strong id="lotto4-display">0000</strong></div>
+<input id="lotto4-number" inputmode="numeric" maxlength="4" type="hidden" value="0000"/>
+<div class="note">Ordre exact obligatoire : 7420 gagne, 0247 perd.</div>
+</div>
+</article>
+
+<div class="lotto4-right-stack">
+<article class="panel lotto4-controls">
+<div class="panel-head">
+<div>
+<h2>Options et montant</h2>
+<p>Choisissez le tirage, l’option et la mise.</p>
+</div>
+</div>
+
+<div class="field-grid">
+<div class="field-card field-card--draw">
+<label for="draw-name-select">Tirage</label>
+<select id="draw-name-select"><option value="">Chargement des tirages…</option></select>
+<div class="note">Le tirage est utilisé pour lier le ticket au résultat officiel.</div>
+</div>
+
+<div class="field-card field-card--option">
+<label for="option-select">Option Lotto 4</label>
+<select id="option-select">
+<option value="">Choisissez une option</option>
+<option value="option1">Option 1 = 2e lot + 3e lot</option>
+<option value="option2">Option 2 = 1er lot + 2e lot</option>
+<option value="option3">Option 3 = 1er lot + 3e lot</option>
+</select>
+<div class="note">Chaque ligne doit inclure le numéro, l’option et le montant.</div>
+</div>
+
+<div class="field-card">
+<label for="amount-input">Montant</label>
+<input id="amount-input" min="1" step="1" type="number" value="10"/>
+</div>
+
+<button class="btn btn-primary lotto4-add-button" id="add-line-btn" type="button">Ajouter au coupon</button>
+</div>
+</article>
+
+<article class="panel lotto4-coupon">
+<div class="panel-head">
+<div>
+<h2>Coupon Lotto 4</h2>
+<p>Numéros, options et mises à valider.</p>
+</div>
+</div>
+
+<div class="coupon-list" id="coupon-list"></div>
+<button class="btn btn-primary" id="validate-btn" style="width:100%; margin-top:12px;" type="button">Valider le ticket</button>
+<div class="feedback" id="feedback-box">Choisissez un tirage, un numéro 0000-9999 et validez.</div>
+</article>
+</div>
+</section>
+
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script>
     (function () {
       const drawNameSelect = document.getElementById('draw-name-select');
       const lotto4NumberInput = document.getElementById('lotto4-number');
@@ -177,6 +617,7 @@
       let couponLines = [];
       let selectedDigitIndex = 0;
       let selectedDigits = ['0', '0', '0', '0'];
+      let hasSelectedNumber = false;
 
       function setFeedback(message, type) {
         feedbackBox.className = 'feedback';
@@ -204,6 +645,7 @@
       }
 
       function chooseDigit(digit) {
+        hasSelectedNumber = true;
         selectedDigits[selectedDigitIndex] = String(digit);
         if (selectedDigitIndex < 3) {
           selectedDigitIndex += 1;
@@ -214,6 +656,7 @@
       function clearSelection() {
         selectedDigits = ['0', '0', '0', '0'];
         selectedDigitIndex = 0;
+        hasSelectedNumber = false;
         syncNumberSelection();
       }
 
@@ -292,6 +735,7 @@
         const optionType = optionSelect.value || '';
         const rawAmount = Number(amountInput.value);
         if (!selectedDrawName) { setFeedback('Choisissez un tirage avant d’ajouter une ligne.', 'warn'); drawNameSelect.focus(); return; }
+        if (!hasSelectedNumber) { setFeedback('Choisissez d’abord vos numéros avant d’ajouter une ligne.', 'warn'); const firstSlot = document.querySelector('.digit-slot'); if (firstSlot) firstSlot.focus(); return; }
         if (!isValidLotto4Number(rawNumber)) { setFeedback('Le numéro doit être composé de 4 chiffres exactement (0000 à 9999).', 'warn'); return; }
         if (!optionType) { setFeedback('Choisissez une option avant d’ajouter une ligne.', 'warn'); optionSelect.focus(); return; }
         if (!Number.isFinite(rawAmount) || rawAmount <= 0) { setFeedback('Entrez un montant valide supérieur à 0.', 'warn'); amountInput.focus(); return; }
@@ -325,7 +769,7 @@
         if (!currentUser) { setFeedback('Vous devez être connecté pour valider un ticket.', 'warn'); if (window.saveRedirectTarget) window.saveRedirectTarget('lotto4.html'); window.tryRedirectToLogin('../login-register/login.html'); return; }
         selectedDrawName = drawNameSelect.value || '';
         if (!selectedDrawName) { setFeedback('Choisissez un tirage avant de valider.', 'warn'); drawNameSelect.focus(); return; }
-        if (!couponLines.length) { setFeedback('Ajoutez au moins un numéro à votre coupon.', 'warn'); return; }
+        if (!couponLines.length) { setFeedback('Validez d’abord votre montant en ajoutant une ligne au coupon avant de valider le ticket.', 'warn'); return; }
 
         const client = await waitForSupabaseClient();
         if (!client || typeof client.from !== 'function') { setFeedback('Connexion au service momentanément indisponible.', 'warn'); return; }
@@ -402,7 +846,7 @@
       })();
     })();
   </script>
-<script data-tk-i18n-auto-init>
+<script data-tk-i18n-auto-init="">
   document.addEventListener('DOMContentLoaded', function () {
     if (window.TKI18n) {
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
@@ -411,4 +855,3 @@
 </script>
 </body>
 </html>
-
