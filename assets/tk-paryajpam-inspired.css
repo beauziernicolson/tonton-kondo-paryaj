@@ -852,3 +852,224 @@ body.tk-page-game .btn-primary{background:var(--tk-yellow)!important;color:#071a
   body.tk-page-game :where(.num-btn,.number-btn){min-height:38px!important;font-size:12px!important;padding:7px 0!important}
   body.tk-page-game :where(.card,.panel,.field-card){border-radius:14px!important}
 }
+
+
+/* =========================================================
+   DASHBOARD — contraste final
+   Scope strict: body.tk-file-dashboard seulement
+   ========================================================= */
+
+body.tk-file-dashboard{
+  --dash-navy:#071a35;
+  --dash-navy-2:#0b2f5c;
+  --dash-gold:#ffd21f;
+  --dash-gold-dark:#a87300;
+  --dash-text:#071a35;
+  --dash-muted:#667a92;
+  --dash-paper:#ffffff;
+  --dash-line:#d6e0eb;
+}
+
+/* Surfaces claires */
+body.tk-file-dashboard .welcome-card,
+body.tk-file-dashboard .balance-card,
+body.tk-file-dashboard .stat-card,
+body.tk-file-dashboard .panel{
+  background:var(--dash-paper)!important;
+  color:var(--dash-text)!important;
+  border:1px solid var(--dash-line)!important;
+  box-shadow:0 14px 34px rgba(7,26,53,.10)!important;
+}
+
+/* Intro */
+body.tk-file-dashboard .welcome-card .eyebrow{
+  color:var(--dash-gold-dark)!important;
+}
+body.tk-file-dashboard .welcome-card h1,
+body.tk-file-dashboard .welcome-card h1 span,
+body.tk-file-dashboard .welcome-card p,
+body.tk-file-dashboard .profile-copy strong,
+body.tk-file-dashboard .profile-copy span,
+body.tk-file-dashboard [data-dashboard-name],
+body.tk-file-dashboard [data-dashboard-email]{
+  color:var(--dash-text)!important;
+  -webkit-text-fill-color:var(--dash-text)!important;
+  opacity:1!important;
+}
+
+body.tk-file-dashboard .profile-avatar{
+  color:var(--dash-gold-dark)!important;
+  background:#fff8d8!important;
+  border-color:#f1cf64!important;
+}
+
+/* Profil: libellés jaunes / valeurs navy */
+body.tk-file-dashboard .profile-meta .tag-pill{
+  background:#f8fafc!important;
+  border-color:var(--dash-line)!important;
+}
+body.tk-file-dashboard [data-dashboard-status-chip],
+body.tk-file-dashboard .profile-meta .tag-pill.muted,
+body.tk-file-dashboard .profile-meta .tag-pill.muted > span{
+  color:var(--dash-gold-dark)!important;
+  -webkit-text-fill-color:var(--dash-gold-dark)!important;
+}
+body.tk-file-dashboard [data-dashboard-role],
+body.tk-file-dashboard [data-dashboard-status]{
+  color:var(--dash-text)!important;
+  -webkit-text-fill-color:var(--dash-text)!important;
+}
+
+/* Solde */
+body.tk-file-dashboard .balance-card small,
+body.tk-file-dashboard .balance-card [data-i18n="dashboard.available_balance"]{
+  color:var(--dash-gold-dark)!important;
+  -webkit-text-fill-color:var(--dash-gold-dark)!important;
+  font-weight:900!important;
+}
+body.tk-file-dashboard [data-dashboard-balance-card]{
+  color:var(--dash-text)!important;
+  -webkit-text-fill-color:var(--dash-text)!important;
+}
+
+/* Statistiques */
+body.tk-file-dashboard .stat-card small{
+  color:var(--dash-gold-dark)!important;
+  -webkit-text-fill-color:var(--dash-gold-dark)!important;
+}
+body.tk-file-dashboard .stat-card strong,
+body.tk-file-dashboard .stat-card > span:not(.stat-icon){
+  color:var(--dash-text)!important;
+  -webkit-text-fill-color:var(--dash-text)!important;
+}
+
+/* Titres et sous-titres des sections */
+body.tk-file-dashboard .panel-head h2{
+  color:var(--dash-text)!important;
+  -webkit-text-fill-color:var(--dash-text)!important;
+}
+body.tk-file-dashboard .panel-head span{
+  color:var(--dash-muted)!important;
+  -webkit-text-fill-color:var(--dash-muted)!important;
+}
+body.tk-file-dashboard .panel-link{
+  color:#0759a8!important;
+  -webkit-text-fill-color:#0759a8!important;
+}
+
+/* Historique */
+body.tk-file-dashboard .empty-history{
+  background:#f8fbff!important;
+  border-color:var(--dash-line)!important;
+}
+body.tk-file-dashboard .empty-history strong,
+body.tk-file-dashboard .history-main strong,
+body.tk-file-dashboard .history-amount,
+body.tk-file-dashboard .history-date{
+  color:var(--dash-text)!important;
+  -webkit-text-fill-color:var(--dash-text)!important;
+}
+body.tk-file-dashboard .empty-history p,
+body.tk-file-dashboard .history-main span{
+  color:var(--dash-muted)!important;
+  -webkit-text-fill-color:var(--dash-muted)!important;
+}
+body.tk-file-dashboard .history-item{
+  border-bottom-color:#e4ebf3!important;
+}
+
+/* Actions rapides: navy avec texte blanc */
+body.tk-file-dashboard .quick-item{
+  background:linear-gradient(135deg,var(--dash-navy-2),var(--dash-navy))!important;
+  border-color:rgba(255,210,31,.30)!important;
+  box-shadow:0 10px 24px rgba(7,26,53,.16)!important;
+}
+body.tk-file-dashboard .quick-item:hover{
+  background:linear-gradient(135deg,#124078,#092448)!important;
+  border-color:var(--dash-gold)!important;
+}
+body.tk-file-dashboard .quick-item strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body.tk-file-dashboard .quick-item span span{
+  color:#d9e7f6!important;
+  -webkit-text-fill-color:#d9e7f6!important;
+}
+body.tk-file-dashboard .quick-arrow{
+  color:var(--dash-gold)!important;
+  -webkit-text-fill-color:var(--dash-gold)!important;
+}
+body.tk-file-dashboard .quick-icon{
+  color:#74bdff!important;
+  background:rgba(57,168,255,.16)!important;
+  border-color:rgba(116,189,255,.30)!important;
+}
+body.tk-file-dashboard .quick-icon.gold{
+  color:var(--dash-gold)!important;
+  background:rgba(255,210,31,.14)!important;
+  border-color:rgba(255,210,31,.30)!important;
+}
+
+/* Boutons */
+body.tk-file-dashboard .quick-buttons .btn,
+body.tk-file-dashboard .quick-buttons .btn-primary,
+body.tk-file-dashboard .deposit-btn{
+  background:linear-gradient(180deg,var(--dash-gold),#ffb900)!important;
+  color:var(--dash-navy)!important;
+  -webkit-text-fill-color:var(--dash-navy)!important;
+  border-color:#ffb900!important;
+}
+
+/* Jeux populaires */
+body.tk-file-dashboard .games-row .game-card{
+  background:linear-gradient(180deg,#0d315d,var(--dash-navy))!important;
+  border-color:rgba(255,255,255,.12)!important;
+  box-shadow:0 10px 24px rgba(7,26,53,.14)!important;
+}
+body.tk-file-dashboard .games-row .game-card strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  opacity:1!important;
+}
+body.tk-file-dashboard .games-row .game-card:hover{
+  border-color:var(--dash-gold)!important;
+}
+
+/* Bande de confiance */
+body.tk-file-dashboard .support-strip .notice-card{
+  background:linear-gradient(135deg,#22384f,#162a40)!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+body.tk-file-dashboard .support-strip .notice-card strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body.tk-file-dashboard .support-strip .notice-card span{
+  color:#c9d7e7!important;
+  -webkit-text-fill-color:#c9d7e7!important;
+}
+body.tk-file-dashboard .support-strip .notice-card svg{
+  color:var(--dash-gold)!important;
+}
+
+/* Header du dashboard */
+body.tk-file-dashboard .wallet-chip strong{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body.tk-file-dashboard .wallet-chip span{
+  color:#b9c8dc!important;
+  -webkit-text-fill-color:#b9c8dc!important;
+}
+
+/* Mobile */
+@media(max-width:760px){
+  body.tk-file-dashboard .support-strip{
+    display:none!important;
+  }
+  body.tk-file-dashboard .games-row .game-card strong{
+    font-size:13px!important;
+  }
+}
+
