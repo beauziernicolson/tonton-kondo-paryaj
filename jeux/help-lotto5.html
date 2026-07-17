@@ -35,22 +35,189 @@
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
 <script src="../js/i18n.js"></script>
-<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
+.game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
+.game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
+.game-header__brand img{width:59px;height:59px;flex:0 0 59px;padding:5px;object-fit:contain;border:1px solid #cbd8e8;border-radius:16px;background:#fff;box-shadow:0 8px 20px rgba(7,26,53,.08)}
+.game-header__brand-text strong{display:block;color:#071a35;font-size:18px;line-height:1.15;letter-spacing:.03em}
+.game-header__brand-text span{display:block;margin-top:3px;color:#526781;font-size:11px;font-weight:800;letter-spacing:.28em;text-transform:uppercase}
+.game-header__actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;min-width:0}
+.game-header__wallet{display:grid;gap:2px;min-width:155px;padding:8px 12px;border-radius:14px;background:linear-gradient(135deg,#071a35,#0c2d57);box-shadow:0 9px 22px rgba(7,26,53,.18);line-height:1.1}
+.game-header__wallet-label{color:#c7d5e6;font-size:9px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+.game-header__wallet-value{color:#ffd21f;font-size:15px;font-weight:950;font-variant-numeric:tabular-nums}
+.game-header__button,.game-header__badge{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 12px;border:1px solid #cbd8e8;border-radius:999px;background:#fff;color:#071a35;font-size:12px;font-weight:900;text-decoration:none;box-shadow:0 7px 18px rgba(7,26,53,.07);white-space:nowrap}
+.game-header__button{cursor:pointer}
+.game-header__button:hover{border-color:#ffbf00;background:#fff9df}
+.game-header__badge{border-color:#0c2d57;background:#0c2d57;color:#ffd21f}
+@media(max-width:900px){.game-header{align-items:flex-start;flex-direction:column}.game-header__actions{width:100%;justify-content:flex-start}}
+@media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
+@media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
+</style>
+
+<style id="header-nav-order-fix">
+  .game-header + .tk-primary-nav {
+    margin-top:0 !important;
+    margin-bottom:16px !important;
+  }
+</style>
+
+
+<style id="mobile-minimal-game-header">
+  /* Mobile uniquement : header minimal avec retour + solde centré */
+  @media (max-width: 760px) {
+    .tk-primary-nav {
+      display:none !important;
+    }
+
+    .game-header {
+      position:relative !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      min-height:62px !important;
+      width:100% !important;
+      margin:0 0 12px !important;
+      padding:8px 58px !important;
+      border-radius:14px !important;
+      background:#061426 !important;
+      border:1px solid rgba(255,255,255,.10) !important;
+      box-shadow:0 10px 24px rgba(7,26,53,.16) !important;
+    }
+
+    .game-header__brand,
+    .game-header__actions > a[href="../profile.html"],
+    .game-header__actions > #gameHeaderLogout,
+    .game-header__actions > .game-header__badge {
+      display:none !important;
+    }
+
+    .game-header__actions {
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      width:100% !important;
+      min-width:0 !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+
+    .game-header__wallet {
+      display:grid !important;
+      place-items:center !important;
+      min-width:0 !important;
+      width:auto !important;
+      max-width:calc(100vw - 132px) !important;
+      padding:7px 12px !important;
+      border-radius:12px !important;
+      background:rgba(255,255,255,.08) !important;
+      border:1px solid rgba(255,255,255,.10) !important;
+      box-shadow:none !important;
+      text-align:center !important;
+    }
+
+    .game-header__wallet-label {
+      display:block !important;
+      color:#aebbd0 !important;
+      font-size:8px !important;
+      line-height:1.1 !important;
+      letter-spacing:.12em !important;
+      white-space:nowrap !important;
+    }
+
+    .game-header__wallet-value {
+      display:block !important;
+      max-width:100% !important;
+      color:#ffd21f !important;
+      font-size:14px !important;
+      line-height:1.15 !important;
+      white-space:nowrap !important;
+      overflow:hidden !important;
+      text-overflow:ellipsis !important;
+    }
+
+    .game-header__actions > a[href="games.html"] {
+      position:absolute !important;
+      left:10px !important;
+      top:50% !important;
+      transform:translateY(-50%) !important;
+      display:grid !important;
+      place-items:center !important;
+      width:38px !important;
+      height:38px !important;
+      min-width:38px !important;
+      min-height:38px !important;
+      padding:0 !important;
+      border-radius:9px !important;
+      border:0 !important;
+      background:#20242c !important;
+      color:transparent !important;
+      font-size:0 !important;
+      box-shadow:none !important;
+      overflow:hidden !important;
+    }
+
+    .game-header__actions > a[href="games.html"]::before {
+      content:"" !important;
+      width:10px !important;
+      height:10px !important;
+      border-left:2px solid #aeb4bf !important;
+      border-bottom:2px solid #aeb4bf !important;
+      transform:rotate(45deg) translate(1px,-1px) !important;
+    }
+
+    .game-header__actions > a[href="games.html"]:hover,
+    .game-header__actions > a[href="games.html"]:active {
+      background:#2b3039 !important;
+      transform:translateY(-50%) !important;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .game-header {
+      min-height:58px !important;
+      padding-left:54px !important;
+      padding-right:54px !important;
+    }
+
+    .game-header__actions > a[href="games.html"] {
+      left:8px !important;
+      width:36px !important;
+      height:36px !important;
+      min-width:36px !important;
+      min-height:36px !important;
+    }
+
+    .game-header__wallet {
+      max-width:calc(100vw - 116px) !important;
+      padding:6px 9px !important;
+    }
+
+    .game-header__wallet-value {
+      font-size:13px !important;
+    }
+  }
+</style>
+
+</head>
 <body class="tk-public tk-page-help tk-file-help-lotto5">
 <main class="app">
-<header class="topbar">
-<a class="brand" href="../index.html">
+<header class="game-header" id="gameHeader">
+<a aria-label="Accueil Tonton Kondo" class="game-header__brand" href="../index.html">
 <img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
-<span class="brand-text">
-<strong>Tonton Kondo</strong>
-<span>Paryaj</span>
-</span>
+<span class="game-header__brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span>
 </a>
-<div class="action-row">
-<a class="btn btn-secondary" href="games.html">Retour aux jeux</a>
-<a class="btn btn-primary" href="lotto5.html">Retour à Lotto 5</a>
+<div class="game-header__actions">
+<div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
+<span class="game-header__wallet-label">Solde disponible</span>
+<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
 </div>
-</header>
+<a class="game-header__button" href="../profile.html">Profil</a>
+<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<span class="game-header__badge">Aide Lotto 5</span>
+</div></header>
+
+
 <section class="card">
 <div class="eyebrow">Aide</div>
 <h1>Lotto 5 — règles détaillées</h1>
@@ -104,6 +271,231 @@
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
     }
   });
+</script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script id="shared-borlette-game-header-script">
+(function () {
+  const walletBox = document.getElementById('gameHeaderWallet');
+  const balanceNode = document.getElementById('gameHeaderBalance');
+  const logoutButton = document.getElementById('gameHeaderLogout');
+
+  let refreshPromise = null;
+  let realtimeChannel = null;
+  let activeUserId = null;
+  let rpcWrapped = false;
+
+  function formatBalance(value, currency = 'HTG') {
+    return `${Number(value || 0).toLocaleString(
+      window.TKI18n?.getLocale?.() || 'fr-FR'
+    )} ${currency}`;
+  }
+
+  async function waitForHeaderDependencies(maxAttempts = 30, delay = 150) {
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      const client = window.supabaseClient || null;
+      const hasUserHelper = typeof window.getCurrentUserAsync === 'function';
+
+      if (client?.from && hasUserHelper) {
+        return client;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+
+    return window.supabaseClient || null;
+  }
+
+  function updateBalanceDisplay(wallet) {
+    if (!balanceNode || !wallet) return;
+
+    balanceNode.textContent = formatBalance(
+      wallet.balance,
+      wallet.currency || 'HTG'
+    );
+
+    walletBox?.classList.remove('is-error');
+  }
+
+  async function refreshGameHeaderBalance() {
+    if (refreshPromise) return refreshPromise;
+
+    refreshPromise = (async () => {
+      try {
+        walletBox?.classList.add('is-loading');
+
+        const client = await waitForHeaderDependencies();
+        const user = typeof window.getCurrentUserAsync === 'function'
+          ? await window.getCurrentUserAsync()
+          : null;
+
+        if (!client?.from || !user?.id) {
+          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          return null;
+        }
+
+        activeUserId = user.id;
+
+        const { data, error } = await client
+          .from('wallets')
+          .select('balance, currency, updated_at')
+          .eq('user_id', user.id)
+          .single();
+
+        if (error) throw error;
+
+        updateBalanceDisplay(data);
+        return data;
+      } catch (error) {
+        console.error('Erreur solde du header :', error);
+        walletBox?.classList.add('is-error');
+        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        return null;
+      } finally {
+        walletBox?.classList.remove('is-loading');
+        refreshPromise = null;
+      }
+    })();
+
+    return refreshPromise;
+  }
+
+  async function startWalletRealtime() {
+    try {
+      const client = await waitForHeaderDependencies();
+      const user = typeof window.getCurrentUserAsync === 'function'
+        ? await window.getCurrentUserAsync()
+        : null;
+
+      if (!client?.channel || !user?.id) return;
+
+      activeUserId = user.id;
+
+      if (realtimeChannel && typeof client.removeChannel === 'function') {
+        await client.removeChannel(realtimeChannel);
+      }
+
+      realtimeChannel = client
+        .channel(`game-header-wallet-${user.id}-${Date.now()}`)
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'wallets',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            if (payload?.new?.balance !== undefined) {
+              updateBalanceDisplay(payload.new);
+            } else {
+              refreshGameHeaderBalance();
+            }
+          }
+        )
+        .subscribe();
+    } catch (error) {
+      console.warn('Realtime du solde indisponible :', error);
+    }
+  }
+
+  async function wrapWalletChangingRpc() {
+    if (rpcWrapped) return;
+
+    const client = await waitForHeaderDependencies();
+    if (!client || typeof client.rpc !== 'function' || client.__tkHeaderRpcWrapped) {
+      return;
+    }
+
+    const originalRpc = client.rpc.bind(client);
+
+    client.rpc = function (...args) {
+      const result = originalRpc(...args);
+
+      if (result && typeof result.then === 'function') {
+        return result.then((response) => {
+          if (!response?.error) {
+            queueMicrotask(() => refreshGameHeaderBalance());
+          }
+          return response;
+        });
+      }
+
+      return result;
+    };
+
+    client.__tkHeaderRpcWrapped = true;
+    rpcWrapped = true;
+  }
+
+  async function logoutFromGameHeader() {
+    if (typeof window.logoutUser === 'function') {
+      await window.logoutUser();
+      window.location.href = '../login-register/login.html';
+      return;
+    }
+
+    const client = window.supabaseClient || null;
+    if (client?.auth?.signOut) {
+      await client.auth.signOut();
+      window.location.href = '../login-register/login.html';
+    }
+  }
+
+  function handleWalletChanged(event) {
+    const detail = event?.detail || null;
+
+    if (
+      detail?.newBalance !== undefined ||
+      detail?.balance !== undefined
+    ) {
+      updateBalanceDisplay({
+        balance: detail.newBalance ?? detail.balance,
+        currency: detail.currency || 'HTG',
+      });
+    }
+
+    refreshGameHeaderBalance();
+  }
+
+  logoutButton?.addEventListener('click', logoutFromGameHeader);
+
+  [
+    'tonton:wallet-updated',
+    'wallet:changed',
+    'balance:changed',
+    'transaction:completed',
+  ].forEach((eventName) => {
+    window.addEventListener(eventName, handleWalletChanged);
+  });
+
+  window.addEventListener('focus', refreshGameHeaderBalance);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      refreshGameHeaderBalance();
+    }
+  });
+
+  window.addEventListener('pageshow', refreshGameHeaderBalance);
+
+  window.refreshGameHeaderBalance = refreshGameHeaderBalance;
+  window.refreshBorletteHeaderBalance = refreshGameHeaderBalance;
+
+  async function initializeGameHeader() {
+    await refreshGameHeaderBalance();
+    await startWalletRealtime();
+    await wrapWalletChangingRpc();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeGameHeader, {
+      once: true,
+    });
+  } else {
+    initializeGameHeader();
+  }
+})();
 </script>
 </body>
 </html>

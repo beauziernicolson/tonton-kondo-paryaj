@@ -289,6 +289,42 @@
     }
   }
 
+  async function refreshAuthHeaderBalance() {
+    const container = ensureAuthHeaderContainer();
+    if (!container) {
+      return null;
+    }
+
+    try {
+      const authData = global.getAuthenticatedProfile ? await global.getAuthenticatedProfile() : null;
+      const currentUser = authData?.currentUser || null;
+      const wallet = authData?.wallet || null;
+
+      if (currentUser) {
+        renderLoggedInHeader(container, currentUser, wallet);
+        await syncUserMenuState(currentUser);
+        await updateNotificationsBadges();
+        return wallet;
+      }
+
+      const storedUser = global.getCurrentUser ? global.getCurrentUser() : null;
+      if (storedUser) {
+        renderLoggedInHeader(container, storedUser, null);
+        await syncUserMenuState(storedUser);
+        await updateNotificationsBadges();
+        return null;
+      }
+
+      renderLoggedOutHeader(container);
+      await syncUserMenuState(null);
+      await updateNotificationsBadges();
+      return null;
+    } catch (error) {
+      console.warn('auth header balance refresh failed:', error);
+      return null;
+    }
+  }
+
   async function updateAuthHeader() {
     const container = ensureAuthHeaderContainer();
     if (!container) {
@@ -383,8 +419,13 @@
     updateNotificationsBadges();
   });
 
+  global.addEventListener('tonton:wallet-updated', () => {
+    refreshAuthHeaderBalance();
+  });
+
   global.tryRedirectToLogin = tryRedirectToLogin;
   global.updateAuthHeader = updateAuthHeader;
+  global.refreshAuthHeaderBalance = refreshAuthHeaderBalance;
   global.updateNotificationsBadges = updateNotificationsBadges;
   global.enforceAuthGuard = enforceAuthGuard;
 })(window);
