@@ -195,6 +195,80 @@
   }
 </style>
 
+
+<style id="blue-header-and-mobile-help-grid-fix">
+  /* Header desktop/tablette bleu navy */
+  .game-header {
+    background:
+      radial-gradient(circle at 88% 0%, rgba(255,210,31,.08), transparent 25%),
+      linear-gradient(135deg,#061426 0%,#0a2b54 100%) !important;
+    border-color:rgba(255,255,255,.10) !important;
+    box-shadow:0 14px 35px rgba(3,13,29,.34) !important;
+  }
+
+  .game-header__brand {
+    color:#fff !important;
+  }
+
+  .game-header__brand img {
+    background:rgba(255,255,255,.96) !important;
+    border-color:rgba(255,255,255,.22) !important;
+  }
+
+  .game-header__brand-text strong {
+    color:#fff !important;
+  }
+
+  .game-header__brand-text span {
+    color:#b9c9dc !important;
+  }
+
+  .game-header__wallet {
+    background:rgba(255,255,255,.09) !important;
+    border:1px solid rgba(255,255,255,.12) !important;
+    box-shadow:none !important;
+  }
+
+  .game-header__wallet-label {
+    color:#c7d5e6 !important;
+  }
+
+  .game-header__wallet-value {
+    color:#ffd21f !important;
+  }
+
+  /* Conserver les boutons clairs et lisibles */
+  .game-header__button {
+    background:#fff !important;
+    color:#071a35 !important;
+    border-color:#d5e1ee !important;
+  }
+
+  .game-header__button:hover {
+    background:#fff8d9 !important;
+    border-color:#ffd21f !important;
+  }
+
+  .game-header__badge {
+    background:#103b70 !important;
+    border-color:#174d89 !important;
+    color:#fff !important;
+  }
+
+  /* Masquer la grille d'aide uniquement sur mobile */
+  @media (max-width:760px) {
+    .help-grid {
+      display:none !important;
+    }
+
+    /* Le header mobile minimal reste bleu */
+    .game-header {
+      background:#061426 !important;
+      border-color:rgba(255,255,255,.10) !important;
+    }
+  }
+</style>
+
 </head>
 <body class="tk-public tk-page-help tk-file-help-lotto3">
 <main class="app">
