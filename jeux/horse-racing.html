@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html lang="ht">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Course Cheval - Tonton Kondo</title>
 <style>
   :root {
@@ -145,6 +144,7 @@
     flex: 1; min-width: 130px; padding: 14px 18px; border-radius: 12px;
     border: none; cursor: pointer; font-size: 15px; font-weight: 800;
     letter-spacing: 0.5px; transition: transform .12s ease, opacity .12s ease;
+    display: inline-flex; align-items: center; justify-content: center; text-align: center;
   }
   .btn:active { transform: scale(0.97); }
   .btn-primary {
@@ -300,6 +300,13 @@
   .race-result h3 { color: var(--or-2); margin-bottom: 6px; }
   .race-result .gain { color: var(--success); font-size: 20px; font-weight: 800; margin-top: 6px; }
   .race-result .loss { color: var(--danger); font-size: 15px; margin-top: 6px; }
+  .race-result-actions {
+    display: flex; justify-content: center; margin-top: 12px;
+  }
+  .quit-btn {
+    width: 100%; max-width: 180px; min-width: 0;
+    display: inline-flex; align-items: center; justify-content: center; text-align: center;
+  }
   @keyframes pop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
   @media (max-width: 480px) {
     .horse-grid { grid-template-columns: repeat(2, 1fr); }
@@ -307,776 +314,67 @@
     .btn { min-width: 100%; }
   }
 </style>
-<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
-<style id="horse-racing-redesign">
-.topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-.brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #fff;
-    }
-
-.brand img {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      object-fit: contain;
-      background: rgba(255,255,255,.04);
-      padding: 6px;
-      border: 1px solid var(--line);
-    }
-
-.brand-text strong {
-      display: block;
-      font-size: 18px;
-      letter-spacing: .04em;
-    }
-
-.brand-text span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .35em;
-    }
-
-.pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 10px 12px;
-      background: rgba(8,24,43,.92);
-      color: #fff;
-      box-shadow: var(--shadow);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-.header-actions {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-.back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 10px 12px;
-      background: rgba(8,24,43,.92);
-      color: #fff;
-      box-shadow: var(--shadow);
-      font-size: 13px;
-      font-weight: 800;
-      text-decoration: none;
-    }
-
-@media (max-width: 740px) {
-  .topbar { flex-direction: column; align-items: flex-start; }
-}
-
-.tk-file-horse-racing {
-  --hr-navy:#071a35; --hr-navy-2:#0c2d57; --hr-yellow:#ffd21f;
-  --hr-yellow-2:#ffbf00; --hr-page:#f4f7fb; --hr-text:#071a35;
-  --hr-muted:#526781; --hr-border:#cbd8e8; --hr-shadow:0 18px 45px rgba(7,26,53,.10);
-  background:var(--hr-page)!important; color:var(--hr-text)!important;
-}
-.tk-file-horse-racing main { width:min(100%,1280px); max-width:none; padding:18px 18px 48px; }
-.tk-file-horse-racing .horse-hero {
-  margin-bottom:18px; padding:24px 28px; border-radius:22px;
-  background:radial-gradient(circle at 92% 15%,rgba(255,210,31,.18),transparent 24%),linear-gradient(135deg,var(--hr-navy),#0a2447)!important;
-  box-shadow:0 20px 50px rgba(7,26,53,.18);
-}
-.tk-file-horse-racing .horse-hero .title {
-  margin:0 0 8px; text-align:left; color:#fff!important; background:none!important;
-  -webkit-text-fill-color:initial; font-size:clamp(30px,4vw,46px);
-}
-.tk-file-horse-racing .horse-hero .subtitle { margin:0; max-width:760px; text-align:left; color:#dce8f6!important; }
-.tk-file-horse-racing .horse-layout {
-  display:grid; grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr); gap:18px; align-items:start;
-}
-.tk-file-horse-racing .horse-selection-panel,
-.tk-file-horse-racing .bet-panel,
-.tk-file-horse-racing .track-wrap {
-  border:1px solid var(--hr-border)!important; border-radius:22px; background:#fff!important;
-  color:var(--hr-text)!important; box-shadow:var(--hr-shadow);
-}
-.tk-file-horse-racing .horse-selection-panel { padding:18px; }
-.tk-file-horse-racing .bet-panel { position:sticky; top:16px; padding:18px; margin:0; }
-.tk-file-horse-racing .horse-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:0; }
-.tk-file-horse-racing .horse-card {
-  border-color:var(--hr-border)!important; background:#fff!important; color:var(--hr-text)!important;
-  box-shadow:0 8px 20px rgba(7,26,53,.06);
-}
-.tk-file-horse-racing .horse-card:hover { border-color:var(--hr-yellow-2)!important; }
-.tk-file-horse-racing .horse-card.selected { border-color:var(--hr-yellow-2)!important; box-shadow:0 0 0 2px rgba(255,191,0,.20),0 12px 28px rgba(7,26,53,.10); }
-.tk-file-horse-racing .horse-card.winner { border-color:#80d8a1!important; }
-.tk-file-horse-racing .horse-num { background:#f1f6fc!important; color:var(--hr-navy-2)!important; }
-.tk-file-horse-racing .horse-odds { background:linear-gradient(180deg,var(--hr-yellow),var(--hr-yellow-2))!important; color:#07111f!important; }
-.tk-file-horse-racing .horse-name { color:var(--hr-text)!important; }
-.tk-file-horse-racing .horse-color-label,
-.tk-file-horse-racing .summary-row .k,
-.tk-file-horse-racing .amount-wrap label,
-.tk-file-horse-racing .feedback { color:var(--hr-muted)!important; }
-.tk-file-horse-racing .summary-row .v { color:var(--hr-navy-2)!important; }
-.tk-file-horse-racing input#bet-amount { border-color:var(--hr-border)!important; background:#fff!important; color:var(--hr-text)!important; }
-.tk-file-horse-racing .btn-secondary { border:1px solid var(--hr-border)!important; background:#fff!important; color:var(--hr-text)!important; }
-.tk-file-horse-racing .btn-primary { background:linear-gradient(180deg,var(--hr-yellow),var(--hr-yellow-2))!important; color:#07111f!important; }
-.tk-file-horse-racing .balance-card {
-  display:flex; justify-content:space-between; align-items:center; gap:10px;
-  padding:12px 14px; border:1px solid var(--hr-border); border-radius:14px; background:#f8fbff;
-}
-.tk-file-horse-racing .balance-card span { color:var(--hr-muted); }
-.tk-file-horse-racing .balance-card strong { color:var(--hr-navy-2); }
-.tk-file-horse-racing .track-wrap { margin-top:18px; padding:18px; overflow:hidden; }
-.tk-file-horse-racing .track-header { color:var(--hr-text)!important; }
-.tk-file-horse-racing .leader-badge { border-color:var(--hr-border)!important; background:#f8fbff!important; color:var(--hr-navy-2)!important; }
-.tk-file-horse-racing .lane { background:linear-gradient(180deg,#dff4e7,#cdebd8)!important; border:1px solid #b8d6c3; }
-.tk-file-horse-racing .lane-num { background:var(--hr-navy)!important; color:var(--hr-yellow)!important; }
-.tk-file-horse-racing .runner__label,
-.tk-file-horse-racing .horse-runner__label { background:var(--hr-navy)!important; color:var(--hr-yellow)!important; }
-.tk-file-horse-racing .race-result { border-color:var(--hr-border)!important; background:#f8fbff!important; color:var(--hr-text)!important; }
-.tk-file-horse-racing .race-result h3 { color:var(--hr-navy-2)!important; }
-
-@media(max-width:980px) {
-  .tk-file-horse-racing .horse-layout { grid-template-columns:1fr; }
-  .tk-file-horse-racing .bet-panel { position:static; }
-}
-@media(max-width:760px) {
-  .tk-file-horse-racing main { padding:12px 10px 32px; }
-  .tk-file-horse-racing .horse-hero { padding:20px 18px; border-radius:18px; }
-  .tk-file-horse-racing .horse-layout { display:flex; flex-direction:column; gap:14px; }
-  .tk-file-horse-racing .horse-selection-panel { order:1; width:100%; padding:12px; border-radius:18px; }
-  .tk-file-horse-racing .bet-panel { order:2; width:100%; padding:14px; border-radius:18px; }
-  .tk-file-horse-racing .horse-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
-  .tk-file-horse-racing .horse-card { padding:10px; border-radius:14px; }
-  .tk-file-horse-racing .horse-visual { height:72px; margin:18px 0 8px; }
-  .tk-file-horse-racing .horse-name { font-size:14px; }
-  .tk-file-horse-racing .horse-color-label { font-size:10px; }
-  .tk-file-horse-racing .amount-wrap { flex-direction:column; align-items:stretch; }
-  .tk-file-horse-racing .amount-wrap label { min-width:0; }
-  .tk-file-horse-racing .actions { display:grid; grid-template-columns:1fr 1fr; }
-  .tk-file-horse-racing .btn { min-width:0; min-height:48px; padding:12px 10px; }
-  .tk-file-horse-racing .track-wrap { margin-top:14px; padding:12px 8px; border-radius:18px; }
-  .tk-file-horse-racing .track-header { align-items:flex-start; flex-direction:column; gap:8px; }
-  .tk-file-horse-racing .track-header > div { width:100%; justify-content:space-between; }
-  .tk-file-horse-racing .lane { height:40px; margin-bottom:6px; }
-  .tk-file-horse-racing .runner, .tk-file-horse-racing .horse-runner { left:32px; width:58px; height:38px; }
-  .tk-file-horse-racing .lane-num { left:5px; width:22px; height:22px; font-size:10px; }
-  .tk-file-horse-racing .finish-line { right:3px; width:6px; }
-}
-@media(max-width:390px) {
-  .tk-file-horse-racing .horse-grid { gap:6px; }
-  .tk-file-horse-racing .horse-card { padding:8px; }
-  .tk-file-horse-racing .horse-visual { height:64px; }
-  .tk-file-horse-racing .actions { grid-template-columns:1fr; }
-}
-
-.tk-file-horse-racing .horse-race-modal {
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.tk-file-horse-racing .horse-race-modal.is-open {
-  display:flex!important;
-}
-
-.tk-file-horse-racing .horse-race-backdrop {
-  position:absolute;
-  inset:0;
-  background:rgba(3,11,26,.80);
-  backdrop-filter:blur(8px);
-}
-
-.tk-file-horse-racing .horse-race-dialog {
-  position:relative;
-  z-index:1;
-  width:min(1050px,100%);
-  max-height:calc(100vh - 40px);
-  overflow:auto;
-  padding:22px;
-  border-radius:24px;
-  background:#fff;
-  box-shadow:0 30px 90px rgba(0,0,0,.40);
-}
-
-.tk-file-horse-racing .horse-race-dialog .track-header {
-  margin-bottom:12px;
-}
-
-.tk-file-horse-racing .horse-race-dialog .track-header h2 {
-  margin:4px 0 0;
-  color:var(--hr-text);
-}
-
-.tk-file-horse-racing .horse-race-track-popup {
-  margin-top:12px;
-  padding:14px;
-  border-radius:18px;
-  background:#f8fbff!important;
-  box-shadow:none;
-}
-
-.tk-file-horse-racing .horse-race-message {
-  margin-top:14px;
-  padding:14px 16px;
-  border:1px solid var(--hr-border);
-  border-radius:14px;
-  background:#f8fbff;
-  color:var(--hr-text);
-  text-align:center;
-  font-weight:800;
-}
-
-.tk-file-horse-racing .horse-race-message.win {
-  border-color:#80d8a1;
-  background:#ecfbf1;
-  color:#0a6f38;
-}
-
-.tk-file-horse-racing .horse-race-message.loss {
-  border-color:#f2ca5e;
-  background:#fff8df;
-  color:#755500;
-}
-
-.tk-file-horse-racing .horse-race-quit-btn {
-  width:100%;
-  margin-top:14px;
-}
-
-body.horse-race-modal-open {
-  overflow:hidden;
-}
-
-@media(max-width:760px) {
-  .tk-file-horse-racing .horse-race-modal {
-    padding:10px;
-  }
-
-  .tk-file-horse-racing .horse-race-dialog {
-    max-height:calc(100vh - 20px);
-    padding:14px;
-    border-radius:18px;
-  }
-
-  .tk-file-horse-racing .horse-race-dialog .track-header {
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .tk-file-horse-racing .horse-race-dialog .track-header > div:last-child {
-    width:100%;
-    justify-content:space-between;
-  }
-
-  .tk-file-horse-racing .horse-race-track-popup {
-    padding:10px 6px;
-  }
-
-  .tk-file-horse-racing .horse-race-dialog .lane {
-    height:38px;
-  }
-
-  .tk-file-horse-racing .horse-race-dialog .runner,
-  .tk-file-horse-racing .horse-race-dialog .horse-runner {
-    width:54px;
-    height:36px;
-  }
-}
-
-</style>
-<meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
-.game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
-.game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
-.game-header__brand img{width:59px;height:59px;flex:0 0 59px;padding:5px;object-fit:contain;border:1px solid #cbd8e8;border-radius:16px;background:#fff;box-shadow:0 8px 20px rgba(7,26,53,.08)}
-.game-header__brand-text strong{display:block;color:#071a35;font-size:18px;line-height:1.15;letter-spacing:.03em}
-.game-header__brand-text span{display:block;margin-top:3px;color:#526781;font-size:11px;font-weight:800;letter-spacing:.28em;text-transform:uppercase}
-.game-header__actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;min-width:0}
-.game-header__wallet{display:grid;gap:2px;min-width:155px;padding:8px 12px;border-radius:14px;background:linear-gradient(135deg,#071a35,#0c2d57);box-shadow:0 9px 22px rgba(7,26,53,.18);line-height:1.1}
-.game-header__wallet-label{color:#c7d5e6;font-size:9px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
-.game-header__wallet-value{color:#ffd21f;font-size:15px;font-weight:950;font-variant-numeric:tabular-nums}
-.game-header__button,.game-header__badge{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 12px;border:1px solid #cbd8e8;border-radius:999px;background:#fff;color:#071a35;font-size:12px;font-weight:900;text-decoration:none;box-shadow:0 7px 18px rgba(7,26,53,.07);white-space:nowrap}
-.game-header__button{cursor:pointer}
-.game-header__button:hover{border-color:#ffbf00;background:#fff9df}
-.game-header__badge{border-color:#0c2d57;background:#0c2d57;color:#ffd21f}
-@media(max-width:900px){.game-header{align-items:flex-start;flex-direction:column}.game-header__actions{width:100%;justify-content:flex-start}}
-@media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
-@media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
-</style>
-
-<style id="header-nav-order-fix">
-  .game-header + .tk-primary-nav {
-    margin-top:0 !important;
-    margin-bottom:16px !important;
-  }
-</style>
-
-
-<style id="mobile-minimal-game-header">
-  /* Mobile uniquement : header minimal avec retour + solde centré */
-  @media (max-width: 760px) {
-    .tk-primary-nav {
-      display:none !important;
-    }
-
-    .game-header {
-      position:relative !important;
-      display:flex !important;
-      align-items:center !important;
-      justify-content:center !important;
-      min-height:62px !important;
-      width:100% !important;
-      margin:0 0 12px !important;
-      padding:8px 58px !important;
-      border-radius:14px !important;
-      background:#061426 !important;
-      border:1px solid rgba(255,255,255,.10) !important;
-      box-shadow:0 10px 24px rgba(7,26,53,.16) !important;
-    }
-
-    .game-header__brand,
-    .game-header__actions > a[href="../profile.html"],
-    .game-header__actions > #gameHeaderLogout,
-    .game-header__actions > .game-header__badge {
-      display:none !important;
-    }
-
-    .game-header__actions {
-      display:flex !important;
-      align-items:center !important;
-      justify-content:center !important;
-      width:100% !important;
-      min-width:0 !important;
-      padding:0 !important;
-      margin:0 !important;
-    }
-
-    .game-header__wallet {
-      display:grid !important;
-      place-items:center !important;
-      min-width:0 !important;
-      width:auto !important;
-      max-width:calc(100vw - 132px) !important;
-      padding:7px 12px !important;
-      border-radius:12px !important;
-      background:rgba(255,255,255,.08) !important;
-      border:1px solid rgba(255,255,255,.10) !important;
-      box-shadow:none !important;
-      text-align:center !important;
-    }
-
-    .game-header__wallet-label {
-      display:block !important;
-      color:#aebbd0 !important;
-      font-size:8px !important;
-      line-height:1.1 !important;
-      letter-spacing:.12em !important;
-      white-space:nowrap !important;
-    }
-
-    .game-header__wallet-value {
-      display:block !important;
-      max-width:100% !important;
-      color:#ffd21f !important;
-      font-size:14px !important;
-      line-height:1.15 !important;
-      white-space:nowrap !important;
-      overflow:hidden !important;
-      text-overflow:ellipsis !important;
-    }
-
-    .game-header__actions > a[href="games.html"] {
-      position:absolute !important;
-      left:10px !important;
-      top:50% !important;
-      transform:translateY(-50%) !important;
-      display:grid !important;
-      place-items:center !important;
-      width:38px !important;
-      height:38px !important;
-      min-width:38px !important;
-      min-height:38px !important;
-      padding:0 !important;
-      border-radius:9px !important;
-      border:0 !important;
-      background:#20242c !important;
-      color:transparent !important;
-      font-size:0 !important;
-      box-shadow:none !important;
-      overflow:hidden !important;
-    }
-
-    .game-header__actions > a[href="games.html"]::before {
-      content:"" !important;
-      width:10px !important;
-      height:10px !important;
-      border-left:2px solid #aeb4bf !important;
-      border-bottom:2px solid #aeb4bf !important;
-      transform:rotate(45deg) translate(1px,-1px) !important;
-    }
-
-    .game-header__actions > a[href="games.html"]:hover,
-    .game-header__actions > a[href="games.html"]:active {
-      background:#2b3039 !important;
-      transform:translateY(-50%) !important;
-    }
-  }
-
-  @media (max-width: 380px) {
-    .game-header {
-      min-height:58px !important;
-      padding-left:54px !important;
-      padding-right:54px !important;
-    }
-
-    .game-header__actions > a[href="games.html"] {
-      left:8px !important;
-      width:36px !important;
-      height:36px !important;
-      min-width:36px !important;
-      min-height:36px !important;
-    }
-
-    .game-header__wallet {
-      max-width:calc(100vw - 116px) !important;
-      padding:6px 9px !important;
-    }
-
-    .game-header__wallet-value {
-      font-size:13px !important;
-    }
-  }
-</style>
-
 </head>
-<body class="tk-public tk-page-game tk-file-horse-racing" id="horse-race-page">
+<body id="horse-race-page">
+
+<header>
+  <div class="brand">
+    <div class="brand-badge">TK</div>
+    <div>Tonton Kondo</div>
+  </div>
+  <div class="balance">
+    <span>💰</span>
+    <span>Balans:</span>
+    <span id="user-balance">Solde démo</span>
+  </div>
+</header>
 
 <main>
-<header class="game-header" id="gameHeader">
-<a aria-label="Accueil Tonton Kondo" class="game-header__brand" href="../index.html">
-<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
-<span class="game-header__brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span>
-</a>
-<div class="game-header__actions">
-<div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
-</div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
-<span class="game-header__badge">Horse Racing</span>
-</div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+  <h1 class="title">Chwazi yon chwal</h1>
+  <p class="subtitle">Chwazi chwal ou, mete montan ou, epi kòmanse kous la!</p>
 
-<section class="horse-hero">
-<h1 class="title">Course Cheval</h1>
-<p class="subtitle">Choisissez votre cheval, définissez votre mise, puis lancez la course.</p>
-</section>
+  <div class="horse-grid" id="horse-list"></div>
 
-<section class="horse-layout">
-<article class="horse-selection-panel">
-<div class="horse-grid" id="horse-list"></div>
-</article>
+  <div class="bet-panel">
+    <div class="summary-row">
+      <div><span class="k">Chwal chwazi:</span> <span class="v" id="selected-horse">Okenn</span></div>
+      <div><span class="k">Cote:</span> <span class="v" id="selected-odds">—</span></div>
+    </div>
+    <div class="summary-row">
+      <div><span class="k">Gain potansyèl:</span> <span class="v" id="potential-gain">0 HTG</span></div>
+      <div><span class="k">Status:</span> <span class="v" id="race-status">Pare</span></div>
+    </div>
+    <div class="amount-wrap">
+      <label for="bet-amount">Montan mize</label>
+      <input type="number" id="bet-amount" min="1" placeholder="0" />
+    </div>
+    <div class="actions">
+      <button class="btn btn-secondary" id="clear-race-btn">Efase tout</button>
+      <button class="btn btn-primary" id="start-race-btn">Kòmanse</button>
+    </div>
+    <div class="feedback" id="feedback-message"></div>
+  </div>
 
-<aside class="bet-panel">
-<div class="balance-card"><span>Solde disponible</span><strong id="user-balance">Chargement...</strong></div>
-<div class="summary-row">
-<div><span class="k">Cheval choisi :</span> <span class="v" id="selected-horse">Aucun</span></div>
-<div><span class="k">Cote :</span> <span class="v" id="selected-odds">—</span></div>
-</div>
-<div class="summary-row">
-<div><span class="k">Gain potentiel :</span> <span class="v" id="potential-gain">0 HTG</span></div>
-<div><span class="k">Statut :</span> <span class="v" id="race-status">Prêt</span></div>
-</div>
-<div class="amount-wrap">
-<label for="bet-amount">Montant de la mise</label>
-<input id="bet-amount" min="1" placeholder="0" type="number"/>
-</div>
-<div class="actions">
-<button class="btn btn-secondary" id="clear-race-btn">Effacer</button>
-<button class="btn btn-primary" id="start-race-btn">Commencer</button>
-</div>
-<div class="feedback" id="feedback-message"></div>
-</aside>
-</section>
-
-<section aria-hidden="true" class="horse-race-modal" id="horse-race-modal">
-<div class="horse-race-backdrop"></div>
-<div aria-modal="true" class="horse-race-dialog" role="dialog">
-<div class="track-header">
-<div>
-<div class="eyebrow">Course en direct</div>
-<h2>Piste de course</h2>
-</div>
-<div style="display:flex;gap:10px;align-items:center">
-<span id="race-status-inline">Prêt</span>
-<span id="race-timer">00:10</span>
-</div>
-</div>
-
-<div class="leader-badge" id="leader-badge">En tête : —</div>
-<div class="track-wrap horse-race-track-popup">
-<div id="race-track"></div>
-</div>
-
-<div class="race-result" id="race-result"></div>
-
-<div aria-live="polite" class="horse-race-message" id="horse-race-message">
-Bonne chance ! La course va commencer.
-</div>
-
-<button class="btn btn-primary horse-race-quit-btn" id="horse-race-quit-btn" style="display:none;" type="button">
-Quitter
-</button>
-</div>
-</section>
+  <div class="track-wrap">
+    <div class="track-header">
+      <span>🏁 Piste kous la</span>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span id="race-status-inline">Pare</span>
+        <span id="race-timer">00:10</span>
+      </div>
+    </div>
+    <div class="leader-badge" id="leader-badge">En tête : —</div>
+    <div id="race-track"></div>
+    <div class="race-result" id="race-result"></div>
+    <div class="race-result-actions">
+      <button class="btn btn-secondary quit-btn" id="quit-race-btn" type="button" style="display:none;">Quitter</button>
+    </div>
+  </div>
 </main>
+
 <script src="../js/i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
-<script id="shared-borlette-game-header-script">
-(function () {
-  const walletBox = document.getElementById('gameHeaderWallet');
-  const balanceNode = document.getElementById('gameHeaderBalance');
-  const logoutButton = document.getElementById('gameHeaderLogout');
-
-  let refreshPromise = null;
-  let realtimeChannel = null;
-  let activeUserId = null;
-  let rpcWrapped = false;
-
-  function formatBalance(value, currency = 'HTG') {
-    return `${Number(value || 0).toLocaleString(
-      window.TKI18n?.getLocale?.() || 'fr-FR'
-    )} ${currency}`;
-  }
-
-  async function waitForHeaderDependencies(maxAttempts = 30, delay = 150) {
-    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
-      const client = window.supabaseClient || null;
-      const hasUserHelper = typeof window.getCurrentUserAsync === 'function';
-
-      if (client?.from && hasUserHelper) {
-        return client;
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
-
-    return window.supabaseClient || null;
-  }
-
-  function updateBalanceDisplay(wallet) {
-    if (!balanceNode || !wallet) return;
-
-    balanceNode.textContent = formatBalance(
-      wallet.balance,
-      wallet.currency || 'HTG'
-    );
-
-    walletBox?.classList.remove('is-error');
-  }
-
-  async function refreshGameHeaderBalance() {
-    if (refreshPromise) return refreshPromise;
-
-    refreshPromise = (async () => {
-      try {
-        walletBox?.classList.add('is-loading');
-
-        const client = await waitForHeaderDependencies();
-        const user = typeof window.getCurrentUserAsync === 'function'
-          ? await window.getCurrentUserAsync()
-          : null;
-
-        if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
-          return null;
-        }
-
-        activeUserId = user.id;
-
-        const { data, error } = await client
-          .from('wallets')
-          .select('balance, currency, updated_at')
-          .eq('user_id', user.id)
-          .single();
-
-        if (error) throw error;
-
-        updateBalanceDisplay(data);
-        return data;
-      } catch (error) {
-        console.error('Erreur solde du header :', error);
-        walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
-        return null;
-      } finally {
-        walletBox?.classList.remove('is-loading');
-        refreshPromise = null;
-      }
-    })();
-
-    return refreshPromise;
-  }
-
-  async function startWalletRealtime() {
-    try {
-      const client = await waitForHeaderDependencies();
-      const user = typeof window.getCurrentUserAsync === 'function'
-        ? await window.getCurrentUserAsync()
-        : null;
-
-      if (!client?.channel || !user?.id) return;
-
-      activeUserId = user.id;
-
-      if (realtimeChannel && typeof client.removeChannel === 'function') {
-        await client.removeChannel(realtimeChannel);
-      }
-
-      realtimeChannel = client
-        .channel(`game-header-wallet-${user.id}-${Date.now()}`)
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: 'wallets',
-            filter: `user_id=eq.${user.id}`,
-          },
-          (payload) => {
-            if (payload?.new?.balance !== undefined) {
-              updateBalanceDisplay(payload.new);
-            } else {
-              refreshGameHeaderBalance();
-            }
-          }
-        )
-        .subscribe();
-    } catch (error) {
-      console.warn('Realtime du solde indisponible :', error);
-    }
-  }
-
-  async function wrapWalletChangingRpc() {
-    if (rpcWrapped) return;
-
-    const client = await waitForHeaderDependencies();
-    if (!client || typeof client.rpc !== 'function' || client.__tkHeaderRpcWrapped) {
-      return;
-    }
-
-    const originalRpc = client.rpc.bind(client);
-
-    client.rpc = function (...args) {
-      const result = originalRpc(...args);
-
-      if (result && typeof result.then === 'function') {
-        return result.then((response) => {
-          if (!response?.error) {
-            queueMicrotask(() => refreshGameHeaderBalance());
-          }
-          return response;
-        });
-      }
-
-      return result;
-    };
-
-    client.__tkHeaderRpcWrapped = true;
-    rpcWrapped = true;
-  }
-
-  async function logoutFromGameHeader() {
-    if (typeof window.logoutUser === 'function') {
-      await window.logoutUser();
-      window.location.href = '../login-register/login.html';
-      return;
-    }
-
-    const client = window.supabaseClient || null;
-    if (client?.auth?.signOut) {
-      await client.auth.signOut();
-      window.location.href = '../login-register/login.html';
-    }
-  }
-
-  function handleWalletChanged(event) {
-    const detail = event?.detail || null;
-
-    if (
-      detail?.newBalance !== undefined ||
-      detail?.balance !== undefined
-    ) {
-      updateBalanceDisplay({
-        balance: detail.newBalance ?? detail.balance,
-        currency: detail.currency || 'HTG',
-      });
-    }
-
-    refreshGameHeaderBalance();
-  }
-
-  logoutButton?.addEventListener('click', logoutFromGameHeader);
-
-  [
-    'tonton:wallet-updated',
-    'wallet:changed',
-    'balance:changed',
-    'transaction:completed',
-  ].forEach((eventName) => {
-    window.addEventListener(eventName, handleWalletChanged);
-  });
-
-  window.addEventListener('focus', refreshGameHeaderBalance);
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      refreshGameHeaderBalance();
-    }
-  });
-
-  window.addEventListener('pageshow', refreshGameHeaderBalance);
-
-  window.refreshGameHeaderBalance = refreshGameHeaderBalance;
-  window.refreshBorletteHeaderBalance = refreshGameHeaderBalance;
-
-  async function initializeGameHeader() {
-    await refreshGameHeaderBalance();
-    await startWalletRealtime();
-    await wrapWalletChangingRpc();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeGameHeader, {
-      once: true,
-    });
-  } else {
-    initializeGameHeader();
-  }
-})();
-</script>
 <script src="../js/auth-guard.js"></script>
 <script>
   const HORSES = [
@@ -1234,23 +532,12 @@ Quitter
   const $selectedOdds   = document.getElementById("selected-odds");
   const $status        = document.getElementById("race-status");
   const $statusInline   = document.getElementById("race-status-inline");
-  const $raceModal      = document.getElementById("horse-race-modal");
-  const $raceMessage    = document.getElementById("horse-race-message");
-  const $raceQuitBtn    = document.getElementById("horse-race-quit-btn");
+  const $quitBtn        = document.getElementById("quit-race-btn");
 
-  function openHorseRaceModal() {
-    $raceModal.classList.add("is-open");
-    $raceModal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("horse-race-modal-open");
-    $raceQuitBtn.style.display = "none";
-    $raceMessage.className = "horse-race-message";
-    $raceMessage.textContent = "Bonne chance ! La course va commencer.";
-  }
-
-  function closeHorseRaceModal() {
-    $raceModal.classList.remove("is-open");
-    $raceModal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("horse-race-modal-open");
+  function quitHorseRace() {
+    if (window.location && window.location.href) {
+      window.location.href = "../index.html";
+    }
   }
 
   function initHorseRace() {
@@ -1262,7 +549,7 @@ Quitter
     });
     $clearBtn.addEventListener("click", clearHorseSelection);
     $startBtn.addEventListener("click", playHorseRace);
-    $raceQuitBtn.addEventListener("click", closeHorseRaceModal);
+    $quitBtn?.addEventListener("click", quitHorseRace);
     updateHorseSummary();
   }
 
@@ -1339,6 +626,9 @@ Quitter
     updateHorseCardState();
     $result.classList.remove("show");
     $result.innerHTML = "";
+    if ($quitBtn) {
+      $quitBtn.style.display = "none";
+    }
     setFeedback("", "");
     updateHorseSummary();
   }
@@ -1488,23 +778,16 @@ Quitter
       <div><strong>Ticket :</strong> ${ticketNumber}</div>
       <div><strong>Cheval choisi :</strong> ${selected ? selected.name : '—'}</div>
       <div><strong>Cheval gagnant :</strong> ${winner.name}</div>
-      <div><strong>Mise :</strong> ${betAmount.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG</div>
-      <div><strong>Gain :</strong> ${gainAmount.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG</div>
+      <div><strong>Mise :</strong> ${betAmount.toLocaleString('fr-FR')} HTG</div>
+      <div><strong>Gain :</strong> ${gainAmount.toLocaleString('fr-FR')} HTG</div>
       <div><strong>Statut :</strong> ${status}</div>
     `;
     $result.classList.add('show');
+    if ($quitBtn) {
+      $quitBtn.style.display = 'inline-flex';
+    }
     horseRaceState.lastResult = result;
     updateHorseCardState();
-
-    const hasWon = gainAmount > 0;
-    if (hasWon) {
-      $raceMessage.className = 'horse-race-message win';
-      $raceMessage.textContent = `Félicitations ! Votre cheval a gagné et vous remportez ${gainAmount.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG 🎉`;
-    } else {
-      $raceMessage.className = 'horse-race-message loss';
-      $raceMessage.textContent = `Votre cheval n'a pas gagné cette fois. Ne vous découragez pas, la prochaine course peut être la bonne !`;
-    }
-    $raceQuitBtn.style.display = 'inline-flex';
   }
 
   async function playHorseRacePlaceholder() {
@@ -1519,7 +802,6 @@ Quitter
     $result.classList.remove('show');
     setFeedback('Kous la ap kouri...', 'warn');
 
-    openHorseRaceModal();
     resetRunners();
     horseRaceState.lastResult = null;
     updateHorseCardState();
@@ -1535,15 +817,11 @@ Quitter
   }
 
   async function waitForSupabaseClient(maxAttempts = 20, delayMs = 250) {
-    const isUsableClient = (client) => Boolean(
-      client &&
-      typeof client.from === 'function' &&
-      typeof client.rpc === 'function' &&
-      client.auth &&
-      typeof client.auth.getSession === 'function'
-    );
-
-    if (isUsableClient(window.supabaseClient)) {
+    if (
+      window.supabaseClient &&
+      typeof window.supabaseClient.from === 'function' &&
+      typeof window.supabaseClient.rpc === 'function'
+    ) {
       return window.supabaseClient;
     }
 
@@ -1551,16 +829,24 @@ Quitter
       try {
         await window.getCurrentUserAsync();
       } catch (error) {
-        console.warn('Horse Racing : initialisation Supabase en attente.', error);
+        console.warn('Horse Racing : initialisation Auth en attente.', error);
       }
     }
 
     for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
       const client = window.supabaseClient || null;
-      if (isUsableClient(client)) {
+
+      if (
+        client &&
+        typeof client.from === 'function' &&
+        typeof client.rpc === 'function'
+      ) {
         return client;
       }
-      await new Promise((resolve) => window.setTimeout(resolve, delayMs));
+
+      await new Promise((resolve) => {
+        window.setTimeout(resolve, delayMs);
+      });
     }
 
     return null;
@@ -1578,13 +864,15 @@ Quitter
 
     try {
       const currentUser = await window.getCurrentUserAsync();
+
       if (currentUser?.id) {
         horseRaceState.currentUser = currentUser;
         return currentUser;
       }
+
       return null;
     } catch (error) {
-      console.error('Horse Racing : erreur utilisateur.', error);
+      console.error('Horse Racing : erreur récupération utilisateur.', error);
       return null;
     }
   }
@@ -1592,6 +880,7 @@ Quitter
   async function refreshHorseRaceBalance({ silent = false } = {}) {
     const currentUser = await getCurrentHorseRaceUser();
     if (!currentUser?.id) {
+      horseRaceState.wallet = null;
       if (!silent) {
         $balance.textContent = 'Connectez-vous pour jouer.';
       }
@@ -1616,7 +905,7 @@ Quitter
       }
       const balanceValue = Number(data.balance ?? 0);
       horseRaceState.wallet = data;
-      $balance.textContent = `${balanceValue.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG`;
+      $balance.textContent = `${balanceValue.toLocaleString('fr-FR')} HTG`;
       return data;
     } catch (error) {
       if (!silent) {
@@ -1670,9 +959,11 @@ Quitter
     horseRaceState.isPlaying = true;
     $startBtn.disabled = true;
     $clearBtn.disabled = true;
+    if ($quitBtn) {
+      $quitBtn.style.display = 'none';
+    }
     setRaceStatus('Kous la kòmanse...');
     setFeedback('Envoi de la mise au backend...', 'warn');
-    openHorseRaceModal();
     resetRunners();
     $result.classList.remove('show');
     horseRaceState.lastResult = null;
@@ -1688,12 +979,26 @@ Quitter
       if (error) {
         throw error;
       }
-      if (!data || !data.winner_id) {
+
+      const rpcResult = Array.isArray(data) ? data[0] : data;
+      const normalizedResult = rpcResult && typeof rpcResult === 'object' ? {
+        ...rpcResult,
+        winner_id: rpcResult.winner_id ?? rpcResult.winner_horse_id ?? null,
+        selected_horse_id: rpcResult.selected_horse_id ?? rpcResult.selected_horse_id ?? null,
+        ticket_number: rpcResult.ticket_number ?? rpcResult.ticketNumber ?? null,
+        amount: rpcResult.amount ?? rpcResult.bet_amount ?? null,
+        odds: rpcResult.odds ?? rpcResult.payout_multiplier ?? null,
+        gain: rpcResult.gain ?? rpcResult.win_amount ?? null,
+        status: rpcResult.status ?? null,
+        new_balance: rpcResult.new_balance ?? rpcResult.balance ?? null,
+      } : null;
+
+      if (!normalizedResult || !normalizedResult.winner_id) {
         throw new Error('Résultat de course invalide.');
       }
 
-      await animateHorseRace(data);
-      showHorseRaceResult(data);
+      await animateHorseRace(normalizedResult);
+      showHorseRaceResult(normalizedResult);
       await refreshHorseRaceBalance({ silent: true });
       setFeedback('Kous terminée.', 'success');
       setRaceStatus('Fini');
@@ -1733,25 +1038,21 @@ Quitter
       const client = await waitForSupabaseClient();
 
       if (!client || typeof client.from !== 'function' || typeof client.rpc !== 'function') {
-        setFeedback('Impossible d’initialiser la connexion Supabase.', 'error');
+        setFeedback('Impossible d’initialiser Supabase.', 'error');
         $balance.textContent = 'Solde indisponible';
         setRaceStatus('Erreur');
         return;
       }
 
-      const wallet = await refreshHorseRaceBalance({ silent: false });
-
-      if (!wallet) {
-        setFeedback('Utilisateur connecté, mais portefeuille introuvable.', 'error');
-        setRaceStatus('Erreur portefeuille');
-        return;
-      }
+      await refreshHorseRaceBalance({ silent: false });
 
       setFeedback('Prêt à courir !', 'success');
       setRaceStatus('Prêt');
     } catch (error) {
       console.error('Horse Racing : erreur initialisation.', error);
+
       setFeedback(error?.message || 'Impossible de vérifier votre connexion.', 'error');
+
       $balance.textContent = 'Solde indisponible';
       setRaceStatus('Erreur');
     }
@@ -1767,13 +1068,6 @@ Quitter
   } else {
     initializeHorseRacePage();
   }
-</script>
-<script data-tk-i18n-auto-init="">
-  document.addEventListener('DOMContentLoaded', function () {
-    if (window.TKI18n) {
-      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
-    }
-  });
 </script>
 </body>
 </html>

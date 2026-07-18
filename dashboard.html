@@ -23,15 +23,14 @@
 <body class="tk-public tk-page-account tk-file-dashboard">
 <main class="app">
 <header class="mobile-header" data-i18n-aria-label="common.main_header">
-<a class="brand" data-i18n-aria-label="common.home" href="index.html">
-<div class="brand-block">
-<img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
-<div class="brand-text">
-<span class="brand-top">TONTON</span>
-<span class="brand-middle">KONDO</span>
-<span class="brand-bottom">PARYAJ</span>
-</div>
-</div>
+<a class="brand dashboard-header-brand" data-i18n-aria-label="common.home" href="index.html">
+  <span class="dashboard-header-brand__logo">
+    <img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
+  </span>
+  <span class="dashboard-header-brand__copy">
+    <strong>Tonton Kondo</strong>
+    <span>PARYAJ</span>
+  </span>
 </a>
 <div class="wallet-chip" data-i18n-aria-label="common.user_balance">
 <span>
@@ -49,25 +48,40 @@
 <svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
 <span class="badge notifications-badge" hidden="">0</span>
 </a>
-<div class="user-menu-wrap" hidden="" id="userMenuWrap">
-<button aria-expanded="false" class="action-btn user-button" data-i18n-aria-label="common.user_menu" id="userMenuButton" type="button">
-<span class="user-avatar" id="userAvatar">TK</span>
-</button>
-<div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
-<a class="user-menu-link" data-i18n="common.tickets" href="tickets.html"></a>
-<a class="user-menu-link" data-i18n="common.history" href="history.html"></a>
-<a class="user-menu-link" data-i18n="common.results" href="results.html"></a>
-<a class="user-menu-link" data-i18n="common.deposit" href="deposit.html"></a>
-<a class="user-menu-link" data-i18n="common.withdraw" href="withdraw.html"></a>
-<a class="user-menu-link" data-i18n="common.wallet" href="wallet.html"></a>
-<a class="user-menu-link" data-i18n="common.profile" href="profile.html"></a>
-<a class="user-menu-link" data-i18n="common.settings" href="settings.html"></a>
-<div class="user-menu-divider"></div>
-<button class="user-menu-link user-menu-logout" data-i18n="common.logout" id="logoutMenuBtn" type="button"></button>
+<div class="user-menu-wrap" id="userMenuWrap">
+  <button
+    aria-expanded="false"
+    aria-haspopup="menu"
+    class="action-btn user-button"
+    data-i18n-aria-label="common.user_menu"
+    id="userMenuButton"
+    type="button"
+  >
+    <span class="user-avatar" id="userAvatar">U</span>
+  </button>
+
+  <div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
+  <a class="user-menu-link" href="tickets.html">Tickets</a>
+  <a class="user-menu-link" href="history.html">Historique</a>
+  <a class="user-menu-link" href="results.html">Résultats</a>
+  <a class="user-menu-link" href="deposit.html">Dépôt</a>
+  <a class="user-menu-link" href="withdraw.html">Retrait</a>
+  <a class="user-menu-link" href="wallet.html">Portefeuille</a>
+  <a class="user-menu-link" href="profile.html">Profil</a>
+  <a class="user-menu-link" href="settings.html">Paramètres</a>
+  <div class="user-menu-divider"></div>
+  <button class="user-menu-link user-menu-logout" id="logoutMenuBtn" type="button">Déconnexion</button>
 </div>
 </div>
 </div>
-</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+</header>
+
+<div class="mobile-auth-bar" style="display:none">
+  <a class="login-btn action-btn" href="profile.html">Profil</a>
+  <button class="logout-btn action-btn" id="mobileLogoutBtn" type="button">Déconnexion</button>
+</div>
+
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <section class="shell">
 <div class="intro-row">
 <article class="welcome-card">
@@ -494,65 +508,233 @@
       const userAvatar = document.getElementById('userAvatar');
       const logoutMenuBtn = document.getElementById('logoutMenuBtn');
       const walletBalanceEl = document.getElementById('wallet-balance');
+function closeUserMenu() {
+        userMenu?.classList.remove('open');
+        userMenuButton?.setAttribute('aria-expanded', 'false');
+        userMenu?.setAttribute('aria-hidden', 'true');
+      }
 
-      userMenuButton?.addEventListener('click', (event) => {
+      function toggleUserMenu(event) {
+        event.preventDefault();
         event.stopPropagation();
-        const isOpen = userMenu?.classList.toggle('open');
-        userMenuButton.setAttribute('aria-expanded', String(isOpen));
-        userMenu?.setAttribute('aria-hidden', String(!isOpen));
+
+        const willOpen = !userMenu?.classList.contains('open');
+        userMenu?.classList.toggle('open', willOpen);
+        userMenuButton?.setAttribute('aria-expanded', String(willOpen));
+        userMenu?.setAttribute('aria-hidden', String(!willOpen));
+      }
+
+      userMenuButton?.addEventListener('click', toggleUserMenu);
+
+      userMenu?.addEventListener('click', (event) => {
+        event.stopPropagation();
       });
 
       document.addEventListener('click', (event) => {
         if (!userMenuWrap?.contains(event.target)) {
-          userMenu?.classList.remove('open');
-          userMenuButton?.setAttribute('aria-expanded', 'false');
-          userMenu?.setAttribute('aria-hidden', 'true');
+          closeUserMenu();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeUserMenu();
+          userMenuButton?.focus();
         }
       });
 
       logoutMenuBtn?.addEventListener('click', async () => {
         if (window.logoutUser) {
           const result = await window.logoutUser();
-          if (result?.ok) {
-            window.tryRedirectToLogin('login-register/login.html');
+          if (result?.ok !== false) {
+            window.tryRedirectToLogin?.('login-register/login.html');
           }
+          return;
+        }
+
+        if (window.supabaseClient?.auth?.signOut) {
+          await window.supabaseClient.auth.signOut();
+          window.location.href = 'login-register/login.html';
         }
       });
 
       try {
-        const currentUser = window.getCurrentUser ? window.getCurrentUser() : (window.getCurrentUserAsync ? await window.getCurrentUserAsync() : null);
-        if (currentUser) {
-          if (userMenuWrap) userMenuWrap.hidden = false;
-          const playerLabel = tkText('common.player', 'Joueur');
-          const displayName = currentUser.full_name || currentUser.email || playerLabel;
-          const firstLetter = String(displayName).trim().charAt(0).toUpperCase();
+        const currentUser = window.getCurrentUserAsync
+          ? await window.getCurrentUserAsync()
+          : (window.getCurrentUser ? window.getCurrentUser() : null);
 
-          if (userAvatar) {
-            userAvatar.innerHTML = '';
-            const avatarUrl = currentUser.avatar_url || user.picture || null;
-            if (avatarUrl) {
-              const img = document.createElement('img');
-              img.src = avatarUrl;
-              img.alt = displayName;
-              userAvatar.appendChild(img);
-            } else {
-              userAvatar.textContent = firstLetter || 'U';
-            }
-          }
+        if (!currentUser) {
+          return;
+        }
 
-          if (window.getAuthenticatedWallet) {
-            const wallet = await window.getAuthenticatedWallet();
-            if (wallet && walletBalanceEl) {
-              const balance = Number(wallet.balance || 0);
-              const currency = wallet.currency || 'HTG';
-              walletBalanceEl.textContent = `${balance.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}`;
-            }
+        if (userMenuWrap) {
+          userMenuWrap.hidden = false;
+        }
+
+        const metadata =
+          currentUser.user_metadata ||
+          currentUser.raw_user_meta_data ||
+          {};
+
+        const displayName =
+          currentUser.full_name ||
+          metadata.full_name ||
+          metadata.name ||
+          currentUser.email ||
+          'Utilisateur';
+
+        const email =
+          currentUser.email ||
+          metadata.email ||
+          '—';
+
+        const avatarUrl =
+          currentUser.avatar_url ||
+          metadata.avatar_url ||
+          metadata.picture ||
+          currentUser.picture ||
+          '';
+if (userAvatar) {
+          userAvatar.innerHTML = '';
+
+          if (avatarUrl) {
+            const image = document.createElement('img');
+            image.src = avatarUrl;
+            image.alt = displayName;
+            image.loading = 'lazy';
+            image.referrerPolicy = 'no-referrer';
+            image.addEventListener('error', () => {
+              userAvatar.textContent =
+                String(displayName).trim().charAt(0).toUpperCase() || 'U';
+            }, { once:true });
+            userAvatar.appendChild(image);
+          } else {
+            userAvatar.textContent =
+              String(displayName).trim().charAt(0).toUpperCase() || 'U';
           }
         }
-      } catch (err) {
-        console.warn("Erreur d'initialisation du header premium:", err);
+
+        if (window.getAuthenticatedWallet && walletBalanceEl) {
+          const wallet = await window.getAuthenticatedWallet();
+
+          if (wallet) {
+            const balance = Number(wallet.balance || 0);
+            const currency = wallet.currency || 'HTG';
+            walletBalanceEl.textContent =
+              `${balance.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency}`;
+          }
+        }
+      } catch (error) {
+        console.warn("Erreur d'initialisation du header dashboard :", error);
       }
     })();
   </script>
+
+<script id="dashboard-user-menu-controller">
+(function () {
+  function getElements() {
+    return {
+      wrap: document.getElementById('userMenuWrap'),
+      button: document.getElementById('userMenuButton'),
+      menu: document.getElementById('userMenu'),
+      logout: document.getElementById('logoutMenuBtn')
+    };
+  }
+
+  function setMenuState(open) {
+    const { button, menu } = getElements();
+    if (!button || !menu) return;
+
+    menu.classList.toggle('open', open);
+    menu.hidden = !open;
+    menu.setAttribute('aria-hidden', String(!open));
+    button.setAttribute('aria-expanded', String(open));
+  }
+
+  function toggleMenu() {
+    const { menu } = getElements();
+    if (!menu) return;
+    setMenuState(!menu.classList.contains('open'));
+  }
+
+  // Initialisation explicite.
+  function initialize() {
+    const { wrap, button, menu } = getElements();
+    if (!wrap || !button || !menu) return;
+
+    wrap.hidden = false;
+    menu.hidden = true;
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true');
+    button.setAttribute('aria-expanded', 'false');
+    button.style.pointerEvents = 'auto';
+    button.style.cursor = 'pointer';
+  }
+
+  // Capture phase : fonctionne même si un autre script arrête la propagation.
+  document.addEventListener('click', function (event) {
+    const button = event.target.closest('#userMenuButton');
+    const menu = event.target.closest('#userMenu');
+    const wrap = event.target.closest('#userMenuWrap');
+
+    if (button) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      toggleMenu();
+      return;
+    }
+
+    if (menu || wrap) {
+      return;
+    }
+
+    setMenuState(false);
+  }, true);
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      setMenuState(false);
+      document.getElementById('userMenuButton')?.focus();
+    }
+  });
+
+  document.addEventListener('click', async function (event) {
+    const logout = event.target.closest('#logoutMenuBtn');
+    if (!logout) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    try {
+      if (typeof window.logoutUser === 'function') {
+        const result = await window.logoutUser();
+        if (result?.ok !== false) {
+          window.location.href = 'login-register/login.html';
+        }
+        return;
+      }
+
+      if (window.supabaseClient?.auth?.signOut) {
+        await window.supabaseClient.auth.signOut();
+      }
+
+      window.location.href = 'login-register/login.html';
+    } catch (error) {
+      console.error('Erreur de déconnexion :', error);
+    }
+  }, true);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize, { once: true });
+  } else {
+    initialize();
+  }
+
+  // Réinitialise le bouton si auth-guard modifie le header après le chargement.
+  window.addEventListener('load', initialize, { once: true });
+  window.setTimeout(initialize, 500);
+})();
+</script>
+
 </body>
 </html>

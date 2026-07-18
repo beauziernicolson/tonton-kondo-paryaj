@@ -1073,3 +1073,573 @@ body.tk-file-dashboard .wallet-chip span{
   }
 }
 
+
+
+
+/* =========================================================
+   MAIN SITE HEADER — logo Borlette exact
+   ========================================================= */
+body.tk-public .borlette-brand-exact{display:flex!important;align-items:center!important;gap:10px!important;min-width:max-content!important;color:#fff!important;text-decoration:none!important}
+body.tk-public .borlette-brand-exact__logo{width:38px!important;height:38px!important;flex:0 0 38px!important;object-fit:contain!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+body.tk-public .borlette-brand-exact__copy{display:flex!important;flex-direction:column!important;justify-content:center!important;line-height:.88!important}
+body.tk-public .borlette-brand-exact__top,
+body.tk-public .borlette-brand-exact__middle{display:block!important;margin:0!important;color:#dbe7f6!important;font-size:9px!important;font-weight:950!important;letter-spacing:.25em!important;line-height:1.05!important;white-space:nowrap!important}
+body.tk-public .borlette-brand-exact__middle{margin-top:2px!important}
+body.tk-public .borlette-brand-exact__bottom{position:relative!important;display:block!important;width:max-content!important;margin-top:6px!important;margin-left:4px!important;color:#dbe7f6!important;font-size:8px!important;font-weight:900!important;letter-spacing:.28em!important;line-height:1!important;white-space:nowrap!important}
+body.tk-public .borlette-brand-exact__bottom::before,
+body.tk-public .borlette-brand-exact__bottom::after{content:""!important;position:absolute!important;top:50%!important;width:15px!important;height:1px!important;background:rgba(219,231,246,.55)!important}
+body.tk-public .borlette-brand-exact__bottom::before{right:100%!important;margin-right:6px!important}
+body.tk-public .borlette-brand-exact__bottom::after{left:100%!important;margin-left:6px!important}
+@media(max-width:768px){
+  body.tk-public .borlette-brand-exact__logo{width:34px!important;height:34px!important;flex-basis:34px!important}
+  body.tk-public .borlette-brand-exact__top,
+  body.tk-public .borlette-brand-exact__middle{font-size:8px!important}
+  body.tk-public .borlette-brand-exact__bottom{font-size:7px!important}
+}
+
+
+/* =========================================================
+   DASHBOARD HEADER — version finale
+   ========================================================= */
+
+body.tk-file-dashboard .mobile-header{
+  width:100%!important;
+  min-height:78px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+  margin:0!important;
+  padding:10px 12px!important;
+  background:#071a35!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+body.tk-file-dashboard .dashboard-header-brand{
+  display:flex!important;
+  align-items:center!important;
+  gap:12px!important;
+  min-width:max-content!important;
+  color:#fff!important;
+  text-decoration:none!important;
+}
+
+body.tk-file-dashboard .dashboard-header-brand__logo{
+  width:58px!important;
+  height:58px!important;
+  flex:0 0 58px!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:7px!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+body.tk-file-dashboard .dashboard-header-brand__logo img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+body.tk-file-dashboard .dashboard-header-brand__copy{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  line-height:1.1!important;
+}
+
+body.tk-file-dashboard .dashboard-header-brand__copy strong{
+  color:#fff!important;
+  font-size:20px!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
+  white-space:nowrap!important;
+}
+
+body.tk-file-dashboard .dashboard-header-brand__copy span{
+  margin-top:4px!important;
+  color:#d8e5f5!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  letter-spacing:.28em!important;
+  white-space:nowrap!important;
+}
+
+body.tk-file-dashboard .wallet-chip{
+  margin-left:auto!important;
+  min-height:50px!important;
+  padding:8px 12px!important;
+  border-radius:12px!important;
+  background:#173354!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+
+body.tk-file-dashboard .wallet-chip strong{
+  color:#fff!important;
+  font-size:17px!important;
+  font-weight:950!important;
+}
+
+body.tk-file-dashboard .wallet-chip span{
+  color:#c5d4e7!important;
+}
+
+body.tk-file-dashboard .header-actions{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  flex-wrap:nowrap!important;
+}
+
+body.tk-file-dashboard #authHeaderActions{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+}
+
+body.tk-file-dashboard #authHeaderActions a,
+body.tk-file-dashboard #authHeaderActions button{
+  min-height:42px!important;
+  padding:0 17px!important;
+  border-radius:10px!important;
+  background:#ffd21f!important;
+  color:#071a35!important;
+  border:0!important;
+  font-weight:900!important;
+}
+
+body.tk-file-dashboard .action-btn,
+body.tk-file-dashboard .user-button{
+  position:relative!important;
+  width:42px!important;
+  height:42px!important;
+  min-width:42px!important;
+  min-height:42px!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:0!important;
+  border-radius:10px!important;
+  background:rgba(255,255,255,.06)!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+
+body.tk-file-dashboard .user-button{
+  overflow:hidden!important;
+  background:#05a6bc!important;
+  border-color:#05a6bc!important;
+  cursor:pointer!important;
+}
+
+body.tk-file-dashboard .user-avatar{
+  width:100%!important;
+  height:100%!important;
+  display:grid!important;
+  place-items:center!important;
+  color:#fff!important;
+  background:transparent!important;
+  font-size:18px!important;
+  font-weight:800!important;
+}
+
+body.tk-file-dashboard .user-avatar img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+
+body.tk-file-dashboard .user-menu-wrap{
+  position:relative!important;
+  display:block!important;
+}
+
+body.tk-file-dashboard .user-menu{
+  position:absolute!important;
+  top:calc(100% + 10px)!important;
+  right:0!important;
+  z-index:1000!important;
+  width:250px!important;
+  display:none!important;
+  padding:9px!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  color:#071a35!important;
+  border:1px solid #d7e1ec!important;
+  box-shadow:0 22px 55px rgba(3,11,26,.24)!important;
+}
+
+body.tk-file-dashboard .user-menu.open{
+  display:grid!important;
+  gap:3px!important;
+}
+
+body.tk-file-dashboard .dashboard-user-menu-head{
+  display:grid!important;
+  gap:3px!important;
+  padding:10px 11px!important;
+}
+
+body.tk-file-dashboard .dashboard-user-menu-head strong{
+  color:#071a35!important;
+  font-size:14px!important;
+}
+
+body.tk-file-dashboard .dashboard-user-menu-head span{
+  color:#65738a!important;
+  font-size:12px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+body.tk-file-dashboard .user-menu-link{
+  width:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  min-height:38px!important;
+  padding:8px 10px!important;
+  border-radius:8px!important;
+  color:#273750!important;
+  background:transparent!important;
+  border:0!important;
+  text-align:left!important;
+  font-size:13px!important;
+  font-weight:750!important;
+}
+
+body.tk-file-dashboard .user-menu-link:hover{
+  background:#f1f5f9!important;
+  color:#071a35!important;
+}
+
+body.tk-file-dashboard .user-menu-logout{
+  color:#c9384d!important;
+}
+
+@media(max-width:760px){
+  body.tk-file-dashboard .mobile-header{
+    min-height:68px!important;
+    padding:8px 7px!important;
+    gap:7px!important;
+  }
+
+  body.tk-file-dashboard .dashboard-header-brand__logo{
+    width:44px!important;
+    height:44px!important;
+    flex-basis:44px!important;
+    padding:6px!important;
+    border-radius:13px!important;
+  }
+
+  body.tk-file-dashboard .dashboard-header-brand__copy{
+    display:none!important;
+  }
+
+  body.tk-file-dashboard .wallet-chip{
+    display:flex!important;
+    min-width:0!important;
+    padding:7px 9px!important;
+  }
+
+  body.tk-file-dashboard .wallet-chip strong{
+    font-size:13px!important;
+  }
+
+  body.tk-file-dashboard .wallet-chip span{
+    font-size:9px!important;
+  }
+
+  body.tk-file-dashboard #authHeaderActions{
+    display:none!important;
+  }
+
+  body.tk-file-dashboard .action-btn,
+  body.tk-file-dashboard .user-button{
+    width:38px!important;
+    height:38px!important;
+    min-width:38px!important;
+    min-height:38px!important;
+  }
+}
+
+
+
+/* Header polish */
+body.tk-file-dashboard #authHeaderActions a,
+body.tk-file-dashboard #authHeaderActions button{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+body.tk-file-dashboard .dashboard-header-brand__logo{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+body.tk-file-dashboard .dashboard-header-brand__logo img{
+  width:82%!important;
+  height:82%!important;
+  object-fit:contain!important;
+  display:block!important;
+  margin:auto!important;
+}
+
+
+/* Header polish v3 — boutons Profil et Déconnexion */
+body.tk-file-dashboard #authHeaderActions a,
+body.tk-file-dashboard #authHeaderActions button{
+  background:#ffffff!important;
+  color:#071a35!important;
+  -webkit-text-fill-color:#071a35!important;
+  border:1px solid #d5e1ee!important;
+  box-shadow:none!important;
+}
+
+body.tk-file-dashboard #authHeaderActions a:hover,
+body.tk-file-dashboard #authHeaderActions button:hover{
+  background:#f7f9fc!important;
+  color:#071a35!important;
+  -webkit-text-fill-color:#071a35!important;
+  border-color:#b8c9dc!important;
+}
+
+
+/* =========================================================
+   DASHBOARD HEADER — logo +3px et menu utilisateur identique à l'index
+   ========================================================= */
+
+/* Logo : 58px -> 61px, image centrée et contenue */
+body.tk-file-dashboard .dashboard-header-brand__logo{
+  width:61px!important;
+  height:61px!important;
+  flex:0 0 61px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:7px!important;
+  overflow:hidden!important;
+}
+
+body.tk-file-dashboard .dashboard-header-brand__logo img{
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  display:block!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:0 auto!important;
+  transform:none!important;
+}
+
+/* Menu blanc identique à celui visible sur l'index */
+body.tk-file-dashboard .user-menu-wrap{
+  position:relative!important;
+}
+
+body.tk-file-dashboard .user-menu{
+  position:absolute!important;
+  top:calc(100% + 8px)!important;
+  right:0!important;
+  z-index:1200!important;
+  min-width:220px!important;
+  width:220px!important;
+  display:none!important;
+  gap:0!important;
+  padding:8px!important;
+  overflow:hidden!important;
+  border:1px solid #dce4ee!important;
+  border-radius:12px!important;
+  background:#ffffff!important;
+  color:#0b172a!important;
+  box-shadow:0 20px 50px rgba(3,11,26,.25)!important;
+}
+
+body.tk-file-dashboard .user-menu.open{
+  display:grid!important;
+}
+
+body.tk-file-dashboard .user-menu-link{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  width:100%!important;
+  min-height:47px!important;
+  padding:10px 12px!important;
+  border:0!important;
+  border-radius:8px!important;
+  background:transparent!important;
+  color:#31415b!important;
+  -webkit-text-fill-color:#31415b!important;
+  text-decoration:none!important;
+  text-align:left!important;
+  font-size:14px!important;
+  font-weight:700!important;
+  box-shadow:none!important;
+}
+
+body.tk-file-dashboard .user-menu-link:hover,
+body.tk-file-dashboard .user-menu-link:focus-visible{
+  background:#f1f5f9!important;
+  color:#071a35!important;
+  -webkit-text-fill-color:#071a35!important;
+}
+
+body.tk-file-dashboard .user-menu-divider{
+  height:1px!important;
+  margin:5px 0!important;
+  background:#e4eaf1!important;
+  border:0!important;
+}
+
+body.tk-file-dashboard .user-menu .user-menu-logout{
+  color:#dc3650!important;
+  -webkit-text-fill-color:#dc3650!important;
+}
+
+body.tk-file-dashboard .user-menu .user-menu-logout:hover{
+  background:#fff1f3!important;
+  color:#c62942!important;
+  -webkit-text-fill-color:#c62942!important;
+}
+
+@media(max-width:760px){
+  body.tk-file-dashboard .dashboard-header-brand__logo{
+    width:47px!important;
+    height:47px!important;
+    flex-basis:47px!important;
+    padding:6px!important;
+  }
+
+  body.tk-file-dashboard .user-menu{
+    position:fixed!important;
+    top:72px!important;
+    right:10px!important;
+    width:min(220px,calc(100vw - 20px))!important;
+  }
+}
+
+
+
+/* Dashboard user menu — fonctionnement garanti */
+body.tk-file-dashboard #userMenuWrap{
+  position:relative!important;
+  display:block!important;
+  overflow:visible!important;
+  z-index:1001!important;
+}
+
+body.tk-file-dashboard #userMenuButton{
+  position:relative!important;
+  z-index:1002!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+}
+
+body.tk-file-dashboard #userMenu[hidden]{
+  display:none!important;
+}
+
+body.tk-file-dashboard #userMenu.open{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+}
+
+body.tk-file-dashboard .mobile-header,
+body.tk-file-dashboard .header-actions{
+  overflow:visible!important;
+}
+
+
+
+/* ===== Dashboard mobile final ===== */
+@media (max-width:768px){
+
+  /* 1. Masquer le texte de préparation */
+  .player-status,
+  .player-status-text,
+  .header-status,
+  .status-chip,
+  .welcome-chip{
+    display:none!important;
+  }
+
+  /* 2. Remplacer la top-bar */
+  .top-bar,
+  .topbar,
+  .main-nav,
+  .desktop-nav{
+    display:none!important;
+  }
+
+  .mobile-auth-bar{
+    display:flex!important;
+    justify-content:space-between!important;
+    align-items:center!important;
+    gap:12px!important;
+    padding:8px 12px!important;
+    background:#071a35!important;
+  }
+
+  .mobile-auth-bar .login-btn,
+  .mobile-auth-bar .logout-btn{
+    display:inline-flex!important;
+  }
+
+  /* 3. Aucun débordement */
+  html,body{
+    overflow-x:hidden!important;
+  }
+
+  .app,
+  .page,
+  .dashboard-container,
+  .dashboard-grid,
+  .dashboard-content,
+  .content{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+
+  .dashboard-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+
+  .card,
+  .panel,
+  .summary-card,
+  .stat-card{
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  img{
+    max-width:100%!important;
+    height:auto!important;
+  }
+
+  /* 4. Masquer jeux populaires */
+  #popular-games,
+  .popular-games,
+  .games-popular,
+  .popular-games-section{
+    display:none!important;
+  }
+}
