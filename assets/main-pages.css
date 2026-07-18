@@ -1,22 +1,277 @@
-/* MAIN PUBLIC ACCOUNT PAGES — contrast and responsive isolation */
-body.tk-page-account:not(.tk-file-dashboard){--mp-ink:#071a35;--mp-muted:#5f7188;--mp-paper:#fff;--mp-line:#d7e1ec;--mp-navy:#071a35;--mp-yellow:#ffd21f;color:var(--mp-ink)!important;background:#f3f6fa!important}
-body.tk-page-account:not(.tk-file-dashboard) .app{width:min(calc(100% - 32px),1200px)!important;max-width:1200px!important;margin:0 auto!important;padding:0 0 88px!important}
-body.tk-page-account:not(.tk-file-dashboard) main,body.tk-page-account:not(.tk-file-dashboard) .main,body.tk-page-account:not(.tk-file-dashboard) .content{min-width:0!important;color:var(--mp-ink)!important}
-body.tk-page-account:not(.tk-file-dashboard) .panel,body.tk-page-account:not(.tk-file-dashboard) .card,body.tk-page-account:not(.tk-file-dashboard) .shell,body.tk-page-account:not(.tk-file-dashboard) .summary-card,body.tk-page-account:not(.tk-file-dashboard) .stat-card,body.tk-page-account:not(.tk-file-dashboard) .form-card,body.tk-page-account:not(.tk-file-dashboard) .profile-card,body.tk-page-account:not(.tk-file-dashboard) .wallet-card,body.tk-page-account:not(.tk-file-dashboard) .ticket-card,body.tk-page-account:not(.tk-file-dashboard) .notification-card,body.tk-page-account:not(.tk-file-dashboard) .history-card,body.tk-page-account:not(.tk-file-dashboard) .settings-card,body.tk-page-account:not(.tk-file-dashboard) .table-card,body.tk-page-account:not(.tk-file-dashboard) .filters-card,body.tk-page-account:not(.tk-file-dashboard) .toolbar,body.tk-page-account:not(.tk-file-dashboard) .method-card,body.tk-page-account:not(.tk-file-dashboard) .info-card{background:#fff!important;color:var(--mp-ink)!important;border:1px solid var(--mp-line)!important;box-shadow:0 10px 28px rgba(7,26,53,.08)!important}
-body.tk-page-account:not(.tk-file-dashboard) h1,body.tk-page-account:not(.tk-file-dashboard) h2,body.tk-page-account:not(.tk-file-dashboard) h3,body.tk-page-account:not(.tk-file-dashboard) h4,body.tk-page-account:not(.tk-file-dashboard) strong{color:var(--mp-ink)!important;-webkit-text-fill-color:var(--mp-ink)!important}
-body.tk-page-account:not(.tk-file-dashboard) p,body.tk-page-account:not(.tk-file-dashboard) small,body.tk-page-account:not(.tk-file-dashboard) .muted,body.tk-page-account:not(.tk-file-dashboard) .subtitle,body.tk-page-account:not(.tk-file-dashboard) .helper-text,body.tk-page-account:not(.tk-file-dashboard) .description{color:var(--mp-muted)!important;-webkit-text-fill-color:var(--mp-muted)!important}
-body.tk-page-account:not(.tk-file-dashboard) .hero,body.tk-page-account:not(.tk-file-dashboard) .page-hero,body.tk-page-account:not(.tk-file-dashboard) .hero-card,body.tk-page-account:not(.tk-file-dashboard) .intro-card{background:linear-gradient(135deg,#071a35,#0d3564)!important;color:#fff!important;border-color:#173f70!important}
-body.tk-page-account:not(.tk-file-dashboard) .hero h1,body.tk-page-account:not(.tk-file-dashboard) .hero h2,body.tk-page-account:not(.tk-file-dashboard) .hero h3,body.tk-page-account:not(.tk-file-dashboard) .hero strong,body.tk-page-account:not(.tk-file-dashboard) .page-hero h1,body.tk-page-account:not(.tk-file-dashboard) .page-hero h2,body.tk-page-account:not(.tk-file-dashboard) .hero-card h1,body.tk-page-account:not(.tk-file-dashboard) .hero-card h2,body.tk-page-account:not(.tk-file-dashboard) .intro-card h1{color:#fff!important;-webkit-text-fill-color:#fff!important}
-body.tk-page-account:not(.tk-file-dashboard) .hero p,body.tk-page-account:not(.tk-file-dashboard) .page-hero p,body.tk-page-account:not(.tk-file-dashboard) .hero-card p,body.tk-page-account:not(.tk-file-dashboard) .intro-card p{color:#d5e3f3!important;-webkit-text-fill-color:#d5e3f3!important}
-body.tk-page-account:not(.tk-file-dashboard) .eyebrow,body.tk-page-account:not(.tk-file-dashboard) .kicker,body.tk-page-account:not(.tk-file-dashboard) label{color:#9a6d00!important;font-weight:800!important}
-body.tk-page-account:not(.tk-file-dashboard) input,body.tk-page-account:not(.tk-file-dashboard) select,body.tk-page-account:not(.tk-file-dashboard) textarea{background:#fff!important;color:var(--mp-ink)!important;border:1px solid #bccadb!important}
-body.tk-page-account:not(.tk-file-dashboard) input::placeholder,body.tk-page-account:not(.tk-file-dashboard) textarea::placeholder{color:#8493a6!important}
-body.tk-page-account:not(.tk-file-dashboard) table{background:#fff!important;color:var(--mp-ink)!important}
-body.tk-page-account:not(.tk-file-dashboard) thead,body.tk-page-account:not(.tk-file-dashboard) th{background:#071a35!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-body.tk-page-account:not(.tk-file-dashboard) td{color:var(--mp-ink)!important;border-bottom:1px solid var(--mp-line)!important}
-body.tk-page-account:not(.tk-file-dashboard) .btn,body.tk-page-account:not(.tk-file-dashboard) button[type=submit],body.tk-page-account:not(.tk-file-dashboard) .primary-btn{background:#ffd21f!important;color:#071a35!important;-webkit-text-fill-color:#071a35!important;border-color:#f0b900!important}
-body.tk-page-account:not(.tk-file-dashboard) .btn-secondary,body.tk-page-account:not(.tk-file-dashboard) .ghost-btn{background:#fff!important;color:#071a35!important;-webkit-text-fill-color:#071a35!important;border-color:#bccadb!important}
-body.tk-page-account:not(.tk-file-dashboard) .empty-state,body.tk-page-account:not(.tk-file-dashboard) .empty-history{background:#f7faff!important;color:var(--mp-muted)!important;border-color:var(--mp-line)!important}
-body.tk-page-account:not(.tk-file-dashboard) .status-pending{background:#fff4bf!important;color:#7d5d00!important}.status-approved,.status-paid,.status-won{background:#dcf7ec!important;color:#087853!important}.status-rejected,.status-failed,.status-lost{background:#ffe5e9!important;color:#b9263c!important}
-@media(max-width:1024px){body.tk-page-account:not(.tk-file-dashboard) .grid,body.tk-page-account:not(.tk-file-dashboard) .content-grid,body.tk-page-account:not(.tk-file-dashboard) .layout-grid,body.tk-page-account:not(.tk-file-dashboard) .main-grid{grid-template-columns:1fr!important}body.tk-page-account:not(.tk-file-dashboard) .stats-grid,body.tk-page-account:not(.tk-file-dashboard) .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:768px){html,body{max-width:100%!important;overflow-x:hidden!important}body.tk-page-account:not(.tk-file-dashboard) .app{width:100%!important;max-width:100%!important;padding:0 10px 84px!important}body.tk-page-account:not(.tk-file-dashboard) *,body.tk-page-account:not(.tk-file-dashboard) *::before,body.tk-page-account:not(.tk-file-dashboard) *::after{min-width:0;box-sizing:border-box}body.tk-page-account:not(.tk-file-dashboard) .panel,body.tk-page-account:not(.tk-file-dashboard) .card,body.tk-page-account:not(.tk-file-dashboard) .form-card,body.tk-page-account:not(.tk-file-dashboard) .table-card{width:100%!important;max-width:100%!important;padding:16px!important}body.tk-page-account:not(.tk-file-dashboard) .table-wrap,body.tk-page-account:not(.tk-file-dashboard) .table-container{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}body.tk-page-account:not(.tk-file-dashboard) table{min-width:640px!important}body.tk-page-account:not(.tk-file-dashboard) .stats-grid,body.tk-page-account:not(.tk-file-dashboard) .summary-grid{grid-template-columns:1fr!important}body.tk-page-account:not(.tk-file-dashboard) img,body.tk-page-account:not(.tk-file-dashboard) svg{max-width:100%}}
+/* =========================================================
+   TONTON KONDO — CONTRASTE GLOBAL DES PAGES PRINCIPALES
+   Chargé après le CSS global et le header partagé.
+   Exclut dashboard, jeux, admin et authentification.
+   ========================================================= */
+
+body.tk-page-account:not(.tk-file-dashboard){
+  --mp-ink:#071a35;
+  --mp-ink-2:#173354;
+  --mp-muted:#5b6f87;
+  --mp-soft:#eef3f8;
+  --mp-paper:#ffffff;
+  --mp-line:#d4deea;
+  --mp-gold:#b17700;
+  --mp-yellow:#ffd21f;
+  --mp-blue:#0759a8;
+  color:var(--mp-ink)!important;
+  background:#f2f5f9!important;
+}
+body.tk-page-account:not(.tk-file-dashboard),
+body.tk-page-account:not(.tk-file-dashboard) *{box-sizing:border-box}
+body.tk-page-account:not(.tk-file-dashboard) main,
+body.tk-page-account:not(.tk-file-dashboard) .app,
+body.tk-page-account:not(.tk-file-dashboard) .page,
+body.tk-page-account:not(.tk-file-dashboard) .shell{min-width:0;max-width:100%}
+body.tk-page-account:not(.tk-file-dashboard) .app,
+body.tk-page-account:not(.tk-file-dashboard) .page{width:min(calc(100% - 32px),1200px)!important;margin:0 auto!important;padding-bottom:88px!important}
+
+/* Surfaces blanches */
+body.tk-page-account:not(.tk-file-dashboard) .panel,
+body.tk-page-account:not(.tk-file-dashboard) .card,
+body.tk-page-account:not(.tk-file-dashboard) .profile-card,
+body.tk-page-account:not(.tk-file-dashboard) .summary-card,
+body.tk-page-account:not(.tk-file-dashboard) .stat-card,
+body.tk-page-account:not(.tk-file-dashboard) .mini-card,
+body.tk-page-account:not(.tk-file-dashboard) .field-card,
+body.tk-page-account:not(.tk-file-dashboard) .method-card,
+body.tk-page-account:not(.tk-file-dashboard) .card-item,
+body.tk-page-account:not(.tk-file-dashboard) .item,
+body.tk-page-account:not(.tk-file-dashboard) .notice,
+body.tk-page-account:not(.tk-file-dashboard) .toolbar,
+body.tk-page-account:not(.tk-file-dashboard) .details-card,
+body.tk-page-account:not(.tk-file-dashboard) .details-panel,
+body.tk-page-account:not(.tk-file-dashboard) .summary-tile,
+body.tk-page-account:not(.tk-file-dashboard) .notification-row,
+body.tk-page-account:not(.tk-file-dashboard) .info-item,
+body.tk-page-account:not(.tk-file-dashboard) .mini-note,
+body.tk-page-account:not(.tk-file-dashboard) .method-block,
+body.tk-page-account:not(.tk-file-dashboard) .trust-block,
+body.tk-page-account:not(.tk-file-dashboard) .info-block{
+  background:#fff!important;
+  color:var(--mp-ink)!important;
+  border-color:var(--mp-line)!important;
+  box-shadow:0 12px 30px rgba(7,26,53,.08)!important;
+}
+
+/* Typographie claire sur fond clair */
+body.tk-page-account:not(.tk-file-dashboard) h1,
+body.tk-page-account:not(.tk-file-dashboard) h2,
+body.tk-page-account:not(.tk-file-dashboard) h3,
+body.tk-page-account:not(.tk-file-dashboard) h4,
+body.tk-page-account:not(.tk-file-dashboard) h5,
+body.tk-page-account:not(.tk-file-dashboard) .title,
+body.tk-page-account:not(.tk-file-dashboard) .method-title,
+body.tk-page-account:not(.tk-file-dashboard) .trust-title,
+body.tk-page-account:not(.tk-file-dashboard) .info-title,
+body.tk-page-account:not(.tk-file-dashboard) .label,
+body.tk-page-account:not(.tk-file-dashboard) .panel-head strong,
+body.tk-page-account:not(.tk-file-dashboard) .panel-head h2{
+  color:var(--mp-ink)!important;
+  -webkit-text-fill-color:var(--mp-ink)!important;
+  opacity:1!important;
+}
+body.tk-page-account:not(.tk-file-dashboard) p,
+body.tk-page-account:not(.tk-file-dashboard) small,
+body.tk-page-account:not(.tk-file-dashboard) .muted,
+body.tk-page-account:not(.tk-file-dashboard) .hint,
+body.tk-page-account:not(.tk-file-dashboard) .description,
+body.tk-page-account:not(.tk-file-dashboard) .helper-text,
+body.tk-page-account:not(.tk-file-dashboard) .language-help,
+body.tk-page-account:not(.tk-file-dashboard) .notification-copy,
+body.tk-page-account:not(.tk-file-dashboard) .load-more-info{
+  color:var(--mp-muted)!important;
+  -webkit-text-fill-color:var(--mp-muted)!important;
+  opacity:1!important;
+}
+body.tk-page-account:not(.tk-file-dashboard) .eyebrow,
+body.tk-page-account:not(.tk-file-dashboard) .kicker,
+body.tk-page-account:not(.tk-file-dashboard) label,
+body.tk-page-account:not(.tk-file-dashboard) .result-line label{
+  color:var(--mp-gold)!important;
+  -webkit-text-fill-color:var(--mp-gold)!important;
+  opacity:1!important;
+  font-weight:850!important;
+}
+
+/* Formulaires */
+body.tk-page-account:not(.tk-file-dashboard) input,
+body.tk-page-account:not(.tk-file-dashboard) select,
+body.tk-page-account:not(.tk-file-dashboard) textarea{
+  background:#fff!important;
+  color:var(--mp-ink)!important;
+  -webkit-text-fill-color:var(--mp-ink)!important;
+  border-color:#b9c8d9!important;
+  opacity:1!important;
+}
+body.tk-page-account:not(.tk-file-dashboard) input::placeholder,
+body.tk-page-account:not(.tk-file-dashboard) textarea::placeholder{color:#7d8ea2!important;opacity:1!important}
+body.tk-page-account:not(.tk-file-dashboard) input:disabled,
+body.tk-page-account:not(.tk-file-dashboard) select:disabled,
+body.tk-page-account:not(.tk-file-dashboard) textarea:disabled{background:#edf2f7!important;color:#566a82!important;opacity:1!important}
+
+/* Boutons généraux */
+body.tk-page-account:not(.tk-file-dashboard) .btn,
+body.tk-page-account:not(.tk-file-dashboard) .btn-primary,
+body.tk-page-account:not(.tk-file-dashboard) button[type="submit"]{
+  background:linear-gradient(180deg,#ffd21f,#ffbd00)!important;
+  color:#071a35!important;
+  -webkit-text-fill-color:#071a35!important;
+  border-color:#e8ab00!important;
+  opacity:1!important;
+}
+body.tk-page-account:not(.tk-file-dashboard) .btn-secondary,
+body.tk-page-account:not(.tk-file-dashboard) .btn-ghost,
+body.tk-page-account:not(.tk-file-dashboard) .ghost-btn{
+  background:#fff!important;color:#071a35!important;-webkit-text-fill-color:#071a35!important;border-color:#b9c8d9!important
+}
+
+/* Filtres / pills */
+body.tk-page-account:not(.tk-file-dashboard) .filters .filter-btn,
+body.tk-page-account:not(.tk-file-dashboard) .ticket-filter-btn,
+body.tk-page-account:not(.tk-file-dashboard) .filter-chip,
+body.tk-page-account:not(.tk-file-dashboard) .pill,
+body.tk-page-account:not(.tk-file-dashboard) .chip,
+body.tk-page-account:not(.tk-file-dashboard) .badge-tag{
+  background:#fff!important;
+  color:var(--mp-ink)!important;
+  -webkit-text-fill-color:var(--mp-ink)!important;
+  border-color:#c7d3e1!important;
+  opacity:1!important;
+}
+body.tk-page-account:not(.tk-file-dashboard) .filter-btn.active,
+body.tk-page-account:not(.tk-file-dashboard) .ticket-filter-btn.active,
+body.tk-page-account:not(.tk-file-dashboard) .filter-chip.active,
+body.tk-page-account:not(.tk-file-dashboard) .filters .active{
+  background:#fff6cf!important;
+  color:#6d5100!important;
+  -webkit-text-fill-color:#6d5100!important;
+  border-color:#e5bd35!important;
+  box-shadow:0 0 0 2px rgba(255,210,31,.12)!important;
+}
+
+/* États, alertes, historiques */
+body.tk-page-account:not(.tk-file-dashboard) .empty-state,
+body.tk-page-account:not(.tk-file-dashboard) .state-box,
+body.tk-page-account:not(.tk-file-dashboard) .feedback{
+  background:#f7faff!important;color:var(--mp-muted)!important;-webkit-text-fill-color:var(--mp-muted)!important;border-color:#cbd7e5!important;opacity:1!important
+}
+body.tk-page-account:not(.tk-file-dashboard) .warn{background:#fff6d7!important;color:#725400!important;border-color:#e6c75c!important}
+body.tk-page-account:not(.tk-file-dashboard) .history-list,
+body.tk-page-account:not(.tk-file-dashboard) .history-feed,
+body.tk-page-account:not(.tk-file-dashboard) .notification-list,
+body.tk-page-account:not(.tk-file-dashboard) .ticket-list,
+body.tk-page-account:not(.tk-file-dashboard) .list{color:var(--mp-ink)!important}
+
+/* Résultats : correction complète */
+body.tk-file-results .card{background:#fff!important}
+body.tk-file-results .topbar h1{color:#071a35!important;-webkit-text-fill-color:#071a35!important}
+body.tk-file-results .topbar p{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
+body.tk-file-results #results-pill{background:#eef4fa!important;color:#173354!important;-webkit-text-fill-color:#173354!important;border-color:#c8d5e3!important}
+body.tk-file-results .result-card{background:#f8fbff!important;border-color:#d4deea!important;color:#071a35!important}
+body.tk-file-results .result-meta strong,
+body.tk-file-results .result-line strong{color:#071a35!important;-webkit-text-fill-color:#071a35!important}
+body.tk-file-results .result-meta span{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
+body.tk-file-results .badge.game{background:#fff4bf!important;color:#725400!important;-webkit-text-fill-color:#725400!important;border-color:#e6c75c!important}
+body.tk-file-results .badge.status{background:#dcf7ec!important;color:#087853!important;-webkit-text-fill-color:#087853!important;border-color:#8ed9bd!important}
+body.tk-file-results .badge.source{background:#e2f1ff!important;color:#0759a8!important;-webkit-text-fill-color:#0759a8!important;border-color:#a9d3f5!important}
+
+/* Pages avec héros navy : texte clair strictement limité au héros */
+body.tk-page-account:not(.tk-file-dashboard) .hero,
+body.tk-page-account:not(.tk-file-dashboard) .hero-card{
+  background:linear-gradient(135deg,#071a35,#0d3564)!important;color:#fff!important;border-color:#173f70!important
+}
+body.tk-page-account:not(.tk-file-dashboard) .hero h1,
+body.tk-page-account:not(.tk-file-dashboard) .hero h2,
+body.tk-page-account:not(.tk-file-dashboard) .hero strong,
+body.tk-page-account:not(.tk-file-dashboard) .hero-card h1,
+body.tk-page-account:not(.tk-file-dashboard) .hero-card h2,
+body.tk-page-account:not(.tk-file-dashboard) .hero-card strong{color:#fff!important;-webkit-text-fill-color:#fff!important}
+body.tk-page-account:not(.tk-file-dashboard) .hero p,
+body.tk-page-account:not(.tk-file-dashboard) .hero .muted,
+body.tk-page-account:not(.tk-file-dashboard) .hero-card p{color:#d7e5f5!important;-webkit-text-fill-color:#d7e5f5!important}
+
+/* Profil / portefeuille / paramètres */
+body.tk-file-profile .info-item strong,
+body.tk-file-wallet .item strong,
+body.tk-file-settings .item strong,
+body.tk-file-notifications .summary-tile strong{color:#071a35!important;-webkit-text-fill-color:#071a35!important}
+body.tk-file-profile .info-item span,
+body.tk-file-wallet .item span,
+body.tk-file-settings .item span,
+body.tk-file-notifications .summary-tile span{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
+body.tk-file-settings .switch-track{background:#cbd5e1!important;border-color:#aebdce!important}
+body.tk-file-settings .setting-switch input:checked + .switch-shell .switch-track{background:#173f70!important}
+
+/* Tickets */
+body.tk-file-tickets .summary-card,
+body.tk-file-tickets .panel,
+body.tk-file-tickets .details-card{background:#fff!important;color:#071a35!important}
+body.tk-file-tickets .panel-head h2,
+body.tk-file-tickets .summary-card strong{color:#071a35!important;-webkit-text-fill-color:#071a35!important}
+body.tk-file-tickets .panel-head span{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
+
+/* Navigation principale blanche */
+body.tk-page-account:not(.tk-file-dashboard) .tk-primary-nav{background:#fff!important;border-color:#d4deea!important}
+body.tk-page-account:not(.tk-file-dashboard) .tk-primary-nav a{color:#173354!important;-webkit-text-fill-color:#173354!important}
+body.tk-page-account:not(.tk-file-dashboard) .tk-primary-nav a.is-active{color:#071a35!important;-webkit-text-fill-color:#071a35!important;border-bottom-color:#ffd21f!important}
+
+/* Responsive */
+@media(max-width:1024px){
+  body.tk-page-account:not(.tk-file-dashboard) .grid,
+  body.tk-page-account:not(.tk-file-dashboard) .content-grid,
+  body.tk-page-account:not(.tk-file-dashboard) .main-grid,
+  body.tk-page-account:not(.tk-file-dashboard) .field-grid,
+  body.tk-page-account:not(.tk-file-dashboard) .method-grid,
+  body.tk-page-account:not(.tk-file-dashboard) .info-grid{grid-template-columns:1fr!important}
+  body.tk-page-account:not(.tk-file-dashboard) .summary-grid,
+  body.tk-page-account:not(.tk-file-dashboard) .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:768px){
+  html,body{max-width:100%!important;overflow-x:hidden!important}
+  body.tk-page-account:not(.tk-file-dashboard) .app,
+  body.tk-page-account:not(.tk-file-dashboard) .page{width:100%!important;max-width:100%!important;padding-left:10px!important;padding-right:10px!important}
+  body.tk-page-account:not(.tk-file-dashboard) .panel,
+  body.tk-page-account:not(.tk-file-dashboard) .card,
+  body.tk-page-account:not(.tk-file-dashboard) .profile-card,
+  body.tk-page-account:not(.tk-file-dashboard) .details-card{width:100%!important;max-width:100%!important;padding:15px!important}
+  body.tk-page-account:not(.tk-file-dashboard) .summary-grid,
+  body.tk-page-account:not(.tk-file-dashboard) .stat-grid{grid-template-columns:1fr!important}
+  body.tk-page-account:not(.tk-file-dashboard) .topbar{align-items:stretch!important}
+  body.tk-page-account:not(.tk-file-dashboard) .topbar .btn{width:100%!important}
+  body.tk-page-account:not(.tk-file-dashboard) .result-row{grid-template-columns:1fr!important}
+  body.tk-page-account:not(.tk-file-dashboard) .result-row > div:last-child{justify-content:start!important}
+  body.tk-page-account:not(.tk-file-dashboard) img,
+  body.tk-page-account:not(.tk-file-dashboard) svg{max-width:100%}
+}
+/* =========================================================
+   TICKETS — summary cards contrast only
+   ========================================================= */
+body.tk-file-tickets .summary-grid .summary-card{
+  background:linear-gradient(180deg,#0d315d 0%,#071a35 100%)!important;
+  border:1px solid rgba(255,210,31,.26)!important;
+  color:#ffffff!important;
+  box-shadow:0 12px 28px rgba(7,26,53,.16)!important;
+}
+body.tk-file-tickets .summary-grid .summary-icon{
+  background:rgba(255,210,31,.14)!important;
+  border:1px solid rgba(255,210,31,.28)!important;
+  color:#ffd21f!important;
+  -webkit-text-fill-color:#ffd21f!important;
+}
+body.tk-file-tickets .summary-grid .summary-card small{
+  color:#ffd21f!important;
+  -webkit-text-fill-color:#ffd21f!important;
+  opacity:1!important;
+}
+body.tk-file-tickets .summary-grid .summary-card strong{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+}
+body.tk-file-tickets .summary-grid .summary-card span{
+  color:#d9e7f6!important;
+  -webkit-text-fill-color:#d9e7f6!important;
+  opacity:1!important;
+}
+

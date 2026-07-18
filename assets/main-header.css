@@ -116,9 +116,19 @@ body.tk-main-header-page #authHeaderActions{
 }
 
 body.tk-main-header-page #authHeaderActions a,
-body.tk-main-header-page #authHeaderActions button{
+body.tk-main-header-page #authHeaderActions button,
+body.tk-main-header-page .header-auth-btn{
   min-height:42px!important;
+  height:auto!important;
   padding:0 17px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  line-height:1!important;
+  text-align:center!important;
+  vertical-align:middle!important;
+  margin:0!important;
+  box-sizing:border-box!important;
   border-radius:10px!important;
   background:#ffd21f!important;
   color:#071a35!important;
@@ -305,7 +315,15 @@ body.tk-main-header-page .dashboard-header-brand__logo img{
 
 /* Header polish v3 — boutons Profil et Déconnexion */
 body.tk-main-header-page #authHeaderActions a,
-body.tk-main-header-page #authHeaderActions button{
+body.tk-main-header-page #authHeaderActions button,
+body.tk-main-header-page .header-auth-btn{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  line-height:1!important;
+  text-align:center!important;
+  vertical-align:middle!important;
+  margin:0!important;
   background:#ffffff!important;
   color:#071a35!important;
   -webkit-text-fill-color:#071a35!important;
@@ -587,4 +605,39 @@ body.tk-main-header-page .header-actions .badge{
   font-size:11px!important;
   line-height:1!important;
   font-weight:900!important;
+}
+/* =========================================================
+   HEADER COLOR LOCK — navy on every principal page
+   ========================================================= */
+html body.tk-main-header-page > .mobile-header,
+html body.tk-main-header-page .mobile-header{
+  background:#071a35!important;
+  background-image:none!important;
+  color:#ffffff!important;
+  border-color:transparent!important;
+}
+
+html body.tk-main-header-page .mobile-header .dashboard-header-brand__copy strong,
+html body.tk-main-header-page .mobile-header .dashboard-header-brand__copy span,
+html body.tk-main-header-page .mobile-header .header-actions,
+html body.tk-main-header-page .mobile-header .action-btn,
+html body.tk-main-header-page .mobile-header .notifications-link{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+
+/* FINAL HEADER NAVY LOCK */
+html body.tk-main-header-page header.mobile-header,
+html body.tk-main-header-page .app > header.mobile-header,
+html body.tk-main-header-page main.app > header.mobile-header{
+  background:#071a35!important;
+  background-color:#071a35!important;
+  background-image:none!important;
+  color:#fff!important;
+}
+html body.tk-main-header-page #mobileAuthBar.mobile-auth-bar{
+  background:#071a35!important;
+  background-color:#071a35!important;
+  background-image:none!important;
 }

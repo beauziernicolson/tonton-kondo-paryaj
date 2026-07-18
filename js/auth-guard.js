@@ -251,8 +251,8 @@
     if (!container) return;
 
     container.innerHTML = `
-      <a class="header-auth-btn btn" href="${getRelativeHref('login-register/login.html')}">Connexion</a>
-      <a class="header-auth-btn btn" href="${getRelativeHref('login-register/login.html')}">Créer un compte</a>
+      <a class="header-auth-btn btn" href="${getRelativeHref('login-register/login.html')}" style="display:inline-flex; align-items:center; justify-content:center; line-height:1; text-align:center; vertical-align:middle; margin:0;">Connexion</a>
+      <a class="header-auth-btn btn" href="${getRelativeHref('login-register/login.html')}" style="display:inline-flex; align-items:center; justify-content:center; line-height:1; text-align:center; vertical-align:middle; margin:0;">Créer un compte</a>
     `;
     container.style.display = 'flex';
     container.style.gap = '8px';
@@ -271,8 +271,8 @@
       <div class="wallet-chip" style="display:flex; margin-right:6px;">
         <span><strong>${balance} ${currency}</strong><span>Solde disponible</span></span>
       </div>
-      <a class="header-auth-btn btn" href="${getRelativeHref('profile.html')}">Profil</a>
-      <button class="header-auth-btn btn" type="button" data-auth-logout="true">Déconnexion</button>
+      <a class="header-auth-btn btn" href="${getRelativeHref('profile.html')}" style="display:inline-flex; align-items:center; justify-content:center; line-height:1; text-align:center; vertical-align:middle; margin:0;">Profil</a>
+      <button class="header-auth-btn btn" type="button" data-auth-logout="true" style="display:inline-flex; align-items:center; justify-content:center; line-height:1; text-align:center; vertical-align:middle; margin:0;">Déconnexion</button>
     `;
 
     container.style.display = 'flex';
