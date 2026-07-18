@@ -498,3 +498,93 @@ html,body{overflow-x:hidden!important}
     object-position:center!important;
   }
 }
+/* Header action icons — exact dashboard rendering */
+body.tk-main-header-page .header-actions .action-btn > svg,
+body.tk-main-header-page .header-actions .notifications-link > svg{
+  width:26px!important;
+  height:26px!important;
+  display:block!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+}
+
+body.tk-main-header-page .header-actions .action-btn,
+body.tk-main-header-page .header-actions .notifications-link{
+  color:#ffffff!important;
+}
+
+body.tk-main-header-page .header-actions .badge{
+  position:absolute!important;
+  right:-2px!important;
+  top:-5px!important;
+  min-width:19px!important;
+  height:19px!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:0 4px!important;
+  border-radius:999px!important;
+  background:#ffd21f!important;
+  color:#111!important;
+  border:2px solid #061426!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* ICONS PROMOTIONS / NOTIFICATIONS — visibilité forcée */
+body.tk-main-header-page .header-actions .action-btn,
+body.tk-main-header-page .header-actions .notifications-link{
+  position:relative!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+body.tk-main-header-page .header-actions .action-btn > svg,
+body.tk-main-header-page .header-actions .notifications-link > svg{
+  width:26px!important;
+  height:26px!important;
+  display:block!important;
+  overflow:visible!important;
+  color:#ffffff!important;
+  fill:none!important;
+  stroke:#ffffff!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+}
+body.tk-main-header-page .header-actions .action-btn > svg *,
+body.tk-main-header-page .header-actions .notifications-link > svg *{
+  fill:none!important;
+  stroke:#ffffff!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+body.tk-main-header-page .header-actions .badge{
+  position:absolute!important;
+  right:-2px!important;
+  top:-5px!important;
+  z-index:3!important;
+  min-width:19px!important;
+  height:19px!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:0 4px!important;
+  border-radius:999px!important;
+  background:#ffd21f!important;
+  color:#111111!important;
+  -webkit-text-fill-color:#111111!important;
+  border:2px solid #061426!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
