@@ -205,42 +205,36 @@
       .wallet-chip { display: none !important; }
     }
   </style>
-<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
-<body class="tk-public tk-page-account tk-file-withdraw">
-<main class="app">
-<header aria-label="En-tête principal" class="mobile-header">
-<a aria-label="Accueil Tonton Kondo" class="brand" href="index.html">
-<div class="brand-block">
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><link data-main-header-css="shared-dashboard-exact" href="assets/main-header.css" rel="stylesheet"/></head>
+<body class="tk-public tk-page-account tk-file-withdraw tk-main-header-page">
+<main class="app"><header class="mobile-header" data-i18n-aria-label="common.main_header">
+<a class="brand dashboard-header-brand" data-i18n-aria-label="common.home" href="index.html">
+<span class="dashboard-header-brand__logo">
 <img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
-<div class="brand-text">
-<span class="brand-top">TONTON</span>
-<span class="brand-middle">KONDO</span>
-<span class="brand-bottom">PARYAJ</span>
-</div>
-</div>
+</span>
+<span class="dashboard-header-brand__copy">
+<strong>Tonton Kondo</strong>
+<span>PARYAJ</span>
+</span>
 </a>
-<div aria-label="Solde utilisateur" class="wallet-chip">
-<span><strong id="header-wallet-balance">Chargement…</strong><span id="wallet-label">Solde disponible</span></span>
+<div class="wallet-chip" data-i18n-aria-label="common.user_balance">
+<span>
+<strong data-i18n="common.player_space_loading" id="wallet-balance"></strong>
+<span data-i18n="dashboard.available_balance" id="wallet-label"></span>
+</span>
 </div>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<!-- Promotions -->
-<button aria-label="Promotions" class="action-btn" type="button">
-<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:24px; height:24px;" viewbox="0 0 24 24">
-<rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path>
-</svg>
+<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
 <span class="badge">3</span>
 </button>
-<!-- Notifications -->
-<a aria-label="Notifications" class="action-btn notifications-link" href="notifications.html">
-<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:24px; height:24px;" viewbox="0 0 24 24">
-<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path>
-</svg>
+<a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
+<svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
 <span class="badge notifications-badge" hidden="">0</span>
 </a>
-<!-- Menu utilisateur interactif -->
-<div class="user-menu-wrap" hidden="" id="userMenuWrap">
-<button aria-expanded="false" aria-label="Menu utilisateur" class="action-btn user-button" id="userMenuButton" type="button">
+<div class="user-menu-wrap" id="userMenuWrap">
+<button aria-expanded="false" aria-haspopup="menu" class="action-btn user-button" data-i18n-aria-label="common.user_menu" id="userMenuButton" type="button">
 <span class="user-avatar" id="userAvatar">U</span>
 </button>
 <div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
@@ -257,7 +251,13 @@
 </div>
 </div>
 </div>
-</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a class="is-active" href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+</header><div class="mobile-auth-bar" id="mobileAuthBar">
+<div class="mobile-auth-bar__guest" hidden="" id="mobileGuestActions">
+<a class="mobile-auth-bar__button" href="login-register/login.html">Connexion</a>
+<a class="mobile-auth-bar__button mobile-auth-bar__button--primary" href="login-register/register.html">Inscription</a>
+</div>
+</div>
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a class="is-active" href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <section class="grid">
 <article class="panel">
 <div class="eyebrow">Retrait</div>
@@ -333,7 +333,7 @@
 <script src="js/i18n.js"></script>
 <script src="js/auth-config.js"></script>
 <script src="js/auth.js"></script>
-<script src="js/auth-guard.js"></script>
+<script src="js/auth-guard.js"></script><script src="js/main-header.js"></script>
 <script>
     const feedbackBox = document.getElementById('feedback-box');
     const historyList = document.getElementById('history-list');

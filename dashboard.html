@@ -18,19 +18,21 @@
     @media(max-width:980px){.intro-row,.main-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.games-row{grid-template-columns:repeat(3,1fr)}.support-strip{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:760px){body{padding-bottom:var(--bottom-nav-height)}.app{width:min(100%,430px);padding:14px 12px calc(var(--bottom-nav-height) + 18px)}.mobile-header{grid-template-columns:1fr auto;margin-bottom:18px}.brand-icon{width:44px;height:44px}.brand-top,.brand-middle{font-size:18px}.brand-bottom{font-size:8px}.header-actions{gap:7px}.action-btn{width:40px;height:40px}.welcome-card{padding:20px;min-height:138px}.welcome-card h1{font-size:24px}.welcome-card p{font-size:14px}.balance-card{padding:16px}.balance-card strong{font-size:23px}.stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{min-height:118px;padding:13px}.stat-icon{width:38px;height:38px}.stat-card strong{font-size:20px}.panel{padding:15px;border-radius:22px}.empty-history{min-height:130px;justify-content:flex-start;padding:16px}.empty-history-inner{align-items:flex-start}.history-item{grid-template-columns:auto 1fr;align-items:start}.history-meta{grid-column:2;justify-items:start;grid-template-columns:repeat(2,auto);gap:8px;align-items:center;margin-top:6px}.history-date{grid-column:1/-1;justify-self:start}.quick-buttons .btn{flex:1 1 calc(50% - 6px)}.quick-buttons .btn:last-child{flex-basis:100%}.games-row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin-inline:-2px}.games-row::-webkit-scrollbar{display:none}.game-card{flex:0 0 112px;min-height:132px;scroll-snap-align:start}.game-card img{height:70px}.support-strip{display:none}.bottom-nav{display:grid}}
   </style>
-<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/>
-</head>
-<body class="tk-public tk-page-account tk-file-dashboard">
-<main class="app">
-<header class="mobile-header" data-i18n-aria-label="common.main_header">
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
+
+<link data-dashboard-css="isolated" href="assets/dashboard.css" rel="stylesheet"/>
+<meta content="#030b1a" name="theme-color"/>
+<link data-main-header-css="shared-dashboard-exact" href="assets/main-header.css" rel="stylesheet"/></head>
+<body class="tk-public tk-page-account tk-file-dashboard tk-main-header-page">
+<main class="app"><header class="mobile-header" data-i18n-aria-label="common.main_header">
 <a class="brand dashboard-header-brand" data-i18n-aria-label="common.home" href="index.html">
-  <span class="dashboard-header-brand__logo">
-    <img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
-  </span>
-  <span class="dashboard-header-brand__copy">
-    <strong>Tonton Kondo</strong>
-    <span>PARYAJ</span>
-  </span>
+<span class="dashboard-header-brand__logo">
+<img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/>
+</span>
+<span class="dashboard-header-brand__copy">
+<strong>Tonton Kondo</strong>
+<span>PARYAJ</span>
+</span>
 </a>
 <div class="wallet-chip" data-i18n-aria-label="common.user_balance">
 <span>
@@ -49,39 +51,30 @@
 <span class="badge notifications-badge" hidden="">0</span>
 </a>
 <div class="user-menu-wrap" id="userMenuWrap">
-  <button
-    aria-expanded="false"
-    aria-haspopup="menu"
-    class="action-btn user-button"
-    data-i18n-aria-label="common.user_menu"
-    id="userMenuButton"
-    type="button"
-  >
-    <span class="user-avatar" id="userAvatar">U</span>
-  </button>
+<button aria-expanded="false" aria-haspopup="menu" class="action-btn user-button" data-i18n-aria-label="common.user_menu" id="userMenuButton" type="button">
+<span class="user-avatar" id="userAvatar">U</span>
+</button>
+<div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
+<a class="user-menu-link" href="tickets.html">Tickets</a>
+<a class="user-menu-link" href="history.html">Historique</a>
+<a class="user-menu-link" href="results.html">Résultats</a>
+<a class="user-menu-link" href="deposit.html">Dépôt</a>
+<a class="user-menu-link" href="withdraw.html">Retrait</a>
+<a class="user-menu-link" href="wallet.html">Portefeuille</a>
+<a class="user-menu-link" href="profile.html">Profil</a>
+<a class="user-menu-link" href="settings.html">Paramètres</a>
+<div class="user-menu-divider"></div>
+<button class="user-menu-link user-menu-logout" id="logoutMenuBtn" type="button">Déconnexion</button>
+</div>
+</div>
+</div>
+</header><div class="mobile-auth-bar" id="mobileAuthBar">
+<div class="mobile-auth-bar__guest" hidden="" id="mobileGuestActions">
+<a class="mobile-auth-bar__button" href="login-register/login.html">Connexion</a>
+<a class="mobile-auth-bar__button mobile-auth-bar__button--primary" href="login-register/register.html">Inscription</a>
+</div>
+</div>
 
-  <div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
-  <a class="user-menu-link" href="tickets.html">Tickets</a>
-  <a class="user-menu-link" href="history.html">Historique</a>
-  <a class="user-menu-link" href="results.html">Résultats</a>
-  <a class="user-menu-link" href="deposit.html">Dépôt</a>
-  <a class="user-menu-link" href="withdraw.html">Retrait</a>
-  <a class="user-menu-link" href="wallet.html">Portefeuille</a>
-  <a class="user-menu-link" href="profile.html">Profil</a>
-  <a class="user-menu-link" href="settings.html">Paramètres</a>
-  <div class="user-menu-divider"></div>
-  <button class="user-menu-link user-menu-logout" id="logoutMenuBtn" type="button">Déconnexion</button>
-</div>
-</div>
-</div>
-</header>
-
-<div class="mobile-auth-bar" id="mobileAuthBar">
-  <div class="mobile-auth-bar__guest" id="mobileGuestActions" hidden>
-    <a class="mobile-auth-bar__button" href="login-register/login.html">Connexion</a>
-    <a class="mobile-auth-bar__button mobile-auth-bar__button--primary" href="login-register/register.html">Inscription</a>
-  </div>
-</div>
 
 <nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <section class="shell">
@@ -211,7 +204,7 @@
 <script src="js/i18n.js"></script>
 <script src="js/auth-config.js"></script>
 <script src="js/auth.js"></script>
-<script src="js/auth-guard.js"></script>
+<script src="js/auth-guard.js"></script><script src="js/main-header.js"></script>
 <script>
     const dashboardTranslationState = {
       dashboardData: null,
@@ -632,118 +625,6 @@ if (userAvatar) {
     })();
   </script>
 
-<script id="dashboard-user-menu-controller">
-(function () {
-  function getElements() {
-    return {
-      wrap: document.getElementById('userMenuWrap'),
-      button: document.getElementById('userMenuButton'),
-      menu: document.getElementById('userMenu'),
-      logout: document.getElementById('logoutMenuBtn')
-    };
-  }
 
-  function setMenuState(open) {
-    const { button, menu } = getElements();
-    if (!button || !menu) return;
-
-    menu.classList.toggle('open', open);
-    menu.hidden = !open;
-    menu.setAttribute('aria-hidden', String(!open));
-    button.setAttribute('aria-expanded', String(open));
-  }
-
-  function toggleMenu() {
-    const { menu } = getElements();
-    if (!menu) return;
-    setMenuState(!menu.classList.contains('open'));
-  }
-
-  // Initialisation explicite.
-  function initialize() {
-    const { wrap, button, menu } = getElements();
-    if (!wrap || !button || !menu) return;
-
-    wrap.hidden = false;
-    menu.hidden = true;
-    menu.classList.remove('open');
-    menu.setAttribute('aria-hidden', 'true');
-    button.setAttribute('aria-expanded', 'false');
-    button.style.pointerEvents = 'auto';
-    button.style.cursor = 'pointer';
-  }
-
-  // Capture phase : fonctionne même si un autre script arrête la propagation.
-  document.addEventListener('click', function (event) {
-    const button = event.target.closest('#userMenuButton');
-    const menu = event.target.closest('#userMenu');
-    const wrap = event.target.closest('#userMenuWrap');
-
-    if (button) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      toggleMenu();
-      return;
-    }
-
-    if (menu || wrap) {
-      return;
-    }
-
-    setMenuState(false);
-  }, true);
-
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-      setMenuState(false);
-      document.getElementById('userMenuButton')?.focus();
-    }
-  });
-
-  document.addEventListener('click', async function (event) {
-    const logout = event.target.closest('#logoutMenuBtn');
-    if (!logout) return;
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    try {
-      if (typeof window.logoutUser === 'function') {
-        const result = await window.logoutUser();
-        if (result?.ok !== false) {
-          window.location.href = 'login-register/login.html';
-        }
-        return;
-      }
-
-      if (window.supabaseClient?.auth?.signOut) {
-        await window.supabaseClient.auth.signOut();
-      }
-
-      window.location.href = 'login-register/login.html';
-    } catch (error) {
-      console.error('Erreur de déconnexion :', error);
-    }
-  }, true);
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initialize, { once: true });
-  } else {
-    initialize();
-  }
-
-  // Réinitialise le bouton si auth-guard modifie le header après le chargement.
-  window.addEventListener('load', initialize, { once: true });
-  window.setTimeout(initialize, 500);
-})();
-</script>
-
-<script id="mobile-auth-bar-controller">
-(function(){
-async function updateMobileAuthBar(){const guest=document.getElementById('mobileGuestActions');if(!guest)return;try{const user=typeof window.getCurrentUserAsync==='function'?await window.getCurrentUserAsync():(typeof window.getCurrentUser==='function'?window.getCurrentUser():null);guest.hidden=Boolean(user);}catch(e){console.warn("État auth mobile indisponible",e);guest.hidden=false;}}
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',updateMobileAuthBar,{once:true});}else{updateMobileAuthBar();}
-window.addEventListener('auth:changed',updateMobileAuthBar);window.addEventListener('pageshow',updateMobileAuthBar);
-})();
-</script>
 </body>
 </html>
