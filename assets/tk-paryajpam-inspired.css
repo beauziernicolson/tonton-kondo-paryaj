@@ -1565,81 +1565,14 @@ body.tk-file-dashboard .header-actions{
 }
 
 
-
-/* ===== Dashboard mobile final ===== */
 @media (max-width:768px){
-
-  /* 1. Masquer le texte de préparation */
-  .player-status,
-  .player-status-text,
-  .header-status,
-  .status-chip,
-  .welcome-chip{
-    display:none!important;
-  }
-
-  /* 2. Remplacer la top-bar */
-  .top-bar,
-  .topbar,
-  .main-nav,
-  .desktop-nav{
-    display:none!important;
-  }
-
-  .mobile-auth-bar{
-    display:flex!important;
-    justify-content:space-between!important;
-    align-items:center!important;
-    gap:12px!important;
-    padding:8px 12px!important;
-    background:#071a35!important;
-  }
-
-  .mobile-auth-bar .login-btn,
-  .mobile-auth-bar .logout-btn{
-    display:inline-flex!important;
-  }
-
-  /* 3. Aucun débordement */
-  html,body{
-    overflow-x:hidden!important;
-  }
-
-  .app,
-  .page,
-  .dashboard-container,
-  .dashboard-grid,
-  .dashboard-content,
-  .content{
-    width:100%!important;
-    max-width:100%!important;
-    overflow-x:hidden!important;
-  }
-
-  .dashboard-grid{
-    display:grid!important;
-    grid-template-columns:1fr!important;
-    gap:14px!important;
-  }
-
-  .card,
-  .panel,
-  .summary-card,
-  .stat-card{
-    width:100%!important;
-    min-width:0!important;
-  }
-
-  img{
-    max-width:100%!important;
-    height:auto!important;
-  }
-
-  /* 4. Masquer jeux populaires */
-  #popular-games,
-  .popular-games,
-  .games-popular,
-  .popular-games-section{
-    display:none!important;
-  }
+body.tk-file-dashboard .dashboard-header-brand__logo{width:50px!important;height:47px!important;flex:0 0 50px!important;padding:6px!important;}
+body.tk-file-dashboard .dashboard-header-brand__logo img{width:calc(100% + 3px)!important;height:calc(100% + 3px)!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:center!important;}
+body.tk-file-dashboard .mobile-auth-bar{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:42px!important;margin:0 0 12px!important;padding:6px 10px!important;background:#071a35!important;border-top:1px solid rgba(255,255,255,.08)!important;border-bottom:1px solid rgba(255,255,255,.08)!important;box-sizing:border-box!important;}
+body.tk-file-dashboard .mobile-auth-bar__guest[hidden]{display:none!important}
+body.tk-file-dashboard .mobile-auth-bar__guest{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:auto!important;margin:0 auto!important;}
+body.tk-file-dashboard .mobile-auth-bar__button{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:30px!important;padding:5px 11px!important;border-radius:7px!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.07)!important;color:#fff!important;text-decoration:none!important;font-size:12px!important;font-weight:800!important;line-height:1!important;}
+body.tk-file-dashboard .mobile-auth-bar__button--primary{background:#ffd21f!important;color:#071a35!important;border-color:#ffd21f!important;}
+body.tk-file-dashboard .mobile-auth-bar .login-btn,body.tk-file-dashboard .mobile-auth-bar .logout-btn,body.tk-file-dashboard .mobile-auth-bar #mobileLogoutBtn{display:none!important;}
+html,body{overflow-x:hidden!important}
 }

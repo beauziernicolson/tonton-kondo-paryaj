@@ -76,9 +76,11 @@
 </div>
 </header>
 
-<div class="mobile-auth-bar" style="display:none">
-  <a class="login-btn action-btn" href="profile.html">Profil</a>
-  <button class="logout-btn action-btn" id="mobileLogoutBtn" type="button">Déconnexion</button>
+<div class="mobile-auth-bar" id="mobileAuthBar">
+  <div class="mobile-auth-bar__guest" id="mobileGuestActions" hidden>
+    <a class="mobile-auth-bar__button" href="login-register/login.html">Connexion</a>
+    <a class="mobile-auth-bar__button mobile-auth-bar__button--primary" href="login-register/register.html">Inscription</a>
+  </div>
 </div>
 
 <nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
@@ -736,5 +738,12 @@ if (userAvatar) {
 })();
 </script>
 
+<script id="mobile-auth-bar-controller">
+(function(){
+async function updateMobileAuthBar(){const guest=document.getElementById('mobileGuestActions');if(!guest)return;try{const user=typeof window.getCurrentUserAsync==='function'?await window.getCurrentUserAsync():(typeof window.getCurrentUser==='function'?window.getCurrentUser():null);guest.hidden=Boolean(user);}catch(e){console.warn("État auth mobile indisponible",e);guest.hidden=false;}}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',updateMobileAuthBar,{once:true});}else{updateMobileAuthBar();}
+window.addEventListener('auth:changed',updateMobileAuthBar);window.addEventListener('pageshow',updateMobileAuthBar);
+})();
+</script>
 </body>
 </html>
