@@ -8,3 +8,26 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 window.SUPABASE_URL = SUPABASE_URL;
 window.SUPABASE_ANON_KEY = SUPABASE_ANON_KEY;
+
+/*
+ * Étape 9C — charge le module RPC des cinq jeux traditionnels avant
+ * les anciens scripts de page. Aucun jeu n’est masqué ou désactivé.
+ */
+(function loadTraditionalGamesSecurity() {
+  const currentScript = document.currentScript;
+
+  if (!currentScript?.src) {
+    console.error('Impossible de localiser traditional-games-secure.js.');
+    return;
+  }
+
+  const secureModuleUrl = new URL(
+    'traditional-games-secure.js',
+    currentScript.src
+  ).href;
+
+  document.write(
+    '<script src="' + secureModuleUrl
+      + '" data-tk-step9c="traditional-games-secure"><\/script>'
+  );
+})();
