@@ -104,7 +104,7 @@
       .tk-risk-admin p { color: #aebbd0; }
       .tk-risk-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
       }
       .tk-risk-card {
@@ -202,6 +202,74 @@
         border-radius: 10px;
         background: rgba(255, 210, 31, .07);
         color: #fff7da;
+      }
+      .tk-risk-alert {
+        margin-top: 14px;
+        padding: 14px;
+        border: 1px solid rgba(255, 93, 108, .32);
+        border-radius: 16px;
+        background: rgba(255, 93, 108, .10);
+        color: #ffe8eb;
+        font-weight: 800;
+        line-height: 1.55;
+      }
+      .tk-risk-control {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, .10);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, .035);
+      }
+      .tk-risk-control__copy strong {
+        display: block;
+        color: #fff;
+      }
+      .tk-risk-control__copy span {
+        display: block;
+        margin-top: 4px;
+        color: #aebbd0;
+        font-size: 12px;
+      }
+      .tk-risk-control__button {
+        min-height: 44px;
+        padding: 10px 14px;
+        border: 1px solid rgba(255, 93, 108, .34);
+        border-radius: 13px;
+        background: rgba(255, 93, 108, .12);
+        color: #ffe8eb;
+        font: inherit;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .tk-risk-control__button[data-mode="resume"] {
+        border-color: rgba(70, 227, 111, .30);
+        background: rgba(70, 227, 111, .10);
+        color: #e4ffec;
+      }
+      .tk-risk-control__button:disabled {
+        opacity: .55;
+        cursor: wait;
+      }
+      .tk-risk-status {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 9px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 900;
+      }
+      .tk-risk-status--active {
+        color: #dfffea;
+        background: rgba(70, 227, 111, .10);
+      }
+      .tk-risk-status--suspended {
+        color: #ffe1e5;
+        background: rgba(255, 93, 108, .12);
       }
       .tk-risk-empty {
         padding: 12px 0;
@@ -476,7 +544,7 @@
       return 'Le montant minimum est de 20 HTG par ligne.';
     }
     if (/réserve|reserve|fonds|exposition|exposure|risque|dépass/i.test(message)) {
-      return 'Cette mise dépasserait le fonds disponible pour payer les gagnants.';
+      return 'Le service de surveillance du risque a rencontré une erreur. Rechargez la page puis réessayez.';
     }
     if (/tirage actif introuvable|horaire.*non configuré/i.test(message)) {
       return 'Ce tirage n’est pas correctement configuré.';
@@ -768,7 +836,7 @@
 
     const value = Number(percent || 0);
 
-    if (value >= 100) return 'Limite atteinte';
+    if (value >= 100) return 'Dépassement du fonds de référence';
     if (value >= 90) return 'Risque élevé';
     if (value >= 80) return 'Vigilance';
 
@@ -779,7 +847,7 @@
     const list = Array.isArray(positions) ? positions.slice(0, 15) : [];
 
     if (!list.length) {
-      return '<div class="tk-risk-empty">Aucun numéro proche de la limite pour le moment.</div>';
+      return '<div class="tk-risk-empty">Aucun jeu, numéro ou combinaison surveillé pour le moment.</div>';
     }
 
     return `<div class="tk-risk-positions">${list.map((position) => {
@@ -797,7 +865,8 @@
         ?? 0
       );
       const percent = (
-        position['pourcentage de la réserve']
+        position['pourcentage du fonds de référence']
+        ?? position['pourcentage de la réserve']
         ?? position.percentage
         ?? 0
       );
@@ -806,13 +875,13 @@
         <article class="tk-risk-position">
           <strong>${game} — numéro ${number}</strong><br>
           Paiement maximal observé : ${formatMoney(payment)}
-          · Part du fonds : ${Number(percent || 0).toFixed(1)} %
+          · Part du fonds de référence : ${Number(percent || 0).toFixed(1)} %
         </article>
       `;
     }).join('')}</div>`;
   }
 
-  function renderRiskAdmin(registers, rejections) {
+  function renderRiskAdmin(registers, alerts, rejections, gameStatus) {
     global.document.getElementById('tk-risk-admin')?.remove();
 
     const container = global.document.createElement('section');
@@ -820,7 +889,11 @@
     container.className = 'tk-risk-admin';
 
     const normalizedRegisters = Array.isArray(registers) ? registers : [];
+    const normalizedAlerts = Array.isArray(alerts) ? alerts : [];
     const normalizedRejections = Array.isArray(rejections) ? rejections : [];
+    const normalizedStatus = gameStatus && typeof gameStatus === 'object'
+      ? gameStatus
+      : {};
 
     const highestRisk = [...normalizedRegisters].sort(
       (left, right) => (
@@ -829,11 +902,16 @@
       )
     )[0] || null;
 
-    const reserve = Number(highestRisk?.reserve_amount ?? 0);
+    const referenceFund = Number(highestRisk?.reserve_amount ?? 100000);
     const engaged = Number(highestRisk?.risk_engaged ?? 0);
-    const remaining = Number(
-      highestRisk?.risk_remaining ?? reserve
+    const maxPossiblePayout = Number(
+      highestRisk?.max_possible_payout ?? engaged
     );
+    const exceededBy = Number(
+      highestRisk?.exceeded_by
+      ?? Math.max(engaged - referenceFund, 0)
+    );
+    const affectedBets = Number(highestRisk?.affected_bets_count ?? 0);
     const usedPercent = Number(
       highestRisk?.reserve_used_percent ?? 0
     );
@@ -841,17 +919,20 @@
       usedPercent,
       highestRisk?.risk_level
     );
+    const allEnabled = normalizedStatus.all_enabled !== false;
+    const statusLabel = allEnabled
+      ? 'Nouvelles mises actives'
+      : 'Nouvelles mises suspendues';
 
     const registerRows = normalizedRegisters.length
       ? normalizedRegisters.map((row) => `
           <tr>
             <td>${escapeHtml(row.draw_name || 'Tirage')}</td>
             <td>${escapeHtml(row.draw_date || '—')}</td>
+            <td>${formatMoney(row.max_possible_payout)}</td>
             <td>${formatMoney(row.risk_engaged)}</td>
-            <td>${formatMoney(row.risk_remaining)}</td>
-            <td>${Number(
-              row.reserve_used_percent || 0
-            ).toFixed(1)} %</td>
+            <td>${formatMoney(row.exceeded_by)}</td>
+            <td>${Number(row.affected_bets_count || 0)}</td>
             <td>
               <span class="tk-risk-level ${riskLevelClass(
                 row.reserve_used_percent
@@ -866,60 +947,145 @@
             </td>
           </tr>
         `).join('')
-      : '<tr><td colspan="6">Aucun risque engagé.</td></tr>';
+      : '<tr><td colspan="7">Aucun risque engagé.</td></tr>';
 
-    const rejectionRows = normalizedRejections.length
-      ? normalizedRejections.map((row) => `
+    const alertRows = normalizedAlerts.length
+      ? normalizedAlerts.map((row) => `
           <tr>
             <td>${formatDate(row.created_at)}</td>
             <td>${escapeHtml(row.game_type || 'Jeu')}</td>
             <td>${escapeHtml(row.draw_name || '—')}</td>
             <td>${formatMoney(row.requested_amount)}</td>
+            <td>${formatMoney(row.risk_after)}</td>
             <td>${formatMoney(row.exceeded_by)}</td>
-            <td>${escapeHtml(
-              row.reason
-              || 'Le fonds disponible aurait été dépassé.'
-            )}</td>
           </tr>
         `).join('')
-      : '<tr><td colspan="6">Aucune mise refusée pour dépassement du fonds.</td></tr>';
+      : '<tr><td colspan="6">Aucun dépassement accepté enregistré.</td></tr>';
+
+    const historicalRejections = normalizedRejections.length
+      ? `
+        <h3 style="margin-top:18px;">Anciens refus liés à la réserve</h3>
+        <p>
+          Historique conservé à titre d’audit. La réserve n’est plus
+          utilisée pour refuser de nouvelles mises.
+        </p>
+        <div class="tk-risk-table-wrap">
+          <table class="tk-risk-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Jeu</th>
+                <th>Tirage</th>
+                <th>Mise</th>
+                <th>Dépassement</th>
+                <th>Ancienne raison</th>
+              </tr>
+            </thead>
+            <tbody>${normalizedRejections.map((row) => `
+              <tr>
+                <td>${formatDate(row.created_at)}</td>
+                <td>${escapeHtml(row.game_type || 'Jeu')}</td>
+                <td>${escapeHtml(row.draw_name || '—')}</td>
+                <td>${formatMoney(row.requested_amount)}</td>
+                <td>${formatMoney(row.exceeded_by)}</td>
+                <td>${escapeHtml(row.reason || 'Ancien refus financier')}</td>
+              </tr>
+            `).join('')}</tbody>
+          </table>
+        </div>
+      `
+      : '';
+
+    const warning = exceededBy > 0
+      ? `
+        <div class="tk-risk-alert" role="alert">
+          Attention : les gains potentiels de ce tirage dépassent
+          actuellement le fonds de référence.<br><br>
+          Assurez-vous que les moyens nécessaires seront disponibles
+          pour payer les gagnants.
+        </div>
+      `
+      : '';
 
     container.innerHTML = `
       <div class="tk-risk-admin__head">
         <div>
-          <h2>Protection du fonds des gagnants</h2>
+          <h2>Surveillance de l’exposition financière</h2>
           <p>
-            Risque maximal engagé par les jeux traditionnels,
-            sans masquer ni désactiver les jeux.
+            Le fonds de référence sert à informer l’administration.
+            Il ne bloque pas automatiquement une mise valide.
           </p>
         </div>
-        <span class="tk-risk-level ${riskLevelClass(usedPercent)}">
-          ${escapeHtml(level)}
-        </span>
+        <div style="display:grid;gap:8px;justify-items:end;">
+          <span class="tk-risk-level ${riskLevelClass(usedPercent)}">
+            ${escapeHtml(level)}
+          </span>
+          <span class="tk-risk-status ${
+            allEnabled
+              ? 'tk-risk-status--active'
+              : 'tk-risk-status--suspended'
+          }">
+            ${statusLabel}
+          </span>
+        </div>
       </div>
 
       <div class="tk-risk-grid">
         <article class="tk-risk-card">
-          <span>Fonds de réserve</span>
-          <strong>${formatMoney(reserve)}</strong>
+          <span>Fonds de référence</span>
+          <strong>${formatMoney(referenceFund)}</strong>
         </article>
         <article class="tk-risk-card">
-          <span>Risque déjà engagé</span>
+          <span>Gain maximal possible</span>
+          <strong>${formatMoney(maxPossiblePayout)}</strong>
+        </article>
+        <article class="tk-risk-card">
+          <span>Risque engagé</span>
           <strong>${formatMoney(engaged)}</strong>
         </article>
         <article class="tk-risk-card">
-          <span>Risque encore disponible</span>
-          <strong>${formatMoney(remaining)}</strong>
+          <span>Dépassement éventuel</span>
+          <strong>${formatMoney(exceededBy)}</strong>
         </article>
         <article class="tk-risk-card">
-          <span>Pourcentage utilisé</span>
-          <strong>${usedPercent.toFixed(1)} %</strong>
+          <span>Montant supplémentaire qui pourrait être nécessaire</span>
+          <strong>${formatMoney(exceededBy)}</strong>
+        </article>
+        <article class="tk-risk-card">
+          <span>Nombre de mises concernées</span>
+          <strong>${affectedBets}</strong>
         </article>
       </div>
 
+      ${warning}
+
       <div class="tk-risk-explanation">
-        Les jeux restent accessibles. Une mise est refusée uniquement
-        lorsque son paiement maximal dépasserait la réserve configurée.
+        Règle appliquée : le risque financier est informatif, pas
+        bloquant. Une mise valide est acceptée même si l’exposition
+        dépasse ${formatMoney(referenceFund)}.
+      </div>
+
+      <div class="tk-risk-control">
+        <div class="tk-risk-control__copy">
+          <strong>Contrôle d’urgence des nouvelles mises</strong>
+          <span>
+            Cette action suspend ou réactive manuellement les cinq jeux.
+            Elle ne modifie aucun multiplicateur.
+          </span>
+        </div>
+        <button
+          class="tk-risk-control__button"
+          id="tk-emergency-toggle"
+          type="button"
+          data-next-enabled="${allEnabled ? 'false' : 'true'}"
+          data-mode="${allEnabled ? 'suspend' : 'resume'}"
+        >
+          ${
+            allEnabled
+              ? 'Suspendre temporairement les nouvelles mises'
+              : 'Réactiver les nouvelles mises'
+          }
+        </button>
       </div>
 
       <h3 style="margin-top:18px;">Situation par tirage</h3>
@@ -929,9 +1095,10 @@
             <tr>
               <th>Tirage</th>
               <th>Date</th>
+              <th>Gain maximal</th>
               <th>Risque engagé</th>
-              <th>Risque restant</th>
-              <th>Utilisation</th>
+              <th>Dépassement</th>
+              <th>Mises concernées</th>
               <th>Niveau</th>
             </tr>
           </thead>
@@ -939,10 +1106,10 @@
         </table>
       </div>
 
-      <h3 style="margin-top:18px;">Numéros surveillés</h3>
+      <h3 style="margin-top:18px;">Jeux, numéros et combinaisons surveillés</h3>
       ${renderPositions(highestRisk?.positions)}
 
-      <h3 style="margin-top:18px;">Historique des mises refusées</h3>
+      <h3 style="margin-top:18px;">Dépassements acceptés</h3>
       <div class="tk-risk-table-wrap">
         <table class="tk-risk-table">
           <thead>
@@ -951,13 +1118,15 @@
               <th>Jeu</th>
               <th>Tirage</th>
               <th>Mise</th>
+              <th>Risque après</th>
               <th>Dépassement</th>
-              <th>Raison</th>
             </tr>
           </thead>
-          <tbody>${rejectionRows}</tbody>
+          <tbody>${alertRows}</tbody>
         </table>
       </div>
+
+      ${historicalRejections}
     `;
 
     const anchor = global.document.querySelector(
@@ -975,6 +1144,44 @@
         || global.document.body
       ).prepend(container);
     }
+  }
+
+  function wireEmergencyControl(client) {
+    const button = global.document.getElementById('tk-emergency-toggle');
+    if (!button || !client?.rpc) return;
+
+    button.addEventListener('click', async () => {
+      const nextEnabled = button.dataset.nextEnabled === 'true';
+      const actionLabel = nextEnabled
+        ? 'réactiver les nouvelles mises'
+        : 'suspendre temporairement les nouvelles mises';
+
+      const confirmed = global.confirm(
+        `Confirmer : ${actionLabel} sur Borlette, Mariage, Lotto 3, Lotto 4 et Lotto 5 ?`
+      );
+      if (!confirmed) return;
+
+      const originalLabel = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Mise à jour…';
+
+      try {
+        const { error } = await client.rpc(
+          'set_traditional_games_enabled',
+          { p_enabled: nextEnabled }
+        );
+        if (error) throw error;
+        await loadAdminRisk();
+      } catch (error) {
+        console.error('Contrôle d’urgence des jeux :', error);
+        button.disabled = false;
+        button.textContent = originalLabel;
+        global.alert(
+          error?.message
+          || 'Impossible de modifier le statut des jeux.'
+        );
+      }
+    });
   }
 
   async function loadAdminRisk() {
