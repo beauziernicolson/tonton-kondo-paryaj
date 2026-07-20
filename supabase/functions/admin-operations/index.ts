@@ -7,6 +7,8 @@ const ALLOWED_ORIGINS = new Set([
   "https://www.tontonkondoparyaj.com",
   "https://tonton-kondo-paryaj.vercel.app",
   "https://tonton-kondo-paryaj-n75s.vercel.app",
+  "http://127.0.0.1:5500",
+  "http://localhost:5500",
 ]);
 
 const BASE_HEADERS: Record<string, string> = {

@@ -6,8 +6,11 @@ const ALLOWED_ORIGINS = new Set([
   "https://www.tontonkondoparyaj.com",
   "https://tonton-kondo-paryaj.vercel.app",
   "https://tonton-kondo-paryaj-n75s.vercel.app",
+  "https://tonton-kondo-paryaj-d9bfh4yvb-nicko07-projects.vercel.app",
+  "http://127.0.0.1:5500",
+  "http://localhost:5500",
 ]);
-const VERCEL_PREVIEW_ORIGIN_RE = /^https:\/\/tonton-kondo-paryaj-[a-z0-9-]+-nicko07-projects\.vercel\.app$/i;
+
 const EXPECTED_PROVIDER_ORIGIN = "https://plopplop.solutionip.app";
 const METHODS = new Set(["moncash", "natcash", "kashpaw", "all"]);
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -19,11 +22,22 @@ const BASE_HEADERS = {
   "X-Content-Type-Options": "nosniff",
 };
 
-function cors(req) {
+function cors(req: Request): Record<string, string> | null {
   const origin = req.headers.get("Origin");
-  if (!origin) return { ...BASE_HEADERS };
-  if (!ALLOWED_ORIGINS.has(origin) && !VERCEL_PREVIEW_ORIGIN_RE.test(origin)) return null;
-  return { ...BASE_HEADERS, "Access-Control-Allow-Origin": origin, Vary: "Origin" };
+
+  if (!origin) {
+    return { ...BASE_HEADERS };
+  }
+
+  if (!ALLOWED_ORIGINS.has(origin)) {
+    return null;
+  }
+
+  return {
+    ...BASE_HEADERS,
+    "Access-Control-Allow-Origin": origin,
+    "Vary": "Origin",
+  };
 }
 function json(req, data, status = 200) {
   return new Response(JSON.stringify(data), {
