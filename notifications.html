@@ -623,7 +623,7 @@
       const unreadTotal = document.getElementById('unreadTotal');
       const visibleTotal = document.getElementById('visibleTotal');
       const activeFilter = document.getElementById('activeFilter');
-      const notificationBadge = document.getElementById('notificationBadge');
+      const notificationBadge = document.querySelector('.notifications-badge');
       const notificationHint = document.getElementById('notificationHint');
       const loadMoreButton = document.getElementById('loadMoreNotifications');
       const markAllReadButton = document.getElementById('markAllRead');
@@ -812,8 +812,10 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
 
         state.unreadCount = Number(data || 0);
         unreadTotal.textContent = String(state.unreadCount);
-        notificationBadge.textContent = String(state.unreadCount);
-        notificationBadge.hidden = state.unreadCount <= 0;
+        if (notificationBadge) {
+          notificationBadge.textContent = String(state.unreadCount);
+          notificationBadge.hidden = state.unreadCount <= 0;
+        }
       }
 
       async function loadNotifications(reset = false) {
