@@ -62,6 +62,13 @@ $$;
 COMMENT ON FUNCTION public.is_super_admin() IS
  'Vérifie si l’utilisateur connecté est super administrateur.';
 
+GRANT EXECUTE ON FUNCTION public.has_admin_access() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_super_admin() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.has_admin_access() TO anon;
+GRANT EXECUTE ON FUNCTION public.is_admin() TO anon;
+GRANT EXECUTE ON FUNCTION public.is_super_admin() TO anon;
+
 -- -----------------------------------------------------------------------------
 -- profiles
 -- -----------------------------------------------------------------------------
