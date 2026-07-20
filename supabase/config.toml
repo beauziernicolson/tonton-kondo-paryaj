@@ -1,2 +1,11 @@
-﻿[functions.admin-operations]
+[functions.plopplop-create-payment]
+verify_jwt = true
+
+[functions.plopplop-verify-payment]
+verify_jwt = true
+
+[functions.plopplop-create-withdrawal]
+verify_jwt = true
+
+[functions.plopplop-verify-withdrawal]
 verify_jwt = true

@@ -1,0 +1,86 @@
+{
+  "passed": 20,
+  "failed": 0,
+  "tests": [
+    {
+      "name": "strict allowlisted HTTPS",
+      "passed": true
+    },
+    {
+      "name": "strict unknown domain",
+      "passed": true
+    },
+    {
+      "name": "provider HTTPS mode accepts public domain",
+      "passed": true
+    },
+    {
+      "name": "HTTP",
+      "passed": true
+    },
+    {
+      "name": "javascript",
+      "passed": true
+    },
+    {
+      "name": "data",
+      "passed": true
+    },
+    {
+      "name": "file",
+      "passed": true
+    },
+    {
+      "name": "credentials embedded",
+      "passed": true
+    },
+    {
+      "name": "malformed",
+      "passed": true
+    },
+    {
+      "name": "localhost",
+      "passed": true
+    },
+    {
+      "name": "dot local",
+      "passed": true
+    },
+    {
+      "name": "private 10/8",
+      "passed": true
+    },
+    {
+      "name": "private 172.16/12",
+      "passed": true
+    },
+    {
+      "name": "private 192.168/16",
+      "passed": true
+    },
+    {
+      "name": "loopback IPv4",
+      "passed": true
+    },
+    {
+      "name": "link-local IPv4",
+      "passed": true
+    },
+    {
+      "name": "loopback IPv6",
+      "passed": true
+    },
+    {
+      "name": "link-local IPv6",
+      "passed": true
+    },
+    {
+      "name": "unique-local IPv6 fc",
+      "passed": true
+    },
+    {
+      "name": "unique-local IPv6 fd",
+      "passed": true
+    }
+  ]
+}

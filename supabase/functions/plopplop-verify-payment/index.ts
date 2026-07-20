@@ -7,389 +7,235 @@ const ALLOWED_ORIGINS = new Set([
   "https://tonton-kondo-paryaj.vercel.app",
   "https://tonton-kondo-paryaj-n75s.vercel.app",
 ]);
-
+const VERCEL_PREVIEW_ORIGIN_RE = /^https:\/\/tonton-kondo-paryaj-[a-z0-9-]+-nicko07-projects\.vercel\.app$/i;
 const EXPECTED_PROVIDER_ORIGIN = "https://plopplop.solutionip.app";
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-const BASE_HEADERS: Record<string, string> = {
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const BASE_HEADERS = {
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Max-Age": "86400",
   "Cache-Control": "no-store",
   "X-Content-Type-Options": "nosniff",
 };
 
-function corsHeaders(req: Request): Record<string, string> | null {
+function cors(req) {
   const origin = req.headers.get("Origin");
   if (!origin) return { ...BASE_HEADERS };
-  if (!ALLOWED_ORIGINS.has(origin)) return null;
+  if (!ALLOWED_ORIGINS.has(origin) && !VERCEL_PREVIEW_ORIGIN_RE.test(origin)) return null;
   return { ...BASE_HEADERS, "Access-Control-Allow-Origin": origin, Vary: "Origin" };
 }
-
-function json(req: Request, data: unknown, status = 200): Response {
+function json(req, data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: {
-      ...(corsHeaders(req) ?? BASE_HEADERS),
-      "Content-Type": "application/json; charset=utf-8",
-    },
+    headers: { ...(cors(req) ?? BASE_HEADERS), "Content-Type": "application/json; charset=utf-8" },
   });
 }
-
-function cleanString(value: unknown, max = 500): string | null {
+function clean(value, max = 500) {
   if (value === null || value === undefined) return null;
   const text = String(value).trim();
-  if (!text) return null;
-  return text.slice(0, max);
+  return text ? text.slice(0, max) : null;
 }
-
-function deepFind(payload: unknown, wantedKeys: string[]): unknown {
-  const wanted = new Set(wantedKeys.map((key) => key.toLowerCase()));
-  const queue: Array<{ value: unknown; depth: number }> = [{ value: payload, depth: 0 }];
+function deepFind(payload, keys) {
+  const wanted = new Set(keys.map((key) => key.toLowerCase()));
+  const queue = [{ value: payload, depth: 0 }];
   let visited = 0;
-
-  while (queue.length && visited < 200) {
-    const current = queue.shift()!;
-    visited += 1;
-    if (current.depth > 4 || current.value === null) continue;
-
-    if (Array.isArray(current.value)) {
-      for (const item of current.value.slice(0, 20)) {
-        queue.push({ value: item, depth: current.depth + 1 });
-      }
+  while (queue.length && visited++ < 200) {
+    const { value, depth } = queue.shift();
+    if (depth > 4 || value === null || value === undefined) continue;
+    if (Array.isArray(value)) {
+      for (const item of value.slice(0, 20)) queue.push({ value: item, depth: depth + 1 });
       continue;
     }
-
-    if (typeof current.value !== "object") continue;
-
-    for (const [key, value] of Object.entries(current.value as Record<string, unknown>)) {
-      if (wanted.has(key.toLowerCase()) && value !== null && value !== undefined) {
-        return value;
-      }
-      queue.push({ value, depth: current.depth + 1 });
+    if (typeof value !== "object") continue;
+    for (const [key, item] of Object.entries(value)) {
+      if (wanted.has(key.toLowerCase()) && item !== null && item !== undefined) return item;
+      queue.push({ value: item, depth: depth + 1 });
     }
   }
-
   return null;
 }
-
-function firstString(payload: unknown, keys: string[], max = 500): string | null {
-  return cleanString(deepFind(payload, keys), max);
+function firstString(payload, keys, max = 500) {
+  return clean(deepFind(payload, keys), max);
 }
-
-function firstNumber(payload: unknown, keys: string[]): number | null {
-  const value = deepFind(payload, keys);
-  const number = typeof value === "number" ? value : Number(String(value ?? "").trim());
-  return Number.isFinite(number) ? number : null;
+function firstNumber(payload, keys) {
+  const raw = deepFind(payload, keys);
+  const value = typeof raw === "number" ? raw : Number(String(raw ?? "").trim());
+  return Number.isFinite(value) ? value : null;
 }
-
-function safeProviderSummary(payload: unknown, httpStatus: number): Record<string, unknown> {
+function summary(payload, httpStatus) {
   return {
     http_status: httpStatus,
     received_at: new Date().toISOString(),
-    trans_status: firstString(payload, ["trans_status", "transaction_status", "status"], 80),
+    trans_status: firstString(payload, ["trans_status"], 80),
     message: firstString(payload, ["message", "msg", "detail", "description"], 500),
     refference_id: firstString(payload, ["refference_id", "reference_id", "reference"], 200),
-    transaction_id: firstString(
-      payload,
-      ["transaction_id", "trans_id", "id_transaction", "transactionId"],
-      200,
-    ),
+    transaction_id: firstString(payload, ["id_transaction", "transaction_id", "trans_id", "transactionId"], 200),
     montant: firstNumber(payload, ["montant", "amount", "transaction_amount"]),
-    payment_method: firstString(payload, ["payment_method", "method"], 80),
+    payment_method: firstString(payload, ["method", "payment_method"], 80),
   };
 }
-
-function providerConfig():
-  | { ok: true; clientId: string; baseUrl: URL }
-  | { ok: false } {
-  const clientId = cleanString(Deno.env.get("PLOPPLOP_CLIENT_ID"), 500);
-  const rawBase = cleanString(Deno.env.get("PLOPPLOP_BASE_URL"), 2_000);
-  if (!clientId || !rawBase) return { ok: false };
-
+function config() {
+  const clientId = clean(Deno.env.get("PLOPPLOP_CLIENT_ID"), 500);
+  const rawBase = clean(Deno.env.get("PLOPPLOP_BASE_URL"), 2000);
+  if (!clientId || !rawBase) return null;
   try {
     const baseUrl = new URL(rawBase.endsWith("/") ? rawBase : `${rawBase}/`);
-    if (baseUrl.protocol !== "https:" || baseUrl.origin !== EXPECTED_PROVIDER_ORIGIN) {
-      return { ok: false };
-    }
-    return { ok: true, clientId, baseUrl };
+    if (baseUrl.protocol !== "https:" || baseUrl.origin !== EXPECTED_PROVIDER_ORIGIN) return null;
+    return { clientId, baseUrl };
   } catch {
-    return { ok: false };
+    return null;
   }
 }
-
-function normalizeStatus(value: string | null): "ok" | "no" | "unknown" {
-  const status = String(value ?? "").trim().toLowerCase();
-  if (["ok", "success", "successful", "completed", "paid", "true", "1"].includes(status)) {
-    return "ok";
-  }
-  if (["no", "pending", "processing", "unpaid", "false", "0", "en_attente"].includes(status)) {
-    return "no";
-  }
-  return "unknown";
+function statusOf(value) {
+  const valueLower = String(value ?? "").trim().toLowerCase();
+  return valueLower === "ok" || valueLower === "no" ? valueLower : "unknown";
+}
+function sameMoney(a, b) {
+  return Number.isFinite(Number(a)) && Number.isFinite(Number(b)) &&
+    Math.round(Number(a) * 100) === Math.round(Number(b) * 100);
+}
+async function manualReview(admin, deposit, userId, code, transactionId, amount, providerSummary, alertType = "provider_error") {
+  const { error } = await admin.rpc("flag_plopplop_manual_review", {
+    p_deposit_id: deposit.id,
+    p_user_id: userId,
+    p_alert_type: alertType,
+    p_error_code: code,
+    p_provider_transaction_id: transactionId,
+    p_confirmed_amount: amount,
+    p_provider_response: providerSummary,
+  });
+  if (error) throw error;
+}
+async function transactionUsed(admin, depositId, transactionId) {
+  const { data, error } = await admin.from("plopplop_deposits").select("id")
+    .eq("provider_transaction_id", transactionId).neq("id", depositId).limit(1);
+  if (error) throw error;
+  return Boolean(data?.length);
 }
 
-Deno.serve(async (req: Request) => {
-  const requestCors = corsHeaders(req);
+Deno.serve(async (req) => {
+  const requestCors = cors(req);
   if (!requestCors) return json(req, { error: "Origin not allowed" }, 403);
-
-  if (req.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers: requestCors });
-  }
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: requestCors });
   if (req.method !== "POST") return json(req, { error: "Method not allowed" }, 405);
 
   const authorization = req.headers.get("Authorization");
-  if (!authorization?.startsWith("Bearer ")) {
-    return json(req, { error: "Unauthorized" }, 401);
-  }
+  if (!authorization?.startsWith("Bearer ")) return json(req, { error: "Unauthorized" }, 401);
 
-  const url = Deno.env.get("SUPABASE_URL");
+  const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!url || !anonKey || !serviceKey) {
-    return json(req, { error: "Server configuration error" }, 500);
-  }
+  if (!supabaseUrl || !anonKey || !serviceKey) return json(req, { error: "Server configuration error" }, 500);
 
-  const userClient = createClient(url, anonKey, {
+  const userClient = createClient(supabaseUrl, anonKey, {
     global: { headers: { Authorization: authorization } },
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-      detectSessionInUrl: false,
-    },
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
   });
-
   const { data: authData, error: authError } = await userClient.auth.getUser();
-  if (authError || !authData.user) {
-    return json(req, { error: "Unauthorized" }, 401);
-  }
+  if (authError || !authData.user) return json(req, { error: "Unauthorized" }, 401);
 
-  const config = providerConfig();
-  if (!config.ok) {
-    return json(
-      req,
-      {
-        error: "Payment provider is not configured",
-        retryable: true,
-      },
-      503,
-    );
-  }
+  const provider = config();
+  if (!provider) return json(req, { error: "Payment provider is not configured", retryable: true }, 503);
 
-  let body: Record<string, unknown>;
+  let body;
   try {
-    const parsed = await req.json();
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-      throw new Error("Invalid JSON object");
-    }
-    body = parsed as Record<string, unknown>;
+    body = await req.json();
+    if (!body || typeof body !== "object" || Array.isArray(body)) throw new Error();
   } catch {
     return json(req, { error: "Invalid JSON body" }, 400);
   }
+  const requestId = clean(body.request_id, 36);
+  if (!requestId || !UUID_RE.test(requestId)) return json(req, { error: "A valid request_id UUID is required" }, 400);
 
-  const requestId = cleanString(body.request_id, 36);
-  if (!requestId || !UUID_RE.test(requestId)) {
-    return json(req, { error: "A valid request_id UUID is required" }, 400);
-  }
-
-  const admin = createClient(url, serviceKey, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-      detectSessionInUrl: false,
-    },
+  const admin = createClient(supabaseUrl, serviceKey, {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
   });
-
-  const { data: deposit, error: depositError } = await admin
-    .from("plopplop_deposits")
-    .select(
-      "id,user_id,request_id,provider_reference,provider_transaction_id,amount,confirmed_amount,payment_method,status,payment_url,credited_at",
-    )
-    .eq("request_id", requestId)
-    .eq("user_id", authData.user.id)
-    .maybeSingle();
-
-  if (depositError) {
-    return json(req, { error: "Unable to load deposit" }, 400);
-  }
-  if (!deposit) {
-    return json(req, { error: "Deposit not found" }, 404);
-  }
+  const { data: deposit, error: depositError } = await admin.from("plopplop_deposits")
+    .select("id,user_id,request_id,provider_reference,provider_transaction_id,amount,confirmed_amount,payment_method,status,payment_url,credited_at")
+    .eq("request_id", requestId).eq("user_id", authData.user.id).maybeSingle();
+  if (depositError) return json(req, { error: "Unable to load deposit" }, 400);
+  if (!deposit) return json(req, { error: "Deposit not found" }, 404);
   if (deposit.status === "completed") {
-    return json(req, {
-      success: true,
-      status: "completed",
-      idempotent: true,
-      request_id: requestId,
-      deposit_id: deposit.id,
-      credited_at: deposit.credited_at,
-    });
+    return json(req, { success: true, status: "completed", idempotent: true, request_id: requestId, deposit_id: deposit.id, credited_at: deposit.credited_at });
+  }
+  if (["manual_review", "amount_mismatch"].includes(deposit.status)) {
+    return json(req, { success: false, status: "manual_review", idempotent: true, request_id: requestId, deposit_id: deposit.id }, 409);
   }
 
-  const endpoint = new URL("api/paiement-verify", config.baseUrl);
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 20_000);
+  const localReference = clean(deposit.provider_reference, 200);
+  if (!localReference) {
+    await manualReview(admin, deposit, authData.user.id, "local_reference_missing", null, null, {});
+    return json(req, { error: "Payment requires manual review", status: "manual_review" }, 409);
+  }
 
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 20000);
   try {
-    const providerResponse = await fetch(endpoint, {
+    const response = await fetch(new URL("api/paiement-verify", provider.baseUrl), {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        client_id: config.clientId,
-        refference_id: deposit.provider_reference,
-      }),
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ client_id: provider.clientId, refference_id: localReference }),
       signal: controller.signal,
     });
-
-    const text = await providerResponse.text();
-    let payload: unknown = {};
-    try {
-      payload = text ? JSON.parse(text) : {};
-    } catch {
-      payload = {};
+    const text = await response.text();
+    let payload = null;
+    try { payload = text ? JSON.parse(text) : null; } catch { payload = null; }
+    if (!response.ok) {
+      return json(req, { error: "Payment verification is temporarily unavailable", provider_status: response.status, retryable: true, request_id: requestId }, 503);
     }
 
-    const summary = safeProviderSummary(payload, providerResponse.status);
-    if (!providerResponse.ok) {
-      return json(
-        req,
-        {
-          error: "Payment verification is temporarily unavailable",
-          retryable: true,
-          request_id: requestId,
-        },
-        503,
-      );
-    }
+    const providerSummary = summary(payload, response.status);
+    const transactionId = clean(providerSummary.transaction_id, 200);
+    const confirmedAmount = typeof providerSummary.montant === "number" ? providerSummary.montant : null;
+    const method = clean(providerSummary.payment_method, 80)?.toLowerCase() ?? null;
+    const expectedMethod = clean(deposit.payment_method, 80)?.toLowerCase() ?? null;
+    const returnedReference = clean(providerSummary.refference_id, 200);
+    const storedTransactionId = clean(deposit.provider_transaction_id, 200);
+    const transStatus = statusOf(providerSummary.trans_status);
 
-    const transStatus = normalizeStatus(cleanString(summary.trans_status, 80));
-    const providerReference = cleanString(summary.refference_id, 200);
-    const transactionId = cleanString(summary.transaction_id, 200);
-    const confirmedAmount =
-      typeof summary.montant === "number" && Number.isFinite(summary.montant)
-        ? Number(summary.montant)
-        : null;
-
-    if (providerReference && providerReference !== deposit.provider_reference) {
-      await admin.rpc("flag_plopplop_manual_review", {
-        p_deposit_id: deposit.id,
-        p_user_id: authData.user.id,
-        p_alert_type: "provider_error",
-        p_error_code: "reference_mismatch",
-        p_provider_transaction_id: transactionId,
-        p_confirmed_amount: confirmedAmount,
-        p_provider_response: summary,
-      });
+    const review = async (code, alertType = "provider_error") => {
+      await manualReview(admin, deposit, authData.user.id, code, transactionId, confirmedAmount, providerSummary, alertType);
       return json(req, { error: "Payment requires manual review", status: "manual_review" }, 409);
-    }
+    };
 
-    if (transStatus === "no" || transStatus === "unknown") {
-      const { data: pending } = await admin.rpc("mark_plopplop_pending", {
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) return await review("provider_non_json");
+    if (transStatus === "unknown") return await review("provider_status_missing_or_unknown");
+    if (returnedReference && returnedReference !== localReference) return await review("reference_mismatch");
+    if (confirmedAmount === null) return await review("confirmed_amount_missing");
+    if (!sameMoney(confirmedAmount, deposit.amount)) return await review("confirmed_amount_mismatch");
+    if (!method) return await review("payment_method_missing");
+    if (!expectedMethod || method !== expectedMethod) return await review("payment_method_mismatch");
+    if (!transactionId) return await review("provider_transaction_id_missing");
+    if (storedTransactionId && storedTransactionId !== transactionId) return await review("provider_transaction_id_changed");
+    if (await transactionUsed(admin, deposit.id, transactionId)) return await review("duplicate_provider_transaction", "duplicate_transaction");
+
+    if (transStatus === "no") {
+      const { data: pending, error } = await admin.rpc("mark_plopplop_pending", {
         p_deposit_id: deposit.id,
         p_user_id: authData.user.id,
         p_provider_transaction_id: transactionId,
         p_confirmed_amount: confirmedAmount,
-        p_provider_response: summary,
+        p_provider_response: providerSummary,
       });
-
-      return json(req, {
-        success: true,
-        status: "pending",
-        request_id: requestId,
-        deposit_id: (pending as Record<string, unknown> | null)?.id ?? deposit.id,
-        message: "Payment is still pending",
-      });
+      if (error || !pending) return json(req, { error: "Unable to save pending status", retryable: true }, 503);
+      return json(req, { success: true, status: "pending", request_id: requestId, deposit_id: pending.id, message: "Payment is still pending" });
     }
 
-    if (confirmedAmount === null) {
-      await admin.rpc("flag_plopplop_manual_review", {
-        p_deposit_id: deposit.id,
-        p_user_id: authData.user.id,
-        p_alert_type: "provider_error",
-        p_error_code: "confirmed_amount_missing",
-        p_provider_transaction_id: transactionId,
-        p_confirmed_amount: null,
-        p_provider_response: summary,
-      });
-      return json(req, { error: "Payment requires manual review", status: "manual_review" }, 409);
-    }
-
-    if (Math.round(confirmedAmount * 100) !== Math.round(Number(deposit.amount) * 100)) {
-      await admin.rpc("flag_plopplop_amount_mismatch", {
-        p_deposit_id: deposit.id,
-        p_user_id: authData.user.id,
-        p_provider_transaction_id: transactionId,
-        p_confirmed_amount: confirmedAmount,
-        p_provider_response: summary,
-      });
-      return json(req, { error: "Confirmed amount mismatch", status: "amount_mismatch" }, 409);
-    }
-
-    if (!transactionId) {
-      await admin.rpc("flag_plopplop_manual_review", {
-        p_deposit_id: deposit.id,
-        p_user_id: authData.user.id,
-        p_alert_type: "provider_error",
-        p_error_code: "provider_transaction_id_missing",
-        p_provider_transaction_id: null,
-        p_confirmed_amount: confirmedAmount,
-        p_provider_response: summary,
-      });
-      return json(req, { error: "Payment requires manual review", status: "manual_review" }, 409);
-    }
-
-    const { data: completed, error: completeError } = await admin.rpc(
-      "complete_plopplop_deposit",
-      {
-        p_deposit_id: deposit.id,
-        p_user_id: authData.user.id,
-        p_provider_transaction_id: transactionId,
-        p_confirmed_amount: confirmedAmount,
-        p_provider_response: summary,
-      },
-    );
-
-    if (completeError || !completed) {
-      const message = String(completeError?.message ?? "");
-      const duplicate = message.includes("déjà utilisé") || message.includes("duplicate");
-      await admin.rpc("flag_plopplop_manual_review", {
-        p_deposit_id: deposit.id,
-        p_user_id: authData.user.id,
-        p_alert_type: duplicate ? "duplicate_transaction" : "provider_error",
-        p_error_code: duplicate ? "duplicate_provider_transaction" : "credit_failed",
-        p_provider_transaction_id: transactionId,
-        p_confirmed_amount: confirmedAmount,
-        p_provider_response: summary,
-      });
-      return json(req, { error: "Payment requires manual review", status: "manual_review" }, 409);
-    }
-
-    const saved = completed as Record<string, unknown>;
-    return json(req, {
-      success: true,
-      status: "completed",
-      request_id: requestId,
-      deposit_id: saved.id,
-      credited_at: saved.credited_at,
+    const { data: completed, error } = await admin.rpc("complete_plopplop_deposit", {
+      p_deposit_id: deposit.id,
+      p_user_id: authData.user.id,
+      p_provider_transaction_id: transactionId,
+      p_confirmed_amount: confirmedAmount,
+      p_provider_response: providerSummary,
     });
+    if (error || !completed) {
+      const duplicate = String(error?.message ?? "").toLowerCase().includes("déjà utilisé") || String(error?.message ?? "").toLowerCase().includes("duplicate");
+      return await review(duplicate ? "duplicate_provider_transaction" : "credit_failed", duplicate ? "duplicate_transaction" : "provider_error");
+    }
+    return json(req, { success: true, status: "completed", request_id: requestId, deposit_id: completed.id, credited_at: completed.credited_at });
   } catch (error) {
     const timeout = error instanceof DOMException && error.name === "AbortError";
-    return json(
-      req,
-      {
-        error: timeout
-          ? "Payment verification timed out"
-          : "Payment verification is temporarily unavailable",
-        retryable: true,
-        request_id: requestId,
-      },
-      503,
-    );
+    return json(req, { error: timeout ? "Payment verification timed out" : "Payment verification is temporarily unavailable", retryable: true, request_id: requestId }, 503);
   } finally {
     clearTimeout(timer);
   }

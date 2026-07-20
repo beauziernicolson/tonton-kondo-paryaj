@@ -1,0 +1,5 @@
+[functions.plopplop-create-payment]
+verify_jwt = true
+
+[functions.plopplop-verify-payment]
+verify_jwt = true

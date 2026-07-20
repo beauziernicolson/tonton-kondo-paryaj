@@ -1,0 +1,243 @@
+{
+  "generated_at": "2026-07-20T08:30:18.584Z",
+  "passed": 47,
+  "failed": 0,
+  "total": 47,
+  "results": [
+    {
+      "name": "file:deposit.html",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:withdraw.html",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:js/plopplop-deposit.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:js/plopplop-withdrawal.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:js/plopplop-pending-sync.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:supabase/functions/plopplop-create-payment/index.ts",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:supabase/functions/plopplop-verify-payment/index.ts",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:supabase/functions/plopplop-create-withdrawal/index.ts",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:supabase/functions/plopplop-verify-withdrawal/index.ts",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "file:supabase/migrations/20260720090000_step10c_plopplop_withdrawals.sql",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "frontend:no-client-secret",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "frontend:no-service-role",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "frontend:no-direct-provider-call",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "frontend:no-old-deposit-insert",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "deposit:min-20",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:min-max",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:methods-restricted",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-create-payment/index.ts:auth-get-user",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-create-payment/index.ts:cors-no-star",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-create-payment/index.ts:fixed-provider-origin",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-create-payment/index.ts:typescript-syntax",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-verify-payment/index.ts:auth-get-user",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-verify-payment/index.ts:cors-no-star",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-verify-payment/index.ts:fixed-provider-origin",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-verify-payment/index.ts:typescript-syntax",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-create-withdrawal/index.ts:auth-get-user",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-create-withdrawal/index.ts:cors-no-star",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-create-withdrawal/index.ts:fixed-provider-origin",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-create-withdrawal/index.ts:typescript-syntax",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-verify-withdrawal/index.ts:auth-get-user",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-verify-withdrawal/index.ts:cors-no-star",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-verify-withdrawal/index.ts:fixed-provider-origin",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "supabase/functions/plopplop-verify-withdrawal/index.ts:typescript-syntax",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:hmac-order",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:new-token-each-operation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:no-secret-log",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:post-execute-timeout-pending",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:pre-execute-failure-refunded",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:definitive-provider-failure-refunded",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "withdraw:verify-404-does-not-refund",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sql:rls-enabled",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sql:frontend-write-revoked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sql:service-role-rpcs",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sql:unique-request-id",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sql:unique-provider-transaction",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sql:refund-idempotence",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sql:duplicate-alert-safe",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

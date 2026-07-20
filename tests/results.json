@@ -1,0 +1,74 @@
+{
+  "passed": 17,
+  "failed": 0,
+  "tests": [
+    {
+      "name": "succès complet : création sans crédit puis vérification avec un seul crédit",
+      "passed": true
+    },
+    {
+      "name": "pending : aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "réponse HTTP fournisseur 400 : retryable et aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "réponse HTTP fournisseur 404 : retryable et aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "réponse HTTP fournisseur 429 : retryable et aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "réponse HTTP fournisseur 503 : retryable et aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "timeout : retryable, aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "réponse non JSON : échec sûr, aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "URL absente : création refusée, aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "transaction absente : création refusée, aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "statut absent : manual_review, alerte, aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "méthode différente : manual_review, aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "montant différent : manual_review, aucun crédit",
+      "passed": true
+    },
+    {
+      "name": "transaction fournisseur dupliquée : second dépôt manual_review et aucun deuxième crédit",
+      "passed": true
+    },
+    {
+      "name": "changement inattendu de transaction : manual_review",
+      "passed": true
+    },
+    {
+      "name": "dix vérifications : toujours un seul crédit",
+      "passed": true
+    },
+    {
+      "name": "retry même request_id : une seule création fournisseur",
+      "passed": true
+    }
+  ]
+}
