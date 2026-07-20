@@ -67,6 +67,24 @@
     return true;
   }
 
+  function isRecoverableAuthError(error) {
+    if (!error) {
+      return false;
+    }
+
+    const status = Number(error?.status || error?.statusCode || error?.code || 0);
+    const message = String(error?.message || error?.details || error?.hint || '').toLowerCase();
+    return status === 403
+      || status === 401
+      || message.includes('permission denied')
+      || message.includes('row level security')
+      || message.includes('rls')
+      || message.includes('jwt')
+      || message.includes('expired')
+      || message.includes('invalid claim')
+      || message.includes('not authenticated');
+  }
+
   function saveRedirectTarget(target) {
     const rawValue = String(target || '').trim();
     const normalizedValue = rawValue
@@ -341,73 +359,109 @@
       return { profile: null, wallet: null };
     }
 
-    const { data: existingProfile, error: profileSelectError } = await client
-      .from('profiles')
-      .select('id, full_name, role, phone, status, email')
-      .eq('id', userId)
-      .maybeSingle();
-
-    if (profileSelectError) {
-      throw profileSelectError;
-    }
-
-    const role = String(existingProfile?.role || user?.user_metadata?.role || fallbackRole).toLowerCase();
-    const profilePayload = {
+    const fallbackProfile = {
       id: userId,
-      full_name: existingProfile?.full_name || user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || 'Utilisateur',
-      phone: existingProfile?.phone || user?.user_metadata?.phone || null,
-      email: existingProfile?.email || user?.email || null,
-      role,
-      status: existingProfile?.status || 'active',
-      updated_at: new Date().toISOString(),
+      full_name: user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || 'Utilisateur',
+      phone: user?.user_metadata?.phone || null,
+      email: user?.email || null,
+      role: String(user?.user_metadata?.role || fallbackRole).toLowerCase(),
+      status: 'active',
     };
 
-    if (!existingProfile) {
-      const { error: profileInsertError } = await client.from('profiles').insert(profilePayload);
-      if (profileInsertError) {
-        throw profileInsertError;
+    const fallbackWallet = {
+      user_id: userId,
+      balance: 0,
+      currency: 'HTG',
+      status: 'active',
+    };
+
+    try {
+      const { data: existingProfile, error: profileSelectError } = await client
+        .from('profiles')
+        .select('id, full_name, role, phone, status, email')
+        .eq('id', userId)
+        .maybeSingle();
+
+      if (profileSelectError) {
+        if (isRecoverableAuthError(profileSelectError)) {
+          return { profile: fallbackProfile, wallet: fallbackWallet };
+        }
+        throw profileSelectError;
       }
-    } else {
-      const { error: profileUpdateError } = await client.from('profiles').update(profilePayload).eq('id', userId);
-      if (profileUpdateError) {
-        throw profileUpdateError;
+
+      if (!existingProfile) {
+        const role = String(user?.user_metadata?.role || fallbackRole).toLowerCase();
+        const profilePayload = {
+          id: userId,
+          full_name: user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || 'Utilisateur',
+          phone: user?.user_metadata?.phone || null,
+          email: user?.email || null,
+          role,
+          status: 'active',
+          updated_at: new Date().toISOString(),
+        };
+        const { error: profileInsertError } = await client.from('profiles').insert(profilePayload);
+        if (profileInsertError) {
+          if (isRecoverableAuthError(profileInsertError)) {
+            return { profile: fallbackProfile, wallet: fallbackWallet };
+          }
+          throw profileInsertError;
+        }
       }
-    }
 
-    const { data: existingWallet, error: walletSelectError } = await client
-      .from('wallets')
-      .select('id, user_id, balance, currency, status')
-      .eq('user_id', userId)
-      .maybeSingle();
+      const { data: existingWallet, error: walletSelectError } = await client
+        .from('wallets')
+        .select('id, user_id, balance, currency, status')
+        .eq('user_id', userId)
+        .maybeSingle();
 
-    if (walletSelectError) {
-      throw walletSelectError;
-    }
-
-    if (!existingWallet) {
-      const { error: walletInsertError } = await client.from('wallets').insert({
-        user_id: userId,
-        balance: 0,
-        currency: 'HTG',
-        status: 'active',
-      });
-
-      if (walletInsertError) {
-        throw walletInsertError;
+      if (walletSelectError) {
+        if (isRecoverableAuthError(walletSelectError)) {
+          return { profile: fallbackProfile, wallet: fallbackWallet };
+        }
+        throw walletSelectError;
       }
+
+      if (!existingWallet) {
+        const { error: walletInsertError } = await client.from('wallets').insert({
+          user_id: userId,
+          balance: 0,
+          currency: 'HTG',
+          status: 'active',
+        });
+
+        if (walletInsertError) {
+          if (isRecoverableAuthError(walletInsertError)) {
+            return { profile: fallbackProfile, wallet: fallbackWallet };
+          }
+          throw walletInsertError;
+        }
+      }
+
+      const { data: finalProfile, error: finalProfileError } = await client
+        .from('profiles')
+        .select('id, full_name, role, phone, status, email')
+        .eq('id', userId)
+        .maybeSingle();
+
+      if (finalProfileError) {
+        if (isRecoverableAuthError(finalProfileError)) {
+          return { profile: fallbackProfile, wallet: existingWallet || fallbackWallet };
+        }
+        throw finalProfileError;
+      }
+
+      return {
+        profile: finalProfile || fallbackProfile,
+        wallet: existingWallet || fallbackWallet,
+      };
+    } catch (error) {
+      if (isRecoverableAuthError(error)) {
+        return { profile: fallbackProfile, wallet: fallbackWallet };
+      }
+      console.warn('ensureProfileAndWallet failed:', error);
+      return { profile: fallbackProfile, wallet: fallbackWallet };
     }
-
-    const { data: finalProfile, error: finalProfileError } = await client
-      .from('profiles')
-      .select('id, full_name, role, phone, status, email')
-      .eq('id', userId)
-      .maybeSingle();
-
-    if (finalProfileError) {
-      throw finalProfileError;
-    }
-
-    return { profile: finalProfile, wallet: existingWallet || { user_id: userId, balance: 0, currency: 'HTG', status: 'active' } };
   }
 
   async function loginWithGoogle() {
@@ -700,55 +754,57 @@
   }
 
   async function getCurrentUserAsync() {
-    const client = global.supabaseClient || (await getSupabaseClient());
-    const { data, error } = await client.auth.getSession();
+    try {
+      const client = global.supabaseClient || (await getSupabaseClient());
+      const { data, error } = await client.auth.getSession();
 
-    if (error || !data.session?.user) {
+      if (error || !data.session?.user) {
+        saveCurrentUser(null);
+        return null;
+      }
+
+      const user = data.session.user;
+      const ensured = await ensureProfileAndWallet(user, 'client');
+      const profileData = ensured.profile;
+
+      if (!profileData) {
+        saveCurrentUser(null);
+        return null;
+      }
+
+      const currentUser = {
+        id: user.id,
+        email: profileData.email || user.email,
+        role: String(profileData.role || 'client').toLowerCase(),
+        full_name: profileData.full_name || user.user_metadata?.full_name || user.email,
+        phone: profileData.phone || user.user_metadata?.phone || null,
+      };
+
+      saveCurrentUser(currentUser);
+      return currentUser;
+    } catch (error) {
+      console.warn('getCurrentUserAsync failed:', error);
       saveCurrentUser(null);
       return null;
     }
-
-    const user = data.session.user;
-    const ensured = await ensureProfileAndWallet(user, 'client');
-    const profileData = ensured.profile;
-
-    if (!profileData) {
-      saveCurrentUser(null);
-      return null;
-    }
-
-    const currentUser = {
-      id: user.id,
-      email: profileData.email || user.email,
-      role: String(profileData.role || 'client').toLowerCase(),
-      full_name: profileData.full_name || user.user_metadata?.full_name || user.email,
-      phone: profileData.phone || user.user_metadata?.phone || null,
-    };
-
-    saveCurrentUser(currentUser);
-    return currentUser;
   }
 
   async function getAuthenticatedProfile() {
-    const client = global.supabaseClient || (await getSupabaseClient());
-    const { data: sessionData, error: sessionError } = await client.auth.getSession();
+    try {
+      const client = global.supabaseClient || (await getSupabaseClient());
+      const { data: sessionData, error: sessionError } = await client.auth.getSession();
 
-    if (sessionError || !sessionData.session?.user) {
-      saveCurrentUser(null);
-      return null;
-    }
+      if (sessionError || !sessionData.session?.user) {
+        saveCurrentUser(null);
+        return null;
+      }
 
-    const user = sessionData.session.user;
-    const ensured = await ensureProfileAndWallet(user, 'client');
-    const profile = ensured.profile;
-    const wallet = ensured.wallet;
+      const user = sessionData.session.user;
+      const ensured = await ensureProfileAndWallet(user, 'client');
+      const profile = ensured.profile;
+      const wallet = ensured.wallet;
 
-    return {
-      session: sessionData.session,
-      user,
-      profile,
-      wallet,
-      currentUser: {
+      const currentUser = {
         id: user.id,
         email: profile?.email || user.email,
         role: String(profile?.role || 'client').toLowerCase(),
@@ -757,8 +813,22 @@
         provider: user.app_metadata?.provider || user.user_metadata?.provider || 'email',
         created_at: user.created_at || null,
         avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
-      },
-    };
+      };
+
+      saveCurrentUser(currentUser);
+
+      return {
+        session: sessionData.session,
+        user,
+        profile,
+        wallet,
+        currentUser,
+      };
+    } catch (error) {
+      console.warn('getAuthenticatedProfile failed:', error);
+      saveCurrentUser(null);
+      return null;
+    }
   }
 
   async function getAuthenticatedWallet() {
@@ -767,50 +837,75 @@
   }
 
   async function getAuthenticatedDashboardData() {
-    const client = global.supabaseClient || (await getSupabaseClient());
-    const { data: sessionData, error: sessionError } = await client.auth.getSession();
+    try {
+      const client = global.supabaseClient || (await getSupabaseClient());
+      const { data: sessionData, error: sessionError } = await client.auth.getSession();
 
-    if (sessionError || !sessionData.session?.user) {
+      if (sessionError || !sessionData.session?.user) {
+        saveCurrentUser(null);
+        return null;
+      }
+
+      const user = sessionData.session.user;
+      const ensured = await ensureProfileAndWallet(user, 'client');
+      const profile = ensured.profile;
+      const wallet = ensured.wallet;
+
+      const { data: transactionsData, error: transactionsError } = await client
+        .from('transactions')
+        .select('id, type, amount, status, created_at, description')
+        .eq('user_id', user.id)
+        .in('type', ['deposit', 'withdrawal'])
+        .order('created_at', { ascending: false })
+        .limit(4);
+
+      if (transactionsError) {
+        if (isRecoverableAuthError(transactionsError)) {
+          return {
+            session: sessionData.session,
+            user,
+            profile,
+            wallet,
+            transactions: [],
+            currentUser: {
+              id: user.id,
+              email: profile?.email || user.email,
+              role: String(profile?.role || user.user_metadata?.role || 'client').toLowerCase(),
+              full_name: profile?.full_name || user.user_metadata?.full_name || user.user_metadata?.name || user.email,
+              phone: profile?.phone || user.user_metadata?.phone || null,
+              provider: user.app_metadata?.provider || user.user_metadata?.provider || 'email',
+              avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
+              created_at: user.created_at || null,
+            },
+          };
+        }
+        throw transactionsError;
+      }
+
+      const role = String(profile?.role || user.user_metadata?.role || 'client').toLowerCase();
+
+      return {
+        session: sessionData.session,
+        user,
+        profile,
+        wallet,
+        transactions: transactionsData || [],
+        currentUser: {
+          id: user.id,
+          email: profile?.email || user.email,
+          role,
+          full_name: profile?.full_name || user.user_metadata?.full_name || user.user_metadata?.name || user.email,
+          phone: profile?.phone || user.user_metadata?.phone || null,
+          provider: user.app_metadata?.provider || user.user_metadata?.provider || 'email',
+          avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
+          created_at: user.created_at || null,
+        },
+      };
+    } catch (error) {
+      console.warn('getAuthenticatedDashboardData failed:', error);
       saveCurrentUser(null);
       return null;
     }
-
-    const user = sessionData.session.user;
-    const ensured = await ensureProfileAndWallet(user, 'client');
-    const profile = ensured.profile;
-    const wallet = ensured.wallet;
-
-    const { data: transactionsData, error: transactionsError } = await client
-      .from('transactions')
-      .select('id, type, amount, status, created_at, description')
-      .eq('user_id', user.id)
-      .in('type', ['deposit', 'withdrawal'])
-      .order('created_at', { ascending: false })
-      .limit(4);
-
-    if (transactionsError) {
-      throw transactionsError;
-    }
-
-    const role = String(profile?.role || user.user_metadata?.role || 'client').toLowerCase();
-
-    return {
-      session: sessionData.session,
-      user,
-      profile,
-      wallet,
-      transactions: transactionsData || [],
-      currentUser: {
-        id: user.id,
-        email: profile?.email || user.email,
-        role,
-        full_name: profile?.full_name || user.user_metadata?.full_name || user.user_metadata?.name || user.email,
-        phone: profile?.phone || user.user_metadata?.phone || null,
-        provider: user.app_metadata?.provider || user.user_metadata?.provider || 'email',
-        avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
-        created_at: user.created_at || null,
-      },
-    };
   }
 
   function getTransactionTypeLabel(type) {
