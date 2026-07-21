@@ -13,6 +13,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 
+supabase/.temp/
+
 *.log
 coverage/
 dist/
