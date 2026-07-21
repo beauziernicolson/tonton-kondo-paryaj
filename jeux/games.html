@@ -298,8 +298,8 @@
     }
   }
 </style>
-</head>
-<body class="tk-public tk-page-games tk-file-games">
+<link href="../assets/main-header.css" rel="stylesheet"/></head>
+<body class="tk-public tk-page-games tk-file-games tk-main-header-page">
 <main class="app">
 <header class="game-header" id="gameHeader">
 <a aria-label="Accueil Tonton Kondo" class="game-header__brand" href="../index.html">
@@ -316,7 +316,7 @@
 <a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Jeux</span>
 </div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a class="is-active" href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="navigation.main"><a data-i18n="navigation.home" href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a class="is-active" data-i18n="navigation.games" href="games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a data-i18n="navigation.results" href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a data-i18n="navigation.tickets" href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a data-i18n="navigation.wallet" href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a data-i18n="navigation.deposit" href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a data-i18n="navigation.withdraw" href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <section class="hero-card">
 <div class="eyebrow">Catalogue</div>
 <h1>Jeux disponibles</h1>
@@ -642,6 +642,7 @@
 })();
 </script>
 <script src="../js/auth-guard.js"></script>
+<script src="../js/plopplop-pending-sync.js"></script>
 <script>
     function toggleUserMenu(event) {
       event?.stopPropagation();

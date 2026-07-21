@@ -90,13 +90,6 @@
     return container;
   }
 
-  function setHeaderVisibility() {
-    const walletChip = global.document?.querySelector('.wallet-chip');
-    if (walletChip) {
-      walletChip.style.display = 'none';
-    }
-  }
-
   function ensureNotificationsBadgeStyle() {
     if (!global.document || !global.document.head) {
       return;
@@ -267,10 +260,10 @@
     const balance = wallet?.balance != null ? Number(wallet.balance).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR') : '0';
     const currency = wallet?.currency || 'HTG';
 
+    const walletBalanceEl = global.document?.getElementById('wallet-balance');
+    if (walletBalanceEl) walletBalanceEl.textContent = `${balance} ${currency}`;
+
     container.innerHTML = `
-      <div class="wallet-chip" style="display:flex; margin-right:6px;">
-        <span><strong>${balance} ${currency}</strong><span>Solde disponible</span></span>
-      </div>
       <a class="header-auth-btn btn" href="${getRelativeHref('profile.html')}" style="display:inline-flex; align-items:center; justify-content:center; line-height:1; text-align:center; vertical-align:middle; margin:0;">Profil</a>
       <button class="header-auth-btn btn" type="button" data-auth-logout="true" style="display:inline-flex; align-items:center; justify-content:center; line-height:1; text-align:center; vertical-align:middle; margin:0;">Déconnexion</button>
     `;
@@ -331,7 +324,6 @@
       return;
     }
 
-    setHeaderVisibility();
     bindUserMenu();
 
     try {

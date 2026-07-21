@@ -1,0 +1,75 @@
+
+/* Tonton Kondo — Notifications light surface */
+html body.tk-file-notifications{
+  background:#f4f7fb!important;
+  background-image:none!important;
+  color:#071a35!important;
+}
+
+body.tk-file-notifications .page{
+  width:min(100%,1180px)!important;
+  padding-top:18px!important;
+}
+
+body.tk-file-notifications .card,
+body.tk-file-notifications .notification-item,
+body.tk-file-notifications .notification-list,
+body.tk-file-notifications .filter-panel,
+body.tk-file-notifications .summary-card{
+  background:#ffffff!important;
+  color:#071a35!important;
+  border-color:#d7e2ee!important;
+  box-shadow:0 14px 34px rgba(7,26,53,.09)!important;
+}
+
+body.tk-file-notifications .hero,
+body.tk-file-notifications .hero h1,
+body.tk-file-notifications .hero h2,
+body.tk-file-notifications .notification-title,
+body.tk-file-notifications .notification-copy h3,
+body.tk-file-notifications .card h1,
+body.tk-file-notifications .card h2,
+body.tk-file-notifications .card h3{
+  color:#071a35!important;
+  -webkit-text-fill-color:#071a35!important;
+}
+
+body.tk-file-notifications .hero p,
+body.tk-file-notifications .notification-meta,
+body.tk-file-notifications .notification-message,
+body.tk-file-notifications .card p,
+body.tk-file-notifications .muted{
+  color:#65778d!important;
+  -webkit-text-fill-color:#65778d!important;
+}
+
+body.tk-file-notifications .filter-btn,
+body.tk-file-notifications .notification-actions button,
+body.tk-file-notifications .notification-actions a{
+  background:#f7f9fc!important;
+  color:#071a35!important;
+  border-color:#ccd9e7!important;
+}
+
+body.tk-file-notifications .filter-btn.active,
+body.tk-file-notifications .primary-btn{
+  background:#ffd21f!important;
+  color:#071a35!important;
+  border-color:#ffd21f!important;
+}
+
+body.tk-file-notifications .notification-item.is-unread{
+  border-left:4px solid #ffd21f!important;
+  background:#fffdf3!important;
+}
+
+body.tk-file-notifications .notification-icon{
+  background:#edf5ff!important;
+  color:#0759a8!important;
+}
+
+@media(max-width:760px){
+  body.tk-file-notifications .page{
+    padding-inline:10px!important;
+  }
+}

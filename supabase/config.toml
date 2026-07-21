@@ -9,3 +9,6 @@ verify_jwt = true
 
 [functions.plopplop-verify-withdrawal]
 verify_jwt = true
+
+[functions.plopplop-reconcile-pending]
+verify_jwt = false

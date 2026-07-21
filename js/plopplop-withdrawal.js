@@ -110,21 +110,23 @@
 
   async function parseFunctionError(error) {
     let status = null;
+    let reachedServer = false;
     try {
       const response = error?.context;
       if (response && typeof response.clone === 'function') {
+        reachedServer = true;
         const body = await response.clone().json();
         status = body?.status ? String(body.status) : null;
-        if (body?.error === 'Withdrawal provider is not configured') return { message: tr('sensitive.withdraw.provider_unavailable'), status };
-        if (body?.error === 'Insufficient wallet balance') return { message: tr('sensitive.withdraw.insufficient'), status };
-        if (body?.error === 'request_id conflict') return { message: tr('sensitive.withdraw.request_conflict'), status };
-        if (status && STATUS_MESSAGES[status]) return { message: STATUS_MESSAGES[status], status };
-        if (body?.error) return { message: String(body.error), status };
+        if (body?.error === 'Withdrawal provider is not configured') return { message: tr('sensitive.withdraw.provider_unavailable'), status, reachedServer };
+        if (body?.error === 'Insufficient wallet balance') return { message: tr('sensitive.withdraw.insufficient'), status, reachedServer };
+        if (body?.error === 'request_id conflict') return { message: tr('sensitive.withdraw.request_conflict'), status, reachedServer };
+        if (status && STATUS_MESSAGES[status]) return { message: STATUS_MESSAGES[status], status, reachedServer };
+        if (body?.error) return { message: String(body.error), status, reachedServer };
       }
     } catch {
       // Le message générique reste sûr.
     }
-    return { message: error?.message || tr('sensitive.withdraw.generic_error'), status };
+    return { message: error?.message || tr('sensitive.withdraw.generic_error'), status, reachedServer };
   }
 
   function ensureStatusPanel() {
@@ -280,6 +282,15 @@
     } catch (error) {
       const failure = await parseFunctionError(error);
       const pending = readPending() || { request_id: requestId, amount, method, recipient };
+      if (!failure.reachedServer && pending.status === 'draft') {
+        // La requête n'a jamais atteint le serveur (réseau/CORS) : rien n'a été réservé,
+        // donc rien à bloquer pour une prochaine tentative.
+        savePending(null);
+        setFeedback(tr('sensitive.withdraw.network_error'), 'error');
+        ensureStatusPanel().hidden = true;
+        await Promise.all([loadHistory(), refreshWallet()]);
+        return;
+      }
       const failureStatus = failure.status || (pending.status === 'draft' ? 'reserved' : pending.status);
       if (FINAL_STATUSES.has(failureStatus)) savePending(null);
       else savePending({ ...pending, status: failureStatus, updated_at: new Date().toISOString() });

@@ -1,0 +1,409 @@
+
+/* =========================================================
+   TONTON KONDO — LOGIN REDESIGN
+   Scope strict : page de connexion uniquement
+   ========================================================= */
+
+body.tk-file-login{
+  min-height:100vh;
+  margin:0;
+  overflow-x:hidden;
+  color:#071a35;
+  background:
+    radial-gradient(circle at 12% 12%,rgba(255,210,31,.17),transparent 27%),
+    radial-gradient(circle at 88% 85%,rgba(37,114,208,.17),transparent 30%),
+    linear-gradient(145deg,#041124 0%,#071a35 48%,#0d315d 100%);
+}
+
+body.tk-file-login::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.22;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:36px 36px;
+}
+
+body.tk-file-login .auth-page{
+  position:relative;
+  z-index:1;
+  width:min(1180px,calc(100% - 32px));
+  min-height:100vh;
+  margin:0 auto;
+  padding:42px 0 30px;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  gap:22px;
+  box-sizing:border-box;
+}
+
+body.tk-file-login .auth-card-redesigned{
+  width:min(620px,100%);
+  padding:32px 42px 38px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:28px;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 30px 80px rgba(0,0,0,.36);
+  backdrop-filter:blur(18px);
+  box-sizing:border-box;
+}
+
+body.tk-file-login .auth-hero-brand{
+  width:100%;
+  margin:0 auto 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  text-decoration:none;
+}
+
+body.tk-file-login .auth-hero-brand__logo{
+  width:92px!important;
+  height:92px!important;
+  flex:0 0 92px;
+  padding:10px;
+  object-fit:contain;
+  border-radius:24px;
+  background:#fff;
+  border:1px solid #d6e2ee;
+  box-shadow:0 14px 30px rgba(7,26,53,.18);
+  box-sizing:border-box;
+}
+
+body.tk-file-login .auth-hero-brand__copy{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  line-height:.95;
+}
+
+body.tk-file-login .auth-hero-brand__copy strong{
+  color:#071a35;
+  font-size:36px;
+  font-weight:950;
+  letter-spacing:-.035em;
+  white-space:nowrap;
+}
+
+body.tk-file-login .auth-hero-brand__copy span{
+  margin-top:11px;
+  color:#bd8600;
+  font-size:13px;
+  font-weight:950;
+  letter-spacing:.38em;
+  text-transform:uppercase;
+}
+
+body.tk-file-login .auth-brand-intro{
+  margin:0 0 25px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:11px;
+}
+
+body.tk-file-login .auth-brand-intro__line{
+  width:42px;
+  height:1px;
+  background:#e1b400;
+}
+
+body.tk-file-login .auth-brand-intro__text{
+  color:#6a7d93;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.20em;
+  text-align:center;
+}
+
+body.tk-file-login .tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:26px;
+  padding:6px;
+  border-radius:15px;
+  background:#edf3f9;
+  border:1px solid #dae4ef;
+}
+
+body.tk-file-login .tab{
+  min-height:46px;
+  border:0;
+  border-radius:11px;
+  color:#53657a;
+  background:transparent;
+  font-weight:850;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+body.tk-file-login .tab.active{
+  color:#071a35;
+  background:#ffd21f;
+  box-shadow:0 8px 20px rgba(255,190,0,.24);
+}
+
+body.tk-file-login .auth-title{
+  margin:0;
+  color:#071a35;
+  font-size:29px;
+  font-weight:950;
+  letter-spacing:-.025em;
+  text-align:center;
+}
+
+body.tk-file-login .auth-subtitle{
+  max-width:460px;
+  margin:9px auto 25px;
+  color:#62748b;
+  font-size:14px;
+  line-height:1.6;
+  text-align:center;
+}
+
+body.tk-file-login .form-group{
+  margin-bottom:17px;
+}
+
+body.tk-file-login .form-label{
+  display:block;
+  margin-bottom:7px;
+  color:#203650;
+  font-size:13px;
+  font-weight:850;
+}
+
+body.tk-file-login .input-wrap{
+  min-height:54px;
+  display:flex;
+  align-items:center;
+  border:1px solid #cbd8e6;
+  border-radius:13px;
+  background:#f9fbfd;
+  transition:.2s ease;
+}
+
+body.tk-file-login .input-wrap:focus-within{
+  border-color:#2679d8;
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(38,121,216,.12);
+}
+
+body.tk-file-login .input-icon{
+  padding-left:15px;
+}
+
+body.tk-file-login .form-input{
+  width:100%;
+  min-width:0;
+  padding:0 13px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#071a35;
+  font-size:15px;
+  box-sizing:border-box;
+}
+
+body.tk-file-login .password-toggle{
+  width:45px;
+  height:45px;
+  margin-right:4px;
+  border:0;
+  border-radius:10px;
+  background:transparent;
+  color:#41546d;
+  cursor:pointer;
+}
+
+body.tk-file-login .hint{
+  margin:6px 2px 0;
+  color:#7a8ba0;
+  font-size:11px;
+}
+
+body.tk-file-login .forgot{
+  margin:-2px 0 17px;
+  text-align:right;
+}
+
+body.tk-file-login .forgot a,
+body.tk-file-login .switch-text a{
+  color:#0759a8;
+  font-weight:850;
+}
+
+body.tk-file-login .primary-btn{
+  width:100%;
+  min-height:53px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(180deg,#ffd21f,#ffba00);
+  color:#071a35;
+  font-size:15px;
+  font-weight:950;
+  cursor:pointer;
+  box-shadow:0 13px 27px rgba(255,187,0,.25);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+
+body.tk-file-login .primary-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 17px 32px rgba(255,187,0,.32);
+}
+
+body.tk-file-login .divider{
+  margin:23px 0 16px;
+  color:#8290a2;
+  font-size:12px;
+  text-align:center;
+}
+
+body.tk-file-login .google-btn{
+  width:100%;
+  min-height:51px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:11px;
+  border:1px solid #cfdbe7;
+  border-radius:13px;
+  background:#fff;
+  color:#203650;
+  font-weight:850;
+  cursor:pointer;
+}
+
+body.tk-file-login .google-icon,
+body.tk-file-login .google-icon svg{
+  width:22px;
+  height:22px;
+}
+
+body.tk-file-login .switch-text{
+  margin:20px 0 0;
+  color:#64758b;
+  text-align:center;
+  font-size:13px;
+}
+
+body.tk-file-login .form-message{
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:10px;
+  background:#e9f8ef;
+  color:#087540;
+  font-size:12px;
+}
+
+body.tk-file-login .form-message.error{
+  background:#fff0f2;
+  color:#bf2940;
+}
+
+body.tk-file-login .trust-bar{
+  width:min(620px,100%);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+body.tk-file-login .trust-item{
+  min-width:0;
+  padding:13px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;
+  background:rgba(4,17,36,.62);
+  color:#fff;
+  backdrop-filter:blur(10px);
+}
+
+body.tk-file-login .trust-icon{
+  flex:0 0 auto;
+}
+
+body.tk-file-login .trust-title{
+  margin:0 0 3px;
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+}
+
+body.tk-file-login .trust-desc{
+  margin:0;
+  color:#aebed1;
+  font-size:9px;
+  line-height:1.35;
+}
+
+@media(max-width:700px){
+  body.tk-file-login .auth-page{
+    width:min(100% - 18px,560px);
+    padding:18px 0 22px;
+    place-items:start stretch;
+  }
+
+  body.tk-file-login .auth-card-redesigned{
+    padding:23px 18px 27px;
+    border-radius:21px;
+  }
+
+  body.tk-file-login .auth-hero-brand{
+    gap:12px;
+  }
+
+  body.tk-file-login .auth-hero-brand__logo{
+    width:72px!important;
+    height:72px!important;
+    flex-basis:72px;
+    padding:8px;
+    border-radius:19px;
+  }
+
+  body.tk-file-login .auth-hero-brand__copy strong{
+    font-size:27px;
+  }
+
+  body.tk-file-login .auth-hero-brand__copy span{
+    font-size:10px;
+    letter-spacing:.30em;
+  }
+
+  body.tk-file-login .auth-title{
+    font-size:24px;
+  }
+
+  body.tk-file-login .trust-bar{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:390px){
+  body.tk-file-login .auth-hero-brand__copy strong{
+    font-size:23px;
+  }
+
+  body.tk-file-login .auth-hero-brand__logo{
+    width:64px!important;
+    height:64px!important;
+    flex-basis:64px;
+  }
+
+  body.tk-file-login .tabs{
+    gap:4px;
+    padding:4px;
+  }
+
+  body.tk-file-login .tab{
+    font-size:12px;
+  }
+}

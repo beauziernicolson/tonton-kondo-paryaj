@@ -218,7 +218,8 @@ Deno.serve(async (req) => {
     if (confirmedAmount === null) return await review("confirmed_amount_missing");
     if (!sameMoney(confirmedAmount, deposit.amount)) return await review("confirmed_amount_mismatch");
     if (!method) return await review("payment_method_missing");
-    if (!expectedMethod || method !== expectedMethod) return await review("payment_method_mismatch");
+    if (!expectedMethod) return await review("payment_method_mismatch");
+    if (expectedMethod !== "all" && method !== expectedMethod) return await review("payment_method_mismatch");
     if (!transactionId) return await review("provider_transaction_id_missing");
     if (storedTransactionId && storedTransactionId !== transactionId) return await review("provider_transaction_id_changed");
     if (await transactionUsed(admin, deposit.id, transactionId)) return await review("duplicate_provider_transaction", "duplicate_transaction");

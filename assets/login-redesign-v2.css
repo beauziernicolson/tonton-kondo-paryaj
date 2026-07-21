@@ -1,0 +1,203 @@
+
+/* =========================================================
+   TONTON KONDO — LOGIN REDESIGN V2
+   ========================================================= */
+html body.tk-file-login{
+  min-height:100vh!important;
+  margin:0!important;
+  overflow-x:hidden!important;
+  color:#071a35!important;
+  background:
+    radial-gradient(circle at 70% 0%,rgba(255,210,31,.12),transparent 24%),
+    radial-gradient(circle at 10% 8%,rgba(57,168,255,.15),transparent 28%),
+    linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%)!important;
+  background-attachment:fixed!important;
+}
+
+body.tk-file-login .auth-page{
+  width:min(100%,1180px)!important;
+  min-height:100vh!important;
+  margin:0 auto!important;
+  padding:30px 18px!important;
+  display:grid!important;
+  place-items:center!important;
+  align-content:center!important;
+  box-sizing:border-box!important;
+}
+
+body.tk-file-login .auth-card-redesigned{
+  width:min(680px,100%)!important;
+  padding:34px 46px 40px!important;
+  border-radius:30px!important;
+  background:rgba(255,255,255,.98)!important;
+  border:1px solid rgba(255,255,255,.38)!important;
+  box-shadow:0 34px 90px rgba(0,0,0,.46)!important;
+  backdrop-filter:blur(18px)!important;
+}
+
+body.tk-file-login .auth-hero-brand-v2{
+  width:100%!important;
+  margin:0 auto 17px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:22px!important;
+  text-decoration:none!important;
+}
+
+body.tk-file-login .auth-hero-brand-v2__logo{
+  width:112px!important;
+  height:112px!important;
+  flex:0 0 112px!important;
+  padding:12px!important;
+  display:block!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:28px!important;
+  background:#ffffff!important;
+  border:1px solid #d3dfeb!important;
+  box-shadow:0 18px 42px rgba(7,26,53,.22)!important;
+  box-sizing:border-box!important;
+}
+
+body.tk-file-login .auth-hero-brand-v2__copy{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  min-width:0!important;
+}
+
+body.tk-file-login .auth-hero-brand-v2__copy strong{
+  display:block!important;
+  color:#071a35!important;
+  -webkit-text-fill-color:#071a35!important;
+  font-size:43px!important;
+  font-weight:950!important;
+  line-height:.92!important;
+  letter-spacing:-.045em!important;
+  white-space:nowrap!important;
+}
+
+body.tk-file-login .auth-hero-brand-v2__copy span{
+  display:block!important;
+  margin-top:13px!important;
+  color:#b67c00!important;
+  -webkit-text-fill-color:#b67c00!important;
+  font-size:14px!important;
+  font-weight:950!important;
+  letter-spacing:.43em!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+}
+
+body.tk-file-login .auth-brand-intro{
+  margin:0 auto 28px!important;
+}
+
+body.tk-file-login .auth-brand-intro__text{
+  color:#5f7187!important;
+  -webkit-text-fill-color:#5f7187!important;
+}
+
+body.tk-file-login .auth-title,
+body.tk-file-login .auth-subtitle{
+  text-align:center!important;
+}
+
+body.tk-file-login .auth-title{
+  font-size:30px!important;
+  color:#071a35!important;
+}
+
+body.tk-file-login .auth-subtitle{
+  max-width:470px!important;
+  margin-inline:auto!important;
+  color:#65778d!important;
+  line-height:1.55!important;
+}
+
+body.tk-file-login .tabs{
+  max-width:480px!important;
+  margin-inline:auto!important;
+}
+
+body.tk-file-login .primary-btn,
+body.tk-file-login .google-btn{
+  min-height:54px!important;
+  border-radius:14px!important;
+}
+
+body.tk-file-login .google-btn{
+  background:#ffffff!important;
+  border:1px solid #cad7e5!important;
+  color:#071a35!important;
+}
+
+body.tk-file-login .switch-text{
+  color:#61748b!important;
+}
+
+body.tk-file-login .trust-bar{
+  width:min(680px,100%)!important;
+}
+
+@media(max-width:720px){
+  body.tk-file-login .auth-page{
+    width:min(100% - 16px,600px)!important;
+    padding:14px 0 22px!important;
+    align-content:start!important;
+  }
+
+  body.tk-file-login .auth-card-redesigned{
+    padding:24px 17px 28px!important;
+    border-radius:22px!important;
+  }
+
+  body.tk-file-login .auth-hero-brand-v2{
+    gap:13px!important;
+  }
+
+  body.tk-file-login .auth-hero-brand-v2__logo{
+    width:78px!important;
+    height:78px!important;
+    flex-basis:78px!important;
+    padding:8px!important;
+    border-radius:20px!important;
+  }
+
+  body.tk-file-login .auth-hero-brand-v2__copy strong{
+    font-size:29px!important;
+  }
+
+  body.tk-file-login .auth-hero-brand-v2__copy span{
+    margin-top:8px!important;
+    font-size:10px!important;
+    letter-spacing:.34em!important;
+  }
+
+  body.tk-file-login .auth-brand-intro__text{
+    font-size:9px!important;
+    letter-spacing:.12em!important;
+  }
+
+  body.tk-file-login .trust-bar{
+    grid-template-columns:1fr!important;
+  }
+}
+
+@media(max-width:380px){
+  body.tk-file-login .auth-hero-brand-v2__logo{
+    width:66px!important;
+    height:66px!important;
+    flex-basis:66px!important;
+  }
+
+  body.tk-file-login .auth-hero-brand-v2__copy strong{
+    font-size:24px!important;
+  }
+
+  body.tk-file-login .auth-hero-brand-v2__copy span{
+    font-size:9px!important;
+  }
+}

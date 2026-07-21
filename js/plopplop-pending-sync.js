@@ -64,7 +64,13 @@
     const { data, error } = await client.functions.invoke(job.fn, {
       body: { request_id: pending.request_id }
     });
-    if (error || !data) return;
+    if (error) {
+      // Une référence introuvable côté serveur ne redeviendra jamais valide :
+      // on nettoie pour ne pas bloquer indéfiniment une nouvelle tentative.
+      if (error?.context?.status === 404) write(job.key, null);
+      return;
+    }
+    if (!data) return;
 
     const status = String(data.status || 'pending');
     if (job.final.has(status)) write(job.key, null);

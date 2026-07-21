@@ -641,3 +641,67 @@ html body.tk-main-header-page #mobileAuthBar.mobile-auth-bar{
   background-color:#071a35!important;
   background-image:none!important;
 }
+
+
+/* FINAL WALLET CHIP CONSISTENCY — all principal pages */
+html body.tk-main-header-page .mobile-header .wallet-chip{
+  min-width:138px!important;
+  min-height:50px!important;
+  padding:7px 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:0!important;
+  border-radius:12px!important;
+  background:#173354!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  box-shadow:none!important;
+  white-space:nowrap!important;
+  box-sizing:border-box!important;
+}
+
+html body.tk-main-header-page .mobile-header .wallet-chip > span{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:1px!important;
+  line-height:1!important;
+}
+
+html body.tk-main-header-page .mobile-header .wallet-chip strong{
+  display:block!important;
+  margin:0!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:17px!important;
+  font-weight:950!important;
+  line-height:1.05!important;
+}
+
+html body.tk-main-header-page .mobile-header .wallet-chip #wallet-label,
+html body.tk-main-header-page .mobile-header .wallet-chip span span{
+  display:block!important;
+  margin:0!important;
+  color:#d7e3f2!important;
+  -webkit-text-fill-color:#d7e3f2!important;
+  font-size:11px!important;
+  line-height:1.15!important;
+}
+
+@media(max-width:760px){
+  html body.tk-main-header-page .mobile-header .wallet-chip{
+    min-width:116px!important;
+    min-height:45px!important;
+    padding:6px 10px!important;
+  }
+
+  html body.tk-main-header-page .mobile-header .wallet-chip strong{
+    font-size:15px!important;
+  }
+
+  html body.tk-main-header-page .mobile-header .wallet-chip #wallet-label,
+  html body.tk-main-header-page .mobile-header .wallet-chip span span{
+    font-size:10px!important;
+  }
+}

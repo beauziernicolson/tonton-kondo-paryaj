@@ -145,7 +145,7 @@
 </div>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<a class="action-btn" data-i18n-aria-label="common.promotions" type="button" href="promotion.html">
+<a class="action-btn" data-i18n-aria-label="common.promotions" href="promotion.html">
 <svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
 <span class="badge">3</span>
 </a>
@@ -184,7 +184,7 @@
 <h1 data-i18n="wallet_v3.title">Gérez votre argent en toute simplicité</h1>
 <p data-i18n="wallet_v3.description">Consultez votre solde, ajoutez des fonds ou demandez un retrait depuis un seul espace.</p>
 <div class="stat-grid">
-<div class="stat-card"><small data-i18n="wallet_v3.available_label">Disponible pour jouer ou effectuer un retrait</small><strong data-i18n="wallet.header_balance_loading" id="wallet-balance">Chargement de votre portefeuille…</strong><span data-i18n="common.available_balance" id="wallet-caption">Solde disponible</span></div>
+<div class="stat-card"><small data-i18n="wallet_v3.available_label">Disponible pour jouer ou effectuer un retrait</small><strong data-i18n="wallet.header_balance_loading" id="wallet-page-balance">Chargement de votre portefeuille…</strong><span data-i18n="common.available_balance" id="wallet-caption">Solde disponible</span></div>
 <div class="stat-card"><small data-i18n="wallet_v3.currency_label">Devise du compte</small><strong data-i18n="wallet.currency_placeholder" id="wallet-currency">HTG</strong><span data-i18n="wallet_v3.currency_help">Toutes vos opérations sont enregistrées dans cette devise.</span></div>
 <div class="stat-card"><small data-i18n="wallet_v3.status_label">État du portefeuille</small><strong data-i18n="wallet.status_placeholder" id="wallet-status">active</strong><span data-i18n="wallet_v3.status_help">Votre portefeuille est prêt à être utilisé.</span></div>
 </div>
@@ -209,6 +209,7 @@
 <script src="js/auth-config.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/auth-guard.js"></script><script src="js/main-header.js"></script>
+<script src="js/plopplop-pending-sync.js"></script>
 <script>
     const refreshWalletBtn = document.getElementById('refresh-wallet-btn');
     const walletPageState = {
@@ -296,10 +297,10 @@
       const status = wallet?.status || 'active';
       const balanceText = formatWalletBalance(balance, currency);
 
-      const balanceEl = document.getElementById('wallet-balance');
+      const balanceEl = document.getElementById('wallet-page-balance');
       if (balanceEl) balanceEl.textContent = balanceText;
 
-      const headerBalanceEl = document.getElementById('header-wallet-balance');
+      const headerBalanceEl = document.getElementById('wallet-balance');
       if (headerBalanceEl) headerBalanceEl.textContent = balanceText;
 
       const currencyEl = document.getElementById('wallet-currency');

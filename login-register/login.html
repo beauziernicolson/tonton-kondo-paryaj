@@ -114,17 +114,21 @@
       .trust-bar { display:none; }
     }
   </style>
-<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><link href="../assets/login-redesign.css" rel="stylesheet"/><link href="../assets/login-redesign-v2.css" rel="stylesheet"/></head>
 <body class="tk-public tk-page-auth tk-file-login">
 <main class="auth-page">
-<section class="auth-card">
-<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html">
-<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
-<span class="brand-text">
+<section class="auth-card auth-card-redesigned">
+<a aria-label="Accueil Tonton Kondo" class="brand auth-hero-brand-v2" href="../index.html">
+<img alt="Logo Tonton Kondo" class="auth-hero-brand-v2__logo" src="../assets/reallogo.png"/>
+<span class="auth-hero-brand-v2__copy">
 <strong>Tonton Kondo</strong>
-<span>Paryaj</span>
+<span>PARYAJ</span>
 </span>
-</a>
+</a><div class="auth-brand-intro">
+<span class="auth-brand-intro__line"></span>
+<span class="auth-brand-intro__text" data-i18n="auth.brand_tagline">PLATEFORME DE JEUX &amp; PARYAJ</span>
+<span class="auth-brand-intro__line"></span>
+</div>
 <div class="tabs">
 <button class="tab active" data-i18n="auth.login_tab" id="loginTab" type="button"><span>↪</span>Connexion</button>
 <button class="tab" data-i18n="auth.register_tab" id="signupTab" type="button"><span>👤+</span>Inscription</button>
@@ -158,10 +162,10 @@
 <div class="forgot">
 <a data-i18n="auth.forgot_password" href="forgot-password.html">Mot de passe oublié ?</a>
 </div>
-<button class="primary-btn" id="submitBtn" type="submit">Se connecter →</button>
+<button class="primary-btn" data-i18n="auth.login_button_arrow" id="submitBtn" type="submit">Se connecter →</button>
 <div class="form-message" id="formMessage"></div>
 <div class="divider" data-i18n="auth.or">ou</div>
-<button class="google-btn" id="googleBtn" type="button">
+<button class="google-btn" data-i18n="auth.continue_google" id="googleBtn" type="button">
 <span aria-hidden="true" class="google-icon">
 <svg focusable="false" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M21.805 10.023H12v4.03h5.383c-.23 1.22-.94 2.26-2.01 2.96l3.25 2.52c1.9-1.74 3.0-4.31 3.0-7.37 0-.66-.06-1.3-.18-1.91z" fill="#4285F4"></path>
@@ -172,7 +176,7 @@
 </span>
           Continuer avec Google
         </button>
-<p class="switch-text" id="switchText">Vous n’avez pas de compte ? <a href="#" id="switchLink">Inscrivez-vous</a></p>
+<p class="switch-text" id="switchText"><span data-i18n="auth.no_account">Vous n’avez pas encore de compte ?</span> <a data-i18n="auth.register_link" href="#" id="switchLink">Inscrivez-vous</a></p>
 </form>
 </section>
 <section class="trust-bar">
@@ -185,6 +189,7 @@
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script src="../js/auth-guard.js"></script>
+<script src="../js/plopplop-pending-sync.js"></script>
 <script>
     const body = document.body;
     const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
@@ -220,12 +225,12 @@
       loginTab.classList.toggle('active', !isSignup);
       signupTab.classList.toggle('active', isSignup);
 
-      formTitle.textContent = isSignup ? 'Créer votre compte' : 'Bienvenue sur Tonton Kondo';
-      formSubtitle.textContent = isSignup ? 'Créez votre compte joueur et profitez des services Tonton Kondo.' : 'Accédez à votre compte pour gérer vos jeux, tickets et transactions.';
-      submitBtn.textContent = isSignup ? 'Créer mon compte →' : 'Se connecter →';
+      formTitle.textContent = tr(isSignup ? 'auth.register_title' : 'auth.login_title');
+      formSubtitle.textContent = tr(isSignup ? 'auth.register_subtitle' : 'auth.login_subtitle');
+      submitBtn.textContent = tr(isSignup ? 'auth.create_account_arrow' : 'auth.login_button_arrow');
       switchText.innerHTML = isSignup
-        ? 'Vous avez déjà un compte ? <a href="#" id="switchLink">Connectez-vous</a>'
-        : 'Vous n’avez pas de compte ? <a href="#" id="switchLink">Inscrivez-vous</a>';
+        ? `${tr('auth.already_account')} <a href="#" id="switchLink">${tr('auth.login_link')}</a>`
+        : `${tr('auth.no_account')} <a href="#" id="switchLink">${tr('auth.register_link')}</a>`;
 
       phoneGroup.style.display = 'block';
       fullnameGroup.style.display = isSignup ? 'block' : 'none';
@@ -266,17 +271,17 @@
       const fullname = String(fullnameInput.value || '').trim();
 
       if (!phone) {
-        setMessage('Veuillez saisir un numéro de téléphone valide.', true);
+        setMessage(tr('auth.invalid_phone'), true);
         return;
       }
 
       if (!password) {
-        setMessage('Mot de passe requis.', true);
+        setMessage(tr('auth.password_required'), true);
         return;
       }
 
       if (mode === 'signup' && !fullname) {
-        setMessage('Veuillez saisir votre nom complet pour créer votre compte.', true);
+        setMessage(tr('auth.full_name_required'), true);
         return;
       }
 
@@ -294,11 +299,11 @@
           return;
         }
 
-        setMessage(result?.message || 'Une erreur est survenue.', true);
+        setMessage(result?.message || tr('auth.generic_error'), true);
       } catch (error) {
-        setMessage(error?.message || 'Impossible d’établir la connexion.', true);
+        setMessage(error?.message || tr('auth.connection_failed'), true);
       } finally {
-        resetButton(mode === 'signup' ? 'Créer mon compte →' : 'Se connecter →');
+        resetButton(tr(mode === 'signup' ? 'auth.create_account_arrow' : 'auth.login_button_arrow'));
       }
     });
     googleBtn.addEventListener('click', async () => {
@@ -310,13 +315,13 @@
       try {
         const result = await window.loginWithGoogle?.();
         if (result && !result.ok) {
-          setMessage(result.message || 'La connexion Google n’a pas pu être lancée.', true);
+          setMessage(result.message || tr('auth.google_failed'), true);
         }
       } catch (error) {
-        setMessage(error?.message || 'La connexion Google n’a pas pu être lancée.', true);
+        setMessage(error?.message || tr('auth.google_failed'), true);
       } finally {
         googleBtn.disabled = false;
-        googleBtn.textContent = 'Continuer avec Google';
+        googleBtn.textContent = tr('auth.continue_google');
       }
     });
 
