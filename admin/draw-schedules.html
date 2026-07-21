@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <html lang="fr">
-<head>
+<head data-i18n="admin_v3.admin_draw_schedules.item_001">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Tonton Kondo — Tirages</title>
+<title data-i18n="admin_v3.admin_draw_schedules.item_001">Tonton Kondo — Tirages</title>
 <style>
     :root { --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0; --gold:#ffd21f; --green:#46e36f; --red:#ff6677; --shadow:0 24px 60px rgba(0,0,0,.45); }
     * { box-sizing:border-box; }
@@ -53,60 +53,60 @@
 <body>
 <main class="app">
 <header class="topbar">
-<a class="brand" href="../index.html"><img alt="Logo Tonton Kondo" src="../assets/logo.png"/><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
-<span class="pill">Admin — tirages centralisés</span>
+<a class="brand" href="../index.html"><img alt="Logo Tonton Kondo" src="../assets/logo.png"/><span class="brand-text"><strong data-i18n="admin_v3.admin_draw_schedules.item_003">Tonton Kondo</strong><span data-i18n="admin_v3.admin_draw_schedules.item_004">Paryaj</span></span></a>
+<span class="pill" data-i18n="admin_v3.admin_draw_schedules.item_005">Admin — tirages centralisés</span>
 </header>
 <section class="hero">
 <article>
-<div class="eyebrow">Phase 5.1</div>
-<h1>Gestion centralisée des tirages</h1>
-<p class="lede">Gérez les tirages disponibles pour les jeux depuis une seule source. Les pages Borlette, Mariage et Résultats pourront ensuite les lire dynamiquement.</p>
-<span class="mini-chip">🧩 <strong>Supabase</strong> — table draw_schedules</span>
+<div class="eyebrow" data-i18n="admin_v3.admin_draw_schedules.item_006">Phase 5.1</div>
+<h1 data-i18n="admin_v3.admin_draw_schedules.item_007">Gestion centralisée des tirages</h1>
+<p class="lede" data-i18n="admin_v3.admin_draw_schedules.item_008">Gérez les tirages disponibles pour les jeux depuis une seule source. Les pages Borlette, Mariage et Résultats pourront ensuite les lire dynamiquement.</p>
+<span class="mini-chip">🧩 <strong data-i18n="admin_v3.admin_draw_schedules.item_009">Supabase</strong> — table draw_schedules</span>
 </article>
 <article class="panel" style="padding:14px;">
 <div class="field-grid">
 <div class="field-card">
-<div class="label"><span>Jeu</span></div>
+<div class="label"><span data-i18n="admin_v3.admin_draw_schedules.item_011">Jeu</span></div>
 <select id="game-type-filter">
-<option value="all">Tous les jeux</option>
-<option value="borlette">Borlette</option>
-<option value="mariage">Mariage</option>
-<option value="lotto3">Lotto 3</option>
-<option value="lotto4">Lotto 4</option>
-<option value="lotto5">Lotto 5</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_012" value="all">Tous les jeux</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_013" value="borlette">Borlette</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_014" value="mariage">Mariage</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_015" value="lotto3">Lotto 3</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_016" value="lotto4">Lotto 4</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_017" value="lotto5">Lotto 5</option>
 </select>
 </div>
 <div class="field-card">
-<div class="label"><span>Nom du tirage</span></div>
-<input id="draw-name-input" placeholder="Ex. New York Midday" type="text"/>
+<div class="label"><span data-i18n="admin_v3.admin_draw_schedules.item_018">Nom du tirage</span></div>
+<input data-i18n-placeholder="admin_v3.admin_draw_schedules.attr_029" id="draw-name-input" placeholder="Ex. New York Midday" type="text"/>
 </div>
 <div class="field-card">
-<div class="label"><span>Libellé affiché</span></div>
-<input id="display-name-input" placeholder="Ex. New York Midday" type="text"/>
+<div class="label"><span data-i18n="admin_v3.admin_draw_schedules.item_019">Libellé affiché</span></div>
+<input data-i18n-placeholder="admin_v3.admin_draw_schedules.attr_030" id="display-name-input" placeholder="Ex. New York Midday" type="text"/>
 </div>
 <div class="field-card">
-<div class="label"><span>Jeu</span></div>
+<div class="label"><span data-i18n="admin_v3.admin_draw_schedules.item_011">Jeu</span></div>
 <select id="new-game-type-input">
-<option value="borlette">Borlette</option>
-<option value="mariage">Mariage</option>
-<option value="lotto3">Lotto 3</option>
-<option value="lotto4">Lotto 4</option>
-<option value="lotto5">Lotto 5</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_013" value="borlette">Borlette</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_014" value="mariage">Mariage</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_015" value="lotto3">Lotto 3</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_016" value="lotto4">Lotto 4</option>
+<option data-i18n="admin_v3.admin_draw_schedules.item_017" value="lotto5">Lotto 5</option>
 </select>
 </div>
 <div class="field-card">
-<div class="label"><span>Heure</span></div>
+<div class="label"><span data-i18n="admin_v3.admin_draw_schedules.item_020">Heure</span></div>
 <input id="draw-time-input" type="time"/>
 </div>
 <div class="field-card">
-<div class="label"><span>Ordre</span></div>
+<div class="label"><span data-i18n="admin_v3.admin_draw_schedules.item_021">Ordre</span></div>
 <input id="sort-order-input" type="number" value="0"/>
 </div>
 <div class="btn-row">
-<button class="btn btn-primary" id="save-btn" type="button">Ajouter / modifier</button>
-<button class="btn" id="refresh-btn" type="button">Actualiser</button>
+<button class="btn btn-primary" data-i18n="admin_v3.admin_draw_schedules.item_022" id="save-btn" type="button">Ajouter / modifier</button>
+<button class="btn" data-i18n="admin_v3.admin_draw_schedules.item_023" id="refresh-btn" type="button">Actualiser</button>
 </div>
-<div class="feedback warn" id="feedback-box">Chargement des tirages…</div>
+<div class="feedback warn" data-i18n="admin_v3.admin_draw_schedules.item_024" id="feedback-box">Chargement des tirages…</div>
 </div>
 </article>
 </section>
@@ -116,13 +116,13 @@
 <table>
 <thead>
 <tr>
-<th>Jeu</th>
-<th>Tirage</th>
-<th>Affichage</th>
-<th>Heure</th>
-<th>Ordre</th>
-<th>Statut</th>
-<th>Actions</th>
+<th data-i18n="admin_v3.admin_draw_schedules.item_011">Jeu</th>
+<th data-i18n="admin_v3.admin_draw_schedules.item_025">Tirage</th>
+<th data-i18n="admin_v3.admin_draw_schedules.item_026">Affichage</th>
+<th data-i18n="admin_v3.admin_draw_schedules.item_020">Heure</th>
+<th data-i18n="admin_v3.admin_draw_schedules.item_021">Ordre</th>
+<th data-i18n="admin_v3.admin_draw_schedules.item_027">Statut</th>
+<th data-i18n="admin_v3.admin_draw_schedules.item_028">Actions</th>
 </tr>
 </thead>
 <tbody id="draw-schedules-body"></tbody>
@@ -164,7 +164,7 @@
         const rows = schedules.filter((item) => selected === 'all' || item.game_type === selected);
         body.innerHTML = '';
         if (!rows.length) {
-          body.innerHTML = '<tr><td colspan="7" style="color:#aebbd0;">Aucun tirage trouvé.</td></tr>';
+          body.innerHTML = `<tr><td colspan="7" style="color:#aebbd0;">${(window.TKI18n?.t('runtime_v3.admin.no_draw') || "Aucun tirage trouvé.")}</td></tr>`;
           return;
         }
 
@@ -201,7 +201,7 @@
           setFeedback(`Affichage de ${schedules.length} tirage(s).`, 'warn');
         } catch (error) {
           console.error('Erreur chargement tirages', error);
-          setFeedback(`Erreur Supabase : ${error.message || 'Impossible de charger les tirages.'}`, 'error');
+          setFeedback(`Erreur Supabase : ${error.message || window.TKI18n?.t('admin_v3.messages.load_draw_error') || window.TKI18n?.t('admin_v3.messages.load_draw_error') || "Impossible de charger les tirages."}`, 'error');
         }
       }
 
@@ -212,12 +212,12 @@
         displayNameInput.value = '';
         drawTimeInput.value = '';
         sortOrderInput.value = '0';
-        setFeedback('Formulaire prêt à créer un tirage.', 'warn');
+        setFeedback(window.TKI18n?.t('admin_v3.messages.form_ready') || window.TKI18n?.t('admin_v3.messages.form_ready') || "Formulaire prêt à créer un tirage.", 'warn');
       }
 
       async function saveSchedule() {
         if (!currentUser) {
-          setFeedback('Vous devez être connecté en tant qu’admin.', 'error');
+          setFeedback((window.TKI18n?.t('runtime_v3.admin.admin_required') || "Vous devez être connecté en tant qu’administrateur."), 'error');
           return;
         }
         const drawName = drawNameInput.value.trim();
@@ -227,7 +227,7 @@
         const sortOrder = Number(sortOrderInput.value || 0);
 
         if (!drawName) {
-          setFeedback('Renseignez un nom de tirage avant de sauvegarder.', 'warn');
+          setFeedback(window.TKI18n?.t('admin_v3.messages.draw_name_required') || window.TKI18n?.t('admin_v3.messages.draw_name_required') || "Renseignez un nom de tirage avant de sauvegarder.", 'warn');
           return;
         }
 
@@ -240,17 +240,17 @@
           if (activeEditId) {
             const { error } = await client.from('draw_schedules').update({ game_type: gameType, draw_name: drawName, display_name: displayName, draw_time: drawTime, sort_order: sortOrder, updated_at: new Date().toISOString() }).eq('id', activeEditId);
             if (error) throw error;
-            setFeedback('Tirage mis à jour.', 'success');
+            setFeedback((window.TKI18n?.t('runtime_v3.admin.draw_updated') || "Tirage mis à jour."), 'success');
           } else {
             const { error } = await client.from('draw_schedules').insert(payload);
             if (error) throw error;
-            setFeedback('Tirage créé.', 'success');
+            setFeedback((window.TKI18n?.t('runtime_v3.admin.draw_created') || "Tirage créé."), 'success');
           }
           await loadSchedules();
           resetForm();
         } catch (error) {
           console.error('Erreur sauvegarde tirage', error);
-          setFeedback(`Erreur : ${error.message || 'Impossible d’enregistrer le tirage.'}`, 'error');
+          setFeedback(`Erreur : ${error.message || window.TKI18n?.t('admin_v3.messages.save_draw_error') || window.TKI18n?.t('admin_v3.messages.save_draw_error') || "Impossible d’enregistrer le tirage."}`, 'error');
         }
       }
 
@@ -266,7 +266,7 @@
           setFeedback(`Tirage ${entry.is_active ? 'désactivé' : 'activé'}.`, 'success');
         } catch (error) {
           console.error('Erreur activation/désactivation', error);
-          setFeedback(`Erreur : ${error.message || 'Impossible de modifier le tirage.'}`, 'error');
+          setFeedback(`Erreur : ${error.message || window.TKI18n?.t('admin_v3.messages.update_draw_error') || window.TKI18n?.t('admin_v3.messages.update_draw_error') || "Impossible de modifier le tirage."}`, 'error');
         }
       }
 
@@ -279,7 +279,7 @@
         displayNameInput.value = entry.display_name || entry.draw_name || '';
         drawTimeInput.value = entry.draw_time || '';
         sortOrderInput.value = entry.sort_order ?? 0;
-        setFeedback('Tirage chargé dans le formulaire. Modifiez puis validez.', 'warn');
+        setFeedback((window.TKI18n?.t?.('runtime_final.tirage_charge_dans_le_formulaire_modifiez_puis_validez') || "Tirage chargé dans le formulaire. Modifiez puis validez."), 'warn');
       }
 
       body.addEventListener('click', async (event) => {
@@ -296,7 +296,7 @@
       refreshBtn.addEventListener('click', loadSchedules);
 
       (async function init() {
-        if (!window.getCurrentUserAsync) { setFeedback('Le système d’authentification est indisponible.', 'error'); return; }
+        if (!window.getCurrentUserAsync) { setFeedback((window.TKI18n?.t?.('runtime_final.le_systeme_dauthentification_est_indisponible') || "Le système d’authentification est indisponible."), 'error'); return; }
         currentUser = await window.getCurrentUserAsync();
         if (!currentUser) { if (window.saveRedirectTarget) window.saveRedirectTarget('admin/draw-schedules.html'); window.tryRedirectToLogin('../login-register/login.html'); return; }
         resetForm();

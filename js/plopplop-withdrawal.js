@@ -1,5 +1,6 @@
 (function () {
   'use strict';
+  const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
 
   if (window.__TK_PLOPPLOP_WITHDRAWAL_LOADED__) return;
   window.__TK_PLOPPLOP_WITHDRAWAL_LOADED__ = true;
@@ -10,14 +11,14 @@
   const VALID_METHODS = new Set(['moncash', 'natcash']);
   const FINAL_STATUSES = new Set(['completed', 'refunded', 'manual_review', 'cancelled']);
   const STATUS_MESSAGES = {
-    reserved: 'Les fonds sont réservés. Vous pouvez relancer la même demande sans deuxième débit.',
-    processing: 'Le retrait est en cours de traitement.',
-    pending: 'Le fournisseur n’a pas encore confirmé le résultat. Aucun deuxième retrait ne sera lancé.',
-    completed: 'Retrait effectué avec succès.',
-    failed: 'Le retrait a échoué. Vérifiez son statut avant toute nouvelle tentative.',
-    refunded: 'Le transfert a échoué et le montant réservé a été remboursé une seule fois.',
-    manual_review: 'Cette opération nécessite une vérification administrative. Ne recommencez pas le retrait.',
-    cancelled: 'Ce retrait a été annulé.'
+    reserved: tr('sensitive.withdraw.reserved'),
+    processing: tr('sensitive.withdraw.processing'),
+    pending: tr('sensitive.withdraw.pending'),
+    completed: tr('sensitive.withdraw.completed'),
+    failed: tr('sensitive.withdraw.failed'),
+    refunded: tr('sensitive.withdraw.refunded'),
+    manual_review: tr('sensitive.withdraw.manual_review'),
+    cancelled: tr('sensitive.withdraw.cancelled')
   };
 
   let busy = false;
@@ -85,7 +86,7 @@
     if (!button) return;
     button.disabled = busy;
     button.setAttribute('aria-busy', String(busy));
-    button.textContent = busy ? (label || 'Traitement…') : 'Retirer avec PlopPlop';
+    button.textContent = busy ? (label || tr('sensitive.withdraw.busy')) : tr('sensitive.withdraw.submit');
   }
 
   async function getClient() {
@@ -94,7 +95,7 @@
       const client = await window.getSupabaseClient();
       if (client) return client;
     }
-    throw new Error('Connexion Supabase indisponible.');
+    throw new Error(tr('sensitive.withdraw.supabase_unavailable'));
   }
 
   async function requireSession(client) {
@@ -102,7 +103,7 @@
     if (error || !data?.session) {
       window.saveRedirectTarget?.('withdraw.html');
       window.tryRedirectToLogin?.('login-register/login.html');
-      throw new Error('Vous devez être connecté.');
+      throw new Error(tr('sensitive.withdraw.login_required'));
     }
     return data.session;
   }
@@ -114,16 +115,16 @@
       if (response && typeof response.clone === 'function') {
         const body = await response.clone().json();
         status = body?.status ? String(body.status) : null;
-        if (body?.error === 'Withdrawal provider is not configured') return { message: 'Le service de retrait PlopPlop n’est pas encore configuré côté serveur.', status };
-        if (body?.error === 'Insufficient wallet balance') return { message: 'Votre solde est insuffisant pour ce retrait.', status };
-        if (body?.error === 'request_id conflict') return { message: 'Cette référence correspond à un autre montant, numéro ou moyen de paiement.', status };
+        if (body?.error === 'Withdrawal provider is not configured') return { message: tr('sensitive.withdraw.provider_unavailable'), status };
+        if (body?.error === 'Insufficient wallet balance') return { message: tr('sensitive.withdraw.insufficient'), status };
+        if (body?.error === 'request_id conflict') return { message: tr('sensitive.withdraw.request_conflict'), status };
         if (status && STATUS_MESSAGES[status]) return { message: STATUS_MESSAGES[status], status };
         if (body?.error) return { message: String(body.error), status };
       }
     } catch {
       // Le message générique reste sûr.
     }
-    return { message: error?.message || 'Une erreur est survenue. Vérifiez le statut avant de recommencer.', status };
+    return { message: error?.message || tr('sensitive.withdraw.generic_error'), status };
   }
 
   function ensureStatusPanel() {
@@ -137,24 +138,24 @@
       <strong data-withdraw-status-title>Suivi du retrait</strong>
       <p data-withdraw-status-message></p>
       <div class="btn-row">
-        <button class="btn btn-primary" data-withdraw-verify type="button">Vérifier le retrait</button>
-        <button class="btn" data-withdraw-clear type="button">Nouvelle demande</button>
+        <button class="btn btn-primary" data-withdraw-verify type="button">${tr('sensitive.withdraw.verify')}</button>
+        <button class="btn" data-withdraw-clear type="button">${tr('sensitive.withdraw.new_request')}</button>
       </div>`;
     byId('withdraw-feedback-box')?.insertAdjacentElement('afterend', panel);
     panel.querySelector('[data-withdraw-verify]')?.addEventListener('click', async () => {
       const pending = readPending();
-      if (!pending?.request_id) return setFeedback('Aucun retrait à vérifier.', 'warn');
+      if (!pending?.request_id) return setFeedback(tr('sensitive.withdraw.no_pending'), 'warn');
       await verifyWithdrawal(pending.request_id);
     });
     panel.querySelector('[data-withdraw-clear]')?.addEventListener('click', () => {
       const pending = readPending();
       if (pending?.request_id && !FINAL_STATUSES.has(String(pending.status || ''))) {
-        setFeedback('Vérifiez d’abord le retrait existant pour éviter une double demande.', 'warn');
+        setFeedback(tr('sensitive.withdraw.check_existing'), 'warn');
         return;
       }
       savePending(null);
       panel.hidden = true;
-      setFeedback('Vous pouvez préparer une nouvelle demande.', 'warn');
+      setFeedback(tr('sensitive.withdraw.new_ready'), 'warn');
     });
     return panel;
   }
@@ -166,7 +167,7 @@
     const title = panel.querySelector('[data-withdraw-status-title]');
     const message = panel.querySelector('[data-withdraw-status-message]');
     const verifyButton = panel.querySelector('[data-withdraw-verify]');
-    if (title) title.textContent = status === 'completed' ? 'Retrait terminé' : status === 'refunded' ? 'Retrait remboursé' : 'Suivi du retrait';
+    if (title) title.textContent = status === 'completed' ? tr('sensitive.withdraw.completed_title') : status === 'refunded' ? tr('sensitive.withdraw.refunded_title') : tr('sensitive.withdraw.tracking_title');
     if (message) message.textContent = STATUS_MESSAGES[status] || STATUS_MESSAGES.pending;
     if (verifyButton) verifyButton.hidden = !['pending', 'processing', 'reserved', 'failed'].includes(status);
   }
@@ -197,7 +198,7 @@
         .limit(50);
       if (error) throw error;
       if (!data?.length) {
-        list.innerHTML = '<div class="card-item"><strong>Aucun retrait PlopPlop</strong><span>Vos futures demandes apparaîtront ici.</span></div>';
+        list.innerHTML = `<div class="card-item"><strong>${tr('sensitive.withdraw.empty_title')}</strong><span>${tr('sensitive.withdraw.empty_text')}</span></div>`;
         return;
       }
       list.innerHTML = data.map((item) => {
@@ -207,14 +208,14 @@
             <strong>${escapeHtml(new Date(item.created_at).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR'))}</strong>
             <span>${escapeHtml(money(item.amount))} • ${escapeHtml(methodLabel(item.method))}</span>
             <span>Destinataire : ${escapeHtml(maskRecipient(item.recipient))}</span>
-            <span>Réf. : ${escapeHtml(item.provider_reference || '—')}</span>
+            <span>${tr('sensitive.withdraw.reference')} : ${escapeHtml(item.provider_reference || '—')}</span>
             <span>Statut : ${escapeHtml(status)}</span>
-            ${['pending', 'processing', 'reserved', 'failed'].includes(status) ? `<button class="btn" data-withdraw-request-id="${escapeHtml(item.request_id)}" type="button">Vérifier maintenant</button>` : ''}
+            ${['pending', 'processing', 'reserved', 'failed'].includes(status) ? `<button class="btn" data-withdraw-request-id="${escapeHtml(item.request_id)}" type="button">${tr('sensitive.withdraw.verify_now')}</button>` : ''}
           </article>`;
       }).join('');
     } catch (error) {
       console.error('Erreur historique retrait PlopPlop.', error);
-      list.innerHTML = '<div class="card-item"><strong>Historique indisponible</strong><span>Rechargez la page pour réessayer.</span></div>';
+      list.innerHTML = `<div class="card-item"><strong>${tr('sensitive.withdraw.history_unavailable')}</strong><span>${tr('sensitive.withdraw.reload')}</span></div>`;
     } finally {
       historyBusy = false;
     }
@@ -236,16 +237,16 @@
     const amount = Number(byId('withdraw-amount-input')?.value);
     const method = String(byId('withdraw-method-input')?.value || '').trim().toLowerCase();
     const recipient = normalizeRecipient(byId('withdraw-recipient-input')?.value);
-    if (!Number.isFinite(amount) || amount < 20 || amount > 100000 || Math.abs(amount * 100 - Math.round(amount * 100)) > 1e-8) {
-      setFeedback('Le retrait doit être compris entre 20 et 100 000 HTG.', 'error');
+    if (!Number.isFinite(amount) || amount < 25 || amount > 100000 || Math.abs(amount * 100 - Math.round(amount * 100)) > 1e-8) {
+      setFeedback(tr('sensitive.withdraw.amount_error'), 'error');
       return;
     }
     if (!VALID_METHODS.has(method)) {
-      setFeedback('Choisissez MonCash ou NatCash.', 'error');
+      setFeedback(tr('sensitive.withdraw.method_error'), 'error');
       return;
     }
     if (!recipient) {
-      setFeedback('Saisissez un numéro au format 509XXXXXXXX.', 'error');
+      setFeedback(tr('sensitive.withdraw.phone_error'), 'error');
       return;
     }
 
@@ -253,7 +254,7 @@
     if (existing?.request_id && !FINAL_STATUSES.has(String(existing.status || '')) && (
       Number(existing.amount) !== amount || String(existing.method) !== method || String(existing.recipient) !== recipient
     )) {
-      setFeedback('Un autre retrait est déjà en cours. Vérifiez-le avant de changer les paramètres.', 'warn');
+      setFeedback(tr('sensitive.withdraw.existing_request'), 'warn');
       showStatus(existing);
       return;
     }
@@ -261,7 +262,7 @@
     const confirmed = window.confirm(`Confirmer le retrait de ${money(amount)} vers ${methodLabel(method)} (${maskRecipient(recipient)}) ?`);
     if (!confirmed) return;
 
-    setBusy(true, 'Traitement du retrait…');
+    setBusy(true, tr('sensitive.withdraw.processing_request'));
     const requestId = getOrCreateRequestId(amount, method, recipient);
     try {
       const client = await getClient();
@@ -292,8 +293,8 @@
 
   async function verifyWithdrawal(requestId) {
     if (busy || !requestId) return;
-    setBusy(true, 'Vérification…');
-    setFeedback('Vérification du retrait en cours…', 'warn');
+    setBusy(true, tr('sensitive.withdraw.verifying'));
+    setFeedback(tr('sensitive.withdraw.verifying_message'), 'warn');
     try {
       const client = await getClient();
       await requireSession(client);

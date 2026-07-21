@@ -234,15 +234,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -378,7 +375,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-game tk-file-mariage">
 <main class="app">
@@ -392,44 +388,43 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Mariage</span>
 </div>
 </header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
-
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
 <section class="card mariage-hero">
 <div class="eyebrow">Jeu</div><h1>Mariage</h1>
 <p class="lede">Choisissez un tirage et deux numéros de 00 à 99. Ajoutez vos combinaisons au coupon, puis validez votre ticket.</p>
-<div class="hero-meta"><a class="mariage-help-link" href="help-mariage.html">Comprendre les règles</a></div>
+<div class="hero-meta"><a class="mariage-help-link" data-i18n="games_common.understand_rules" href="help-mariage.html">Comprendre les règles</a></div>
 </section>
 <div class="mariage-scroll-shell"><section class="mariage-workspace">
 <article class="mariage-panel mariage-builder">
 <div class="panel-title"><div><h2>Choix du tirage et des numéros</h2><p>Sélectionnez un tirage, puis choisissez les deux numéros de votre combinaison.</p></div><span class="chip-note">Sélection</span></div>
 <div class="field-grid">
-<article class="field-card mariage-draw-card"><div class="label"><span>Tirage</span><span class="value-pill">Obligatoire</span></div><select aria-label="Choisir un tirage Mariage" id="draw-name-select"><option value="">Chargement des tirages…</option></select><p class="helper-text">Le tirage choisi sera enregistré avec la combinaison pour la vérification future.</p></article>
+<article class="field-card mariage-draw-card"><div class="label"><span data-i18n="games_common.draw">Tirage</span><span class="value-pill" data-i18n="games_group1.required">Obligatoire</span></div><select aria-label="Choisir un tirage Mariage" id="draw-name-select"><option data-i18n="games_common.loading_draws" value="">Chargement des tirages…</option></select><p class="helper-text" data-i18n="games_group1.draw_helper">Le tirage choisi sera enregistré avec la combinaison pour la vérification future.</p></article>
 <div class="mariage-grids">
 <article class="field-card mariage-grid-card"><div class="label"><span>Premier numéro</span><span class="value-pill" id="first-number-pill">00</span></div><div aria-label="Premier numéro" class="number-grid" id="first-number-grid"></div></article>
 <article class="field-card mariage-grid-card"><div class="label"><span>Deuxième numéro</span><span class="value-pill" id="second-number-pill">00</span></div><div aria-label="Deuxième numéro" class="number-grid" id="second-number-grid"></div></article>
 </div></div></article>
 <aside class="mariage-side"><article class="mariage-panel mariage-coupon">
-<div class="panel-title"><div><h2>Coupon en cours</h2><p>Vos combinaisons et le total du ticket.</p></div><span class="chip-note">Total</span></div>
-<div class="summary"><div class="summary-row"><span>Nombre de lignes</span><strong id="line-count">0</strong></div><div class="summary-row"><span>Montant total</span><strong id="total-amount">0 HTG</strong></div><div class="summary-total"><span>Total du ticket</span><strong id="total-display">0 HTG</strong></div></div>
+<div class="panel-title"><div><h2 data-i18n="games_common.current_bet_slip">Coupon en cours</h2><p data-i18n="games_group1.bet_slip_description">Vos combinaisons et le total du ticket.</p></div><span class="chip-note">Total</span></div>
+<div class="summary"><div class="summary-row"><span data-i18n="games_group1.line_count">Nombre de lignes</span><strong id="line-count">0</strong></div><div class="summary-row"><span data-i18n="games_common.total_amount">Montant total</span><strong id="total-amount">0 HTG</strong></div><div class="summary-total"><span data-i18n="games_group1.ticket_total">Total du ticket</span><strong id="total-display">0 HTG</strong></div></div>
 <div aria-live="polite" class="coupon-list" id="coupon-list"></div>
 <div class="field-grid" style="margin-top:14px;">
-<article class="field-card"><div class="label"><span>Validation</span><span class="value-pill">En ligne</span></div><button class="btn btn-primary" id="validate-btn" style="width:100%;" type="button">Valider le ticket</button><p class="footer-note">Le ticket est enregistré et traité de façon sécurisée.</p></article>
-<article class="field-card mariage-amount-card"><div class="label"><span>Montant</span><span class="value-pill">HTG</span></div><div class="amount-row"><input aria-label="Montant du ticket" id="amount-input" inputmode="numeric" min="1" step="1" type="number" value="10"/><button class="btn btn-primary mariage-add-button" id="add-line-btn" type="button">Ajouter au coupon</button></div><p class="helper-text">Le montant s'applique à la combinaison sélectionnée.</p></article>
+<article class="field-card"><div class="label"><span data-i18n="games_group1.validation">Validation</span><span class="value-pill" data-i18n="games_group1.online">En ligne</span></div><button class="btn btn-primary" data-i18n="games_common.validate_ticket" id="validate-btn" style="width:100%;" type="button">Valider le ticket</button><p class="footer-note" data-i18n="games_group1.secure_processing">Le ticket est enregistré et traité de façon sécurisée.</p></article>
+<article class="field-card mariage-amount-card"><div class="label"><span data-i18n="games_common.amount">Montant</span><span class="value-pill">HTG</span></div><div class="amount-row"><input aria-label="Montant de la mise" data-i18n-aria-label="simple_games_qa.amount_aria" id="amount-input" inputmode="numeric" min="1" step="1" type="number" value="10"/><button class="btn btn-primary mariage-add-button" data-i18n="games_common.add_to_bet_slip" id="add-line-btn" type="button">Ajouter au coupon</button></div><p class="helper-text" data-i18n="games_group1.amount_helper">Le montant s'applique à la combinaison sélectionnée.</p></article>
 <div class="feedback warn" id="feedback-box">Choisissez deux numéros, définissez votre mise puis ajoutez la ligne au coupon.</div>
 </div></article></aside>
 </section></div>
 </main>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -488,7 +483,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -507,7 +502,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');
@@ -714,12 +709,12 @@
 
       async function loadDrawSchedules() {
         try {
-          drawNameSelect.innerHTML = '<option value="">Chargement des tirages…</option>';
+          drawNameSelect.innerHTML = '<option data-i18n="games_common.loading_draws" value="">Chargement des tirages…</option>';
 
           const client = await waitForSupabaseClient();
           if (!client || typeof client.from !== 'function') {
-            drawNameSelect.innerHTML = '<option value="">Connexion au service momentanément indisponible</option>';
-            setFeedback('La connexion au service n’est pas encore disponible. Rechargez la page si nécessaire.', 'error');
+            drawNameSelect.innerHTML = `<option value="">${gameT('simple_games_qa.draw_service_unavailable')}</option>`;
+            setFeedback((window.TKI18n?.t?.('runtime_final.la_connexion_au_service_nest_pas_encore_disponible_rechargez_la_page_si_') || "La connexion au service n’est pas encore disponible. Rechargez la page si nécessaire."), 'error');
             return;
           }
 
@@ -733,8 +728,8 @@
 
           if (error) {
             console.error('Erreur chargement tirages Mariage', error);
-            drawNameSelect.innerHTML = '<option value="">Erreur de chargement des tirages</option>';
-            setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'error');
+            drawNameSelect.innerHTML = `<option value="">${gameT('simple_games_qa.draw_service_unavailable')}</option>`;
+            setFeedback(gameT('simple_games_qa.draw_load_error', { message: error.message || gameT('simple_games_qa.unknown_error') }), 'error');
             return;
           }
 
@@ -744,7 +739,7 @@
           if (!schedules.length) {
             drawNameSelect.innerHTML = '<option value="">Aucun tirage actif disponible</option>';
             selectedDrawName = '';
-            setFeedback('Aucun tirage actif disponible pour Mariage.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.aucun_tirage_actif_disponible_pour_mariage') || "Aucun tirage actif disponible pour Mariage."), 'warn');
             return;
           }
 
@@ -757,11 +752,11 @@
 
           selectedDrawName = drawNameSelect.value || schedules[0].draw_name;
           drawNameSelect.value = selectedDrawName;
-          setFeedback(`Tirages Mariage chargés : ${schedules.length} tirage(s) disponible(s).`, 'success');
+          setFeedback(gameT('games_group1.draws_loaded', { game: 'Mariage', count: schedules.length }), 'success');
         } catch (error) {
           console.error('Erreur chargement tirages Mariage', error);
-          drawNameSelect.innerHTML = '<option value="">Erreur de chargement des tirages</option>';
-          setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'error');
+          drawNameSelect.innerHTML = `<option value="">${gameT('simple_games_qa.draw_service_unavailable')}</option>`;
+          setFeedback(gameT('simple_games_qa.draw_load_error', { message: error.message || gameT('simple_games_qa.unknown_error') }), 'error');
         }
       }
 
@@ -784,13 +779,13 @@
           selectedFirst = value;
           firstNumberPill.textContent = value;
           renderNumbers();
-          setFeedback(`Premier numéro ${value} sélectionné.`, 'warn');
+          setFeedback(gameT('simple_games_qa.first_number_selected', { number: value }), 'warn');
         });
         renderNumberGrid(secondNumberGrid, selectedSecond, (value) => {
           selectedSecond = value;
           secondNumberPill.textContent = value;
           renderNumbers();
-          setFeedback(`Deuxième numéro ${value} sélectionné.`, 'warn');
+          setFeedback(gameT('simple_games_qa.second_number_selected', { number: value }), 'warn');
         });
         firstNumberPill.textContent = selectedFirst;
         secondNumberPill.textContent = selectedSecond;
@@ -820,7 +815,7 @@
               couponLines = couponLines.filter((entry) => entry.id !== line.id);
               saveCoupon(couponLines);
               renderCoupon();
-              setFeedback(`La combinaison ${line.numberPlayed} a été supprimée du coupon.`, 'warn');
+              setFeedback(gameT('simple_games_qa.combination_removed', { number: line.numberPlayed }), 'warn');
             });
             right.appendChild(amount);
             right.appendChild(deleteBtn);
@@ -838,14 +833,14 @@
       function addLineToCoupon() {
         selectedDrawName = drawNameSelect.value || 'New York Midday';
         const rawAmount = Number(amountInput.value);
-        if (!selectedDrawName) { setFeedback('Choisissez un tirage avant d’ajouter une combinaison.', 'warn'); return; }
-        if (!Number.isFinite(rawAmount) || rawAmount <= 0) { setFeedback('Entrez un montant valide supérieur à 0.', 'warn'); amountInput.focus(); return; }
+        if (!selectedDrawName) { setFeedback((window.TKI18n?.t?.('runtime_final.choisissez_un_tirage_avant_dajouter_une_combinaison') || "Choisissez un tirage avant d’ajouter une combinaison."), 'warn'); return; }
+        if (!Number.isFinite(rawAmount) || rawAmount <= 0) { setFeedback((window.TKI18n?.t?.('runtime_final.entrez_un_montant_valide_superieur_a_0') || "Entrez un montant valide supérieur à 0."), 'warn'); amountInput.focus(); return; }
         const numberPlayed = `${selectedFirst}-${selectedSecond}`;
         const newLine = { id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`, numberPlayed, drawName: selectedDrawName, amount: rawAmount, createdAt: new Date().toISOString() };
         couponLines = [newLine, ...couponLines];
         saveCoupon(couponLines);
         renderCoupon();
-        setFeedback(`Combinaison ${numberPlayed} ajoutée au coupon pour ${formatCurrency(rawAmount)}.`, 'success');
+        setFeedback(gameT('simple_games_qa.combination_added', { number: numberPlayed, amount: formatCurrency(rawAmount) }), 'success');
       }
 
       addLineBtn.addEventListener('click', addLineToCoupon);
@@ -855,17 +850,17 @@
 
       validateBtn.addEventListener('click', async () => {
         if (!currentUser) {
-          setFeedback('Vous devez être connecté pour valider un ticket.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.vous_devez_etre_connecte_pour_valider_un_ticket') || "Vous devez être connecté pour valider un ticket."), 'warn');
           if (window.saveRedirectTarget) window.saveRedirectTarget('../mariage.html');
           window.tryRedirectToLogin('../login-register/login.html');
           return;
         }
 
         selectedDrawName = drawNameSelect.value || 'New York Midday';
-        if (!couponLines.length) { setFeedback('Aucune combinaison à valider. Ajoutez au moins une ligne au coupon.', 'warn'); return; }
+        if (!couponLines.length) { setFeedback((window.TKI18n?.t?.('runtime_final.aucune_combinaison_a_valider_ajoutez_au_moins_une_ligne_au_coupon') || "Aucune combinaison à valider. Ajoutez au moins une ligne au coupon."), 'warn'); return; }
 
         const client = window.supabaseClient || null;
-        if (!client || typeof client.from !== 'function') { setFeedback('Connexion au service momentanément indisponible. Rechargez la page puis réessayez.', 'error'); return; }
+        if (!client || typeof client.from !== 'function') { setFeedback((window.TKI18n?.t?.('runtime_final.connexion_au_service_momentanement_indisponible_rechargez_la_page_puis_r') || "Connexion au service momentanément indisponible. Rechargez la page puis réessayez."), 'error'); return; }
 
         const userId = currentUser.id || currentUser.user_id || null;
         const totalAmountValue = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);
@@ -873,7 +868,7 @@
 
         validateBtn.disabled = true;
         validateBtn.textContent = 'Validation…';
-        setFeedback('Validation du ticket en cours…', 'warn');
+        setFeedback((window.TKI18n?.t?.('runtime_final.validation_du_ticket_en_cours') || "Validation du ticket en cours…"), 'warn');
 
         try {
           const { data: walletData, error: walletError } = await client
@@ -888,7 +883,7 @@
 
           const currentBalance = Number(walletData?.balance || 0);
           if (currentBalance < totalAmountValue) {
-            setFeedback(`Solde insuffisant. Solde actuel : ${formatCurrency(currentBalance)}. Total ticket : ${formatCurrency(totalAmountValue)}.`, 'error');
+            setFeedback(gameT('simple_games_qa.insufficient_balance', { balance: formatCurrency(currentBalance), total: formatCurrency(totalAmountValue) }), 'error');
             return;
           }
 
@@ -963,7 +958,7 @@
           localStorage.removeItem(STORAGE_KEY);
           couponLines = [];
           renderCoupon();
-          setFeedback(`Ticket validé : ${ticketNumber}. Débit de ${formatCurrency(totalAmountValue)} effectué.`, 'success');
+          setFeedback(gameT('games_group1.ticket_success', { game: 'Mariage', ticket: ticketNumber, amount: formatCurrency(totalAmountValue) }), 'success');
 
           window.dispatchEvent(new CustomEvent('tonton:wallet-updated', {
             detail: {
@@ -987,10 +982,10 @@
             }
           }
           const message = error?.message || 'Impossible de valider le ticket pour le moment.';
-          setFeedback(`Erreur de validation : ${message}`, 'error');
+          setFeedback(gameT('simple_games_qa.validation_error', { message }), 'error');
         } finally {
           validateBtn.disabled = false;
-          validateBtn.textContent = 'Valider le ticket';
+          validateBtn.textContent = gameT('validate_ticket');
         }
       });
 
@@ -999,7 +994,7 @@
 
       (async function protectPage() {
         if (!window.getCurrentUserAsync) {
-          setFeedback('Le système d’authentification est indisponible sur cette page.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.le_systeme_dauthentification_est_indisponible_sur_cette_page') || "Le système d’authentification est indisponible sur cette page."), 'warn');
           return;
         }
 
@@ -1013,7 +1008,7 @@
         const meta = document.querySelector('.hero-meta');
         const userLabel = document.createElement('span');
         userLabel.className = 'mini-chip';
-        userLabel.innerHTML = '👤 Connecté : <strong>' + (currentUser.full_name || currentUser.email || 'Joueur') + '</strong>';
+        userLabel.innerHTML = '👤 ' + gameT('connected') + ' : <strong>' + (currentUser.full_name || currentUser.email || 'Joueur') + '</strong>';
         meta.appendChild(userLabel);
 
         await loadDrawSchedules();
@@ -1026,6 +1021,11 @@
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
     }
   });
+</script>
+<script id="simple-games-qa-language-hook">
+window.TKI18n?.onLanguageChanged?.(() => {
+  try { if (typeof renderCoupon === 'function') renderCoupon(); } catch (error) { console.warn('Coupon language refresh failed', error); }
+});
 </script>
 </body>
 </html>

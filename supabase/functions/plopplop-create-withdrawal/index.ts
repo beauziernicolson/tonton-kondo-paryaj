@@ -181,8 +181,8 @@ Deno.serve(async (req: Request) => {
   const method = String(body.method ?? "").trim().toLowerCase();
   const recipient = normalizeRecipient(body.recipient);
   if (!requestId || !UUID_RE.test(requestId)) return json(req, { error: "A valid request_id UUID is required" }, 400);
-  if (!Number.isFinite(amount) || amount < 20 || amount > 100000 || Math.round(amount * 100) !== amount * 100) {
-    return json(req, { error: "Withdrawal must be between 20 and 100000 HTG" }, 400);
+  if (!Number.isFinite(amount) || amount < 25 || amount > 100000 || Math.round(amount * 100) !== amount * 100) {
+    return json(req, { error: "Withdrawal must be between 25 and 100000 HTG" }, 400);
   }
   if (!METHODS.has(method)) return json(req, { error: "Invalid withdrawal method" }, 400);
   if (!recipient) return json(req, { error: "Recipient must use format 509XXXXXXXX" }, 400);
@@ -278,7 +278,7 @@ Deno.serve(async (req: Request) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${merchantToken}`,
+        "X-Authorization": `Bearer ${merchantToken}`,
       },
       body: JSON.stringify({
         amount: Number(amountText),
@@ -307,7 +307,7 @@ Deno.serve(async (req: Request) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${withdrawalToken}`,
+        "X-Authorization": `Bearer ${withdrawalToken}`,
       },
       body: JSON.stringify({ amount: Number(amountText), method, recipient, reference: providerReference }),
     }, 25000);
@@ -349,7 +349,7 @@ Deno.serve(async (req: Request) => {
 
     const errorCode = String(executeSummary.error_code ?? "").toUpperCase();
     const definitiveNoTransfer = executeResult.response.status === 400 && [
-      "API_TRANSFER_FAILED", "INSUFFICIENT_BALANCE", "METHOD_NOT_CONFIGURED",
+      "API_TRANSFER_FAILED", "INSUFFICIENT_BALANCE", "METHOD_NOT_CONFIGURED", "BELOW_MINIMUM",
     ].includes(errorCode);
 
     if (definitiveNoTransfer) {

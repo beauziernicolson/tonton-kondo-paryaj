@@ -965,8 +965,6 @@ a{color:inherit;text-decoration:none}
     }
   }
 </style>
-
-
 <style id="roulette-layout-result-sync-fix">
   /* Paysage mobile : aucune partie du tapis ne doit sortir de l'écran */
   @media (max-width: 900px) and (orientation: landscape) {
@@ -1112,8 +1110,6 @@ a{color:inherit;text-decoration:none}
     }
   }
 </style>
-
-
 <style id="roulette-navy-information-text">
   /* Bandeau d'information au-dessus du tapis */
   .tk-file-roulette .roulette-felt .tip,
@@ -1165,7 +1161,6 @@ a{color:inherit;text-decoration:none}
     }
   }
 </style>
-
 <style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -1184,15 +1179,12 @@ a{color:inherit;text-decoration:none}
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -1328,22 +1320,19 @@ a{color:inherit;text-decoration:none}
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-game tk-file-american-roulette">
 <div class="app">
 <!-- ============ HEADER ============ -->
-
-<div class="roulette-orientation-gate" id="rouletteOrientationGate" aria-hidden="true">
-  <div class="roulette-orientation-card">
-    <div class="phone-rotate-icon" aria-hidden="true">
-      <span></span>
-    </div>
-    <h2>Tournez votre téléphone</h2>
-    <p>La roulette se joue en mode paysage pour afficher la roue et le tapis de mises correctement.</p>
-  </div>
+<div aria-hidden="true" class="roulette-orientation-gate" id="rouletteOrientationGate">
+<div class="roulette-orientation-card">
+<div aria-hidden="true" class="phone-rotate-icon">
+<span></span>
 </div>
-
+<h2 data-i18n="games_group2.roulette.rotate_phone">Tournez votre téléphone</h2>
+<p data-i18n="games_group2.roulette.rotate_desc">Utilisez le mode paysage pour afficher correctement la roue et le tapis de mises.</p>
+</div>
+</div>
 <main class="roulette-stage">
 <header class="game-header" id="gameHeader">
 <a aria-label="Accueil Tonton Kondo" class="game-header__brand" href="../index.html">
@@ -1352,108 +1341,102 @@ a{color:inherit;text-decoration:none}
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">American Roulette</span>
 </div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
-  <section class="roulette-hero">
-    <div>
-      <span class="roulette-kicker">Jeu en direct</span>
-      <h1>Roulette américaine</h1>
-      <p>Choisissez votre jeton, placez vos mises puis lancez la roue.</p>
-    </div>
-    <div class="balance roulette-balance">
-      <div class="lbl">Solde disponible</div>
-      <div class="val"><span id="balance">Chargement du solde...</span> <small>HTG</small></div>
-    </div>
-  </section>
-
-  <section class="roulette-game-grid">
-    <article class="roulette-wheel-column">
-      <div class="roulette-wheel-shell">
-        <div class="wheel" id="wheel">
-          <div class="glow"></div>
-          <div class="ring"></div>
-          <div class="bevel"></div>
-          <div class="track"></div>
-          <div class="face" id="wheelFace">
-            <svg id="wheelSvg" viewbox="0 0 400 400"></svg>
-          </div>
-          <div class="ball-orbit" id="ballOrbit"><div class="ball"></div></div>
-          <div class="pointer"></div>
-          <div class="roulette-hub"><span>TK</span></div>
-        </div>
-      </div>
-      <div class="recent roulette-recent" id="recent"></div>
-    </article>
-
-    <article class="roulette-table-column">
-      <div class="felt roulette-felt">
-        <div class="tip">
-          <span>Placez vos mises · Jeton <b id="tipChip">50</b></span>
-          <span>Roulette américaine · 0, 00, 1–36</span>
-        </div>
-        <div class="felt-inner" id="bettingTable"></div>
-      </div>
-
-      <div class="roulette-controls">
-        <div class="chip-rack">
-          <span class="lbl">Jetons</span>
-          <div id="chipRack" class="roulette-chip-list"></div>
-        </div>
-        <div class="roulette-action-buttons">
-          <button class="btn" id="btnClear">Effacer</button>
-          <button class="btn" id="btnRepeat">Répéter</button>
-          <button class="btn-spin" disabled id="btnSpin">Lancer</button>
-        </div>
-      </div>
-    </article>
-  </section>
-
-  <section class="roulette-bottom-grid">
-    <aside class="panel summary roulette-summary">
-      <div class="roulette-panel-heading">
-        <span>01</span>
-        <div>
-          <h3>Résumé des mises</h3>
-          <p>Vos mises actives avant le lancement.</p>
-        </div>
-      </div>
-      <div class="row"><span class="k">Solde</span><span class="v gold" id="sumBalance">Chargement du solde...</span></div>
-      <div class="row"><span class="k">Total misé</span><span class="v" id="sumBet">0</span></div>
-      <div class="row"><span class="k">Gain potentiel</span><span class="v green" id="sumWin">0</span></div>
-      <div class="row"><span class="k">Dernier numéro</span><span class="v" id="sumLast">—</span></div>
-      <div class="bet-list" id="betList"><div class="empty">Aucune mise placée.</div></div>
-    </aside>
-
-    <aside class="panel roulette-result-card">
-      <div class="roulette-panel-heading">
-        <span>02</span>
-        <div>
-          <h3>Résultat</h3>
-          <p>Le numéro gagnant et votre gain apparaîtront ici.</p>
-        </div>
-      </div>
-      <div id="resultPanel" class="roulette-result-content">
-        <div class="roulette-empty-result">
-          <strong>En attente du lancement</strong>
-          <span>Placez une mise puis appuyez sur Lancer.</span>
-        </div>
-      </div>
-    </aside>
-  </section>
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
+<section class="roulette-hero">
+<div>
+<span class="roulette-kicker" data-i18n="games_group2.roulette.live_game">Jeu en direct</span>
+<h1 data-i18n="games_group2.roulette.american">Roulette américaine</h1>
+<p data-i18n="games_group2.roulette.intro">Choisissez votre jeton, placez vos mises, puis lancez la roue.</p>
+</div>
+<div class="balance roulette-balance">
+<div class="lbl">Solde disponible</div>
+<div class="val"><span data-i18n="games_group2.roulette.loading_balance" id="balance">Chargement du solde…</span> <small>HTG</small></div>
+</div>
+</section>
+<section class="roulette-game-grid">
+<article class="roulette-wheel-column">
+<div class="roulette-wheel-shell">
+<div class="wheel" id="wheel">
+<div class="glow"></div>
+<div class="ring"></div>
+<div class="bevel"></div>
+<div class="track"></div>
+<div class="face" id="wheelFace">
+<svg id="wheelSvg" viewbox="0 0 400 400"></svg>
+</div>
+<div class="ball-orbit" id="ballOrbit"><div class="ball"></div></div>
+<div class="pointer"></div>
+<div class="roulette-hub"><span>TK</span></div>
+</div>
+</div>
+<div class="recent roulette-recent" id="recent"></div>
+</article>
+<article class="roulette-table-column">
+<div class="felt roulette-felt">
+<div class="tip">
+<span data-i18n="games_group2.roulette.place_bets">Placez vos mises · Jeton<b id="tipChip">50</b></span>
+<span data-i18n="games_group2.roulette.american_range">Roulette américaine · 0, 00, 1–36</span>
+</div>
+<div class="felt-inner" id="bettingTable"></div>
+</div>
+<div class="roulette-controls">
+<div class="chip-rack">
+<span class="lbl" data-i18n="games_group2.roulette.chips">Jetons</span>
+<div class="roulette-chip-list" id="chipRack"></div>
+</div>
+<div class="roulette-action-buttons">
+<button class="btn" data-i18n="games_group2.roulette.clear" id="btnClear">Effacer</button>
+<button class="btn" data-i18n="games_group2.roulette.repeat" id="btnRepeat">Répéter</button>
+<button class="btn-spin" data-i18n="games_group2.roulette.spin" disabled="" id="btnSpin">Lancer</button>
+</div>
+</div>
+</article>
+</section>
+<section class="roulette-bottom-grid">
+<aside class="panel summary roulette-summary">
+<div class="roulette-panel-heading">
+<span>01</span>
+<div>
+<h3 data-i18n="games_group2.roulette.bets_summary">Résumé des mises</h3>
+<p data-i18n="games_group2.roulette.bets_desc">Vos mises actives avant le lancement.</p>
+</div>
+</div>
+<div class="row"><span class="k" data-i18n="games_group2.roulette.balance">Solde</span><span class="v gold" data-i18n="games_group2.roulette.loading_balance" id="sumBalance">Chargement du solde…</span></div>
+<div class="row"><span class="k" data-i18n="games_group2.roulette.total_staked">Total misé</span><span class="v" id="sumBet">0</span></div>
+<div class="row"><span class="k" data-i18n="games_group2.roulette.potential_win">Gain potentiel</span><span class="v green" id="sumWin">0</span></div>
+<div class="row"><span class="k" data-i18n="games_group2.roulette.last_number">Dernier numéro</span><span class="v" id="sumLast">—</span></div>
+<div class="bet-list" id="betList"><div class="empty" data-i18n="games_group2.roulette.no_bets">Aucune mise placée.</div></div>
+</aside>
+<aside class="panel roulette-result-card">
+<div class="roulette-panel-heading">
+<span>02</span>
+<div>
+<h3 data-i18n="games_group2.roulette.result">Résultat</h3>
+<p data-i18n="games_group2.roulette.result_desc">Le numéro gagnant et votre gain apparaîtront ici.</p>
+</div>
+</div>
+<div class="roulette-result-content" id="resultPanel">
+<div class="roulette-empty-result">
+<strong data-i18n="games_group2.roulette.waiting">En attente du lancement</strong>
+<span data-i18n="games_group2.roulette.place_then_spin">Placez une mise, puis appuyez sur Lancer.</span>
+</div>
+</div>
+</aside>
+</section>
 </main>
-<div class="footer">
-    Jouez, suivez vos tickets et consultez vos résultats en temps réel.
-  </div>
+<div class="footer" data-i18n="games_group2.roulette.footer">Jouez, suivez vos tickets et consultez vos résultats en temps réel.</div>
 </div>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
+<script src="../js/games-group2-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -1512,7 +1495,7 @@ a{color:inherit;text-decoration:none}
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -1531,7 +1514,7 @@ a{color:inherit;text-decoration:none}
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');
@@ -1746,7 +1729,7 @@ function labelOf(key){
 const state = {
   balance: null,
   balanceStatus: 'loading',
-  balanceMessage: 'Chargement du solde...',
+  balanceMessage: gameT('loading_balance'),
   selectedChip: 50,
   bets: {},          // {betKey: amount}
   lastBets: {},
@@ -1765,7 +1748,7 @@ function setSpinButtonState(isSpinning){
   const button = document.getElementById("btnSpin");
   const hasBet = totalBet() > 0;
   button.disabled = isSpinning || !hasBet;
-  button.textContent = isSpinning ? "Spinning…" : "Spin";
+  button.textContent = isSpinning ? advancedT('spinning') : advancedT('spin');
 }
 function showFeedback(message, kind = "info"){
   const panel = document.getElementById("resultPanel");
@@ -1816,7 +1799,7 @@ async function ensureAuthenticatedUser(){
 
   const currentUser = await getCurrentAmericanRouletteUser();
   if (!currentUser?.id) {
-    showFeedback("Vous devez être connecté pour jouer.", "error");
+    showFeedback(advancedT('signin'), "error");
     return null;
   }
   return currentUser;
@@ -1827,13 +1810,13 @@ async function playAmericanRoulette(){
 
   const currentUser = await getCurrentAmericanRouletteUser();
   if (!currentUser?.id) {
-    showFeedback("Vous devez être connecté pour jouer.", "error");
+    showFeedback(advancedT('signin'), "error");
     return;
   }
 
   const betsPayload = buildAmericanRoulettePayload();
   if (!Object.keys(betsPayload).length) {
-    showFeedback("Veuillez placer au moins une mise.", "error");
+    showFeedback(advancedT('betfirst'), "error");
     return;
   }
 
@@ -1872,7 +1855,7 @@ async function playAmericanRoulette(){
     updateAmericanRouletteSummary();
     showAmericanBackendResultPanel(result);
   } catch (err) {
-    const message = err?.message || "Erreur lors de la rotation.";
+    const message = err?.message || group2T('roulette.spin_error');
     showFeedback(message, "error");
   } finally {
     state.spinning = false;
@@ -1896,14 +1879,14 @@ function showAmericanBackendResultPanel(result){
     <div class="result-panel">
       <div class="big" style="color:${color}">${slot}</div>
       <div class="${result.total_win_amount > 0 ? 'win' : 'loss'}">
-        ${result.total_win_amount > 0 ? 'Gagné' : 'Perdu'} · ${result.total_win_amount > 0 ? '+' : ''}${formatCurrency(result.total_win_amount)} HTG
+        ${result.total_win_amount > 0 ? group2T('roulette.won') : group2T('roulette.lost')} · ${result.total_win_amount > 0 ? '+' : ''}${formatCurrency(result.total_win_amount)} HTG
       </div>
-      <div style="margin-top:8px;color:#071a35;font-size:13px">Couleur : <strong>${String(result.winning_color || '—')}</strong></div>
-      <div style="margin-top:4px;color:#071a35;font-size:13px">Total misé : <strong>${formatCurrency(result.total_bet_amount)} HTG</strong></div>
-      <div style="margin-top:4px;color:#071a35;font-size:13px">Gain total : <strong>${formatCurrency(result.total_win_amount)} HTG</strong></div>
-      <div style="margin-top:4px;color:#071a35;font-size:13px">Statut : <strong>${String(result.status || '—')}</strong></div>
-      <div style="margin-top:4px;color:#071a35;font-size:13px">Ticket : <strong>${String(result.ticket_number || '—')}</strong></div>
-      <div style="margin-top:10px;color:#f6d27a;font-size:12px">Mises backend :</div>
+      <div style="margin-top:8px;color:#071a35;font-size:13px">${advancedT('color')} : <strong>${String(result.winning_color || '—')}</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">${advancedT('total')} : <strong>${formatCurrency(result.total_bet_amount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">${advancedT('win')} : <strong>${formatCurrency(result.total_win_amount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">${advancedT('status')} : <strong>${String(result.status || '—')}</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">${advancedT('ticket')} : <strong>${String(result.ticket_number || '—')}</strong></div>
+      <div style="margin-top:10px;color:#f6d27a;font-size:12px">${advancedT('details')} :</div>
       ${betsMarkup}
     </div>`;
 }
@@ -2081,7 +2064,7 @@ function placeAmericanBetByKey(key){
 function addAmericanRouletteBet(/*type*/_t, key, /*label*/_l, /*mult*/_m){
   if(state.spinning) return;
   if (state.balance == null) {
-    showFeedback("Chargement du solde...", "info");
+    showFeedback(gameT('loading_balance'), "info");
     return;
   }
   const total = totalBet();
@@ -2099,7 +2082,7 @@ function clearAmericanRouletteBets(){
 function repeatAmericanRouletteBets(){
   if(state.spinning) return;
   if (state.balance == null) {
-    showFeedback("Chargement du solde...", "info");
+    showFeedback(gameT('loading_balance'), "info");
     return;
   }
   const t = Object.values(state.lastBets).reduce((a,b)=>a+b,0);
@@ -2138,19 +2121,19 @@ function paintChipsOnCells(){
 /* ---------- Summary ---------- */
 function setBalanceStatus(status, message){
   state.balanceStatus = status;
-  state.balanceMessage = message || 'Chargement du solde...';
+  state.balanceMessage = message || gameT('loading_balance');
   updateAmericanRouletteSummary();
 }
 function getBalanceDisplayText(){
   if (state.balanceStatus === 'ready' && state.balance != null) {
     return state.balance.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR');
   }
-  return state.balanceMessage || 'Chargement du solde...';
+  return state.balanceMessage || gameT('loading_balance');
 }
 async function refreshAmericanRouletteBalance({silent = false} = {}){
   const client = window.supabaseClient || null;
   if (!client?.from && !window.getAuthenticatedWallet && !window.getCurrentUserAsync && !window.getCurrentUser) {
-    if (!silent) setBalanceStatus('unavailable', 'Solde indisponible');
+    if (!silent) setBalanceStatus('unavailable', advancedT('bal'));
     return;
   }
 
@@ -2177,7 +2160,7 @@ async function refreshAmericanRouletteBalance({silent = false} = {}){
 
     if (!client?.from) {
       state.balance = null;
-      setBalanceStatus('unavailable', 'Solde indisponible');
+      setBalanceStatus('unavailable', advancedT('bal'));
       return;
     }
 
@@ -2188,7 +2171,7 @@ async function refreshAmericanRouletteBalance({silent = false} = {}){
 
     if (data?.balance == null) {
       state.balance = null;
-      setBalanceStatus('unavailable', 'Solde indisponible');
+      setBalanceStatus('unavailable', advancedT('bal'));
       return;
     }
 
@@ -2196,7 +2179,7 @@ async function refreshAmericanRouletteBalance({silent = false} = {}){
     setBalanceStatus('ready', '');
   } catch (error) {
     state.balance = null;
-    setBalanceStatus('unavailable', 'Solde indisponible');
+    setBalanceStatus('unavailable', advancedT('bal'));
   }
 }
 function updateAmericanRouletteSummary(){
@@ -2230,7 +2213,7 @@ function updateAmericanRouletteSummary(){
 async function playAmericanRoulettePlaceholder(){
   if(state.spinning) return;
   if(totalBet()===0){
-    showFeedback("Veuillez placer au moins une mise.", "error");
+    showFeedback(advancedT('betfirst'), "error");
     return;
   }
 
@@ -2239,7 +2222,7 @@ async function playAmericanRoulettePlaceholder(){
 
   const betsPayload = buildAmericanRoulettePayload();
   if(!Object.keys(betsPayload).length){
-    showFeedback("Au moins une mise est requise.", "error");
+    showFeedback(advancedT('betfirst'), "error");
     return;
   }
 
@@ -2293,7 +2276,7 @@ async function playAmericanRoulettePlaceholder(){
   } catch (err){
     state.spinning = false;
     setSpinButtonState(false);
-    const message = err?.message || "Erreur lors du tirage Roulette.";
+    const message = err?.message || group2T('roulette.spin_error');
     showFeedback(message, "error");
   }
 }
@@ -2352,11 +2335,11 @@ function showAmericanResultPanel(result){
   document.getElementById("resultPanel").innerHTML = `
     <div class="result-panel">
       <div class="big" style="color:${color}">${result.winningNumber}</div>
-      <div class="${result.totalWinAmount > 0 ? 'win' : 'loss'}">${result.totalWinAmount > 0 ? 'Gagné' : 'Perdu'} · ${result.totalWinAmount > 0 ? '+' : ''}${formatCurrency(result.totalWinAmount)} HTG</div>
-      <div style="margin-top:8px;color:#071a35;font-size:13px">Couleur : <strong>${result.winningColor}</strong></div>
-      <div style="margin-top:4px;color:#071a35;font-size:13px">Total misé : <strong>${formatCurrency(result.totalBetAmount)} HTG</strong></div>
-      <div style="margin-top:4px;color:#071a35;font-size:13px">Statut : <strong>${result.status}</strong></div>
-      <div style="margin-top:4px;color:#071a35;font-size:13px">Ticket : <strong>${result.ticketNumber}</strong></div>
+      <div class="${result.totalWinAmount > 0 ? 'win' : 'loss'}">${result.totalWinAmount > 0 ? group2T('roulette.won') : group2T('roulette.lost')} · ${result.totalWinAmount > 0 ? '+' : ''}${formatCurrency(result.totalWinAmount)} HTG</div>
+      <div style="margin-top:8px;color:#071a35;font-size:13px">${advancedT('color')} : <strong>${result.winningColor}</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">${advancedT('total')} : <strong>${formatCurrency(result.totalBetAmount)} HTG</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">${advancedT('status')} : <strong>${result.status}</strong></div>
+      <div style="margin-top:4px;color:#071a35;font-size:13px">${advancedT('ticket')} : <strong>${result.ticketNumber}</strong></div>
       <div style="margin-top:6px;color:#f6d27a;font-size:12px">${result.walletMessage || ''}</div>
       ${detailMarkup}
     </div>`;
@@ -2372,7 +2355,6 @@ document.addEventListener("DOMContentLoaded", ()=>{ void initAmericanRoulette();
     }
   });
 </script>
-
 <script id="roulette-landscape-helper">
 (function () {
   const gate = document.getElementById('rouletteOrientationGate');
@@ -2410,6 +2392,8 @@ document.addEventListener("DOMContentLoaded", ()=>{ void initAmericanRoulette();
   syncOrientationGate();
 })();
 </script>
-
+<script id="advanced-polish-i18n-helper">
+window.advancedT=(key,vars={})=>window.TKI18n?.t?.(`advanced_polish.${key}`,vars)||key;
+</script>
 </body>
 </html>

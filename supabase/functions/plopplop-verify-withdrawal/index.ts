@@ -206,7 +206,7 @@ Deno.serve(async (req: Request) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${merchantToken}`,
+        "X-Authorization": `Bearer ${merchantToken}`,
       },
       body: JSON.stringify({ reference: providerReference }),
     }, 20000);

@@ -37,6 +37,7 @@
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -55,15 +56,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -199,8 +197,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -273,7 +269,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-help tk-file-help-lotto4">
 <main class="app">
@@ -284,63 +279,61 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" data-i18n="help_v3.common.back_to_games" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Aide Lotto 4</span>
 </div></header>
-
-
 <section class="card">
 <div class="eyebrow">Aide</div>
-<h1>Lotto 4 — règles détaillées</h1>
-<p>Le Lotto 4 est un jeu de numéro à 4 chiffres. Le joueur choisit un nombre compris entre 0000 et 9999, puis il sélectionne une option de gain selon les lots du tirage publié. L’ordre exact des chiffres est essentiel, car un seul chiffre mal placé fait perdre le ticket.</p>
-<a class="back-link" href="lotto4.html">← Retour à la page Lotto 4</a>
+<h1 data-i18n="help_v3.pages.lotto4.text_01">Lotto 4 — règles détaillées</h1>
+<p data-i18n="help_v3.pages.lotto4.text_02">Le Lotto 4 est un jeu de numéro à 4 chiffres. Le joueur choisit un nombre compris entre 0000 et 9999, puis il sélectionne une option de gain selon les lots du tirage publié. L’ordre exact des chiffres est essentiel, car un seul chiffre mal placé fait perdre le ticket.</p>
+<a class="back-link" data-i18n="help_v3.pages.lotto4.text_03" href="lotto4.html">← Retour à la page Lotto 4</a>
 <div class="grid">
 <article class="panel">
-<h2>1. Principe du jeu</h2>
-<p>Vous choisissez un numéro de 0000 à 9999. Par exemple, 7420. Ce numéro est ensuite comparé au résultat officiel du tirage sélectionné.</p>
-<span class="callout">Le numéro doit correspondre exactement au résultat attendu.</span>
+<h2 data-i18n="help_v3.pages.lotto4.text_04">1. Principe du jeu</h2>
+<p data-i18n="help_v3.pages.lotto4.text_05">Vous choisissez un numéro de 0000 à 9999. Par exemple, 7420. Ce numéro est ensuite comparé au résultat officiel du tirage sélectionné.</p>
+<span class="callout" data-i18n="help_v3.pages.lotto4.text_06">Le numéro doit correspondre exactement au résultat attendu.</span>
 </article>
 <article class="panel">
-<h2>2. Comment jouer</h2>
+<h2 data-i18n="help_v3.pages.lotto4.text_07">2. Comment jouer</h2>
 <ul>
-<li>Choisissez un tirage disponible.</li>
-<li>Sélectionnez un numéro à 4 chiffres.</li>
-<li>Choisissez une option de gain.</li>
-<li>Indiquez votre mise et validez votre ticket.</li>
+<li data-i18n="help_v3.pages.lotto4.text_08">Choisissez un tirage disponible.</li>
+<li data-i18n="help_v3.pages.lotto4.text_09">Sélectionnez un numéro à 4 chiffres.</li>
+<li data-i18n="help_v3.pages.lotto4.text_10">Choisissez une option de gain.</li>
+<li data-i18n="help_v3.pages.lotto4.text_11">Indiquez votre mise et validez votre ticket.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>3. Les options de gain</h2>
-<p>Le Lotto 4 propose plusieurs façons de jouer selon la position des chiffres par rapport aux lots du tirage. Une option est associée à un type de correspondance.</p>
+<h2 data-i18n="help_v3.pages.lotto4.text_12">3. Les options de gain</h2>
+<p data-i18n="help_v3.pages.lotto4.text_13">Le Lotto 4 propose plusieurs façons de jouer selon la position des chiffres par rapport aux lots du tirage. Une option est associée à un type de correspondance.</p>
 <ul>
-<li>Option 1 : 4 chiffres exacts du 1er lot.</li>
-<li>Le gain dépend du multiplicateur configuré pour cette option.</li>
+<li data-i18n="help_v3.pages.lotto4.text_14">Option 1 : 4 chiffres exacts du 1er lot.</li>
+<li data-i18n="help_v3.pages.lotto4.text_15">Le gain dépend du multiplicateur configuré pour cette option.</li>
 </ul>
-<p>Le mot important ici est “exact”. Si vous jouez 7420 mais que le lot publié est 7240, vous perdez, car l’ordre exact n’est pas respecté.</p>
+<p data-i18n="help_v3.pages.lotto4.text_16">Le mot important ici est “exact”. Si vous jouez 7420 mais que le lot publié est 7240, vous perdez, car l’ordre exact n’est pas respecté.</p>
 </article>
 <article class="panel">
-<h2>4. Exemple simple</h2>
-<p>Supposons que le tirage publié donne 7420 comme 1er lot.</p>
+<h2 data-i18n="help_v3.pages.lotto4.text_17">4. Exemple simple</h2>
+<p data-i18n="help_v3.pages.lotto4.text_18">Supposons que le tirage publié donne 7420 comme 1er lot.</p>
 <div class="example">
-<span class="pill">Vous jouez 7420</span>
-<span class="pill">Résultat = 7420</span>
-<span class="pill">Vous gagnez</span>
+<span class="pill" data-i18n="help_v3.pages.lotto4.text_19">Vous jouez 7420</span>
+<span class="pill" data-i18n="help_v3.pages.lotto4.text_20">Résultat = 7420</span>
+<span class="pill" data-i18n="help_v3.pages.lotto4.text_21">Vous gagnez</span>
 </div>
-<p>Mais si vous jouez 7240, le résultat n’est pas identique. Même si les chiffres sont les mêmes, l’ordre n’est pas le bon : c’est perdu.</p>
+<p data-i18n="help_v3.pages.lotto4.text_22">Mais si vous jouez 7240, le résultat n’est pas identique. Même si les chiffres sont les mêmes, l’ordre n’est pas le bon : c’est perdu.</p>
 </article>
 <article class="panel" style="grid-column:1 / -1;">
-<h2>5. Ce qu’il faut retenir</h2>
+<h2 data-i18n="help_v3.pages.lotto4.text_23">5. Ce qu’il faut retenir</h2>
 <ul>
-<li>Le Lotto 4 se joue sur un numéro à 4 chiffres.</li>
-<li>Le numéro doit être exact.</li>
-<li>L’ordre compte toujours.</li>
-<li>Le gain dépend de l’option choisie et du multiplicateur affiché.</li>
-<li>Le ticket est validé après mise et tirage sélectionné.</li>
+<li data-i18n="help_v3.pages.lotto4.text_24">Le Lotto 4 se joue sur un numéro à 4 chiffres.</li>
+<li data-i18n="help_v3.pages.lotto4.text_25">Le numéro doit être exact.</li>
+<li data-i18n="help_v3.pages.lotto4.text_26">L’ordre compte toujours.</li>
+<li data-i18n="help_v3.pages.lotto4.text_27">Le gain dépend de l’option choisie et du multiplicateur affiché.</li>
+<li data-i18n="help_v3.pages.lotto4.text_28">Le ticket est validé après mise et tirage sélectionné.</li>
 </ul>
 </article>
 </div>
@@ -411,7 +404,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -430,7 +423,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

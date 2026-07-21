@@ -90,49 +90,49 @@
 <span>Paryaj</span>
 </span>
 </a>
-<span class="chip">Création de compte</span>
+<span class="chip" data-i18n="auth.register_title">Création de compte</span>
 </header>
 <section class="shell">
 <article class="panel hero-panel">
 <div>
-<span class="badge-tag">Nouveau joueur</span>
+<span class="badge-tag" data-i18n="auth.new_player">Nouveau joueur</span>
 <h1>Créez votre compte et entrez dans l’univers <span>Tonton Kondo</span>.</h1>
-<p>Créez votre compte joueur et profitez des services Tonton Kondo.</p>
+<p data-i18n="auth.register_subtitle">Créez votre compte joueur et profitez des services Tonton Kondo.</p>
 </div>
 <div>
-<div class="benefit-card"><strong>Profil complet</strong><span>Gérez votre espace joueur, vos jeux et vos transactions en toute simplicité.</span></div>
-<div class="benefit-card"><strong>Accès sécurisé</strong><span>Votre compte est protégé par des parcours simples et rassurants à chaque étape.</span></div>
-<div class="benefit-card"><strong>Expérience premium</strong><span>Une interface pensée pour un parcours joueur fluide sur mobile et sur bureau.</span></div>
+<div class="benefit-card"><strong data-i18n="auth.benefit_profile_title">Profil complet</strong><span data-i18n="auth.benefit_profile_desc">Gérez votre espace joueur, vos jeux et vos transactions en toute simplicité.</span></div>
+<div class="benefit-card"><strong data-i18n="auth.benefit_security_title">Accès sécurisé</strong><span data-i18n="auth.benefit_security_desc">Votre compte est protégé par des parcours simples et rassurants à chaque étape.</span></div>
+<div class="benefit-card"><strong data-i18n="auth.benefit_experience_title">Expérience premium</strong><span data-i18n="auth.benefit_experience_desc">Une interface pensée pour un parcours joueur fluide sur mobile et sur bureau.</span></div>
 </div>
 </article>
 <article class="panel form-panel">
 <div>
-<div class="eyebrow">Inscription</div>
-<h2>Créer mon compte</h2>
-<p>Renseignez vos informations de base pour lancer votre profil joueur.</p>
+<div class="eyebrow" data-i18n="auth.register_eyebrow">Inscription</div>
+<h2 data-i18n="auth.register_button">Créer mon compte</h2>
+<p data-i18n="auth.register_intro">Renseignez vos informations de base pour lancer votre profil joueur.</p>
 </div>
 <form id="registerForm" novalidate="">
 <div class="grid">
-<div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" placeholder="50933123456 ou 33123456" required="" type="tel"/><span class="hint">Vous utiliserez ce numéro pour vous connecter.</span></div>
-<div class="field"><label for="full-name">Nom complet</label><input id="full-name" name="full_name" placeholder="Jean Kouassi" required="" type="text"/></div>
+<div class="field"><label data-i18n="auth.phone_label" for="phone">Téléphone</label><input data-i18n-placeholder="auth.phone_placeholder" id="phone" name="phone" placeholder="50933123456 ou 33123456" required="" type="tel"/><span class="hint" data-i18n="auth.phone_hint">Vous utiliserez ce numéro pour vous connecter.</span></div>
+<div class="field"><label data-i18n="auth.full_name_label" for="full-name">Nom complet</label><input id="full-name" name="full_name" placeholder="Jean Kouassi" required="" type="text"/></div>
 </div>
 <div class="grid">
-<div class="field"><label for="password">Mot de passe</label><input id="password" minlength="6" name="password" placeholder="••••••••" required="" type="password"/></div>
-<div class="field"><label for="confirmPassword">Confirmer le mot de passe</label><input id="confirmPassword" minlength="6" name="confirmPassword" placeholder="••••••••" required="" type="password"/></div>
+<div class="field"><label data-i18n="auth.password_label" for="password">Mot de passe</label><input id="password" minlength="6" name="password" placeholder="••••••••" required="" type="password"/></div>
+<div class="field"><label data-i18n="auth.confirm_password_label" for="confirmPassword">Confirmer le mot de passe</label><input id="confirmPassword" minlength="6" name="confirmPassword" placeholder="••••••••" required="" type="password"/></div>
 </div>
 <label class="check">
 <input type="checkbox"/>
-<span>J’accepte les conditions d’utilisation et la politique de confidentialité du projet Tonton Kondo.</span>
+<span data-i18n="auth.terms_accept">J’accepte les conditions d’utilisation et la politique de confidentialité du projet Tonton Kondo.</span>
 </label>
-<button class="btn btn-primary" type="submit">Créer mon compte</button>
-<button class="btn btn-secondary" id="googleRegisterBtn" type="button">Créer un compte avec Google</button>
-<a class="btn btn-secondary" href="login.html">J’ai déjà un compte</a>
+<button class="btn btn-primary" data-i18n="auth.register_button" type="submit">Créer mon compte</button>
+<button class="btn btn-secondary" data-i18n="auth.continue_google" id="googleRegisterBtn" type="button">Créer un compte avec Google</button>
+<a class="btn btn-secondary" data-i18n="auth.already_account" href="login.html">J’ai déjà un compte</a>
 </form>
 <div class="footer-links">
-<span>Déjà inscrit ?</span>
-<a class="inline-link" href="login.html">Connexion</a>
+<span data-i18n="auth.already_account">Déjà inscrit ?</span>
+<a class="inline-link" data-i18n="auth.login_link" href="login.html">Connexion</a>
 <span>•</span>
-<a class="inline-link" href="forgot-password.html">Mot de passe oublié</a>
+<a class="inline-link" data-i18n="auth.forgot_password" href="forgot-password.html">Mot de passe oublié</a>
 </div>
 </article>
 </section>
@@ -149,7 +149,8 @@
     registerForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      const formData = Object.fromEntries(new FormData(registerForm).entries());
+      const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
+    const formData = Object.fromEntries(new FormData(registerForm).entries());
 
       if (formData.password !== formData.confirmPassword) {
         window.alert('Les mots de passe ne correspondent pas.');
@@ -170,7 +171,7 @@
 
       if (result && result.ok) {
         if (result.needsLogin) {
-          const message = result.message || 'Compte créé. Connectez-vous maintenant avec votre numéro et votre mot de passe.';
+          const message = result.message || tr('sensitive.auth.created');
           window.alert(message);
           window.setTimeout(() => {
             const target = window.resolveRedirectUrl?.(result.redirectTo || 'login-register/login.html') || result.redirectTo || 'login-register/login.html';
@@ -185,7 +186,7 @@
           || 'dashboard.html';
         window.location.href = resolvedTarget;
       } else {
-        window.alert(result?.message || 'Inscription non activée pour l’instant.');
+        window.alert(result?.message || tr('sensitive.auth.register_disabled'));
       }
     });
 
@@ -193,7 +194,7 @@
       if (googleRegisterBtn.disabled) return;
 
       googleRegisterBtn.disabled = true;
-      googleRegisterBtn.textContent = 'Connexion Google...';
+      googleRegisterBtn.textContent = tr('sensitive.auth.google_loading');
 
       try {
         const result = await window.loginWithGoogle?.();

@@ -907,15 +907,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -1051,7 +1048,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-game tk-file-penalty">
 <main id="penalty-page">
@@ -1065,19 +1061,17 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Penalty</span>
 </div>
 </header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
 <!-- ============ HEADER ============ -->
-
 <!-- ============ LAYOUT ============ -->
 <div class="pk-layout">
 <!-- LEFT: Goal + controls -->
@@ -1087,12 +1081,12 @@
 <div class="pk-ball" id="pk-ball"></div>
 </div>
 <div class="pk-posts">
-<div class="pk-post-zone">↘ Poto (poteau)</div>
-<div class="pk-post-zone">✗ Rate / Kenbe</div>
+<div class="pk-post-zone" data-i18n="games_group2.penalty.post">Poteau</div>
+<div class="pk-post-zone" data-i18n="games_group2.penalty.miss_saved">Raté / Arrêté</div>
 </div>
 <!-- Bet controls -->
 <div class="pk-controls">
-<h3>Montant de la mise</h3>
+<h3 data-i18n="games_group2.penalty.stake">Montant de la mise</h3>
 <div class="pk-amount-row">
 <input class="pk-amount-input" id="bet-amount" inputmode="numeric" min="1" type="number" value="50"/>
 <button class="pk-chip" data-amount-action="dec">−</button>
@@ -1104,7 +1098,7 @@
 <button class="pk-chip" data-amount-set="100">100</button>
 <button class="pk-chip" data-amount-set="500">500</button>
 </div>
-<h3>Mises spéciales</h3>
+<h3 data-i18n="games_group2.penalty.special_bets">Mises spéciales</h3>
 <div class="pk-groups">
 <button class="pk-bet-btn green" data-bet-type="range" data-bet-value="1-8">
             1 – 8 <small>x2.5</small>
@@ -1115,36 +1109,31 @@
 <button class="pk-bet-btn green" data-bet-type="range" data-bet-value="17-24">
             17 – 24 <small>x2.5</small>
 </button>
-<button class="pk-bet-btn purple" data-bet-type="random" data-bet-value="random">
-            Hasard <small>x1.5</small>
+<button class="pk-bet-btn purple" data-bet-type="random" data-bet-value="random" data-i18n="games_group2.penalty.random">Hasard<small>x1.5</small>
 </button>
-<button class="pk-bet-btn yellow" data-bet-type="color" data-bet-value="yellow">
-            Jòn <small>x1.8</small>
+<button class="pk-bet-btn yellow" data-bet-type="color" data-bet-value="yellow" data-i18n="games_group2.penalty.yellow">Jaune<small>x1.8</small>
 </button>
-<button class="pk-bet-btn blue" data-bet-type="color" data-bet-value="blue">
-            Blu <small>x1.8</small>
+<button class="pk-bet-btn blue" data-bet-type="color" data-bet-value="blue" data-i18n="games_group2.penalty.blue">Bleu<small>x1.8</small>
 </button>
-<button class="pk-bet-btn red" data-bet-type="event" data-bet-value="post">
-            Poto <small>x5</small>
+<button class="pk-bet-btn red" data-bet-type="event" data-bet-value="post" data-i18n="games_group2.penalty.post">Poteau<small>x5</small>
 </button>
-<button class="pk-bet-btn red" data-bet-type="event" data-bet-value="miss">
-            Rate / Kenbe <small>x3</small>
+<button class="pk-bet-btn red" data-bet-type="event" data-bet-value="miss" data-i18n="games_group2.penalty.miss_saved">Raté / Arrêté<small>x3</small>
 </button>
 </div>
 <div class="pk-actions">
-<button class="pk-btn pk-btn-clear" id="clear-bets-btn">Effacer</button>
-<button class="pk-btn pk-btn-draw" id="draw-btn">⚽ Tirage</button>
+<button class="pk-btn pk-btn-clear" data-i18n="games_group2.penalty.clear" id="clear-bets-btn">Effacer</button>
+<button class="pk-btn pk-btn-draw" data-i18n="games_group2.penalty.draw" id="draw-btn">Tirer</button>
 </div>
 </div>
 </section>
 <!-- RIGHT: Summary -->
 <aside class="pk-card pk-summary">
-<h2>Résumé des mises</h2>
+<h2 data-i18n="games_group2.penalty.bets_summary">Résumé des mises</h2>
 <div id="bets-summary">
-<div class="pk-empty">Aucune mise pour l'instant.<br/>Clique sur un secteur ou un bouton.</div>
+<div class="pk-empty" data-i18n="games_group2.penalty.empty_help">Aucune mise pour le moment.<br/>Touchez une zone ou un bouton pour placer une mise.</div>
 </div>
 <div class="pk-total">
-<span>Total misé</span>
+<span data-i18n="games_group2.penalty.total_staked">Total misé</span>
 <strong id="total-bet">0 HTG</strong>
 </div>
 <div id="result-panel"></div>
@@ -1153,6 +1142,8 @@
 </div>
 </main>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
+<script src="../js/games-group2-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -1211,7 +1202,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -1230,7 +1221,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');
@@ -1492,14 +1483,14 @@ function addPenaltyBet(type, value, label) {
 
   const amount = parseInt($amount.value, 10);
   if (!amount || amount <= 0) {
-    showFeedback('Entre un montant valide.', 'warn');
+    showFeedback(advancedT('invalid'), 'warn');
     return;
   }
 
   penaltyState.bets.push({ type, value, label, amount });
   hideResult();
   updatePenaltySummary();
-  showFeedback(`Mise ajoutée : ${label} — ${amount} HTG`, 'info');
+  showFeedback(advancedT('added',{label,amount}), 'info');
 }
 
 function clearPenaltyBets() {
@@ -1507,7 +1498,7 @@ function clearPenaltyBets() {
   penaltyState.bets = [];
   hideResult();
   updatePenaltySummary();
-  showFeedback('Toutes les mises ont été effacées.', 'warn');
+  showFeedback(advancedT('cleared'), 'warn');
 }
 
 function removePenaltyBet(index) {
@@ -1529,7 +1520,7 @@ function updatePenaltySummary() {
 
   // Render bet rows
   if (penaltyState.bets.length === 0) {
-    $summary.innerHTML = `<div class="pk-empty">Aucune mise pour l'instant.<br/>Clique sur un secteur ou un bouton.</div>`;
+    $summary.innerHTML = `<div class="pk-empty">${advancedT('pempty')}</div>`;
   } else {
     $summary.innerHTML = '';
     penaltyState.bets.forEach((b, idx) => {
@@ -1670,7 +1661,7 @@ function showPenaltyResult(result) {
   const isBackend = result && typeof result === 'object' && typeof result.result_type === 'string';
   const total = isBackend ? Number(result.total_bet_amount || 0) : penaltyState.bets.reduce((s, b) => s + b.amount, 0);
   const winAmount = isBackend ? Number(result.total_win_amount || 0) : computePenaltyWin(result).win;
-  const statusLabel = isBackend ? (String(result.status).toLowerCase() === 'paid' ? 'Gagné' : 'Perdu') : (winAmount > 0 ? 'Gagné' : 'Perdu');
+  const statusLabel = isBackend ? (String(result.status).toLowerCase() === 'paid' ? group2T('penalty.won') : group2T('penalty.lost')) : (winAmount > 0 ? group2T('penalty.won') : group2T('penalty.lost'));
   const statusClass = isBackend ? (String(result.status).toLowerCase() === 'paid' ? 'win' : 'lose') : (winAmount > 0 ? 'win' : 'lose');
   const resultLabel = isBackend ? (result.result_label || result.result?.label || 'Résultat inconnu') : result.label;
   const ticketNumber = isBackend ? (result.ticket_number || '—') : null;
@@ -1684,25 +1675,25 @@ function showPenaltyResult(result) {
   $resultPnl.className = 'show ' + statusClass;
   $resultPnl.innerHTML = `
     <div class="pk-result-head">
-      <h3>Résultat : ${resultLabel}</h3>
+      <h3>${advancedT('result',{result:resultLabel})}</h3>
       <span class="pk-result-status ${statusClass}">${statusLabel}</span>
     </div>
     <div class="pk-result-grid">
       <div class="pk-result-cell">
-        <div class="k">Total misé</div>
+        <div class="k">${advancedT('total')}</div>
         <div class="v">${total} HTG</div>
       </div>
       <div class="pk-result-cell">
-        <div class="k">Gain</div>
+        <div class="k">${advancedT('win')}</div>
         <div class="v gold">${winAmount} HTG</div>
       </div>
       <div class="pk-result-cell">
-        <div class="k">Net</div>
+        <div class="k">${advancedT('net')}</div>
         <div class="v ${winAmount - total >= 0 ? 'gold' : ''}">${winAmount - total} HTG</div>
       </div>
       ${ticketNumber ? `
       <div class="pk-result-cell">
-        <div class="k">Ticket</div>
+        <div class="k">${advancedT('ticket')}</div>
         <div class="v">${ticketNumber}</div>
       </div>` : ''}
     </div>
@@ -1730,7 +1721,7 @@ async function refreshPenaltyBalance() {
 
   const client = window.supabaseClient || null;
   if (!client || typeof client.from !== 'function') {
-    balanceEl.textContent = 'Solde indisponible';
+    balanceEl.textContent = advancedT('bal');
     return null;
   }
 
@@ -1762,14 +1753,14 @@ async function refreshPenaltyBalance() {
     }
 
     if (balance == null) {
-      throw new Error('Solde indisponible');
+      throw new Error(advancedT('bal'));
     }
 
     balanceEl.textContent = `${Number(balance).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${currency || 'HTG'}`;
     return { balance, currency };
   } catch (error) {
     console.error('refreshPenaltyBalance', error);
-    balanceEl.textContent = 'Solde indisponible';
+    balanceEl.textContent = advancedT('bal');
     return null;
   }
 }
@@ -1780,7 +1771,7 @@ async function refreshPenaltyBalance() {
 async function playPenaltyPlaceholder() {
   if (penaltyState.isPlaying) return;
   if (penaltyState.bets.length === 0) {
-    showFeedback('Ajoute au moins une mise avant le tirage.', 'warn');
+    showFeedback(advancedT('betfirst'), 'warn');
     return;
   }
 
@@ -1808,24 +1799,24 @@ async function playPenalty() {
   if (penaltyState.isPlaying) return;
 
   if (!penaltyState.bets.length) {
-    showFeedback('Ajoute au moins une mise avant le tirage.', 'warn');
+    showFeedback(advancedT('betfirst'), 'warn');
     return;
   }
 
   if (penaltyState.bets.some(b => !Number.isFinite(b.amount) || b.amount <= 0)) {
-    showFeedback('Toutes les mises doivent avoir un montant supérieur à 0.', 'warn');
+    showFeedback(advancedT('positive'), 'warn');
     return;
   }
 
   const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : null);
   if (!currentUser || !currentUser.id) {
-    showFeedback('Vous devez être connecté pour jouer.', 'error');
+    showFeedback(advancedT('signin'), 'error');
     return;
   }
 
   const client = window.supabaseClient || null;
   if (!client || typeof client.rpc !== 'function') {
-    showFeedback('Connexion Supabase indisponible. Rechargez la page puis réessayez.', 'error');
+    showFeedback(group2T('penalty.service_unavailable'), 'error');
     return;
   }
 
@@ -1853,9 +1844,9 @@ async function playPenalty() {
     await animatePenaltyShot(result.result);
     showPenaltyResult(result);
     await refreshPenaltyBalance();
-    showFeedback('Solde mis à jour après transaction.', 'success');
+    showFeedback(advancedT('saved'), 'success');
   } catch (error) {
-    showFeedback(String(error?.message || error || 'Erreur lors du tirage Penalty.'), 'error');
+    showFeedback(String(error?.message || error || group2T('penalty.draw_error')), 'error');
   } finally {
     penaltyState.isPlaying = false;
     $drawBtn.disabled = false;
@@ -1898,6 +1889,9 @@ document.addEventListener('DOMContentLoaded', initPenalty);
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
     }
   });
+</script>
+<script id="advanced-polish-i18n-helper">
+window.advancedT=(key,vars={})=>window.TKI18n?.t?.(`advanced_polish.${key}`,vars)||key;
 </script>
 </body>
 </html>

@@ -35,6 +35,7 @@
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -53,15 +54,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -197,8 +195,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -271,7 +267,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-help tk-file-help-american-roulette">
 <main class="app">
@@ -282,59 +277,57 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" data-i18n="help_v3.common.back_to_games" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Aide American Roulette</span>
 </div></header>
-
-
 <section class="card">
 <div class="eyebrow">Aide</div>
-<h1>American Roulette — règles détaillées</h1>
+<h1 data-i18n="help_v3.pages.american_roulette.text_01">American Roulette — règles détaillées</h1>
 <p>La roulette américaine suit le même principe que la roulette classique, mais elle inclut un zéro supplémentaire, noté 00. Cela change légèrement les probabilités et la façon dont certains paris sont interprétés. Le plateau comprend les numéros 0, 00 et 1 à 36.</p>
-<a class="back-link" href="american-roulette.html">← Retour à la page American Roulette</a>
+<a class="back-link" data-i18n="help_v3.pages.american_roulette.text_02" href="american-roulette.html">← Retour à la page American Roulette</a>
 <div class="grid">
 <article class="panel">
-<h2>1. Principe du jeu</h2>
-<p>La roue comporte 0, 00 et les numéros de 1 à 36. Le résultat est déterminé par la roue au moment du lancement.</p>
-<span class="callout">Le 0 et le 00 appartiennent à la couleur verte.</span>
+<h2 data-i18n="help_v3.pages.american_roulette.text_03">1. Principe du jeu</h2>
+<p data-i18n="help_v3.pages.american_roulette.text_04">La roue comporte 0, 00 et les numéros de 1 à 36. Le résultat est déterminé par la roue au moment du lancement.</p>
+<span class="callout" data-i18n="help_v3.pages.american_roulette.text_05">Le 0 et le 00 appartiennent à la couleur verte.</span>
 </article>
 <article class="panel">
-<h2>2. Types de mises</h2>
+<h2 data-i18n="help_v3.pages.american_roulette.text_06">2. Types de mises</h2>
 <ul>
-<li>Numéro : vous misez sur un seul numéro.</li>
-<li>Couleur : rouge ou noir.</li>
-<li>Pair / impair : vous misez sur la parité du résultat.</li>
-<li>Plage : un groupe de numéros.</li>
-<li>Douzaine : un bloc de 12 résultats.</li>
-<li>Colonne : une colonne de la table.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_07">Numéro : vous misez sur un seul numéro.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_08">Couleur : rouge ou noir.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_09">Pair / impair : vous misez sur la parité du résultat.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_10">Plage : un groupe de numéros.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_11">Douzaine : un bloc de 12 résultats.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_12">Colonne : une colonne de la table.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>3. Particularité de la roulette américaine</h2>
-<p>Grâce au 00, la roue contient un peu plus de possibilités de sortie verte. Cela influence directement les probabilités et le niveau de risque de certains paris.</p>
-<p>Les paris simples sur un seul numéro sont très risqués, tandis que les paris larges comme couleur ou colonne offrent davantage de chances de réussite.</p>
+<h2 data-i18n="help_v3.pages.american_roulette.text_13">3. Particularité de la roulette américaine</h2>
+<p data-i18n="help_v3.pages.american_roulette.text_14">Grâce au 00, la roue contient un peu plus de possibilités de sortie verte. Cela influence directement les probabilités et le niveau de risque de certains paris.</p>
+<p data-i18n="help_v3.pages.american_roulette.text_15">Les paris simples sur un seul numéro sont très risqués, tandis que les paris larges comme couleur ou colonne offrent davantage de chances de réussite.</p>
 </article>
 <article class="panel">
-<h2>4. Exemple simple</h2>
-<p>Vous misez 20 HTG sur la couleur noire.</p>
+<h2 data-i18n="help_v3.pages.american_roulette.text_16">4. Exemple simple</h2>
+<p data-i18n="help_v3.pages.american_roulette.text_17">Vous misez 20 HTG sur la couleur noire.</p>
 <div class="example">
-<span class="pill">Résultat = noir</span>
-<span class="pill">Vous gagnez</span>
+<span class="pill" data-i18n="help_v3.pages.american_roulette.text_18">Résultat = noir</span>
+<span class="pill" data-i18n="help_v3.pages.american_roulette.text_19">Vous gagnez</span>
 </div>
-<p>Si le résultat est vert (0 ou 00), le pari est perdu. Les jeux de couleur et de groupe sont plus faciles à comprendre mais moins rémunérateurs que les paris directs.</p>
+<p data-i18n="help_v3.pages.american_roulette.text_20">Si le résultat est vert (0 ou 00), le pari est perdu. Les jeux de couleur et de groupe sont plus faciles à comprendre mais moins rémunérateurs que les paris directs.</p>
 </article>
 <article class="panel" style="grid-column:1 / -1;">
-<h2>5. Ce qu’il faut retenir</h2>
+<h2 data-i18n="help_v3.pages.american_roulette.text_21">5. Ce qu’il faut retenir</h2>
 <ul>
-<li>Le 0 et le 00 sont verts.</li>
-<li>Le jeu propose plusieurs types de paris.</li>
-<li>Le gain dépend du risque et du type de pari.</li>
-<li>Les paris larges sont souvent plus simples à suivre.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_22">Le 0 et le 00 sont verts.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_23">Le jeu propose plusieurs types de paris.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_24">Le gain dépend du risque et du type de pari.</li>
+<li data-i18n="help_v3.pages.american_roulette.text_25">Les paris larges sont souvent plus simples à suivre.</li>
 </ul>
 </article>
 </div>
@@ -405,7 +398,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -424,7 +417,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

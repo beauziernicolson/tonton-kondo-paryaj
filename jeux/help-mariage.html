@@ -42,6 +42,7 @@
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -60,15 +61,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -204,8 +202,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -278,7 +274,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-help tk-file-help-mariage">
 <main class="app">
@@ -289,65 +284,63 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" data-i18n="help_v3.common.back_to_games" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Aide Mariage</span>
 </div></header>
-
-
 <section class="card">
 <div class="eyebrow">Aide</div>
-<h1>Mariage — règles officielles</h1>
-<p>Le Mariage est désormais calculé à partir des 3 lots Borlette du tirage publié. L’ordre des numéros n’a pas d’importance : 12-45 est identique à 45-12.</p>
-<a class="back-link" href="mariage.html">← Retour à la page Mariage</a>
+<h1 data-i18n="help_v3.pages.mariage.text_01">Mariage — règles officielles</h1>
+<p data-i18n="help_v3.pages.mariage.text_02">Le Mariage est désormais calculé à partir des 3 lots Borlette du tirage publié. L’ordre des numéros n’a pas d’importance : 12-45 est identique à 45-12.</p>
+<a class="back-link" data-i18n="help_v3.pages.mariage.text_03" href="mariage.html">← Retour à la page Mariage</a>
 <div class="grid">
 <article class="panel">
-<h2>Qu’est-ce que Mariage ?</h2>
-<p>Vous jouez deux numéros sur un tirage. Pour gagner, les deux numéros doivent être présents parmi les 3 lots officiels Borlette du même tirage.</p>
+<h2 data-i18n="help_v3.pages.mariage.text_04">Qu’est-ce que Mariage ?</h2>
+<p data-i18n="help_v3.pages.mariage.text_05">Vous jouez deux numéros sur un tirage. Pour gagner, les deux numéros doivent être présents parmi les 3 lots officiels Borlette du même tirage.</p>
 <ul>
-<li>Vous choisissez un tirage.</li>
-<li>Vous choisissez deux numéros de 00 à 99.</li>
-<li>Le ticket est vérifié automatiquement quand un résultat Borlette est publié.</li>
+<li data-i18n="help_v3.pages.mariage.text_06">Vous choisissez un tirage.</li>
+<li data-i18n="help_v3.pages.mariage.text_07">Vous choisissez deux numéros de 00 à 99.</li>
+<li data-i18n="help_v3.pages.mariage.text_08">Le ticket est vérifié automatiquement quand un résultat Borlette est publié.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>Comment jouer</h2>
+<h2 data-i18n="help_v3.pages.mariage.text_09">Comment jouer</h2>
 <ul>
-<li>Choisissez un tirage Borlette.</li>
-<li>Sélectionnez un premier et un deuxième numéro.</li>
-<li>Indiquez votre mise.</li>
-<li>Validez votre ticket ; le wallet est débité comme d’habitude.</li>
+<li data-i18n="help_v3.pages.mariage.text_10">Choisissez un tirage Borlette.</li>
+<li data-i18n="help_v3.pages.mariage.text_11">Sélectionnez un premier et un deuxième numéro.</li>
+<li data-i18n="help_v3.pages.mariage.text_12">Indiquez votre mise.</li>
+<li data-i18n="help_v3.pages.mariage.text_13">Validez votre ticket ; le wallet est débité comme d’habitude.</li>
 </ul>
 <div class="tag">Gain potentiel = mise × 5000</div>
 </article>
 <article class="panel">
-<h2>Règle de validation</h2>
-<p>Les deux numéros joués doivent être présents dans les 3 lots du tirage :</p>
+<h2 data-i18n="help_v3.pages.mariage.text_14">Règle de validation</h2>
+<p data-i18n="help_v3.pages.mariage.text_15">Les deux numéros joués doivent être présents dans les 3 lots du tirage :</p>
 <ul>
-<li>1er lot</li>
-<li>2e lot</li>
-<li>3e lot</li>
+<li data-i18n="help_v3.pages.mariage.text_16">1er lot</li>
+<li data-i18n="help_v3.pages.mariage.text_17">2e lot</li>
+<li data-i18n="help_v3.pages.mariage.text_18">3e lot</li>
 </ul>
-<p>Si les deux numéros figurent dans cette liste, le ticket est gagnant. L’ordre n’a pas d’importance.</p>
+<p data-i18n="help_v3.pages.mariage.text_19">Si les deux numéros figurent dans cette liste, le ticket est gagnant. L’ordre n’a pas d’importance.</p>
 </article>
 <article class="panel">
-<h2>Exemples</h2>
-<p>Résultat Borlette du tirage :</p>
+<h2 data-i18n="help_v3.pages.mariage.text_20">Exemples</h2>
+<p data-i18n="help_v3.pages.mariage.text_21">Résultat Borlette du tirage :</p>
 <div class="example">
-<span class="pill">1er lot = 45</span>
-<span class="pill">2e lot = 12</span>
-<span class="pill">3e lot = 89</span>
+<span class="pill" data-i18n="help_v3.pages.mariage.text_22">1er lot = 45</span>
+<span class="pill" data-i18n="help_v3.pages.mariage.text_23">2e lot = 12</span>
+<span class="pill" data-i18n="help_v3.pages.mariage.text_24">3e lot = 89</span>
 </div>
 <ul>
-<li>45 × 12 → gagnant</li>
-<li>12 × 89 → gagnant</li>
-<li>45 × 77 → perdant</li>
+<li data-i18n="help_v3.pages.mariage.text_25">45 × 12 → gagnant</li>
+<li data-i18n="help_v3.pages.mariage.text_26">12 × 89 → gagnant</li>
+<li data-i18n="help_v3.pages.mariage.text_27">45 × 77 → perdant</li>
 </ul>
-<p>Le gain est de mise × 5000.</p>
+<p data-i18n="help_v3.pages.mariage.text_28">Le gain est de mise × 5000.</p>
 </article>
 </div>
 </section>
@@ -417,7 +410,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -436,7 +429,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

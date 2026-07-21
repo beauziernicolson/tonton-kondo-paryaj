@@ -494,15 +494,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -638,7 +635,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-game tk-file-lotto4">
 <main class="app">
@@ -649,45 +645,40 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Lotto 4</span>
 </div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
-
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
 <section class="hero-card lotto4-hero">
 <article>
 <div class="eyebrow">Nouveau jeu</div>
 <h1>Jouez au Lotto 4</h1>
 <p>Choisissez un numéro 0000 à 9999, sélectionnez une option, misez et validez votre ticket.</p>
 <div class="lotto4-hero-actions">
-<div class="mini-chip" id="user-chip">👤 Connecté</div>
-<a class="help-link" href="help-lotto4.html">Comprendre les règles</a>
+<div class="mini-chip" id="user-chip">👤 <span data-i18n="simple_games_qa.connected">Connecté</span></div>
+<a class="help-link" data-i18n="games_common.understand_rules" href="help-lotto4.html">Comprendre les règles</a>
 </div>
 </article>
 </section>
-
 <section class="lotto4-layout">
 <article class="panel lotto4-grid-panel">
 <div class="panel-head">
 <div>
-<h2>Numéro Lotto 4</h2>
+<h2 data-i18n="games_group1.lotto_number" data-i18n-vars='{"game":"Lotto 4"}'>Numéro Lotto 4</h2>
 <p>Sélectionnez vos 4 chiffres.</p>
 </div>
 </div>
-
 <div class="field-card">
-<label for="lotto4-number">Numéro Lotto 4 (4 chiffres)</label>
+<label data-i18n="games_group1.lotto_number_digits" data-i18n-vars='{"game":"Lotto 4","digits":"4"}' for="lotto4-number">Numéro Lotto 4 (4 chiffres)</label>
 <div class="digit-row-label">
 <span>Choisissez la position, puis le chiffre.</span>
 <button class="ghost-btn" id="clear-number-btn" type="button">Effacer</button>
 </div>
-
 <div class="digit-row">
 <div class="digit-grid" style="grid-template-columns:repeat(4, minmax(0, 1fr));">
 <button class="digit-slot active" data-slot="0" type="button">_</button>
@@ -695,7 +686,6 @@
 <button class="digit-slot" data-slot="2" type="button">_</button>
 <button class="digit-slot" data-slot="3" type="button">_</button>
 </div>
-
 <div class="digit-grid" id="digit-buttons">
 <button class="digit-btn" data-digit="0" type="button">0</button>
 <button class="digit-btn" data-digit="1" type="button">1</button>
@@ -709,66 +699,58 @@
 <button class="digit-btn" data-digit="9" type="button">9</button>
 </div>
 </div>
-
-<div class="digit-display">Numéro choisi <strong id="lotto4-display">0000</strong></div>
+<div class="digit-display"><span data-i18n="games_group1.chosen_number">Numéro choisi</span> <strong id="lotto4-display">0000</strong></div>
 <input id="lotto4-number" inputmode="numeric" maxlength="4" type="hidden" value="0000"/>
 <div class="note">Ordre exact obligatoire : 7420 gagne, 0247 perd.</div>
 </div>
 </article>
-
 <div class="lotto4-right-stack">
 <article class="panel lotto4-controls">
 <div class="panel-head">
 <div>
-<h2>Options et montant</h2>
+<h2 data-i18n="games_group1.options_amount">Options et montant</h2>
 <p>Choisissez le tirage, l’option et la mise.</p>
 </div>
 </div>
-
 <div class="field-grid">
 <div class="field-card field-card--draw">
-<label for="draw-name-select">Tirage</label>
-<select id="draw-name-select"><option value="">Chargement des tirages…</option></select>
+<label data-i18n="games_common.draw" for="draw-name-select">Tirage</label>
+<select id="draw-name-select"><option data-i18n="games_common.loading_draws" value="">Chargement des tirages…</option></select>
 <div class="note">Le tirage est utilisé pour lier le ticket au résultat officiel.</div>
 </div>
-
 <div class="field-card field-card--option">
-<label for="option-select">Option Lotto 4</label>
+<label data-i18n="games_group1.game_option" data-i18n-vars='{"game":"Lotto 4"}' for="option-select">Option Lotto 4</label>
 <select id="option-select">
-<option value="">Choisissez une option</option>
-<option value="option1">Option 1 = 2e lot + 3e lot</option>
-<option value="option2">Option 2 = 1er lot + 2e lot</option>
-<option value="option3">Option 3 = 1er lot + 3e lot</option>
+<option data-i18n="games_group1.choose_option" value="">Choisissez une option</option>
+<option data-i18n="games_group1.option1_l4" value="option1">Option 1 = 2e lot + 3e lot</option>
+<option data-i18n="games_group1.option2_l4" value="option2">Option 2 = 1er lot + 2e lot</option>
+<option data-i18n="games_group1.option3_l4" value="option3">Option 3 = 1er lot + 3e lot</option>
 </select>
 <div class="note">Chaque ligne doit inclure le numéro, l’option et le montant.</div>
 </div>
-
 <div class="field-card">
-<label for="amount-input">Montant</label>
+<label data-i18n="games_common.amount" for="amount-input">Montant</label>
 <input id="amount-input" min="1" step="1" type="number" value="10"/>
 </div>
-
-<button class="btn btn-primary lotto4-add-button" id="add-line-btn" type="button">Ajouter au coupon</button>
+<button class="btn btn-primary lotto4-add-button" data-i18n="games_common.add_to_bet_slip" id="add-line-btn" type="button">Ajouter au coupon</button>
 </div>
 </article>
-
 <article class="panel lotto4-coupon">
 <div class="panel-head">
 <div>
-<h2>Coupon Lotto 4</h2>
-<p>Numéros, options et mises à valider.</p>
+<h2 data-i18n="games_group1.slip_title" data-i18n-vars='{"game":"Lotto 4"}'>Coupon Lotto 4</h2>
+<p data-i18n="games_group1.slip_description">Numéros, options et mises à valider.</p>
 </div>
 </div>
-
 <div class="coupon-list" id="coupon-list"></div>
-<button class="btn btn-primary" id="validate-btn" style="width:100%; margin-top:12px;" type="button">Valider le ticket</button>
+<button class="btn btn-primary" data-i18n="games_common.validate_ticket" id="validate-btn" style="width:100%; margin-top:12px;" type="button">Valider le ticket</button>
 <div class="feedback" id="feedback-box">Choisissez un tirage, un numéro 0000-9999 et validez.</div>
 </article>
 </div>
 </section>
-
 </main>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -827,7 +809,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -846,7 +828,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');
@@ -1074,11 +1056,11 @@
 
       async function loadDrawSchedules() {
         try {
-          drawNameSelect.innerHTML = '<option value="">Chargement des tirages…</option>';
+          drawNameSelect.innerHTML = '<option data-i18n="games_common.loading_draws" value="">Chargement des tirages…</option>';
           const client = await waitForSupabaseClient();
           if (!client || typeof client.from !== 'function') {
-            drawNameSelect.innerHTML = '<option value="">Connexion au service momentanément indisponible</option>';
-            setFeedback('Connexion au service momentanément indisponible. Rechargez la page si nécessaire.', 'warn');
+            drawNameSelect.innerHTML = `<option value="">${gameT('simple_games_qa.draw_service_unavailable')}</option>`;
+            setFeedback((window.TKI18n?.t?.('runtime_final.connexion_au_service_momentanement_indisponible_rechargez_la_page_si_nec') || "Connexion au service momentanément indisponible. Rechargez la page si nécessaire."), 'warn');
             return;
           }
           const { data, error } = await client.from('draw_schedules').select('draw_name, display_name').eq('game_type', 'lotto4').eq('is_active', true).order('sort_order', { ascending: true });
@@ -1088,7 +1070,7 @@
           if (!schedules.length) {
             drawNameSelect.innerHTML = '<option value="">Aucun tirage actif disponible</option>';
             selectedDrawName = '';
-            setFeedback('Aucun tirage actif disponible pour Lotto 4.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.aucun_tirage_actif_disponible_pour_lotto_4') || "Aucun tirage actif disponible pour Lotto 4."), 'warn');
             return;
           }
           schedules.forEach((draw) => {
@@ -1099,11 +1081,11 @@
           });
           selectedDrawName = drawNameSelect.value || schedules[0].draw_name;
           drawNameSelect.value = selectedDrawName;
-          setFeedback(`Tirages Lotto 4 chargés : ${schedules.length} disponible(s).`, 'success');
+          setFeedback(gameT('games_group1.draws_loaded', { game: 'Lotto 4', count: schedules.length }), 'success');
         } catch (error) {
           console.error('Erreur chargement tirages Lotto 4', error);
-          drawNameSelect.innerHTML = '<option value="">Erreur de chargement</option>';
-          setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'warn');
+          drawNameSelect.innerHTML = `<option value="">${gameT('simple_games_qa.draw_service_unavailable')}</option>`;
+          setFeedback(gameT('simple_games_qa.draw_load_error', { message: error.message || gameT('simple_games_qa.unknown_error') }), 'warn');
         }
       }
 
@@ -1116,7 +1098,7 @@
         couponLines.forEach((line) => {
           const item = document.createElement('article');
           item.className = 'coupon-item';
-          item.innerHTML = `<div><strong>Numéro ${line.number} • ${line.option_type || 'option inconnue'}</strong><span>Ajouté le ${new Date(line.createdAt).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')}</span></div><div><strong>${formatCurrency(line.amount)}</strong><button class="btn" type="button" data-delete="${line.id}" style="padding:8px 10px;">Supprimer</button></div>`;
+          item.innerHTML = `<div><strong>${gameT('simple_games_qa.number_option', { number: line.number, option: line.option_type || gameT('games_group1.unknown_option') })}</strong><span>${gameT('simple_games_qa.added_on', { date: new Date(line.createdAt).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR') })}</span></div><div><strong>${formatCurrency(line.amount)}</strong><button class="btn" type="button" data-delete="${line.id}" style="padding:8px 10px;" data-i18n="games_group1.delete">${gameT('games_group1.delete')}</button></div>`;
           couponList.appendChild(item);
         });
       }
@@ -1130,15 +1112,15 @@
         const rawNumber = String(lotto4NumberInput.value || '').trim();
         const optionType = optionSelect.value || '';
         const rawAmount = Number(amountInput.value);
-        if (!selectedDrawName) { setFeedback('Choisissez un tirage avant d’ajouter une ligne.', 'warn'); drawNameSelect.focus(); return; }
-        if (!hasSelectedNumber) { setFeedback('Choisissez d’abord vos numéros avant d’ajouter une ligne.', 'warn'); const firstSlot = document.querySelector('.digit-slot'); if (firstSlot) firstSlot.focus(); return; }
-        if (!isValidLotto4Number(rawNumber)) { setFeedback('Le numéro doit être composé de 4 chiffres exactement (0000 à 9999).', 'warn'); return; }
-        if (!optionType) { setFeedback('Choisissez une option avant d’ajouter une ligne.', 'warn'); optionSelect.focus(); return; }
-        if (!Number.isFinite(rawAmount) || rawAmount <= 0) { setFeedback('Entrez un montant valide supérieur à 0.', 'warn'); amountInput.focus(); return; }
+        if (!selectedDrawName) { setFeedback((window.TKI18n?.t?.('runtime_final.choisissez_un_tirage_avant_dajouter_une_ligne') || "Choisissez un tirage avant d’ajouter une ligne."), 'warn'); drawNameSelect.focus(); return; }
+        if (!hasSelectedNumber) { setFeedback((window.TKI18n?.t?.('runtime_final.choisissez_dabord_vos_numeros_avant_dajouter_une_ligne') || "Choisissez d’abord vos numéros avant d’ajouter une ligne."), 'warn'); const firstSlot = document.querySelector('.digit-slot'); if (firstSlot) firstSlot.focus(); return; }
+        if (!isValidLotto4Number(rawNumber)) { setFeedback((window.TKI18n?.t?.('runtime_final.le_numero_doit_etre_compose_de_4_chiffres_exactement_0000_a_9999') || "Le numéro doit être composé de 4 chiffres exactement (0000 à 9999)."), 'warn'); return; }
+        if (!optionType) { setFeedback((window.TKI18n?.t?.('runtime_final.choisissez_une_option_avant_dajouter_une_ligne') || "Choisissez une option avant d’ajouter une ligne."), 'warn'); optionSelect.focus(); return; }
+        if (!Number.isFinite(rawAmount) || rawAmount <= 0) { setFeedback((window.TKI18n?.t?.('runtime_final.entrez_un_montant_valide_superieur_a_0') || "Entrez un montant valide supérieur à 0."), 'warn'); amountInput.focus(); return; }
         const newLine = { id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`, number: rawNumber, option_type: optionType, amount: rawAmount, createdAt: new Date().toISOString() };
         couponLines = [newLine, ...couponLines];
         renderCoupon();
-        setFeedback(`Ligne ${newLine.number} (${newLine.option_type}) ajoutée. Débit prévu : ${formatCurrency(newLine.amount)}.`, 'success');
+        setFeedback(gameT('simple_games_qa.line_added_with_option', { number: newLine.number, option: newLine.option_type, amount: formatCurrency(newLine.amount) }), 'success');
       }
 
       document.querySelectorAll('.digit-slot').forEach((slot) => {
@@ -1158,28 +1140,28 @@
         const id = button.getAttribute('data-delete');
         couponLines = couponLines.filter((line) => line.id !== id);
         renderCoupon();
-        setFeedback('La ligne a été retirée du coupon.', 'warn');
+        setFeedback((window.TKI18n?.t?.('runtime_final.la_ligne_a_ete_retiree_du_coupon') || "La ligne a été retirée du coupon."), 'warn');
       });
 
       validateBtn.addEventListener('click', async () => {
-        if (!currentUser) { setFeedback('Vous devez être connecté pour valider un ticket.', 'warn'); if (window.saveRedirectTarget) window.saveRedirectTarget('lotto4.html'); window.tryRedirectToLogin('../login-register/login.html'); return; }
+        if (!currentUser) { setFeedback((window.TKI18n?.t?.('runtime_final.vous_devez_etre_connecte_pour_valider_un_ticket') || "Vous devez être connecté pour valider un ticket."), 'warn'); if (window.saveRedirectTarget) window.saveRedirectTarget('lotto4.html'); window.tryRedirectToLogin('../login-register/login.html'); return; }
         selectedDrawName = drawNameSelect.value || '';
-        if (!selectedDrawName) { setFeedback('Choisissez un tirage avant de valider.', 'warn'); drawNameSelect.focus(); return; }
-        if (!couponLines.length) { setFeedback('Validez d’abord votre montant en ajoutant une ligne au coupon avant de valider le ticket.', 'warn'); return; }
+        if (!selectedDrawName) { setFeedback((window.TKI18n?.t?.('runtime_final.choisissez_un_tirage_avant_de_valider') || "Choisissez un tirage avant de valider."), 'warn'); drawNameSelect.focus(); return; }
+        if (!couponLines.length) { setFeedback((window.TKI18n?.t?.('runtime_final.validez_dabord_votre_montant_en_ajoutant_une_ligne_au_coupon_avant_de_va') || "Validez d’abord votre montant en ajoutant une ligne au coupon avant de valider le ticket."), 'warn'); return; }
 
         const client = await waitForSupabaseClient();
-        if (!client || typeof client.from !== 'function') { setFeedback('Connexion au service momentanément indisponible.', 'warn'); return; }
+        if (!client || typeof client.from !== 'function') { setFeedback((window.TKI18n?.t?.('runtime_final.connexion_au_service_momentanement_indisponible') || "Connexion au service momentanément indisponible."), 'warn'); return; }
 
         const userId = currentUser.id || currentUser.user_id || null;
         const totalAmountValue = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);
 
         const { data: walletData, error: walletError } = await client.from('wallets').select('id, balance').eq('user_id', userId).single();
-        if (walletError || !walletData) { setFeedback('Wallet introuvable pour ce compte.', 'warn'); return; }
-        if (Number(walletData.balance || 0) < totalAmountValue) { setFeedback(`Solde insuffisant. Solde actuel : ${formatCurrency(walletData.balance)}.`, 'warn'); return; }
+        if (walletError || !walletData) { setFeedback((window.TKI18n?.t?.('runtime_final.wallet_introuvable_pour_ce_compte') || "Wallet introuvable pour ce compte."), 'warn'); return; }
+        if (Number(walletData.balance || 0) < totalAmountValue) { setFeedback(gameT('simple_games_qa.current_balance_too_low', { balance: formatCurrency(walletData.balance) }), 'warn'); return; }
 
         validateBtn.disabled = true;
         validateBtn.textContent = 'Validation…';
-        setFeedback('Validation du ticket Lotto 4 en cours…', 'warn');
+        setFeedback((window.TKI18n?.t?.('runtime_final.validation_du_ticket_lotto_4_en_cours') || "Validation du ticket Lotto 4 en cours…"), 'warn');
 
         try {
           const ticketNumber = generateTicketNumber();
@@ -1215,7 +1197,7 @@
 
           couponLines = [];
           renderCoupon();
-          setFeedback(`Ticket Lotto 4 validé : ${ticketNumber}. Débit de ${formatCurrency(totalAmountValue)} effectué.`, 'success');
+          setFeedback(gameT('games_group1.ticket_success', { game: 'Lotto 4', ticket: ticketNumber, amount: formatCurrency(totalAmountValue) }), 'success');
 
           window.dispatchEvent(new CustomEvent('tonton:wallet-updated', {
             detail: {
@@ -1231,10 +1213,10 @@
           }
         } catch (error) {
           console.error('Erreur validation Lotto 4', error);
-          setFeedback(`Erreur de validation : ${error.message || 'Impossible de valider le ticket.'}`, 'error');
+          setFeedback(gameT('simple_games_qa.validation_error', { message: error.message || gameT('simple_games_qa.unknown_error') }), 'error');
         } finally {
           validateBtn.disabled = false;
-          validateBtn.textContent = 'Valider le ticket';
+          validateBtn.textContent = gameT('validate_ticket');
         }
       });
 
@@ -1243,7 +1225,7 @@
       loadDrawSchedules();
 
       (async function init() {
-        if (!window.getCurrentUserAsync) { setFeedback('Le système d’authentification est indisponible.', 'error'); return; }
+        if (!window.getCurrentUserAsync) { setFeedback((window.TKI18n?.t?.('runtime_final.le_systeme_dauthentification_est_indisponible') || "Le système d’authentification est indisponible."), 'error'); return; }
         currentUser = await window.getCurrentUserAsync();
         if (!currentUser) {
           if (window.saveRedirectTarget) window.saveRedirectTarget('lotto4.html');
@@ -1251,7 +1233,7 @@
           return;
         }
         const name = currentUser.full_name || currentUser.email || 'Joueur';
-        userChip.innerHTML = '👤 Connecté : <strong>' + name + '</strong>';
+        userChip.innerHTML = '👤 ' + gameT('connected') + ' : <strong>' + name + '</strong>';
       })();
     })();
   </script>
@@ -1261,6 +1243,11 @@
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
     }
   });
+</script>
+<script id="simple-games-qa-language-hook">
+window.TKI18n?.onLanguageChanged?.(() => {
+  try { if (typeof renderCoupon === 'function') renderCoupon(); } catch (error) { console.warn('Coupon language refresh failed', error); }
+});
 </script>
 </body>
 </html>

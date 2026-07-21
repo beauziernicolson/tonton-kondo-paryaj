@@ -81,15 +81,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -225,8 +222,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -303,7 +298,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-games tk-file-games">
 <main class="app">
@@ -314,17 +308,15 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Jeux</span>
 </div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a class="is-active" href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
-
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a class="is-active" href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
 <section class="hero-card">
 <div class="eyebrow">Catalogue</div>
 <h1>Jeux disponibles</h1>
@@ -423,6 +415,7 @@
 </section>
 </main>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -481,7 +474,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -500,7 +493,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

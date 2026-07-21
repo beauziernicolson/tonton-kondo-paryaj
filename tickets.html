@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="Historique de vos tickets et résultats sur votre espace joueur Tonton Kondo." name="description"/>
-<title>Tonton Kondo — Tickets</title>
+<title data-i18n="tickets_v3.page_title">Tonton Kondo — Mes tickets</title>
 <style>
     :root {
       --bg:#020813;
@@ -740,13 +740,13 @@
 </div>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<a class="action-btn" data-i18n-aria-label="common.promotions" type="button" href="promotion.html">
 <svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
 <span class="badge">3</span>
-</button>
+</a>
 <a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
 <svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
-<span class="badge notifications-badge" hidden="">0</span>
+<span class="badge notifications-badge" hidden="" id="notificationBadge">0</span>
 </a>
 <div class="user-menu-wrap" id="userMenuWrap">
 <button aria-expanded="false" aria-haspopup="menu" class="action-btn user-button" data-i18n-aria-label="common.user_menu" id="userMenuButton" type="button">
@@ -775,28 +775,28 @@
 <nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a class="is-active" href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <section class="hero-card">
 <article>
-<div class="eyebrow">Historique</div>
-<h1>Mes tickets</h1>
-<p>Consultez vos tickets en un coup d’œil et suivez les résultats rapidement.</p>
+<div class="eyebrow" data-i18n="tickets_v3.eyebrow">Historique de jeu</div>
+<h1 data-i18n="tickets_v3.title">Mes tickets</h1>
+<p data-i18n="tickets_v3.description">Retrouvez vos tickets, vérifiez leur statut et consultez chaque sélection en détail.</p>
 </article>
 <article class="summary-grid">
 <div class="summary-card">
 <div class="summary-icon">🎟️</div>
-<small>Tickets</small>
+<small data-i18n="tickets_v3.summary_count_label">Tickets</small>
 <strong id="ticket-count">0</strong>
-<span>Tickets de jeu enregistrés</span>
+<span data-i18n="tickets_v3.summary_count_help">Tickets de jeu enregistrés</span>
 </div>
 <div class="summary-card">
 <div class="summary-icon">💰</div>
-<small>Montant total</small>
+<small data-i18n="tickets_v3.summary_amount_label">Montant total</small>
 <strong id="ticket-total">0 HTG</strong>
-<span>Somme des tickets affichés</span>
+<span data-i18n="tickets_v3.summary_amount_help">Somme des tickets affichés</span>
 </div>
 <div class="summary-card">
 <div class="summary-icon">📌</div>
-<small>Statut</small>
+<small data-i18n="tickets_v3.summary_status_label">Statut</small>
 <strong id="status-summary">—</strong>
-<span>Dernier état visible</span>
+<span data-i18n="tickets_v3.summary_status_help">Dernier statut affiché</span>
 </div>
 </article>
 </section>
@@ -804,15 +804,15 @@
 <article class="panel">
 <div class="panel-head">
 <div>
-<h2>Liste des tickets</h2>
-<p>Suivi en direct de vos tickets de jeux.</p>
+<h2 data-i18n="tickets_v3.list_title">Liste des tickets</h2>
+<p data-i18n="tickets_v3.list_description">Suivez vos tickets et leurs résultats depuis un seul espace.</p>
 </div>
-<button class="btn btn-primary" id="refresh-tickets-btn" type="button">Rafraîchir mes tickets</button>
+<button class="btn btn-primary" data-i18n="tickets_v3.refresh" id="refresh-tickets-btn" type="button">Actualiser mes tickets</button>
 </div>
 <div class="ticket-toolbar">
-<input autocomplete="off" id="ticket-search" placeholder="Rechercher un ticket..." type="search"/>
-<select aria-label="Filtrer par jeu" id="ticket-game-filter">
-<option value="all">Tous les jeux</option>
+<input autocomplete="off" data-i18n-placeholder="tickets_v3.search_placeholder" id="ticket-search" placeholder="Rechercher par numéro ou jeu" type="search"/>
+<select aria-label="Filtrer les tickets par jeu" data-i18n-aria-label="tickets_v3.game_filter_label" id="ticket-game-filter">
+<option data-i18n="tickets_v3.all_games" value="all">Tous les jeux</option>
 <option value="borlette">Borlette</option>
 <option value="mariage">Mariage</option>
 <option value="lotto3">Lotto 3</option>
@@ -826,33 +826,33 @@
 <option value="horse_racing">Course Cheval</option>
 </select>
 </div>
-<div aria-label="Filtres des tickets" class="ticket-filters" id="ticket-filters" role="group">
-<button class="ticket-filter-btn active" data-ticket-filter="all" type="button">Tous</button>
-<button class="ticket-filter-btn" data-ticket-filter="pending" type="button">En attente</button>
-<button class="ticket-filter-btn" data-ticket-filter="won" type="button">Gagnés</button>
-<button class="ticket-filter-btn" data-ticket-filter="lost" type="button">Perdus</button>
-<button class="ticket-filter-btn" data-ticket-filter="paid" type="button">Payés</button>
-<button class="ticket-filter-btn" data-ticket-filter="completed" type="button">Terminés</button>
-<button class="ticket-filter-btn" data-ticket-filter="cancelled" type="button">Annulés</button>
+<div aria-label="Filtrer les tickets par statut" class="ticket-filters" data-i18n-aria-label="tickets_v3.filters_label" id="ticket-filters" role="group">
+<button class="ticket-filter-btn active" data-i18n="tickets_v3.filter_all" data-ticket-filter="all" type="button">Tous</button>
+<button class="ticket-filter-btn" data-i18n="tickets_v3.filter_pending" data-ticket-filter="pending" type="button">En attente</button>
+<button class="ticket-filter-btn" data-i18n="tickets_v3.filter_won" data-ticket-filter="won" type="button">Gagnés</button>
+<button class="ticket-filter-btn" data-i18n="tickets_v3.filter_lost" data-ticket-filter="lost" type="button">Perdus</button>
+<button class="ticket-filter-btn" data-i18n="tickets_v3.filter_paid" data-ticket-filter="paid" type="button">Payés</button>
+<button class="ticket-filter-btn" data-i18n="tickets_v3.filter_completed" data-ticket-filter="completed" type="button">Terminés</button>
+<button class="ticket-filter-btn" data-i18n="tickets_v3.filter_cancelled" data-ticket-filter="cancelled" type="button">Annulés</button>
 </div>
-<div class="state-box" id="ticket-state">Chargement de vos tickets…</div>
+<div class="state-box" data-i18n="tickets_v3.loading" id="ticket-state">Chargement de vos tickets…</div>
 <div aria-live="polite" class="ticket-list" id="ticket-list"></div>
 <div class="load-more-wrap" hidden="" id="tickets-load-more-wrap">
 <div class="load-more-info" id="tickets-load-more-info"></div>
-<button class="btn" id="tickets-load-more-btn" type="button">Charger plus</button>
+<button class="btn" data-i18n="tickets_v3.load_more" id="tickets-load-more-btn" type="button">Afficher plus</button>
 </div>
 </article>
 <article class="panel">
 <div class="panel-head">
 <div>
-<h2>Détails du ticket</h2>
-<p>Sélectionnez un ticket pour voir ses lignes.</p>
+<h2 data-i18n="tickets_v3.details_title">Détails du ticket</h2>
+<p data-i18n="tickets_v3.details_description">Sélectionnez un ticket pour consulter ses lignes.</p>
 </div>
 </div>
 <div class="details-panel" id="details-panel">
 <div class="details-card">
-<h3>Aucun ticket sélectionné</h3>
-<p>Choisissez un ticket pour voir ses détails.</p>
+<h3 data-i18n="tickets_v3.no_selection_title">Aucun ticket sélectionné</h3>
+<p data-i18n="tickets_v3.no_selection_text">Choisissez un ticket pour afficher tous ses détails.</p>
 </div>
 </div>
 </article>
@@ -871,6 +871,7 @@
 <script src="js/auth-guard.js"></script><script src="js/main-header.js"></script>
 <script>
     (function () {
+      const t = (key, params = {}) => window.TKI18n?.t?.(key, params) || key;
       const ticketList = document.getElementById('ticket-list');
       const ticketState = document.getElementById('ticket-state');
       const detailsPanel = document.getElementById('details-panel');
@@ -909,15 +910,49 @@
         roulette_american: 'Roulette Américaine',
       }; 
 
-      const STATUS_LABELS = {
-        pending: 'En attente',
-        won: 'Gagné',
-        lost: 'Perdu',
-        paid: 'Payé',
-        completed: 'Terminé',
-        cancelled: 'Annulé',
-        confirmed: 'Confirmé',
+      function getStatusLabels() {
+        return {
+          pending: t('tickets_v3.status.pending'),
+          won: t('tickets_v3.status.won'),
+          lost: t('tickets_v3.status.lost'),
+          paid: t('tickets_v3.status.paid'),
+          completed: t('tickets_v3.status.completed'),
+          cancelled: t('tickets_v3.status.cancelled'),
+          confirmed: t('tickets_v3.status.confirmed'),
+          unknown: t('tickets_v3.status.unknown'),
+        };
+      }
+
+      const STATUS_ALIASES = {
+        pending: 'pending', waiting: 'pending', 'in_progress': 'pending', 'in progress': 'pending',
+        'en attente': 'pending', attente: 'pending', 'ap tann': 'pending', processing: 'pending',
+        won: 'won', win: 'won', winner: 'won', winning: 'won', success: 'won', successful: 'won',
+        gagne: 'won', gagné: 'won', gagnant: 'won', genyen: 'won', 'ou genyen': 'won',
+        lost: 'lost', lose: 'lost', loser: 'lost', losing: 'lost', failed: 'lost',
+        perdu: 'lost', perdant: 'lost', pedi: 'lost', pèdi: 'lost', 'ou pèdi': 'lost',
+        paid: 'paid', paye: 'paid', payé: 'paid', peye: 'paid', settled: 'paid', payout: 'paid',
+        completed: 'completed', complete: 'completed', termine: 'completed', terminé: 'completed', fini: 'completed',
+        cancelled: 'cancelled', canceled: 'cancelled', annule: 'cancelled', annulé: 'cancelled', anile: 'cancelled',
+        confirmed: 'confirmed', confirm: 'confirmed', confirme: 'confirmed', confirmé: 'confirmed', konfime: 'confirmed',
       };
+
+      function normalizeStatus(status) {
+        const raw = String(status || '').trim().toLowerCase();
+        return STATUS_ALIASES[raw] || raw || 'pending';
+      }
+
+      function getEffectiveTicketStatus(ticket) {
+        const ticketStatus = normalizeStatus(ticket?.status);
+        if (['won', 'lost', 'paid', 'cancelled', 'pending'].includes(ticketStatus)) return ticketStatus;
+
+        const items = ticketItemsByTicket[ticket?.id] || [];
+        const itemStatuses = items.map((item) => normalizeStatus(item.status || item.outcome)).filter(Boolean);
+        if (itemStatuses.includes('won')) return 'won';
+        if (itemStatuses.length && itemStatuses.every((status) => status === 'lost')) return 'lost';
+        if (itemStatuses.includes('pending')) return 'pending';
+        if (itemStatuses.includes('paid')) return 'paid';
+        return ticketStatus;
+      }
 
       function formatCurrency(value) {
         return `${Number(value || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG`;
@@ -925,12 +960,13 @@
 
       function formatGameLabel(gameType) {
         const normalized = String(gameType || '').toLowerCase();
-        return GAME_LABELS[normalized] || 'Jeu inconnu';
+        return GAME_LABELS[normalized] || t('tickets_v3.unknown_game');
       }
 
       function formatStatusLabel(status) {
-        const normalized = String(status || '').toLowerCase();
-        return STATUS_LABELS[normalized] || String(status || 'Inconnu');
+        const normalized = normalizeStatus(status);
+        const labels = getStatusLabels();
+        return labels[normalized] || labels.unknown;
       }
 
       function formatSignedCurrency(value) {
@@ -993,11 +1029,11 @@
       function translateOutcome(value) {
         const normalized = String(value || '').trim().toLowerCase();
         const map = {
-          won: 'Gagné',
-          lost: 'Perdu',
-          pending: 'En attente',
-          paid: 'Payé',
-          completed: 'Terminé',
+          won: t('tickets_v3.status.won'),
+          lost: t('tickets_v3.status.lost'),
+          pending: t('tickets_v3.status.pending'),
+          paid: t('tickets_v3.status.paid'),
+          completed: t('tickets_v3.status.completed'),
         };
         return map[normalized] || safeText(value, '—');
       }
@@ -1013,7 +1049,7 @@
       }
 
       function statusLabel(status) {
-        return String(status || 'pending').toLowerCase();
+        return normalizeStatus(status);
       }
 
       function getStatusClass(status) {
@@ -1069,7 +1105,7 @@
         const total = tickets.reduce((sum, ticket) => sum + Number(ticket.total_amount || 0), 0);
         ticketCount.textContent = String(tickets.length);
         ticketTotal.textContent = formatCurrency(total);
-        statusSummary.textContent = tickets.length ? formatStatusLabel(tickets[0].status) : '—';
+        statusSummary.textContent = tickets.length ? formatStatusLabel(getEffectiveTicketStatus(tickets[0])) : '—';
       }
 
       function setActiveFilterButton() {
@@ -1160,7 +1196,7 @@
         let filteredTickets = [...tickets];
 
         if (activeTicketFilter !== 'all') {
-          filteredTickets = filteredTickets.filter((ticket) => String(ticket.status || '').toLowerCase() === activeTicketFilter);
+          filteredTickets = filteredTickets.filter((ticket) => getEffectiveTicketStatus(ticket) === activeTicketFilter);
         }
 
         if (activeGameFilter !== 'all') {
@@ -1191,9 +1227,9 @@
           const empty = document.createElement('div');
           empty.className = 'empty-state';
           if (!tickets.length) {
-            empty.innerHTML = 'Vous n’avez encore aucun ticket. Jouez pour créer votre premier billet.<br><a class="btn btn-primary" href="jeux/games.html" style="margin-top:10px; display:inline-flex;">Jouer maintenant</a>';
+            empty.innerHTML = `${t('tickets_v3.no_tickets')}<br><a class="btn btn-primary" href="jeux/games.html" style="margin-top:10px; display:inline-flex;">${t('tickets_v3.play_now')}</a>`;
           } else {
-            empty.innerHTML = 'Aucun ticket ne correspond à votre recherche ou à vos filtres.<br><button class="btn btn-primary" type="button" data-ticket-reset="true" style="margin-top:10px; display:inline-flex;">Réinitialiser les filtres</button>';
+            empty.innerHTML = `${t('tickets_v3.no_match')}<br><button class="btn btn-primary" type="button" data-ticket-reset="true" style="margin-top:10px; display:inline-flex;">${t('tickets_v3.reset_filters')}</button>`;
           }
           ticketList.appendChild(empty);
           if (ticketsLoadMoreWrap) ticketsLoadMoreWrap.hidden = true;
@@ -1210,9 +1246,9 @@
           const isLucky6 = gameKey === 'lucky6';
           const chosenNumbers = ticketItems.length > 0 ? ticketItems.map((item) => normalizeNumberPlayed(item.number_played)).join(' | ') : null;
           const potentialWin = ticketItems.length > 0 ? ticketItems.reduce((sum, item) => sum + Number(item.potential_win || 0), 0) : null;
-          const detailsFallback = 'Détails complets disponibles dans l’historique.';
+          const detailsFallback = t('tickets_v3.details_available_history');
           const ticketNumber = String(ticket.ticket_number || '');
-          const ticketLabel = ticketNumber || 'Ticket';
+          const ticketLabel = ticketNumber || t('tickets_v3.ticket_label');
 
           card.innerHTML = `
             <div class="ticket-card-head">
@@ -1221,8 +1257,8 @@
                 <span class="ticket-game">${formatGameLabel(ticket.game_type)} • ${formatDate(ticket.created_at)}</span>
               </div>
               <div class="ticket-card-actions">
-                <button class="btn ticket-copy-btn" type="button" data-ticket-copy aria-label="Copier le numéro du ticket ${ticketNumber}">Copier</button>
-                ${renderStatusBadge(ticket.status)}
+                <button class="btn ticket-copy-btn" type="button" data-ticket-copy aria-label="${t('tickets_v3.copy_aria', { ticket: ticketNumber })}">${t('tickets_v3.copy')}</button>
+                ${renderStatusBadge(getEffectiveTicketStatus(ticket))}
               </div>
             </div>
             <div class="ticket-card-meta">
@@ -1232,7 +1268,7 @@
             ${isPenalty || isLucky6 ? `<div class="ticket-card-note">${chosenNumbers || detailsFallback}</div>` : ''}
             <div class="ticket-card-foot">
               <span class="ticket-amount">${formatCurrency(ticket.total_amount)}</span>
-              <button class="btn btn-primary" type="button" data-ticket-id="${ticket.id}">Voir détails</button>
+              <button class="btn btn-primary" type="button" data-ticket-id="${ticket.id}">${t('tickets_v3.view_details')}</button>
             </div>
           `;
 
@@ -1241,22 +1277,22 @@
             copyBtn.addEventListener('click', async (event) => {
               event.stopPropagation();
               const originalText = copyBtn.textContent.trim();
-              const successLabel = 'Copié ✓';
+              const successLabel = t('tickets_v3.copied');
               const failLabel = 'Échec';
               try {
                 await copyTextToClipboard(ticketNumber);
                 copyBtn.textContent = successLabel;
-                copyBtn.setAttribute('aria-label', `Numéro ${ticketNumber} copié`);
+                copyBtn.setAttribute('aria-label', t('tickets_v3.copied_aria', { ticket: ticketNumber }));
                 setTimeout(() => {
                   copyBtn.textContent = originalText;
-                  copyBtn.setAttribute('aria-label', `Copier le numéro du ticket ${ticketNumber}`);
+                  copyBtn.setAttribute('aria-label', t('tickets_v3.copy_aria', { ticket: ticketNumber }));
                 }, 1500);
               } catch (copyError) {
-                console.warn('Impossible de copier le numéro du ticket', copyError);
+                console.warn(t('tickets_v3.copy_failed_console'), copyError);
                 copyBtn.textContent = failLabel;
                 setTimeout(() => {
                   copyBtn.textContent = originalText;
-                  copyBtn.setAttribute('aria-label', `Copier le numéro du ticket ${ticketNumber}`);
+                  copyBtn.setAttribute('aria-label', t('tickets_v3.copy_aria', { ticket: ticketNumber }));
                 }, 1500);
               }
             });
@@ -1273,7 +1309,7 @@
           const hasMore = visibleTicketsCount < filteredTickets.length;
           ticketsLoadMoreWrap.hidden = !hasMore;
           if (ticketsLoadMoreInfo) {
-            ticketsLoadMoreInfo.textContent = `${Math.min(visibleTicketsCount, filteredTickets.length)} sur ${filteredTickets.length} tickets affichés`;
+            ticketsLoadMoreInfo.textContent = `${t('tickets_v3.displayed_count', { visible: Math.min(visibleTicketsCount, filteredTickets.length), total: filteredTickets.length })}`;
           }
         }
 
@@ -1281,7 +1317,7 @@
       }
 
       async function copyTextToClipboard(text) {
-        if (!text) return Promise.reject(new Error('Aucun numéro de ticket à copier'));
+        if (!text) return Promise.reject(new Error(t('tickets_v3.nothing_to_copy')));
         if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
           return navigator.clipboard.writeText(text);
         }
@@ -1315,12 +1351,12 @@
         detailsPanel.innerHTML = '';
 
         if (!ticket) {
-          detailsPanel.innerHTML = '<div class="details-card"><h3>Aucun ticket sélectionné</h3><p>Choisissez un ticket pour voir ses détails.</p></div>';
+          detailsPanel.innerHTML = `<div class="details-card"><h3>${t('tickets_v3.no_selection_title')}</h3><p>${t('tickets_v3.no_selection_text')}</p></div>`;
           return;
         }
 
         const gameKey = String(ticket.game_type || '').toLowerCase();
-        const ticketStatus = statusLabel(ticket.status);
+        const ticketStatus = getEffectiveTicketStatus(ticket);
         const ticketStatusLabel = formatStatusLabel(ticket.status);
         const capitalJoue = Number(ticket.total_amount || 0);
         const detailItems = rouletteDetails?.bets?.length ? rouletteDetails.bets : items;
@@ -1363,13 +1399,13 @@
             )
           : '—';
         const resultLabel = ticketStatus === 'pending'
-          ? 'En attente'
+          ? t('tickets_v3.status.pending')
           : ticketStatus === 'won'
             ? formatCurrency(gainPotentiel)
             : ticketStatus === 'lost'
               ? `-${formatCurrency(capitalJoue)}`
               : ticketStatus === 'paid'
-                ? `Payé : ${formatCurrency(gainPotentiel)}`
+                ? t('tickets_v3.paid_amount', { amount: formatCurrency(gainPotentiel) })
                 : '—';
 
         detailsPanel.innerHTML = `
@@ -1481,7 +1517,7 @@
             const amount = formatCurrencyOrFallback(item.amount, '0 HTG');
             const multiplier = safeText(item.payout_multiplier || item.odds || '—');
             const winAmount = formatCurrencyOrFallback(item.win_amount || item.potential_win || 0, '0 HTG');
-            const outcomeLabel = item.status ? formatStatusLabel(item.status) : safeText(item.outcome, 'En attente');
+            const outcomeLabel = item.status ? formatStatusLabel(item.status) : safeText(item.outcome, t('tickets_v3.status.pending'));
 
             lineCard.innerHTML = `
               <strong>${translateRouletteKey(betKey)}</strong>
@@ -1514,7 +1550,7 @@
         try {
           const client = window.supabaseClient || null;
           if (!client || typeof client.from !== 'function') {
-            throw new Error('Connexion au service momentanément indisponible. Réessayez dans quelques instants.');
+            throw new Error(t('tickets_v3.service_unavailable'));
           }
 
           const gameKey = String(ticket.game_type || '').toLowerCase();
@@ -1586,19 +1622,19 @@
           itemsData = fallbackItems || [];
           renderDetails(itemsData, ticket, rouletteDetails);
         } catch (error) {
-          console.error('Erreur chargement tickets:', error);
+          console.error(t('tickets_v3.console_load_error'), error);
           console.error('Erreur lors du chargement des détails du ticket.', error);
-          detailsPanel.innerHTML = `<div class="error-state">Erreur lors du chargement des lignes : ${error.message || 'Inconnue'}</div>`;
+          detailsPanel.innerHTML = `<div class="error-state">${t('tickets_v3.details_load_error', { error: error.message || t('tickets_v3.unknown_value') })}</div>`;
         }
       }
 
       async function loadTickets() {
         try {
-          setState('Chargement des tickets en cours…', 'info');
+          setState(t('tickets_v3.loading_data'), 'info');
 
           const client = window.supabaseClient || null;
           if (!client || typeof client.from !== 'function') {
-            throw new Error('Connexion au service momentanément indisponible. Réessayez dans quelques instants.');
+            throw new Error(t('tickets_v3.service_unavailable'));
           }
 
           const { data, error } = await client
@@ -1634,33 +1670,38 @@
           renderTickets();
 
           if (!tickets.length) {
-            setState('Aucun ticket n’a encore été enregistré pour ce compte.', 'info');
+            setState(t('tickets_v3.empty_account'), 'info');
           } else {
             ticketState.style.display = 'none';
           }
         } catch (error) {
-          console.error('Erreur chargement tickets:', error);
-          console.error('Erreur lors du chargement des tickets.', error);
-          setState('Impossible de charger les données pour le moment. Réessayez plus tard.', 'error');
+          console.error(t('tickets_v3.console_load_error'), error);
+          console.error(t('tickets_v3.console_load_error'), error);
+          setState(t('tickets_v3.load_failed'), 'error');
         }
       }
 
       if (refreshTicketsBtn) {
         refreshTicketsBtn.addEventListener('click', async () => {
           if (!currentUser) {
-            setState('Vous devez être connecté pour rafraîchir vos tickets.', 'error');
+            setState(t('tickets_v3.login_required_refresh'), 'error');
             return;
           }
           await loadTickets();
         });
       }
 
+      window.TKI18n?.onLanguageChanged?.(() => {
+        renderTickets();
+        if (selectedTicketId) showTicketDetails(selectedTicketId);
+      });
+
       (async function init() {
         try {
           setupTicketFilters();
 
           if (!window.getCurrentUserAsync) {
-            setState('Le système d’authentification est indisponible sur cette page.', 'error');
+            setState(t('tickets_v3.auth_unavailable'), 'error');
             return;
           }
 
@@ -1673,12 +1714,12 @@
             return;
           }
 
-          const name = currentUser.full_name || currentUser.email || 'Joueur';
-          if (userChip) userChip.innerHTML = '👤 Connecté : <strong>' + name + '</strong>';
+          const name = currentUser.full_name || currentUser.email || t('results_v3.player');
+          if (userChip) userChip.innerHTML = '👤 <strong>' + t('tickets_v3.connected', { name }) + '</strong>';
           await loadTickets();
         } catch (error) {
-          console.error('Erreur d’initialisation.', error);
-          setState('Impossible d’initialiser la page des tickets.', 'error');
+          console.error(t('tickets_v3.console_init_error'), error);
+          setState(t('tickets_v3.init_failed'), 'error');
         }
       })();
     })();

@@ -781,15 +781,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -925,7 +922,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-game tk-file-keno">
 <main class="app">
@@ -936,41 +932,37 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Keno</span>
 </div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
-
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
 <section class="hero-card keno-hero">
 <article>
-<div class="eyebrow">Jeu instantané</div>
+<div class="eyebrow" data-i18n="games_group2.keno.eyebrow">Jeu instantané</div>
 <h1>Keno</h1>
-<p>Choisissez entre 5 et 10 numéros parmi 80, placez votre mise et lancez le tirage.</p>
+<p data-i18n="games_group2.keno.intro">Choisissez de 5 à 10 numéros parmi 80, définissez votre mise, puis lancez le tirage.</p>
 <div class="keno-hero-actions">
-<div class="mini-chip">Sélectionnez entre 5 et 10 numéros</div>
-<a class="keno-help-link" href="help-keno.html">Comprendre les règles</a>
+<div class="mini-chip" data-i18n="games_group2.keno.chip">Sélectionnez de 5 à 10 numéros</div>
+<a class="keno-help-link" data-i18n="games_common.understand_rules" href="help-keno.html">Comprendre les règles</a>
 </div>
 </article>
 </section>
-
 <section class="keno-layout">
 <div class="keno-left-stack">
 <article class="keno-panel keno-grid-panel">
 <div class="panel-head">
 <div>
-<h2>Choisissez vos numéros</h2>
-<p>Sélectionnez entre 5 et 10 numéros parmi les 80 disponibles.</p>
+<h2 data-i18n="games_group2.keno.choose_title">Choisissez vos numéros</h2>
+<p data-i18n="games_group2.keno.choose_desc">Sélectionnez de 5 à 10 numéros parmi les 80 disponibles.</p>
 </div>
 </div>
-
 <div class="field-card">
-<label>Numéros choisis</label>
+<label data-i18n="games_group2.keno.selected">Numéros choisis</label>
 <div class="grid-info">
 <strong id="selected-count">0 / 10</strong>
 <span id="warning-text"></span>
@@ -981,159 +973,141 @@
 <article class="keno-panel keno-payout-panel">
 <div class="panel-head">
 <div>
-<h2>Table de paiement</h2>
-<p>Consultez les multiplicateurs selon vos matchs.</p>
+<h2 data-i18n="games_group2.keno.payment_table">Table de paiement</h2>
+<p data-i18n="games_group2.keno.payment_desc">Consultez les multiplicateurs selon le nombre de correspondances.</p>
 </div>
 </div>
-
 <div class="payout-accordion">
-<details class="payout-group" open>
+<details class="payout-group" open="">
 <summary>
-<span class="payout-group-title"><strong>5 numéros</strong><span>3 niveaux de gain</span></span>
+<span class="payout-group-title"><strong>5 numéros</strong><span data-i18n="games_group2.keno.levels_3">3 niveaux de gain</span></span>
 </summary>
 <div class="payout-mini-list">
-<div class="payout-mini-row"><span><strong>3</strong> matchs</span><span>Mise × 2</span></div>
-<div class="payout-mini-row"><span><strong>4</strong> matchs</span><span>Mise × 10</span></div>
-<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 50</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>3</strong>Correspondances</span><span>Mise × 2</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>4</strong>Correspondances</span><span>Mise × 10</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>5</strong>Correspondances</span><span>Mise × 50</span></div>
 </div>
 </details>
-
 <details class="payout-group">
 <summary>
-<span class="payout-group-title"><strong>6 numéros</strong><span>4 niveaux de gain</span></span>
+<span class="payout-group-title"><strong>6 numéros</strong><span data-i18n="games_group2.keno.levels_4">4 niveaux de gain</span></span>
 </summary>
 <div class="payout-mini-list">
-<div class="payout-mini-row"><span><strong>3</strong> matchs</span><span>Mise × 1</span></div>
-<div class="payout-mini-row"><span><strong>4</strong> matchs</span><span>Mise × 5</span></div>
-<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 25</span></div>
-<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 100</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>3</strong>Correspondances</span><span>Mise × 1</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>4</strong>Correspondances</span><span>Mise × 5</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>5</strong>Correspondances</span><span>Mise × 25</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>6</strong>Correspondances</span><span>Mise × 100</span></div>
 </div>
 </details>
-
 <details class="payout-group">
 <summary>
-<span class="payout-group-title"><strong>7 numéros</strong><span>4 niveaux de gain</span></span>
+<span class="payout-group-title"><strong>7 numéros</strong><span data-i18n="games_group2.keno.levels_4">4 niveaux de gain</span></span>
 </summary>
 <div class="payout-mini-list">
-<div class="payout-mini-row"><span><strong>4</strong> matchs</span><span>Mise × 3</span></div>
-<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 15</span></div>
-<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 75</span></div>
-<div class="payout-mini-row"><span><strong>7</strong> matchs</span><span>Mise × 250</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>4</strong>Correspondances</span><span>Mise × 3</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>5</strong>Correspondances</span><span>Mise × 15</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>6</strong>Correspondances</span><span>Mise × 75</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>7</strong>Correspondances</span><span>Mise × 250</span></div>
 </div>
 </details>
-
 <details class="payout-group">
 <summary>
-<span class="payout-group-title"><strong>8 numéros</strong><span>5 niveaux de gain</span></span>
+<span class="payout-group-title"><strong>8 numéros</strong><span data-i18n="games_group2.keno.levels_5">5 niveaux de gain</span></span>
 </summary>
 <div class="payout-mini-list">
-<div class="payout-mini-row"><span><strong>4</strong> matchs</span><span>Mise × 2</span></div>
-<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 10</span></div>
-<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 50</span></div>
-<div class="payout-mini-row"><span><strong>7</strong> matchs</span><span>Mise × 200</span></div>
-<div class="payout-mini-row"><span><strong>8</strong> matchs</span><span>Mise × 500</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>4</strong>Correspondances</span><span>Mise × 2</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>5</strong>Correspondances</span><span>Mise × 10</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>6</strong>Correspondances</span><span>Mise × 50</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>7</strong>Correspondances</span><span>Mise × 200</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>8</strong>Correspondances</span><span>Mise × 500</span></div>
 </div>
 </details>
-
 <details class="payout-group">
 <summary>
-<span class="payout-group-title"><strong>9 numéros</strong><span>5 niveaux de gain</span></span>
+<span class="payout-group-title"><strong>9 numéros</strong><span data-i18n="games_group2.keno.levels_5">5 niveaux de gain</span></span>
 </summary>
 <div class="payout-mini-list">
-<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 5</span></div>
-<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 25</span></div>
-<div class="payout-mini-row"><span><strong>7</strong> matchs</span><span>Mise × 100</span></div>
-<div class="payout-mini-row"><span><strong>8</strong> matchs</span><span>Mise × 500</span></div>
-<div class="payout-mini-row"><span><strong>9</strong> matchs</span><span>Mise × 1000</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>5</strong>Correspondances</span><span>Mise × 5</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>6</strong>Correspondances</span><span>Mise × 25</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>7</strong>Correspondances</span><span>Mise × 100</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>8</strong>Correspondances</span><span>Mise × 500</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>9</strong>Correspondances</span><span>Mise × 1000</span></div>
 </div>
 </details>
-
 <details class="payout-group">
 <summary>
-<span class="payout-group-title"><strong>10 numéros</strong><span>6 niveaux de gain</span></span>
+<span class="payout-group-title"><strong>10 numéros</strong><span data-i18n="games_group2.keno.levels_6">6 niveaux de gain</span></span>
 </summary>
 <div class="payout-mini-list">
-<div class="payout-mini-row"><span><strong>5</strong> matchs</span><span>Mise × 2</span></div>
-<div class="payout-mini-row"><span><strong>6</strong> matchs</span><span>Mise × 10</span></div>
-<div class="payout-mini-row"><span><strong>7</strong> matchs</span><span>Mise × 50</span></div>
-<div class="payout-mini-row"><span><strong>8</strong> matchs</span><span>Mise × 250</span></div>
-<div class="payout-mini-row"><span><strong>9</strong> matchs</span><span>Mise × 1000</span></div>
-<div class="payout-mini-row"><span><strong>10</strong> matchs</span><span>Mise × 5000</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>5</strong>Correspondances</span><span>Mise × 2</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>6</strong>Correspondances</span><span>Mise × 10</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>7</strong>Correspondances</span><span>Mise × 50</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>8</strong>Correspondances</span><span>Mise × 250</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>9</strong>Correspondances</span><span>Mise × 1000</span></div>
+<div class="payout-mini-row"><span data-i18n="games_group2.keno.matches"><strong>10</strong>Correspondances</span><span>Mise × 5000</span></div>
 </div>
 </details>
 </div>
-<div class="panel-note">Ouvrez uniquement la catégorie correspondant au nombre de numéros joués.</div>
+<div class="panel-note" data-i18n="games_group2.keno.open_hint">Ouvrez uniquement la catégorie correspondant au nombre de numéros joués.</div>
 </article>
 </div>
-
 <aside class="keno-side">
 <article class="keno-panel keno-controls">
 <div class="panel-head">
 <div>
-<h2>Mise et actions</h2>
-<p>Définissez votre mise, puis lancez la partie.</p>
+<h2 data-i18n="games_group2.keno.stake_actions">Mise et actions</h2>
+<p data-i18n="games_group2.keno.stake_desc">Définissez votre mise, puis lancez la partie.</p>
 </div>
 </div>
-
 <div class="field-card">
-<label for="stake-input">Montant de la mise</label>
+<label data-i18n="games_common.bet_amount" for="stake-input">Montant de la mise</label>
 <input id="stake-input" min="1" placeholder="Montant de la mise" type="number"/>
 <div class="button-row">
-<button class="btn" id="quick-pick-btn" type="button">Quick Pick</button>
-<button class="btn" id="clear-btn" type="button">Effacer</button>
-<button class="btn btn-primary" id="play-btn" type="button">Jouer</button>
+<button class="btn" data-i18n="games_group2.keno.quick_pick" id="quick-pick-btn" type="button">Sélection automatique</button>
+<button class="btn" data-i18n="games_group2.keno.clear" id="clear-btn" type="button">Effacer</button>
+<button class="btn btn-primary" data-i18n="games_group2.keno.play" id="play-btn" type="button">Jouer</button>
 </div>
-<div class="feedback" id="feedback-box">Sélectionnez vos numéros puis validez.</div>
+<div class="feedback" data-i18n="games_group2.keno.feedback" id="feedback-box">Sélectionnez vos numéros, puis validez votre mise.</div>
 </div>
 </article>
-
 <article class="keno-panel result-card">
 <div class="panel-head">
 <div>
-<h2>Résultat Keno</h2>
-<p>Le résultat de votre partie apparaîtra ici.</p>
+<h2 data-i18n="games_group2.keno.result_title">Résultat Keno</h2>
+<p data-i18n="games_group2.keno.result_desc">Le résultat de votre partie apparaîtra ici.</p>
 </div>
 </div>
-<div class="result-row"><span>Numéros choisis</span><strong id="chosen-numbers">Aucun</strong></div>
-<div class="result-row"><span>Numéros tirés</span><strong id="drawn-numbers">En attente du résultat</strong></div>
-<div class="result-row"><span>Matchs</span><strong id="matches-count">-</strong></div>
-<div class="result-row"><span>Gain</span><strong id="gain-amount">-</strong></div>
-<div class="result-row"><span>Ticket</span><strong id="ticket-number">-</strong></div>
-<div class="result-row"><span>Mise</span><strong id="bet-amount">-</strong></div>
-<div class="result-row"><span>Multiplicateur</span><strong id="payout-multiplier">-</strong></div>
-<div class="result-row"><span>Statut</span><strong id="status-text">-</strong></div>
+<div class="result-row"><span data-i18n="games_group2.keno.selected">Numéros choisis</span><strong data-i18n="games_group2.keno.none" id="chosen-numbers">Aucun</strong></div>
+<div class="result-row"><span data-i18n="games_group2.keno.drawn">Numéros tirés</span><strong data-i18n="games_group2.keno.waiting_result" id="drawn-numbers">En attente du résultat</strong></div>
+<div class="result-row"><span data-i18n="games_group2.keno.matches">Correspondances</span><strong id="matches-count">-</strong></div>
+<div class="result-row"><span data-i18n="games_group2.keno.win">Gain</span><strong id="gain-amount">-</strong></div>
+<div class="result-row"><span data-i18n="games_group2.keno.ticket">Ticket</span><strong id="ticket-number">-</strong></div>
+<div class="result-row"><span data-i18n="games_group2.keno.stake">Mise</span><strong id="bet-amount">-</strong></div>
+<div class="result-row"><span data-i18n="games_group2.keno.multiplier">Multiplicateur</span><strong id="payout-multiplier">-</strong></div>
+<div class="result-row"><span data-i18n="games_group2.keno.status">Statut</span><strong id="status-text">-</strong></div>
 </article>
 </aside>
 </section>
-
 <section aria-hidden="true" class="drawing-machine keno-draw-modal" id="drawing-machine" style="display:none;">
 <div class="keno-draw-backdrop"></div>
 <div aria-labelledby="keno-draw-title" aria-modal="true" class="keno-draw-dialog" role="dialog">
 <div class="drawing-header">
 <div>
-<div class="eyebrow">Tirage en direct</div>
-<h2 id="keno-draw-title">Machine de tirage</h2>
-<p class="keno-draw-subtitle">Les numéros apparaissent un à un.</p>
+<div class="eyebrow" data-i18n="games_group2.keno.live_draw">Tirage en direct</div>
+<h2 data-i18n="games_group2.keno.machine" id="keno-draw-title">Machine de tirage</h2>
+<p class="keno-draw-subtitle" data-i18n="games_group2.keno.machine_desc">Les numéros apparaissent un à un.</p>
 </div>
 <div class="match-counter" id="live-match-counter">Matchs : 0</div>
 </div>
-
 <div class="drawing-zone" id="drawing-zone"></div>
-
-<div aria-live="polite" class="keno-draw-message" id="keno-draw-message">
-Bonne chance ! Le tirage commence.
-</div>
-
-<button class="btn btn-primary keno-quit-button" id="keno-quit-btn" style="display:none;" type="button">
-Quitter
-</button>
+<div aria-live="polite" class="keno-draw-message" data-i18n="games_group2.keno.good_luck" id="keno-draw-message">Bonne chance ! Le tirage commence.</div>
+<button class="btn btn-primary keno-quit-button" data-i18n="games_group2.keno.quit" id="keno-quit-btn" style="display:none;" type="button">Quitter</button>
 </div>
 </section>
-
-
-
 </main>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
+<script src="../js/games-group2-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -1192,7 +1166,7 @@ Quitter
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -1211,7 +1185,7 @@ Quitter
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');
@@ -1403,7 +1377,7 @@ Quitter
 
     function updateSelectedNumbers() {
       selectedNumbers.sort((a, b) => a - b);
-      selectedCount.textContent = `${selectedNumbers.length} / 10`;
+      selectedCount.textContent = advancedT('ks',{count:selectedNumbers.length});
       warningText.textContent = selectedNumbers.length > 10 ? 'Maximum 10 numéros.' : '';
       chosenNumbersEl.textContent = selectedNumbers.length ? selectedNumbers.join(', ') : 'Aucun';
       renderGrid();
@@ -1413,14 +1387,14 @@ Quitter
       const index = selectedNumbers.indexOf(number);
       if (index >= 0) {
         selectedNumbers.splice(index, 1);
-        setFeedback('Numéro retiré de la sélection.', '');
+        setFeedback((window.TKI18n?.t?.('runtime_final.numero_retire_de_la_selection') || "Numéro retiré de la sélection."), '');
       } else {
         if (selectedNumbers.length >= 10) {
-          setFeedback('Vous ne pouvez pas choisir plus de 10 numéros.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.vous_ne_pouvez_pas_choisir_plus_de_10_numeros') || "Vous ne pouvez pas choisir plus de 10 numéros."), 'warn');
           return;
         }
         selectedNumbers.push(number);
-        setFeedback('Numéro ajouté.', '');
+        setFeedback((window.TKI18n?.t?.('runtime_final.numero_ajoute') || "Numéro ajouté."), '');
       }
       updateSelectedNumbers();
     }
@@ -1434,31 +1408,31 @@ Quitter
         selectedNumbers.push(number);
       }
       updateSelectedNumbers();
-      setFeedback('Quick Pick : 5 numéros choisis automatiquement.', 'success');
+      setFeedback((window.TKI18n?.t?.('runtime_final.quick_pick_5_numeros_choisis_automatiquement') || "Quick Pick : 5 numéros choisis automatiquement."), 'success');
     }
 
     function clearSelection() {
       selectedNumbers.length = 0;
       updateSelectedNumbers();
-      drawnNumbersEl.textContent = 'En attente du backend';
+      drawnNumbersEl.textContent = group2T('keno.waiting_backend');
       matchesCount.textContent = '-';
       gainAmount.textContent = '-';
       stakeInput.value = '';
-      setFeedback('Sélection effacée.', '');
+      setFeedback((window.TKI18n?.t?.('runtime_final.selection_effacee') || "Sélection effacée."), '');
     }
 
     function validateKenoForm() {
       const stake = Number(stakeInput.value);
       if (selectedNumbers.length < 5) {
-        setFeedback('Choisissez au moins 5 numéros pour jouer.', 'error');
+        setFeedback(group2T('keno.min_numbers'), 'error');
         return false;
       }
       if (selectedNumbers.length > 10) {
-        setFeedback('Vous ne pouvez pas choisir plus de 10 numéros.', 'error');
+        setFeedback((window.TKI18n?.t?.('runtime_final.vous_ne_pouvez_pas_choisir_plus_de_10_numeros') || "Vous ne pouvez pas choisir plus de 10 numéros."), 'error');
         return false;
       }
       if (!stake || stake < 1) {
-        setFeedback('Entrez un montant de mise valide supérieur à 0.', 'error');
+        setFeedback((window.TKI18n?.t?.('runtime_final.entrez_un_montant_de_mise_valide_superieur_a_0') || "Entrez un montant de mise valide supérieur à 0."), 'error');
         return false;
       }
       return true;
@@ -1478,7 +1452,7 @@ Quitter
       if (window.supabaseClient && typeof window.supabaseClient.rpc === 'function') {
         return window.supabaseClient;
       }
-      throw new Error('Connexion au service momentanément indisponible. Rechargez la page puis réessayez.');
+      throw new Error(group2T('keno.service_unavailable'));
     }
 
     async function getCurrentPlayer() {
@@ -1495,7 +1469,7 @@ Quitter
       document.body.classList.add('keno-modal-open');
       quitDrawBtn.style.display = 'none';
       drawMessage.className = 'keno-draw-message';
-      drawMessage.textContent = 'Bonne chance ! Le tirage commence.';
+      drawMessage.textContent = group2T('keno.good_luck');
     }
 
     function closeKenoDrawModal() {
@@ -1507,7 +1481,7 @@ Quitter
 
     function resetKenoResult() {
       chosenNumbersEl.textContent = selectedNumbers.length ? selectedNumbers.join(', ') : 'Aucun';
-      drawnNumbersEl.textContent = 'En attente du backend';
+      drawnNumbersEl.textContent = group2T('keno.waiting_backend');
       matchesCount.textContent = '-';
       gainAmount.textContent = '-';
       ticketNumberEl.textContent = '-';
@@ -1518,10 +1492,10 @@ Quitter
       drawingMachine.classList.remove('is-open');
       drawingMachine.setAttribute('aria-hidden', 'true');
       drawingZone.innerHTML = '';
-      liveMatchCounter.textContent = 'Matchs : 0';
+      liveMatchCounter.textContent = advancedT('km0');
       quitDrawBtn.style.display = 'none';
       drawMessage.className = 'keno-draw-message';
-      drawMessage.textContent = 'Bonne chance ! Le tirage commence.';
+      drawMessage.textContent = group2T('keno.good_luck');
     }
 
     function renderBall(number, isMatch) {
@@ -1541,15 +1515,15 @@ Quitter
       console.log('Keno selected numbers:', result.selected_numbers);
 
       if (!drawnNumbers.length) {
-        setFeedback('Aucun numéro tiré reçu du backend.', 'error');
+        setFeedback((window.TKI18n?.t?.('runtime_final.aucun_numero_tire_recu_du_backend') || "Aucun numéro tiré reçu du backend."), 'error');
         return;
       }
 
       // Afficher la machine de tirage dans une fenêtre superposée
       openKenoDrawModal();
       drawingZone.innerHTML = '';
-      liveMatchCounter.textContent = 'Matchs : 0';
-      setFeedback('Tirage en cours...', 'warn');
+      liveMatchCounter.textContent = advancedT('km0');
+      setFeedback((window.TKI18n?.t?.('runtime_final.tirage_en_cours') || "Tirage en cours..."), 'warn');
       matchesCount.textContent = '0';
       ticketNumberEl.textContent = result.ticket_number || '-';
       betAmountEl.textContent = `${Number(result.bet_amount || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG`;
@@ -1570,7 +1544,7 @@ Quitter
 
         // Mettre à jour les compteurs
         matchesCount.textContent = String(matchedCount);
-        liveMatchCounter.textContent = `Matchs : ${matchedCount}`;
+        liveMatchCounter.textContent = advancedT('km',{count:matchedCount});
 
         // Délai avant la boule suivante
         const delay = 120 + Math.random() * 80; // Entre 120 et 200ms
@@ -1606,7 +1580,7 @@ Quitter
 
       const currentUser = await getCurrentPlayer();
       if (!currentUser || !currentUser.id) {
-        setFeedback('Vous devez être connecté pour jouer au Keno.', 'error');
+        setFeedback((window.TKI18n?.t?.('runtime_final.vous_devez_etre_connecte_pour_jouer_au_keno') || "Vous devez être connecté pour jouer au Keno."), 'error');
         return;
       }
 
@@ -1621,9 +1595,9 @@ Quitter
       const amount = Number(stakeInput.value);
       const selectedNumbersCopy = [...selectedNumbers].sort((a, b) => a - b);
 
-      setFeedback('Envoi de la mise...', 'warn');
+      setFeedback((window.TKI18n?.t?.('runtime_final.envoi_de_la_mise') || "Envoi de la mise..."), 'warn');
       playBtn.disabled = true;
-      playBtn.textContent = 'En cours...';
+      playBtn.textContent = advancedT('progress');
 
       try {
         const { data, error } = await client.rpc('play_keno', {
@@ -1655,7 +1629,7 @@ Quitter
         setFeedback(message, 'error');
       } finally {
         playBtn.disabled = false;
-        playBtn.textContent = 'Jouer';
+        playBtn.textContent = group2T('keno.play');
       }
     }
 
@@ -1663,10 +1637,10 @@ Quitter
       if (!validateKenoForm()) {
         return;
       }
-      drawnNumbersEl.textContent = 'En attente du résultat';
+      drawnNumbersEl.textContent = group2T('keno.waiting_result');
       matchesCount.textContent = '-';
       gainAmount.textContent = '-';
-      setFeedback('Votre sélection est prête. Le tirage sera confirmé après validation.', 'success');
+      setFeedback((window.TKI18n?.t?.('runtime_final.votre_selection_est_prete_le_tirage_sera_confirme_apres_validation') || "Votre sélection est prête. Le tirage sera confirmé après validation."), 'success');
     }
 
     numberGrid.addEventListener('click', (event) => {
@@ -1690,6 +1664,9 @@ Quitter
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
     }
   });
+</script>
+<script id="advanced-polish-i18n-helper">
+window.advancedT=(key,vars={})=>window.TKI18n?.t?.(`advanced_polish.${key}`,vars)||key;
 </script>
 </body>
 </html>

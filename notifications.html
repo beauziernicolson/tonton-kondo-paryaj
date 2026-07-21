@@ -415,17 +415,18 @@
       margin:0;
       font-size:18px;
       line-height:1.25;
+      color: #ffffff;
     }
     .notification-meta {
       margin:4px 0 0;
       font-size:13px;
-      color:var(--muted);
+      color:#ffffff;
       display:flex;
       gap:8px;
       flex-wrap:wrap;
     }
     .notification-message {
-      color:#e3ecfb;
+      color:#ffffff;
       margin:0;
       font-size:14px;
     }
@@ -496,7 +497,7 @@
       }
     }
   </style>
-<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><link data-main-pages-css="contrast-final" href="assets/main-pages.css" rel="stylesheet"/><link data-main-header-css="shared-dashboard-exact-final" href="assets/main-header.css" rel="stylesheet"/></head>
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><link data-main-pages-css="contrast-final" href="assets/main-pages.css" rel="stylesheet"/><link data-main-header-css="shared-dashboard-exact-final" href="assets/main-header.css" rel="stylesheet"/><link href="assets/notifications-polish.css" rel="stylesheet"/></head>
 <body class="tk-public tk-page-account tk-file-notifications tk-main-header-page">
 <main class="page"><header class="mobile-header" data-i18n-aria-label="common.main_header" style="background:#071a35!important;background-image:none!important;color:#fff!important;border-color:transparent!important;">
 <a class="brand dashboard-header-brand" data-i18n-aria-label="common.home" href="index.html">
@@ -516,10 +517,10 @@
 </div>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<a class="action-btn" data-i18n-aria-label="common.promotions" href="promotion.html">
 <svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
 <span class="badge">3</span>
-</button>
+</a>
 <a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
 <svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
 <span class="badge notifications-badge" hidden="">0</span>
@@ -552,22 +553,22 @@
 <section class="card hero">
 <div class="hero-copy">
 <div class="eyebrow">Tonton Kondo</div>
-<h1>Centre de notifications</h1>
+<h1 data-i18n="notifications_v3.title">Centre de notifications</h1>
 <p>Consultez vos alertes, résultats et rappels de paiement depuis un seul espace dédié.</p>
 </div>
 <div class="summary-grid">
 <div class="summary-tile">
-<small>Non lues</small>
+<small data-i18n="notifications_v4.unread_title">Non lues</small>
 <strong id="unreadTotal">0</strong>
 <span>Messages à traiter</span>
 </div>
 <div class="summary-tile">
-<small>Affichées</small>
+<small data-i18n="notifications_v4.visible_title">Affichées</small>
 <strong id="visibleTotal">0</strong>
-<span>Notifications visibles</span>
+<span data-i18n="notifications_v3.visible_label">Notifications visibles</span>
 </div>
 <div class="summary-tile">
-<small>Filtre</small>
+<small data-i18n="notifications_v4.filter_title">Filtre</small>
 <strong id="activeFilter">Tous</strong>
 <span>Vue locale active</span>
 </div>
@@ -580,33 +581,33 @@
 <circle cx="11" cy="11" r="7"></circle>
 <path d="m21 21-4.3-4.3"></path>
 </svg>
-<input id="notificationSearch" placeholder="Rechercher par titre, message ou catégorie" type="search"/>
+<input data-i18n-placeholder="notifications_v3.search_placeholder" id="notificationSearch" placeholder="Rechercher par titre, message ou catégorie" type="search"/>
 </label>
-<button class="btn btn-ghost" id="refreshNotifications" type="button">Rafraîchir</button>
-<button class="btn btn-primary" id="markAllRead" type="button">Tout marquer comme lu</button>
+<button class="btn btn-ghost" data-i18n="notifications_v3.refresh" id="refreshNotifications" type="button">Rafraîchir</button>
+<button class="btn btn-primary" data-i18n="notifications_v3.mark_all_read" id="markAllRead" type="button">Tout marquer comme lu</button>
 </div>
-<div aria-label="Filtres de notifications" class="filters" id="notificationFilters">
+<div aria-label="Filtres de notifications" class="filters" data-i18n-aria-label="notifications_v3.filters_label" id="notificationFilters">
 <button class="filter-chip active" data-category="all" type="button">Tous</button>
-<button class="filter-chip" data-category="result" type="button">Résultats</button>
-<button class="filter-chip" data-category="wallet" type="button">Portefeuille</button>
-<button class="filter-chip" data-category="deposit" type="button">Dépôts</button>
-<button class="filter-chip" data-category="withdrawal" type="button">Retraits</button>
-<button class="filter-chip" data-category="promotion" type="button">Promotions</button>
-<button class="filter-chip" data-category="security" type="button">Sécurité</button>
-<button class="filter-chip" data-category="ticket" type="button">Tickets</button>
+<button class="filter-chip" data-category="result" data-i18n="notifications_v3.filter_results" type="button">Résultats</button>
+<button class="filter-chip" data-category="wallet" data-i18n="notifications_v3.filter_wallet" type="button">Portefeuille</button>
+<button class="filter-chip" data-category="deposit" data-i18n="notifications_v3.filter_deposits" type="button">Dépôts</button>
+<button class="filter-chip" data-category="withdrawal" data-i18n="notifications_v3.filter_withdrawals" type="button">Retraits</button>
+<button class="filter-chip" data-category="promotion" data-i18n="notifications_v3.filter_promotions" type="button">Promotions</button>
+<button class="filter-chip" data-category="security" data-i18n="notifications_v3.filter_security" type="button">Sécurité</button>
+<button class="filter-chip" data-category="ticket" data-i18n="notifications_v3.filter_tickets" type="button">Tickets</button>
 </div>
-<div aria-live="polite" class="notice" id="notificationStatus" role="status">Chargement des notifications…</div>
+<div aria-live="polite" class="notice" data-i18n="notifications_v3.loading" id="notificationStatus" role="status">Chargement des notifications…</div>
 <div class="notification-list" id="notificationList"></div>
 <div class="loading-row" hidden="" id="notificationLoading">
 <span aria-hidden="true" class="dot-spinner"></span>
-<span>Chargement en cours…</span>
+<span data-i18n="notifications_v3.loading_short">Chargement en cours…</span>
 </div>
 <div class="empty-state" hidden="" id="notificationEmpty">
         Aucune notification disponible pour cette vue. Essayez un autre filtre ou revenez plus tard.
       </div>
 <div class="toolbar" style="margin-top:16px;">
 <div class="muted" id="notificationHint">Affichage des 10 dernières notifications.</div>
-<button class="btn btn-ghost" hidden="" id="loadMoreNotifications" type="button">Charger plus</button>
+<button class="btn btn-ghost" data-i18n="notifications_v3.load_more" hidden="" id="loadMoreNotifications" type="button">Charger plus</button>
 </div>
 </section>
 </main>
@@ -684,6 +685,8 @@
         return mapping[category] || String(category || 'Autre');
       }
 
+      const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
+
       function escapeHtml(value) {
         return String(value || '')
           .replace(/&/g, '&amp;')
@@ -760,13 +763,13 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
         notificationList.innerHTML = filtered
           .map((item) => {
             const isUnread = item.is_read === false;
-            const statusText = item.is_read ? 'Lu' : 'Non lu';
+            const statusText = item.is_read ? tr('sensitive.notifications.read') : tr('sensitive.notifications.unread');
             const statusClass = item.is_read ? 'status-pill' : 'status-pill unread';
             const body = escapeHtml(item.message || '');
-            const title = escapeHtml(item.title || 'Notification');
+            const title = escapeHtml(item.title || tr('sensitive.notifications.default_title'));
             const category = slugifyCategory(item.category);
             const timestamp = formatTimestamp(item.created_at);
-            const action = item.action_url ? `<a class="btn btn-ghost" href="${escapeHtml(item.action_url)}" target="_self">Ouvrir</a>` : '';
+            const action = item.action_url ? `<a class="btn btn-ghost" href="${escapeHtml(item.action_url)}" target="_self">${tr('sensitive.notifications.open')}</a>` : '';
 
             return `
               <article class="notification-item">
@@ -786,8 +789,8 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
                   <span class="${statusClass}">${statusText}</span>
                 </div>
                 <div class="notification-actions">
-                  ${isUnread ? `<button class="btn btn-ghost" type="button" data-action="mark-read" data-id="${item.id}">Marquer lu</button>` : ''}
-                  <button class="btn btn-ghost" type="button" data-action="archive" data-id="${item.id}">Archiver</button>
+                  ${isUnread ? `<button class="btn btn-ghost" type="button" data-action="mark-read" data-id="${item.id}">${tr('sensitive.notifications.mark_read')}</button>` : ''}
+                  <button class="btn btn-ghost" type="button" data-action="archive" data-id="${item.id}">${tr('sensitive.notifications.archive')}</button>
                   ${action}
                 </div>
               </article>
@@ -796,7 +799,7 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
           .join('');
 
         loadMoreButton.hidden = state.fullyLoaded || filtered.length < state.pageSize;
-        notificationHint.textContent = `Affichage de ${filtered.length} notification${filtered.length > 1 ? 's' : ''} filtrée${filtered.length > 1 ? 's' : ''} localement.`;
+        notificationHint.textContent = tr('sensitive.notifications.filtered', { count: filtered.length });
       }
 
       async function refreshUnreadCount() {
@@ -825,7 +828,7 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
 
         state.loading = true;
         notificationLoading.hidden = false;
-        setStatus('Chargement des notifications…');
+        setStatus(tr('notifications_v3.loading'));
 
         try {
           const categoryParam = state.currentCategory === 'all' ? null : state.currentCategory;
@@ -858,10 +861,10 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
           }
 
           renderNotifications();
-          setStatus('Notifications chargées avec succès.');
+          setStatus(tr('sensitive.notifications.loaded'));
         } catch (error) {
           console.error('Erreur get_notifications', error);
-          setStatus(error?.message || 'Impossible de charger les notifications pour le moment.');
+          setStatus(error?.message || tr('sensitive.notifications.load_error'));
           notificationList.innerHTML = '';
           notificationEmpty.hidden = false;
         } finally {
@@ -885,10 +888,10 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
           state.notifications = state.notifications.map((item) => item.id === notificationId ? { ...item, is_read: true, read_at: updated?.read_at || item.read_at } : item);
           await refreshUnreadCount();
           renderNotifications();
-          setStatus('Notification marquée comme lue.');
+          setStatus(tr('sensitive.notifications.marked_read'));
         } catch (error) {
           console.error('Erreur mark_notification_read', error);
-          setStatus(error?.message || 'Impossible de marquer cette notification comme lue.');
+          setStatus(error?.message || tr('sensitive.notifications.mark_error'));
         }
       }
 
@@ -908,10 +911,10 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
           state.offset = Math.max(0, state.offset - 1);
           await refreshUnreadCount();
           renderNotifications();
-          setStatus(archivedRow ? 'Notification archivée.' : 'Notification retirée de la vue.');
+          setStatus(archivedRow ? tr('sensitive.notifications.archived') : tr('sensitive.notifications.removed'));
         } catch (error) {
           console.error('Erreur archive_notification', error);
-          setStatus(error?.message || 'Impossible d’archiver cette notification.');
+          setStatus(error?.message || tr('sensitive.notifications.archive_error'));
         }
       }
 
@@ -929,10 +932,10 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
           state.notifications = state.notifications.map((item) => ({ ...item, is_read: true }));
           await refreshUnreadCount();
           renderNotifications();
-          setStatus(`Toutes les notifications ont été marquées lues (${Number(data || 0)} mise${Number(data || 0) > 1 ? 's' : ''}).`);
+          setStatus(tr('sensitive.notifications.all_read', { count: Number(data || 0) }));
         } catch (error) {
           console.error('Erreur mark_all_notifications_read', error);
-          setStatus(error?.message || 'Impossible de marquer toutes les notifications comme lues.');
+          setStatus(error?.message || tr('sensitive.notifications.all_read_error'));
         }
       }
 
@@ -950,7 +953,7 @@ return icons[category] || `<svg class="icon" viewBox="0 0 24 24" width="24" heig
           await loadNotifications(true);
         } catch (error) {
           console.error('Erreur initialisation notifications', error);
-          setStatus(error?.message || 'Une erreur de connexion a empêché le chargement des notifications.');
+          setStatus(error?.message || tr('sensitive.notifications.connection_error'));
         }
       }
 

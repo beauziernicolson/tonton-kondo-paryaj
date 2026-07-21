@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <html lang="fr">
-<head>
+<head data-i18n="admin_v3.admin_withdrawals.item_001">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Tonton Kondo — Retraits admin</title>
+<title data-i18n="admin_v3.admin_withdrawals.item_001">Tonton Kondo — Retraits admin</title>
 <style>
     :root {
       --bg:#020813;
@@ -71,52 +71,52 @@
 <a class="brand" href="../admin/index.html">
 <img alt="Logo Tonton Kondo" src="../assets/logo.png"/>
 <span class="brand-text">
-<strong>Tonton Kondo</strong>
-<span>Paryaj</span>
+<strong data-i18n="admin_v3.admin_withdrawals.item_003">Tonton Kondo</strong>
+<span data-i18n="admin_v3.admin_withdrawals.item_004">Paryaj</span>
 </span>
 </a>
-<span class="pill">Admin — Retraits</span>
+<span class="pill" data-i18n="admin_v3.admin_withdrawals.item_005">Admin — Retraits</span>
 </header>
 <section class="hero-card">
 <article class="panel">
-<div class="eyebrow">Phase 3.3</div>
-<h1>Gestion des retraits</h1>
-<p>Consultez les demandes de retrait en attente et approuvez ou refusez-les. Le wallet ne sera pas modifié directement depuis cette page.</p>
-<span class="mini-chip">🔐 Accès admin / super_admin</span>
-<span class="mini-chip">💸 Vérification du solde</span>
+<div class="eyebrow" data-i18n="admin_v3.admin_withdrawals.item_006">Phase 3.3</div>
+<h1 data-i18n="admin_v3.admin_withdrawals.item_007">Gestion des retraits</h1>
+<p data-i18n="admin_v3.admin_withdrawals.item_008">Consultez les demandes de retrait en attente et approuvez ou refusez-les. Le wallet ne sera pas modifié directement depuis cette page.</p>
+<span class="mini-chip" data-i18n="admin_v3.admin_withdrawals.item_009">🔐 Accès admin / super_admin</span>
+<span class="mini-chip" data-i18n="admin_v3.admin_withdrawals.item_010">💸 Vérification du solde</span>
 </article>
 <article class="panel">
 <div class="panel-head">
 <div>
-<h2>État</h2>
-<p>Validation des demandes de retrait.</p>
+<h2 data-i18n="admin_v3.admin_withdrawals.item_011">État</h2>
+<p data-i18n="admin_v3.admin_withdrawals.item_012">Validation des demandes de retrait.</p>
 </div>
 </div>
-<div class="feedback warn" id="feedback-box">Chargement des demandes…</div>
-<div class="access-box" hidden="" id="access-denied">Accès refusé. Cette page est réservée aux admins et super_admin.</div>
+<div class="feedback warn" data-i18n="admin_v3.admin_withdrawals.item_013" id="feedback-box">Chargement des demandes…</div>
+<div class="access-box" data-i18n="admin_v3.admin_withdrawals.item_014" hidden="" id="access-denied">Accès refusé. Cette page est réservée aux admins et super_admin.</div>
 </article>
 </section>
 <section class="layout-grid">
 <article class="panel">
 <div class="panel-head">
 <div>
-<h2>Demandes de retrait</h2>
-<p>Liste des demandes avec client, méthode et actions admin.</p>
+<h2 data-i18n="admin_v3.admin_withdrawals.item_015">Demandes de retrait</h2>
+<p data-i18n="admin_v3.admin_withdrawals.item_016">Liste des demandes avec client, méthode et actions admin.</p>
 </div>
 </div>
 <div class="table-card">
 <table>
 <thead>
 <tr>
-<th>Client</th>
-<th>Email</th>
-<th>Montant</th>
-<th>Méthode</th>
-<th>Téléphone</th>
-<th>Statut</th>
-<th>Date</th>
-<th>Note admin</th>
-<th>Actions</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_017">Client</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_018">Email</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_019">Montant</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_020">Méthode</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_021">Téléphone</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_022">Statut</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_023">Date</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_024">Note admin</th>
+<th data-i18n="admin_v3.admin_withdrawals.item_025">Actions</th>
 </tr>
 </thead>
 <tbody id="withdrawals-table-body"></tbody>
@@ -129,6 +129,7 @@
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script>
+    const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
     const feedbackBox = document.getElementById('feedback-box');
     const accessDeniedBox = document.getElementById('access-denied');
     const withdrawalsBody = document.getElementById('withdrawals-table-body');
@@ -190,7 +191,7 @@
 
       const client = window.supabaseClient || null;
       if (!client || typeof client.from !== 'function') {
-        setFeedback('Connexion Supabase indisponible.', 'error');
+        setFeedback(tr('sensitive.admin.service_unavailable'), 'error');
         return;
       }
 
@@ -203,8 +204,8 @@
         if (error) throw error;
 
         if (!data || !data.length) {
-          withdrawalsBody.innerHTML = '<tr><td colspan="9" class="muted">Aucune demande de retrait.</td></tr>';
-          setFeedback('Aucune demande de retrait à traiter.', 'warn');
+          withdrawalsBody.innerHTML = `<tr><td colspan="9" class="muted">${tr('sensitive.admin.no_withdrawals')}</td></tr>`;
+          setFeedback(tr('sensitive.admin.no_withdrawals_feedback'), 'warn');
           return;
         }
 
@@ -231,7 +232,7 @@
 
         setFeedback('Demandes de retrait chargées.', 'success');
       } catch (error) {
-        console.error('Erreur chargement retraits admin.', error);
+        console.error(tr('sensitive.admin.withdraw_load_error'), error);
         setFeedback(error.message || 'Impossible de charger les demandes de retrait.', 'error');
       }
     }
@@ -242,7 +243,7 @@
 
       const client = window.supabaseClient || null;
       if (!client || typeof client.from !== 'function') {
-        setFeedback('Connexion Supabase indisponible.', 'error');
+        setFeedback(tr('sensitive.admin.service_unavailable'), 'error');
         return;
       }
 
@@ -272,7 +273,7 @@
           if (walletError) throw walletError;
           const balance = Number(walletData?.balance || 0);
           if (balance < Number(requestData.amount || 0)) {
-            setFeedback('Solde insuffisant pour approuver ce retrait.', 'error');
+            setFeedback(tr('sensitive.admin.withdraw_insufficient'), 'error');
             return;
           }
 
@@ -281,7 +282,7 @@
             p_type: 'withdrawal',
             p_amount: Number(requestData.amount),
             p_reference: `WIT-${requestData.id}`,
-            p_description: 'Retrait approuvé'
+            p_description: tr('sensitive.admin.withdraw_approved_desc')
           });
 
           if (rpcError) {
@@ -302,10 +303,10 @@
 
         if (updateError) throw updateError;
 
-        setFeedback(action === 'approve' ? 'Retrait approuvé avec succès.' : 'Retrait refusé.', 'success');
+        setFeedback(action === 'approve' ? tr('sensitive.admin.withdraw_approved') : tr('sensitive.admin.withdraw_rejected'), 'success');
         await loadWithdrawals();
       } catch (error) {
-        console.error('Erreur traitement retrait admin.', error);
+        console.error(tr('sensitive.admin.withdraw_action_error'), error);
         setFeedback(error.message || 'Impossible de traiter cette demande.', 'error');
       }
     }

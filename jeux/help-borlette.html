@@ -97,6 +97,7 @@
     @media (max-width: 520px) { .pill { display:none; } }
   </style>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -115,15 +116,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -259,8 +257,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -333,7 +329,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-help tk-file-help-borlette">
 <main class="app">
@@ -344,106 +339,104 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" data-i18n="help_v3.common.back_to_games" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Aide Borlette</span>
 </div></header>
-
-
 <section class="hero-card">
 <div class="eyebrow">Aide</div>
-<h1>Comment jouer à la Borlette ?</h1>
-<p class="lede">La Borlette est simple à comprendre. Voici un guide clair, étape par étape, comme si on l’expliquait à un enfant de 12 ans.</p>
+<h1 data-i18n="help_v3.pages.borlette.text_01">Comment jouer à la Borlette ?</h1>
+<p class="lede" data-i18n="help_v3.pages.borlette.text_02">La Borlette est simple à comprendre. Voici un guide clair, étape par étape, comme si on l’expliquait à un enfant de 12 ans.</p>
 <div class="action-row">
-<a class="btn btn-primary" href="borlette.html">Retour à Borlette</a>
-<a class="btn btn-secondary" href="../tickets.html">Voir mes tickets</a>
+<a class="btn btn-primary" data-i18n="help_v3.pages.borlette.text_03" href="borlette.html">Retour à Borlette</a>
+<a class="btn btn-secondary" data-i18n="help_v3.pages.borlette.text_04" href="../tickets.html">Voir mes tickets</a>
 </div>
 </section>
 <section class="grid">
 <article class="panel">
-<h2>1. C’est quoi la Borlette ?</h2>
-<p>La Borlette est un jeu où le joueur choisit une boule entre 00 et 99. Le tirage est publié ensuite, et si la boule que tu as choisie sort parmi les 3 lots gagnants, tu peux gagner.</p>
-<span class="highlight">Une boule = une chance de gagner.</span>
+<h2 data-i18n="help_v3.pages.borlette.text_05">1. C’est quoi la Borlette ?</h2>
+<p data-i18n="help_v3.pages.borlette.text_06">La Borlette est un jeu où le joueur choisit une boule entre 00 et 99. Le tirage est publié ensuite, et si la boule que tu as choisie sort parmi les 3 lots gagnants, tu peux gagner.</p>
+<span class="highlight" data-i18n="help_v3.pages.borlette.text_07">Une boule = une chance de gagner.</span>
 </article>
 <article class="panel">
-<h2>2. Comment jouer ?</h2>
+<h2 data-i18n="help_v3.pages.borlette.text_08">2. Comment jouer ?</h2>
 <ul>
-<li>Choisir un tirage.</li>
-<li>Choisir une boule entre 00 et 99.</li>
-<li>Choisir une mise, par exemple 10 HTG.</li>
-<li>Valider le ticket pour l’enregistrer.</li>
+<li data-i18n="help_v3.pages.borlette.text_09">Choisir un tirage.</li>
+<li data-i18n="help_v3.pages.borlette.text_10">Choisir une boule entre 00 et 99.</li>
+<li data-i18n="help_v3.pages.borlette.text_11">Choisir une mise, par exemple 10 HTG.</li>
+<li data-i18n="help_v3.pages.borlette.text_12">Valider le ticket pour l’enregistrer.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>3. Les 3 lots gagnants</h2>
-<p>À chaque tirage, il y a 3 boules gagnantes :</p>
+<h2 data-i18n="help_v3.pages.borlette.text_13">3. Les 3 lots gagnants</h2>
+<p data-i18n="help_v3.pages.borlette.text_14">À chaque tirage, il y a 3 boules gagnantes :</p>
 <ul>
-<li>1er lot</li>
-<li>2e lot</li>
-<li>3e lot</li>
+<li data-i18n="help_v3.pages.borlette.text_15">1er lot</li>
+<li data-i18n="help_v3.pages.borlette.text_16">2e lot</li>
+<li data-i18n="help_v3.pages.borlette.text_17">3e lot</li>
 </ul>
-<p>La boule que tu as jouée peut donc gagner selon sa place dans ces 3 résultats.</p>
+<p data-i18n="help_v3.pages.borlette.text_18">La boule que tu as jouée peut donc gagner selon sa place dans ces 3 résultats.</p>
 </article>
 <article class="panel">
-<h2>4. Combien on gagne ?</h2>
+<h2 data-i18n="help_v3.pages.borlette.text_19">4. Combien on gagne ?</h2>
 <ul>
-<li>1er lot = 60 fois la mise</li>
-<li>2e lot = 20 fois la mise</li>
-<li>3e lot = 10 fois la mise</li>
+<li data-i18n="help_v3.pages.borlette.text_20">1er lot = 60 fois la mise</li>
+<li data-i18n="help_v3.pages.borlette.text_21">2e lot = 20 fois la mise</li>
+<li data-i18n="help_v3.pages.borlette.text_22">3e lot = 10 fois la mise</li>
 </ul>
-<p>Exemple simple : si tu joues 10 HTG sur la boule 26 :</p>
+<p data-i18n="help_v3.pages.borlette.text_23">Exemple simple : si tu joues 10 HTG sur la boule 26 :</p>
 <div class="example-grid">
-<div class="mini-card"><strong>26 au 1er lot</strong><span>10 × 60 = 600 HTG</span></div>
-<div class="mini-card"><strong>26 au 2e lot</strong><span>10 × 20 = 200 HTG</span></div>
-<div class="mini-card"><strong>26 au 3e lot</strong><span>10 × 10 = 100 HTG</span></div>
-<div class="mini-card"><strong>26 absent</strong><span>Tu perds ta mise de 10 HTG</span></div>
+<div class="mini-card"><strong data-i18n="help_v3.pages.borlette.text_24">26 au 1er lot</strong><span data-i18n="help_v3.pages.borlette.text_25">10 × 60 = 600 HTG</span></div>
+<div class="mini-card"><strong data-i18n="help_v3.pages.borlette.text_26">26 au 2e lot</strong><span data-i18n="help_v3.pages.borlette.text_27">10 × 20 = 200 HTG</span></div>
+<div class="mini-card"><strong data-i18n="help_v3.pages.borlette.text_28">26 au 3e lot</strong><span data-i18n="help_v3.pages.borlette.text_29">10 × 10 = 100 HTG</span></div>
+<div class="mini-card"><strong data-i18n="help_v3.pages.borlette.text_30">26 absent</strong><span data-i18n="help_v3.pages.borlette.text_31">Tu perds ta mise de 10 HTG</span></div>
 </div>
 </article>
 </section>
 <section class="card" style="margin-top:18px;">
-<h2 style="margin-top:0; font-size:20px;">5. Exemple complet</h2>
+<h2 data-i18n="help_v3.pages.borlette.text_32" style="margin-top:0; font-size:20px;">5. Exemple complet</h2>
 <div class="example-box">
-<strong>Wallet avant : 500 HTG</strong>
-<p>Tu joues la boule 26 avec une mise de 10 HTG.</p>
-<p>Après validation : Wallet = 490 HTG</p>
-<p>Résultat du tirage :</p>
+<strong data-i18n="help_v3.pages.borlette.text_33">Wallet avant : 500 HTG</strong>
+<p data-i18n="help_v3.pages.borlette.text_34">Tu joues la boule 26 avec une mise de 10 HTG.</p>
+<p data-i18n="help_v3.pages.borlette.text_35">Après validation : Wallet = 490 HTG</p>
+<p data-i18n="help_v3.pages.borlette.text_36">Résultat du tirage :</p>
 <ul>
-<li>1er lot = 26</li>
-<li>2e lot = 14</li>
-<li>3e lot = 89</li>
+<li data-i18n="help_v3.pages.borlette.text_37">1er lot = 26</li>
+<li data-i18n="help_v3.pages.borlette.text_38">2e lot = 14</li>
+<li data-i18n="help_v3.pages.borlette.text_39">3e lot = 89</li>
 </ul>
-<p>Comme 26 est 1er lot, ton gain est de 600 HTG.</p>
-<p>Wallet final = 490 + 600 = 1090 HTG.</p>
+<p data-i18n="help_v3.pages.borlette.text_40">Comme 26 est 1er lot, ton gain est de 600 HTG.</p>
+<p data-i18n="help_v3.pages.borlette.text_41">Wallet final = 490 + 600 = 1090 HTG.</p>
 </div>
 </section>
 <section class="grid" style="margin-top:18px;">
 <article class="panel">
-<h2>6. Important à comprendre</h2>
+<h2 data-i18n="help_v3.pages.borlette.text_42">6. Important à comprendre</h2>
 <ul>
-<li>La mise est retirée au moment où tu valides le ticket.</li>
-<li>Si tu gagnes, le gain est ajouté automatiquement.</li>
-<li>Si tu perds, tu ne récupères pas la mise.</li>
-<li>Un ticket en attente veut dire que le résultat n’est pas encore publié.</li>
-<li>Un ticket payé veut dire que le gain a déjà été ajouté au wallet.</li>
+<li data-i18n="help_v3.pages.borlette.text_43">La mise est retirée au moment où tu valides le ticket.</li>
+<li data-i18n="help_v3.pages.borlette.text_44">Si tu gagnes, le gain est ajouté automatiquement.</li>
+<li data-i18n="help_v3.pages.borlette.text_45">Si tu perds, tu ne récupères pas la mise.</li>
+<li data-i18n="help_v3.pages.borlette.text_46">Un ticket en attente veut dire que le résultat n’est pas encore publié.</li>
+<li data-i18n="help_v3.pages.borlette.text_47">Un ticket payé veut dire que le gain a déjà été ajouté au wallet.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>7. Statuts des tickets</h2>
+<h2 data-i18n="help_v3.pages.borlette.text_48">7. Statuts des tickets</h2>
 <div class="status-list">
-<div class="status-item"><strong>En attente</strong><span>Le résultat n’est pas encore publié.</span></div>
-<div class="status-item"><strong>Gagné</strong><span>Le ticket a gagné un lot.</span></div>
-<div class="status-item"><strong>Perdu</strong><span>Le ticket n’a pas gagné.</span></div>
-<div class="status-item"><strong>Payé</strong><span>Le gain a déjà été ajouté au wallet.</span></div>
+<div class="status-item"><strong data-i18n="help_v3.pages.borlette.text_49">En attente</strong><span data-i18n="help_v3.pages.borlette.text_50">Le résultat n’est pas encore publié.</span></div>
+<div class="status-item"><strong data-i18n="help_v3.pages.borlette.text_51">Gagné</strong><span data-i18n="help_v3.pages.borlette.text_52">Le ticket a gagné un lot.</span></div>
+<div class="status-item"><strong data-i18n="help_v3.pages.borlette.text_53">Perdu</strong><span data-i18n="help_v3.pages.borlette.text_54">Le ticket n’a pas gagné.</span></div>
+<div class="status-item"><strong data-i18n="help_v3.pages.borlette.text_55">Payé</strong><span data-i18n="help_v3.pages.borlette.text_56">Le gain a déjà été ajouté au wallet.</span></div>
 </div>
 </article>
 <article class="panel" style="grid-column: 1 / -1;">
-<h2>8. Jeu responsable</h2>
-<p>Joue seulement avec l’argent que tu peux te permettre de perdre.</p>
-<p class="note">Cette page explique uniquement les règles. La logique métier, le wallet et les résultats restent inchangés.</p>
+<h2 data-i18n="help_v3.pages.borlette.text_57">8. Jeu responsable</h2>
+<p data-i18n="help_v3.pages.borlette.text_58">Joue seulement avec l’argent que tu peux te permettre de perdre.</p>
+<p class="note" data-i18n="help_v3.pages.borlette.text_59">Cette page explique uniquement les règles. La logique métier, le wallet et les résultats restent inchangés.</p>
 </article>
 </section>
 </main>
@@ -512,7 +505,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -531,7 +524,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

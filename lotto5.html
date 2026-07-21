@@ -1,72 +1,862 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=jeux/lotto5.html">
-  <meta name="robots" content="noindex">
-  <title>Redirection vers Lotto 5 — Tonton Kondo</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tonton Kondo — Lotto 5</title>
+<style>
     :root {
-      color-scheme: dark;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #020813;
-      color: #f5f7fb;
+      --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0;
+      --gold:#ffd21f; --gold-2:#ffb900; --green:#46e36f; --red:#ff5d6c; --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius-xl:28px; --radius-md:18px;
     }
-    * { box-sizing: border-box; }
-    body {
-      min-height: 100vh;
-      margin: 0;
-      display: grid;
-      place-items: center;
-      padding: 18px;
-      background:
-        radial-gradient(circle at 80% 0%, rgba(255, 210, 31, .12), transparent 24%),
-        linear-gradient(180deg, #010610, #061426 48%, #020813);
-    }
-    main {
-      width: min(100%, 560px);
-      padding: clamp(22px, 5vw, 36px);
-      border: 1px solid rgba(255, 255, 255, .13);
-      border-radius: 24px;
-      background: rgba(8, 24, 43, .96);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, .45);
-      text-align: center;
-    }
-    strong {
-      display: block;
-      color: #ffd21f;
-      font-size: clamp(25px, 6vw, 36px);
-    }
-    p {
-      margin: 14px auto 22px;
-      color: #c7d2e3;
-      line-height: 1.6;
-    }
-    a {
-      display: inline-flex;
-      min-height: 48px;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 18px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ffd21f, #ffb900);
-      color: #111;
-      font-weight: 900;
-      text-decoration: none;
-    }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:"Segoe UI", Arial, sans-serif; color:var(--text); background:radial-gradient(circle at 82% 0%, rgba(255,210,31,.10), transparent 18%), radial-gradient(circle at 10% 8%, rgba(57,168,255,.13), transparent 24%), linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%); }
+    a { color:inherit; text-decoration:none; }
+    button, input, select { font:inherit; }
+    button { cursor:pointer; }
+    .app { width:min(100%, 1140px); margin:0 auto; padding:18px 16px 40px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; }
+    .brand img { width:56px; height:56px; border-radius:16px; object-fit:contain; background:rgba(255,255,255,.04); padding:6px; border:1px solid var(--line); }
+    .brand-text strong { display:block; font-size:18px; letter-spacing:.04em; }
+    .brand-text span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.35em; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; }
+    .header-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+    .back-btn { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:rgba(8,24,43,.92); color:#fff; box-shadow:var(--shadow); font-size:13px; font-weight:800; text-decoration:none; }
+    .hero-card { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:18px; display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-bottom:18px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.28em; font-size:11px; font-weight:900; margin-bottom:6px; }
+    .hero-card h1 { margin:0 0 8px; font-size:clamp(28px, 5vw, 38px); line-height:1.04; letter-spacing:-.03em; }
+    .hero-card p { margin:0; color:var(--muted); font-size:15px; }
+    .mini-chip { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:#edf4ff; font-weight:700; font-size:12px; margin-top:12px; }
+    .mini-chip strong { color:var(--gold); }
+    .content-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:18px; }
+    .panel { border:1px solid var(--line); border-radius:var(--radius-xl); background:linear-gradient(180deg, rgba(8,24,43,.96), rgba(5,17,31,.96)); box-shadow:var(--shadow); padding:16px; }
+    .panel-head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:12px; }
+    .panel-head h2 { margin:0; font-size:18px; letter-spacing:-.02em; }
+    .panel-head p { margin:4px 0 0; color:var(--muted); font-size:13px; }
+    .field-grid { display:grid; gap:12px; }
+    .field-card { border:1px solid var(--line); border-radius:var(--radius-md); padding:12px; background:rgba(255,255,255,.03); }
+    .field-card label { display:block; color:#edf4ff; font-size:13px; font-weight:800; margin-bottom:6px; }
+    .field-card input, .field-card select { width:100%; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.04); color:#fff; padding:10px 12px; }
+    .field-card .note { color:var(--muted); font-size:12px; margin-top:6px; }
+    .digit-display { display:flex; align-items:center; justify-content:space-between; gap:10px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.04); padding:10px 12px; margin-top:8px; }
+    .digit-display strong { font-size:18px; letter-spacing:.2em; color:var(--gold); }
+    .digit-grid { display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:8px; margin-top:10px; }
+    .digit-btn, .digit-slot, .ghost-btn { border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.04); color:#fff; padding:10px; font-weight:800; }
+    .digit-btn:hover, .digit-slot:hover, .ghost-btn:hover { background:rgba(255,255,255,.08); }
+    .digit-slot { min-height:46px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.03); color:#edf4ff; }
+    .digit-slot.active { border-color:rgba(255,210,31,.65); box-shadow:0 0 0 1px rgba(255,210,31,.18) inset; background:rgba(255,210,31,.10); color:#fff; }
+    .digit-row { display:grid; gap:8px; margin-top:8px; }
+    .digit-row-label { display:flex; align-items:center; justify-content:space-between; gap:8px; color:var(--muted); font-size:12px; }
+    .ghost-btn { padding:8px 10px; font-size:12px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; padding:10px 12px; border:1px solid var(--line); font-weight:900; color:#fff; background:rgba(255,255,255,.04); }
+    .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#121212; border-color:transparent; box-shadow:0 10px 28px rgba(255,210,31,.18); }
+    .feedback { border:1px dashed rgba(255,255,255,.16); border-radius:14px; padding:10px 12px; background:rgba(255,255,255,.03); color:var(--muted); font-size:13px; margin-top:10px; }
+    .feedback.success { color:#eafff1; border-color:rgba(70,227,111,.22); background:rgba(70,227,111,.08); }
+    .feedback.warn { color:#fff4d7; border-color:rgba(255,210,31,.18); background:rgba(255,210,31,.08); }
+    .feedback.error { color:#ffe7eb; border-color:rgba(255,93,108,.18); background:rgba(255,93,108,.08); }
+    .coupon-list { display:grid; gap:10px; }
+    .coupon-item { border:1px solid var(--line); border-radius:16px; padding:10px; background:rgba(255,255,255,.03); display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .coupon-item strong { display:block; font-size:14px; }
+    .coupon-item span { color:var(--muted); font-size:12px; }
+    .empty-state { border:1px dashed rgba(255,255,255,.14); border-radius:16px; padding:10px; color:var(--muted); background:rgba(255,255,255,.02); font-size:13px; }
+    .help-link { display:inline-flex; margin-top:8px; color:var(--gold); text-decoration:underline; font-size:13px; }
+    @media (max-width: 1080px) { .hero-card, .content-grid { grid-template-columns:1fr; } }
+    @media (max-width: 768px) { #digit-buttons { grid-template-columns:repeat(10, minmax(0, 1fr)); gap:6px; } #digit-buttons .digit-btn { min-height:42px; padding:8px; font-size:13px; } .digit-slot { min-height:42px; } }
+    @media (max-width: 760px) { .app { padding:12px 12px 28px; } .topbar { flex-direction:column; align-items:flex-start; } }
   </style>
-</head>
-<body>
-  <main>
-    <strong>Ouverture de Lotto 5</strong>
-    <p>
-      Cette ancienne adresse vous redirige vers la page officielle du jeu.
-    </p>
-    <a href="jeux/lotto5.html">Accéder à Lotto 5</a>
-  </main>
-  <script>
-    window.location.replace('jeux/lotto5.html');
+<link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><style id="lotto5-page-redesign">
+  /* Lotto 5 — refonte visuelle uniquement. Aucun JavaScript n'est modifié. */
+  .tk-file-lotto5 {
+    --l5-navy: #071a35;
+    --l5-navy-2: #0c2d57;
+    --l5-yellow: #ffd21f;
+    --l5-yellow-2: #ffbf00;
+    --l5-page: #f4f7fb;
+    --l5-white: #ffffff;
+    --l5-text: #071a35;
+    --l5-muted: #526781;
+    --l5-border: #cbd8e8;
+    --l5-shadow: 0 18px 45px rgba(7, 26, 53, .10);
+  }
+
+  .tk-file-lotto5 {
+    color: var(--l5-text) !important;
+    background: var(--l5-page) !important;
+  }
+
+  .tk-file-lotto5 .app {
+    width: min(100%, 1220px);
+    padding: 18px 18px 48px;
+  }
+
+  .tk-file-lotto5 .hero-card.lotto5-hero {
+    display: block !important;
+    min-height: 0;
+    margin-bottom: 18px;
+    padding: 24px 28px;
+    border: 0;
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 92% 15%, rgba(255, 210, 31, .18), transparent 24%),
+      linear-gradient(135deg, var(--l5-navy), #0a2447) !important;
+    box-shadow: 0 20px 50px rgba(7, 26, 53, .18);
+  }
+
+  .tk-file-lotto5 .lotto5-hero h1 {
+    max-width: 720px;
+    margin: 0 0 8px;
+    color: #fff !important;
+    font-size: clamp(30px, 4vw, 48px);
+  }
+
+  .tk-file-lotto5 .lotto5-hero p {
+    max-width: 760px;
+    color: #dce8f6 !important;
+  }
+
+  .tk-file-lotto5 .lotto5-hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .tk-file-lotto5 .lotto5-hero .mini-chip {
+    margin: 0;
+    border-color: #c9d7e8 !important;
+    background: #eaf3ff !important;
+    color: #0b2c52 !important;
+    box-shadow: 0 8px 20px rgba(7,26,51,.10);
+  }
+
+  .tk-file-lotto5 .lotto5-hero .mini-chip strong {
+    color: #0b2c52 !important;
+  }
+
+  .tk-file-lotto5 .lotto5-hero .help-link {
+    margin: 0;
+    color: var(--l5-yellow) !important;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .tk-file-lotto5 .lotto5-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(340px, .88fr);
+    align-items: start;
+    gap: 18px;
+  }
+
+  .tk-file-lotto5 .panel {
+    padding: 18px;
+    border: 1px solid var(--l5-border) !important;
+    border-radius: 22px;
+    background: var(--l5-white) !important;
+    box-shadow: var(--l5-shadow);
+    color: var(--l5-text) !important;
+  }
+
+  .tk-file-lotto5 .panel-head {
+    padding-bottom: 13px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #e2e9f2;
+  }
+
+  .tk-file-lotto5 .panel-head h2,
+  .tk-file-lotto5 .field-card label {
+    color: var(--l5-text) !important;
+  }
+
+  .tk-file-lotto5 .panel-head p,
+  .tk-file-lotto5 .field-card .note,
+  .tk-file-lotto5 .digit-row-label,
+  .tk-file-lotto5 .coupon-item span,
+  .tk-file-lotto5 .empty-state {
+    color: var(--l5-muted) !important;
+  }
+
+  .tk-file-lotto5 .lotto5-builder .field-grid {
+    gap: 14px;
+  }
+
+  .tk-file-lotto5 .field-card {
+    padding: 14px;
+    border: 1px solid var(--l5-border) !important;
+    border-radius: 18px;
+    background: #fff !important;
+  }
+
+  .tk-file-lotto5 .field-card--draw {
+    background: #f8fbff !important;
+  }
+
+  .tk-file-lotto5 .field-card--draw select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid #173b68 !important;
+    border-radius: 12px;
+    background: var(--l5-navy-2) !important;
+    color: #fff !important;
+    font-weight: 800;
+    outline: none;
+  }
+
+  .tk-file-lotto5 .field-card--draw select option {
+    background: #fff;
+    color: var(--l5-text);
+  }
+
+  .tk-file-lotto5 .field-card input {
+    min-height: 48px;
+    border: 1px solid var(--l5-border) !important;
+    border-radius: 12px;
+    background: #fff !important;
+    color: var(--l5-text) !important;
+  }
+
+  .tk-file-lotto5 .digit-row-label {
+    margin-bottom: 10px;
+  }
+
+  .tk-file-lotto5 .digit-row > .digit-grid:first-child {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px;
+  }
+
+  .tk-file-lotto5 .digit-slot {
+    min-height: 52px;
+    border: 1px solid var(--l5-border) !important;
+    border-radius: 12px;
+    background: #fff !important;
+    color: var(--l5-text) !important;
+    font-size: 18px;
+  }
+
+  .tk-file-lotto5 .digit-slot.active {
+    border-color: var(--l5-yellow-2) !important;
+    background: #fff8d8 !important;
+    color: var(--l5-text) !important;
+    box-shadow: 0 0 0 2px rgba(255, 191, 0, .18);
+  }
+
+  .tk-file-lotto5 #digit-buttons {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 9px;
+    margin-top: 12px;
+  }
+
+  .tk-file-lotto5 #digit-buttons .digit-btn {
+    min-height: 48px;
+    padding: 8px;
+    border: 1px solid #b8c9dd !important;
+    border-radius: 12px;
+    background: #fff !important;
+    color: var(--l5-text) !important;
+    font-size: 16px;
+    box-shadow: 0 5px 12px rgba(7, 26, 53, .05);
+  }
+
+  .tk-file-lotto5 #digit-buttons .digit-btn:hover {
+    border-color: var(--l5-yellow-2) !important;
+    background: #fff8d8 !important;
+    transform: translateY(-1px);
+  }
+
+  .tk-file-lotto5 .digit-display {
+    margin-top: 12px;
+    border: 1px solid var(--l5-border) !important;
+    background: #f8fbff !important;
+    color: var(--l5-text) !important;
+  }
+
+  .tk-file-lotto5 .digit-display strong {
+    color: var(--l5-navy-2) !important;
+  }
+
+  .tk-file-lotto5 .ghost-btn {
+    border-color: var(--l5-border) !important;
+    background: #fff !important;
+    color: var(--l5-text) !important;
+  }
+
+  .tk-file-lotto5 .btn-primary {
+    min-height: 50px;
+    border: 0 !important;
+    background: linear-gradient(180deg, var(--l5-yellow), var(--l5-yellow-2)) !important;
+    color: #07111f !important;
+    box-shadow: 0 10px 24px rgba(255, 191, 0, .22);
+  }
+
+  .tk-file-lotto5 .lotto5-add-button {
+    width: 100%;
+  }
+
+  .tk-file-lotto5 .lotto5-coupon {
+    position: sticky;
+    top: 16px;
+  }
+
+  .tk-file-lotto5 .coupon-list {
+    min-height: 180px;
+  }
+
+  .tk-file-lotto5 .coupon-item,
+  .tk-file-lotto5 .empty-state {
+    border-color: var(--l5-border) !important;
+    background: #f8fbff !important;
+  }
+
+  .tk-file-lotto5 .coupon-item strong {
+    color: var(--l5-text) !important;
+  }
+
+  .tk-file-lotto5 .coupon-item .btn {
+    border-color: var(--l5-border) !important;
+    background: #fff !important;
+    color: var(--l5-text) !important;
+  }
+
+  .tk-file-lotto5 .feedback {
+    border-color: var(--l5-border) !important;
+    background: #f8fbff !important;
+    color: var(--l5-muted) !important;
+  }
+
+  .tk-file-lotto5 .feedback.success {
+    border-color: #80d8a1 !important;
+    background: #ecfbf1 !important;
+    color: #0a6f38 !important;
+  }
+
+  .tk-file-lotto5 .feedback.warn {
+    border-color: #f2ca5e !important;
+    background: #fff8df !important;
+    color: #755500 !important;
+  }
+
+  .tk-file-lotto5 .feedback.error {
+    border-color: #f4a4aa !important;
+    background: #fff0f1 !important;
+    color: #a31927 !important;
+  }
+
+  @media (max-width: 900px) {
+    .tk-file-lotto5 .lotto5-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .tk-file-lotto5 .lotto5-coupon {
+      position: static;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .tk-file-lotto5 .app {
+      padding: 12px 12px 32px;
+    }
+
+    .tk-file-lotto5 .hero-card.lotto5-hero {
+      padding: 20px 18px;
+      border-radius: 18px;
+    }
+
+    .tk-file-lotto5 .panel {
+      padding: 14px;
+      border-radius: 18px;
+    }
+
+    .tk-file-lotto5 #digit-buttons {
+      grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+      gap: 7px;
+    }
+
+    .tk-file-lotto5 #digit-buttons .digit-btn {
+      min-height: 44px;
+      padding: 6px;
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .tk-file-lotto5 #digit-buttons {
+      gap: 5px;
+    }
+
+    .tk-file-lotto5 #digit-buttons .digit-btn {
+      min-height: 41px;
+      font-size: 14px;
+    }
+  }
+
+
+  .tk-file-lotto5 .digit-row > .digit-grid:first-child {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+
+  .tk-file-lotto5 .field-card--option select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--l5-border) !important;
+    border-radius: 12px;
+    background: #fff !important;
+    color: var(--l5-text) !important;
+    font-weight: 700;
+    outline: none;
+  }
+
+  .tk-file-lotto5 .field-card--option select option {
+    background: #fff;
+    color: var(--l5-text);
+  }
+
+  .tk-file-lotto5 .lotto5-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(360px, .88fr);
+    align-items: start;
+    gap: 18px;
+  }
+
+  .tk-file-lotto5 .lotto5-grid-panel {
+    min-width: 0;
+  }
+
+  .tk-file-lotto5 .lotto5-right-stack {
+    display: grid;
+    gap: 18px;
+    min-width: 0;
+  }
+
+  .tk-file-lotto5 .lotto5-controls,
+  .tk-file-lotto5 .lotto5-coupon {
+    position: static;
+  }
+
+  @media (max-width: 900px) {
+    .tk-file-lotto5 .lotto5-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .tk-file-lotto5 .lotto5-right-stack {
+      display: contents;
+    }
+
+    .tk-file-lotto5 .lotto5-grid-panel {
+      order: 1;
+      width: 100%;
+    }
+
+    .tk-file-lotto5 .lotto5-controls {
+      order: 2;
+      width: 100%;
+    }
+
+    .tk-file-lotto5 .lotto5-coupon {
+      order: 3;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .tk-file-lotto5 .lotto5-layout {
+      width: 100%;
+    }
+
+    .tk-file-lotto5 .digit-row > .digit-grid:first-child {
+      grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+      gap: 6px;
+    }
+
+    .tk-file-lotto5 .digit-slot {
+      min-height: 44px;
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .tk-file-lotto5 .digit-row > .digit-grid:first-child {
+      gap: 4px;
+    }
+
+    .tk-file-lotto5 .digit-slot {
+      min-height: 40px;
+      font-size: 15px;
+    }
+  }
+</style><meta content="#030b1a" name="theme-color"/></head>
+<body class="tk-public tk-page-game tk-file-lotto5">
+<main class="app">
+<header class="topbar">
+<a aria-label="Accueil Tonton Kondo" class="brand" href="../index.html"><img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/><span class="brand-text"><strong>Tonton Kondo</strong><span>Paryaj</span></span></a>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="back-btn" href="games.html">← Retour aux jeux</a>
+<span class="pill">Lotto 5</span>
+</div>
+</header><nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
+<section class="hero-card lotto5-hero">
+<article>
+<div class="eyebrow">Nouveau jeu</div>
+<h1>Jouez au Lotto 5</h1>
+<p>Choisissez un numéro 00000 à 99999, sélectionnez une option, misez et validez votre ticket.</p>
+<div class="lotto5-hero-actions">
+<div class="mini-chip" id="user-chip">👤 Connecté</div>
+<a class="help-link" href="help-lotto5.html">Comprendre les règles</a>
+</div>
+</article>
+</section>
+<section class="lotto5-layout">
+<article class="panel lotto5-grid-panel">
+<div class="panel-head">
+<div>
+<h2>Numéro Lotto 5</h2>
+<p>Sélectionnez vos 5 chiffres.</p>
+</div>
+</div>
+<div class="field-card">
+<label for="lotto5-number">Numéro Lotto 5 (5 chiffres)</label>
+<div class="digit-row-label">
+<span>Choisissez la position, puis le chiffre.</span>
+<button class="ghost-btn" id="clear-number-btn" type="button">Effacer</button>
+</div>
+<div class="digit-row">
+<div class="digit-grid" style="grid-template-columns:repeat(5, minmax(0, 1fr));">
+<button class="digit-slot active" data-slot="0" type="button">_</button>
+<button class="digit-slot" data-slot="1" type="button">_</button>
+<button class="digit-slot" data-slot="2" type="button">_</button>
+<button class="digit-slot" data-slot="3" type="button">_</button>
+<button class="digit-slot" data-slot="4" type="button">_</button>
+</div>
+<div class="digit-grid" id="digit-buttons">
+<button class="digit-btn" data-digit="0" type="button">0</button>
+<button class="digit-btn" data-digit="1" type="button">1</button>
+<button class="digit-btn" data-digit="2" type="button">2</button>
+<button class="digit-btn" data-digit="3" type="button">3</button>
+<button class="digit-btn" data-digit="4" type="button">4</button>
+<button class="digit-btn" data-digit="5" type="button">5</button>
+<button class="digit-btn" data-digit="6" type="button">6</button>
+<button class="digit-btn" data-digit="7" type="button">7</button>
+<button class="digit-btn" data-digit="8" type="button">8</button>
+<button class="digit-btn" data-digit="9" type="button">9</button>
+</div>
+</div>
+<div class="digit-display">Numéro choisi <strong id="lotto5-display">00000</strong></div>
+<input id="lotto5-number" inputmode="numeric" maxlength="5" type="hidden" value="00000"/>
+<div class="note">Ordre exact obligatoire : 74208 gagne, 02470 perd.</div>
+</div>
+</article>
+<div class="lotto5-right-stack">
+<article class="panel lotto5-controls">
+<div class="panel-head">
+<div>
+<h2>Options et montant</h2>
+<p>Choisissez le tirage, l’option et la mise.</p>
+</div>
+</div>
+<div class="field-grid">
+<div class="field-card field-card--draw">
+<label for="draw-name-select">Tirage</label>
+<select id="draw-name-select"><option value="">Chargement des tirages…</option></select>
+<div class="note">Le tirage est utilisé pour lier le ticket au résultat officiel.</div>
+</div>
+<div class="field-card field-card--option">
+<label for="option-select">Option Lotto 5</label>
+<select id="option-select" required="">
+<option value="">Choisissez une option</option>
+<option value="option1">Option 1 = 1er lot + 2e lot</option>
+<option value="option2">Option 2 = 1er lot + 3e lot</option>
+<option value="option3">Option 3 = 3e chiffre du 1er lot + 2e lot + 3e lot</option>
+</select>
+<div class="note">Chaque ligne doit inclure le numéro, l’option et le montant.</div>
+</div>
+<div class="field-card">
+<label for="amount-input">Montant</label>
+<input id="amount-input" min="1" step="1" type="number" value="10"/>
+</div>
+<button class="btn btn-primary lotto5-add-button" id="add-line-btn" type="button">Ajouter au coupon</button>
+</div>
+</article>
+<article class="panel lotto5-coupon">
+<div class="panel-head">
+<div>
+<h2>Coupon Lotto 5</h2>
+<p>Numéros, options et mises à valider.</p>
+</div>
+</div>
+<div class="coupon-list" id="coupon-list"></div>
+<button class="btn btn-primary" id="validate-btn" style="width:100%; margin-top:12px;" type="button">Valider le ticket</button>
+<div class="feedback" id="feedback-box">Choisissez un tirage, un numéro 00000-99999 et validez.</div>
+</article>
+</div>
+</section>
+</main>
+<script src="../js/i18n.js"></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script>
+    (function () {
+      const drawNameSelect = document.getElementById('draw-name-select');
+      const lotto5NumberInput = document.getElementById('lotto5-number');
+      const lotto5Display = document.getElementById('lotto5-display');
+      const amountInput = document.getElementById('amount-input');
+      const optionSelect = document.getElementById('option-select');
+      const addLineBtn = document.getElementById('add-line-btn');
+      const validateBtn = document.getElementById('validate-btn');
+      const couponList = document.getElementById('coupon-list');
+      const feedbackBox = document.getElementById('feedback-box');
+      const userChip = document.getElementById('user-chip');
+
+      console.log('SUPABASE DEBUG LOTTO5', { supabaseClient: window.supabaseClient, supabase: window.supabase });
+
+      let currentUser = null;
+      let selectedDrawName = '';
+      let couponLines = [];
+      let selectedDigitIndex = 0;
+      let selectedDigits = ['0', '0', '0', '0', '0'];
+      let hasSelectedNumber = false;
+
+      function setFeedback(message, type) {
+        feedbackBox.className = 'feedback';
+        if (type === 'success') feedbackBox.classList.add('success');
+        if (type === 'warn') feedbackBox.classList.add('warn');
+        if (type === 'error') feedbackBox.classList.add('error');
+        feedbackBox.textContent = message;
+      }
+
+      function formatCurrency(value) { return `${Number(value || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG`; }
+
+      function syncNumberSelection() {
+        const number = selectedDigits.join('');
+        lotto5NumberInput.value = number;
+        lotto5Display.textContent = number;
+        document.querySelectorAll('.digit-slot').forEach((slot, index) => {
+          slot.classList.toggle('active', index === selectedDigitIndex);
+          slot.textContent = selectedDigits[index] || '_';
+        });
+      }
+
+      function selectDigitSlot(index) {
+        selectedDigitIndex = Number(index) || 0;
+        syncNumberSelection();
+      }
+
+      function chooseDigit(digit) {
+        hasSelectedNumber = true;
+        selectedDigits[selectedDigitIndex] = String(digit);
+        if (selectedDigitIndex < 4) {
+          selectedDigitIndex += 1;
+        }
+        syncNumberSelection();
+      }
+
+      function clearSelection() {
+        selectedDigits = ['0', '0', '0', '0', '0'];
+        selectedDigitIndex = 0;
+        hasSelectedNumber = false;
+        syncNumberSelection();
+      }
+
+      function generateTicketNumber() {
+        const now = new Date();
+        const stamp = [now.getFullYear(), String(now.getMonth()+1).padStart(2,'0'), String(now.getDate()).padStart(2,'0'), String(now.getHours()).padStart(2,'0'), String(now.getMinutes()).padStart(2,'0'), String(now.getSeconds()).padStart(2,'0')].join('');
+        const randomPart = Math.floor(Math.random() * 9000 + 1000);
+        return `TKL5-${stamp}-${randomPart}`;
+      }
+
+      async function waitForSupabaseClient(maxAttempts = 12, delayMs = 250) {
+        for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+          const client = window.supabaseClient || null;
+          if (client && typeof client.from === 'function') return client;
+          await new Promise((resolve) => setTimeout(resolve, delayMs));
+        }
+        return window.supabaseClient || null;
+      }
+
+      async function loadDrawSchedules() {
+        console.log('LOADING LOTTO5 DRAWS');
+        try {
+          drawNameSelect.innerHTML = '<option value="">Chargement des tirages…</option>';
+          const client = await waitForSupabaseClient();
+          if (!client || typeof client.from !== 'function') {
+            drawNameSelect.innerHTML = '<option value="">Connexion au service momentanément indisponible</option>';
+            setFeedback((window.TKI18n?.t('runtime_v3.common.service_unavailable') || "Connexion au service momentanément indisponible."), 'warn');
+            return;
+          }
+          const { data, error } = await client.from('draw_schedules').select('draw_name, display_name').eq('game_type', 'lotto5').eq('is_active', true).order('sort_order', { ascending: true });
+          if (error) throw error;
+          const schedules = Array.isArray(data) ? data : [];
+          drawNameSelect.innerHTML = '';
+          if (!schedules.length) {
+            drawNameSelect.innerHTML = '<option value="">Aucun tirage actif disponible</option>';
+            selectedDrawName = '';
+            setFeedback((window.TKI18n?.t('runtime_v3.lotto5.no_active_draw') || "Aucun tirage actif disponible pour Lotto 5."), 'warn');
+            return;
+          }
+          schedules.forEach((draw) => {
+            const option = document.createElement('option');
+            option.value = draw.draw_name;
+            option.textContent = draw.display_name || draw.draw_name;
+            drawNameSelect.appendChild(option);
+          });
+          selectedDrawName = drawNameSelect.value || schedules[0].draw_name;
+          drawNameSelect.value = selectedDrawName;
+          setFeedback(`Tirages Lotto 5 chargés : ${schedules.length} disponible(s).`, 'success');
+        } catch (error) {
+          console.error('Erreur chargement tirages Lotto 5', error);
+          drawNameSelect.innerHTML = '<option value="">Erreur de chargement</option>';
+          setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'warn');
+        }
+      }
+
+      function renderCoupon() {
+        couponList.innerHTML = '';
+        if (!couponLines.length) {
+          couponList.innerHTML = `<div class="empty-state">${(window.TKI18n?.t('runtime_v3.lotto5.empty_coupon') || "Votre coupon est vide. Ajoutez un numéro de 00000 à 99999 pour commencer.")}</div>`;
+          return;
+        }
+        couponLines.forEach((line) => {
+          const item = document.createElement('article');
+          item.className = 'coupon-item';
+          item.innerHTML = `<div><strong>Numéro ${line.number} • ${line.option_type || 'option inconnue'}</strong><span>Ajouté le ${new Date(line.createdAt).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')}</span></div><div><strong>${formatCurrency(line.amount)}</strong><button class="btn" type="button" data-delete="${line.id}" style="padding:8px 10px;">Supprimer</button></div>`;
+          couponList.appendChild(item);
+        });
+      }
+
+      function isValidLotto5Number(value) {
+        return /^[0-9]{5}$/.test(value);
+      }
+
+      function addLineToCoupon() {
+        selectedDrawName = drawNameSelect.value || '';
+        const rawNumber = String(lotto5NumberInput.value || '').trim();
+        const optionType = optionSelect.value || '';
+        const rawAmount = Number(amountInput.value);
+        if (!selectedDrawName) { setFeedback((window.TKI18n?.t('runtime_v3.lotto5.choose_draw_line') || "Choisissez un tirage avant d’ajouter une ligne."), 'warn'); drawNameSelect.focus(); return; }
+        if (!hasSelectedNumber) { setFeedback((window.TKI18n?.t('runtime_v3.lotto5.choose_numbers') || "Choisissez d’abord vos numéros avant d’ajouter une ligne."), 'warn'); const firstSlot = document.querySelector('.digit-slot'); if (firstSlot) firstSlot.focus(); return; }
+        if (!isValidLotto5Number(rawNumber)) { setFeedback((window.TKI18n?.t('runtime_v3.lotto5.invalid_number') || "Le numéro doit contenir exactement 5 chiffres, de 00000 à 99999."), 'warn'); return; }
+        if (!optionType) { setFeedback((window.TKI18n?.t('runtime_v3.lotto5.choose_option') || "Choisissez une option avant d’ajouter une ligne."), 'warn'); optionSelect.focus(); return; }
+        if (!Number.isFinite(rawAmount) || rawAmount <= 0) { setFeedback((window.TKI18n?.t('runtime_v3.lotto5.invalid_amount') || "Saisissez un montant valide supérieur à zéro."), 'warn'); amountInput.focus(); return; }
+        const newLine = { id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`, number: rawNumber, option_type: optionType, amount: rawAmount, createdAt: new Date().toISOString() };
+        couponLines = [newLine, ...couponLines];
+        renderCoupon();
+        setFeedback(`Ligne ${newLine.number} (${newLine.option_type}) ajoutée. Débit prévu : ${formatCurrency(newLine.amount)}.`, 'success');
+      }
+
+      document.querySelectorAll('.digit-slot').forEach((slot) => {
+        slot.addEventListener('click', () => selectDigitSlot(slot.dataset.slot));
+      });
+      document.querySelectorAll('.digit-btn').forEach((button) => {
+        button.addEventListener('click', () => chooseDigit(button.dataset.digit));
+      });
+      document.getElementById('clear-number-btn').addEventListener('click', clearSelection);
+
+      addLineBtn.addEventListener('click', addLineToCoupon);
+      amountInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); addLineToCoupon(); } });
+
+      couponList.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-delete]');
+        if (!button) return;
+        const id = button.getAttribute('data-delete');
+        couponLines = couponLines.filter((line) => line.id !== id);
+        renderCoupon();
+        setFeedback((window.TKI18n?.t('runtime_v3.lotto5.line_removed') || "La ligne a été retirée du coupon."), 'warn');
+      });
+
+      validateBtn.addEventListener('click', async () => {
+        if (!currentUser) { setFeedback((window.TKI18n?.t('runtime_v3.lotto5.sign_in_ticket') || "Vous devez être connecté pour valider un ticket."), 'warn'); if (window.saveRedirectTarget) window.saveRedirectTarget('lotto5.html'); window.tryRedirectToLogin('../login-register/login.html'); return; }
+        selectedDrawName = drawNameSelect.value || '';
+        if (!selectedDrawName) { setFeedback((window.TKI18n?.t('runtime_v3.lotto5.choose_draw_validate') || "Choisissez un tirage avant de valider."), 'warn'); drawNameSelect.focus(); return; }
+        if (!couponLines.length) { setFeedback((window.TKI18n?.t('runtime_v3.lotto5.add_line_first') || "Ajoutez au moins une ligne au coupon avant de valider le ticket."), 'warn'); return; }
+
+        const client = await waitForSupabaseClient();
+        if (!client || typeof client.from !== 'function') { setFeedback((window.TKI18n?.t('runtime_v3.common.service_unavailable') || "Connexion au service momentanément indisponible."), 'warn'); return; }
+
+        const userId = currentUser.id || currentUser.user_id || null;
+        const totalAmountValue = couponLines.reduce((sum, line) => sum + Number(line.amount || 0), 0);
+
+        const { data: walletData, error: walletError } = await client.from('wallets').select('id, balance').eq('user_id', userId).single();
+        if (walletError || !walletData) { setFeedback((window.TKI18n?.t('runtime_v3.common.wallet_not_found') || "Portefeuille introuvable pour ce compte."), 'warn'); return; }
+        if (Number(walletData.balance || 0) < totalAmountValue) { setFeedback(`Solde insuffisant. Solde actuel : ${formatCurrency(walletData.balance)}.`, 'warn'); return; }
+
+        validateBtn.disabled = true;
+        validateBtn.textContent = (window.TKI18n?.t('runtime_v3.common.validating') || "Validation…");
+        setFeedback((window.TKI18n?.t('runtime_v3.lotto5.validating_ticket') || "Validation du ticket Lotto 5 en cours…"), 'warn');
+
+        try {
+          const ticketNumber = generateTicketNumber();
+          const { data: ticketData, error: ticketError } = await client.from('tickets').insert({
+            ticket_number: ticketNumber,
+            user_id: userId,
+            game_type: 'lotto5',
+            draw_name: selectedDrawName,
+            total_amount: totalAmountValue,
+            currency: 'HTG',
+            status: 'pending'
+          }).select('id').single();
+          if (ticketError) throw ticketError;
+
+          const ticketItems = couponLines.map((line) => ({ ticket_id: ticketData.id, number_played: line.number, amount: Number(line.amount || 0), potential_win: null, status: 'pending', option_type: line.option_type }));
+          const { error: itemsError } = await client.from('ticket_items').insert(ticketItems);
+          if (itemsError) {
+            console.warn('Lotto5 - option_type insert may fail if option_type column does not exist.', itemsError);
+            const safeItems = couponLines.map((line) => ({ ticket_id: ticketData.id, number_played: line.number, amount: Number(line.amount || 0), potential_win: null, status: 'pending' }));
+            const { error: fallbackError } = await client.from('ticket_items').insert(safeItems);
+            if (fallbackError) throw fallbackError;
+          }
+
+          const { error: transactionError } = await client.rpc('apply_transaction', {
+            p_user_id: userId,
+            p_type: 'bet',
+            p_amount: totalAmountValue,
+            p_reference: ticketNumber,
+            p_description: 'Mise Lotto 5',
+            p_metadata: { game_type: 'lotto5', draw_name: selectedDrawName, ticket_number: ticketNumber }
+          });
+          if (transactionError) throw transactionError;
+
+          couponLines = [];
+          renderCoupon();
+          setFeedback(`Ticket Lotto 5 validé : ${ticketNumber}. Débit de ${formatCurrency(totalAmountValue)} effectué.`, 'success');
+        } catch (error) {
+          console.error('Erreur validation Lotto 5', error);
+          setFeedback(`Erreur de validation : ${error.message || 'Impossible de valider le ticket.'}`, 'error');
+        } finally {
+          validateBtn.disabled = false;
+          validateBtn.textContent = (window.TKI18n?.t('runtime_v3.lotto5.validate_button') || "Valider le ticket");
+        }
+      });
+
+      syncNumberSelection();
+      renderCoupon();
+      loadDrawSchedules();
+
+      (async function init() {
+        if (!window.getCurrentUserAsync) { setFeedback((window.TKI18n?.t('runtime_v3.common.auth_unavailable') || "Le système d’authentification est indisponible."), 'error'); return; }
+        currentUser = await window.getCurrentUserAsync();
+        if (!currentUser) {
+          if (window.saveRedirectTarget) window.saveRedirectTarget('lotto5.html');
+          window.tryRedirectToLogin('../login-register/login.html');
+          return;
+        }
+        const name = currentUser.full_name || currentUser.email || 'Joueur';
+        userChip.innerHTML = '👤 Connecté : <strong>' + name + '</strong>';
+      })();
+    })();
   </script>
+<script data-tk-i18n-auto-init="">
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
 </body>
 </html>

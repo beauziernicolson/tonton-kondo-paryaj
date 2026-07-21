@@ -898,15 +898,12 @@ body.lucky6-modal-open { overflow:hidden; }
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -1042,7 +1039,6 @@ body.lucky6-modal-open { overflow:hidden; }
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-game tk-file-lucky6">
 <main class="app">
@@ -1053,72 +1049,67 @@ body.lucky6-modal-open { overflow:hidden; }
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Lucky 6</span>
 </div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
-
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
 <section class="hero-card">
 <article>
-<div class="eyebrow">Jeu disponible</div>
+<div class="eyebrow" data-i18n="games_group2.lucky6.eyebrow">Jeu instantané</div>
 <h2>Lucky 6</h2>
-<p>Choisissez exactement 6 numéros parmi 48. Le système tire 35 boules et votre gain dépend de la position du sixième match.</p>
-<a class="lucky-help" href="help-lucky6.html">Comprendre les règles</a>
+<p data-i18n="games_group2.lucky6.intro">Choisissez exactement 6 numéros parmi 48. Le système tire 35 boules et votre gain dépend de la position de la sixième correspondance.</p>
+<a class="lucky-help" data-i18n="games_common.understand_rules" href="help-lucky6.html">Comprendre les règles</a>
 </article>
 </section>
-
 <section class="lucky-layout">
 <div class="lucky-left">
 <article class="panel lucky-grid-panel">
 <div class="panel-head">
 <div>
-<h3>Grille de sélection</h3>
-<p>Choisissez exactement 6 numéros parmi 48.</p>
+<h3 data-i18n="games_group2.lucky6.grid">Grille de sélection</h3>
+<p data-i18n="games_group2.lucky6.grid_desc">Choisissez exactement 6 numéros parmi 48.</p>
 </div>
 </div>
 <div class="grid-meta">
-<strong id="selected-count">0/6 sélectionnés</strong>
-<span id="selection-hint">Choisissez vos 6 numéros</span>
+<strong data-i18n="games_group2.lucky6.selected_count" id="selected-count">0/6 sélectionnés</strong>
+<span data-i18n="games_group2.lucky6.choose_six" id="selection-hint">Choisissez vos 6 numéros</span>
 </div>
 <div class="number-grid" id="number-grid"></div>
 </article>
-
 <article class="panel lucky-result">
 <div class="panel-head">
 <div>
-<h3>Résultat final</h3>
-<p>Votre dernier résultat Lucky 6.</p>
+<h3 data-i18n="games_group2.lucky6.final_result">Résultat final</h3>
+<p data-i18n="games_group2.lucky6.result_desc">Consultez le résultat de votre dernière partie Lucky 6.</p>
 </div>
 </div>
 <div class="result-card">
-<div class="result-row"><span>Ticket</span><strong id="result-ticket">—</strong></div>
-<div class="result-row"><span>Numéros choisis</span><strong id="result-selected">Aucun</strong></div>
-<div class="result-row"><span>Tirage complet</span><strong id="result-draw">En attente</strong></div>
-<div class="result-row"><span>Matches</span><strong id="result-matches">0/6</strong></div>
-<div class="result-row"><span>Position du 6e match</span><strong id="result-position">—</strong></div>
-<div class="result-row"><span>Multiplicateur</span><strong id="result-multiplier">—</strong></div>
-<div class="result-row"><span>Mise</span><strong id="result-stake">0 HTG</strong></div>
-<div class="result-row"><span>Gain estimé</span><strong id="result-gain">0 HTG</strong></div>
-<div class="result-row"><span>Statut</span><strong id="result-status">En attente</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.ticket">Ticket</span><strong id="result-ticket">—</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.selected_numbers">Numéros choisis</span><strong data-i18n="games_group2.lucky6.none" id="result-selected">Aucun</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.full_draw">Tirage complet</span><strong data-i18n="games_group2.lucky6.waiting" id="result-draw">En attente</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.matches">Correspondances</span><strong id="result-matches">0/6</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.sixth_position">Position de la 6e correspondance</span><strong id="result-position">—</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.multiplier">Multiplicateur</span><strong id="result-multiplier">—</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.stake">Mise</span><strong id="result-stake">0 HTG</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.estimated_win">Gain estimé</span><strong id="result-gain">0 HTG</strong></div>
+<div class="result-row"><span data-i18n="games_group2.lucky6.status">Statut</span><strong data-i18n="games_group2.lucky6.waiting" id="result-status">En attente</strong></div>
 </div>
 </article>
-
 <article class="panel lucky-payout">
 <div class="panel-head">
 <div>
-<h3>Table de paiement</h3>
-<p>Multiplicateur selon la position du sixième match.</p>
+<h3 data-i18n="games_group2.lucky6.payment_table">Table de paiement</h3>
+<p data-i18n="games_group2.lucky6.payment_desc">Le multiplicateur dépend de la position de la sixième correspondance.</p>
 </div>
 </div>
 <div class="payout-table-wrap">
 <table class="payout-table">
-<thead><tr><th>Position</th><th>Multiplicateur</th></tr></thead>
+<thead><tr><th data-i18n="games_group2.lucky6.position">Position</th><th data-i18n="games_group2.lucky6.multiplier">Multiplicateur</th></tr></thead>
 <tbody>
 <tr><td>6 à 10</td><td>x50</td></tr>
 <tr><td>11 à 15</td><td>x15</td></tr>
@@ -1131,60 +1122,58 @@ body.lucky6-modal-open { overflow:hidden; }
 </div>
 </article>
 </div>
-
 <aside class="lucky-right">
 <article class="panel lucky-controls">
 <div class="panel-head">
 <div>
-<h3>Mise et actions</h3>
-<p>Définissez votre mise puis lancez la partie.</p>
+<h3 data-i18n="games_group2.lucky6.stake_actions">Mise et actions</h3>
+<p data-i18n="games_group2.lucky6.stake_desc">Définissez votre mise, puis lancez la partie.</p>
 </div>
 </div>
 <div class="field-card">
-<label for="stake-input">Montant de la mise</label>
+<label data-i18n="games_common.bet_amount" for="stake-input">Montant de la mise</label>
 <input id="stake-input" min="1" step="1" type="number" value="100"/>
 <div class="button-row" style="margin-top:10px;">
-<button class="btn" id="quick-pick-btn" type="button">Sélection rapide</button>
-<button class="btn" id="clear-btn" type="button">Effacer</button>
-<button class="btn btn-primary" id="play-btn" type="button">Jouer</button>
+<button class="btn" data-i18n="games_group2.lucky6.quick_pick" id="quick-pick-btn" type="button">Sélection automatique</button>
+<button class="btn" data-i18n="games_group2.lucky6.clear" id="clear-btn" type="button">Effacer</button>
+<button class="btn btn-primary" data-i18n="games_group2.lucky6.play" id="play-btn" type="button">Jouer</button>
 </div>
-<div class="feedback" id="feedback-box">Choisissez 6 numéros puis lancez le tirage.</div>
+<div class="feedback" data-i18n="games_group2.lucky6.feedback" id="feedback-box">Choisissez 6 numéros, puis lancez le tirage.</div>
 </div>
 </article>
-
 <article class="panel summary-card lucky-summary">
 <div class="panel-head">
 <div>
-<h3>Résumé</h3>
-<p>À jour avec votre sélection actuelle.</p>
+<h3 data-i18n="games_group2.lucky6.summary">Résumé</h3>
+<p data-i18n="games_group2.lucky6.summary_desc">Mis à jour selon votre sélection actuelle.</p>
 </div>
 </div>
-<div class="summary-row"><span>Numéros choisis</span><strong id="selected-numbers">Aucun</strong></div>
-<div class="summary-row"><span>Nombre sélectionné</span><strong id="summary-count">0/6</strong></div>
+<div class="summary-row"><span data-i18n="games_group2.lucky6.selected_numbers">Numéros choisis</span><strong data-i18n="games_group2.lucky6.none" id="selected-numbers">Aucun</strong></div>
+<div class="summary-row"><span data-i18n="games_group2.lucky6.selected_total">Nombre sélectionné</span><strong id="summary-count">0/6</strong></div>
 <div class="summary-row"><span>Montant de la mise</span><strong id="summary-stake">100 HTG</strong></div>
-<div class="summary-row"><span>Gain potentiel indicatif</span><strong id="summary-potential">0 HTG</strong></div>
+<div class="summary-row"><span data-i18n="games_group2.lucky6.potential_hint">Gain potentiel indicatif</span><strong id="summary-potential">0 HTG</strong></div>
 </article>
 </aside>
 </section>
-
 <section aria-hidden="true" class="lucky-draw-modal" id="lucky-draw-modal">
 <div class="lucky-draw-backdrop"></div>
 <div aria-modal="true" class="lucky-draw-dialog" role="dialog">
 <div class="drawing-header">
 <div>
-<div class="eyebrow">Tirage en direct</div>
-<h3>Machine de tirage Lucky 6</h3>
+<div class="eyebrow" data-i18n="games_group2.lucky6.live_draw">Tirage en direct</div>
+<h3 data-i18n="games_group2.lucky6.machine">Machine de tirage Lucky 6</h3>
 </div>
 <div class="match-counter" id="match-counter">Matches : 0/6</div>
 </div>
 <div class="drawing-zone" id="drawing-zone"></div>
-<div aria-live="polite" class="lucky-draw-message" id="lucky-draw-message">Bonne chance !</div>
-<button class="btn btn-primary lucky-quit-btn" id="lucky-quit-btn" style="display:none;" type="button">Quitter</button>
+<div aria-live="polite" class="lucky-draw-message" data-i18n="games_group2.lucky6.good_luck" id="lucky-draw-message">Bonne chance !</div>
+<button class="btn btn-primary lucky-quit-btn" data-i18n="games_group2.lucky6.quit" id="lucky-quit-btn" style="display:none;" type="button">Quitter</button>
 </div>
 </section>
-
 </main>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
+<script src="../js/games-group2-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -1243,7 +1232,7 @@ body.lucky6-modal-open { overflow:hidden; }
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -1262,7 +1251,7 @@ body.lucky6-modal-open { overflow:hidden; }
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');
@@ -1493,7 +1482,7 @@ body.lucky6-modal-open { overflow:hidden; }
       }
 
       if (!currentUser) {
-        setFeedback('Connectez-vous pour jouer.', 'warn');
+        setFeedback((window.TKI18n?.t?.('runtime_final.connectez_vous_pour_jouer') || advancedT('signin')), 'warn');
       }
     }
 
@@ -1510,14 +1499,14 @@ body.lucky6-modal-open { overflow:hidden; }
       const index = selectedNumbers.indexOf(number);
       if (index >= 0) {
         selectedNumbers.splice(index, 1);
-        setFeedback('Numéro retiré de votre sélection.', 'warn');
+        setFeedback((window.TKI18n?.t?.('runtime_final.numero_retire_de_votre_selection') || "Numéro retiré de votre sélection."), 'warn');
       } else if (selectedNumbers.length >= 6) {
-        setFeedback('Vous ne pouvez sélectionner que 6 numéros.', 'warn');
+        setFeedback((window.TKI18n?.t?.('runtime_final.vous_ne_pouvez_selectionner_que_6_numeros') || "Vous ne pouvez sélectionner que 6 numéros."), 'warn');
         return;
       } else {
         selectedNumbers.push(number);
         selectedNumbers.sort((a, b) => a - b);
-        setFeedback('Numéro ajouté à votre sélection.', 'success');
+        setFeedback((window.TKI18n?.t?.('runtime_final.numero_ajoute_a_votre_selection') || "Numéro ajouté à votre sélection."), 'success');
       }
       renderLucky6Grid();
       updateLucky6Summary();
@@ -1535,22 +1524,22 @@ body.lucky6-modal-open { overflow:hidden; }
       selectedNumbers.push(...picked.sort((a, b) => a - b));
       renderLucky6Grid();
       updateLucky6Summary();
-      setFeedback('Sélection rapide réalisée avec 6 numéros aléatoires.', 'success');
+      setFeedback((window.TKI18n?.t?.('runtime_final.selection_rapide_realisee_avec_6_numeros_aleatoires') || "Sélection rapide réalisée avec 6 numéros aléatoires."), 'success');
     }
 
     function clearLucky6Selection() {
       selectedNumbers.length = 0;
       renderLucky6Grid();
       updateLucky6Summary();
-      setFeedback('Sélection effacée.', 'warn');
+      setFeedback((window.TKI18n?.t?.('runtime_final.selection_effacee') || "Sélection effacée."), 'warn');
     }
 
     function updateLucky6Summary() {
       const stake = Number(stakeInput.value) || 0;
-      selectedCount.textContent = `${selectedNumbers.length}/6 sélectionnés`;
-      selectionHint.textContent = selectedNumbers.length === 6 ? 'Sélection complète' : 'Choisissez encore ' + (6 - selectedNumbers.length) + ' numéro(s)';
+      selectedCount.textContent = advancedT('l6s',{count:selectedNumbers.length});
+      selectionHint.textContent = selectedNumbers.length === 6 ? group2T('lucky6.selection_complete') : 'Choisissez encore ' + (6 - selectedNumbers.length) + ' numéro(s)';
       selectedNumbersEl.textContent = selectedNumbers.length ? selectedNumbers.join(', ') : 'Aucun';
-      summaryCount.textContent = `${selectedNumbers.length}/6`;
+      summaryCount.textContent = advancedT('l6s',{count:selectedNumbers.length});
       summaryStake.textContent = formatCurrency(stake);
       const potential = selectedNumbers.length === 6 ? formatCurrency(stake * 50) : formatCurrency(0);
       summaryPotential.textContent = potential;
@@ -1579,7 +1568,7 @@ body.lucky6-modal-open { overflow:hidden; }
       document.body.classList.add('lucky6-modal-open');
       luckyQuitBtn.style.display = 'none';
       luckyDrawMessage.className = 'lucky-draw-message';
-      luckyDrawMessage.textContent = 'Bonne chance ! Le tirage commence.';
+      luckyDrawMessage.textContent = group2T('lucky6.good_luck');
     }
 
     function closeLucky6Modal() {
@@ -1591,7 +1580,7 @@ body.lucky6-modal-open { overflow:hidden; }
     function animateLucky6Draw(drawNumbers) {
       openLucky6Modal();
       drawingZone.innerHTML = '';
-      matchCounter.textContent = 'Matches : 0/6';
+      matchCounter.textContent = advancedT('l60');
       const selectedSet = new Set(selectedNumbers);
       const draw = Array.isArray(drawNumbers) ? drawNumbers : [];
 
@@ -1610,7 +1599,7 @@ body.lucky6-modal-open { overflow:hidden; }
 
       window.setTimeout(() => {
         const matches = draw.filter((number) => selectedSet.has(number));
-        matchCounter.textContent = `Matches : ${matches.length}/6`;
+        matchCounter.textContent = advancedT('l6m',{count:matches.length});
       }, draw.length * 70 + 250);
     }
 
@@ -1630,31 +1619,31 @@ body.lucky6-modal-open { overflow:hidden; }
       }
 
       if (!currentUser) {
-        setFeedback('Vous devez être connecté pour jouer.', 'error');
+        setFeedback((window.TKI18n?.t?.('runtime_final.vous_devez_etre_connecte_pour_jouer') || advancedT('signin')), 'error');
         return;
       }
 
       if (selectedNumbers.length !== 6) {
-        setFeedback('Vous devez sélectionner exactement 6 numéros.', 'error');
+        setFeedback((window.TKI18n?.t?.('runtime_final.vous_devez_selectionner_exactement_6_numeros') || "Vous devez sélectionner exactement 6 numéros."), 'error');
         return;
       }
 
       const amount = Number(stakeInput.value);
       if (!amount || amount <= 0) {
-        setFeedback('Le montant de la mise doit être supérieur à 0.', 'error');
+        setFeedback((window.TKI18n?.t?.('runtime_final.le_montant_de_la_mise_doit_etre_superieur_a_0') || "Le montant de la mise doit être supérieur à 0."), 'error');
         return;
       }
 
       const playButtonLabel = playBtn.textContent;
       playBtn.disabled = true;
-      playBtn.textContent = 'Traitement…';
+      playBtn.textContent = advancedT('processing');
       isPlaying = true;
-      setFeedback('Tirage en cours…', 'success');
+      setFeedback((window.TKI18n?.t?.('runtime_final.tirage_en_cours') || "Tirage en cours…"), 'success');
 
       try {
         const client = window.supabaseClient;
         if (!client || typeof client.rpc !== 'function') {
-          throw new Error('Connexion Supabase indisponible.');
+          throw new Error(group2T('lucky6.service_unavailable'));
         }
 
         const { data, error } = await client.rpc('play_lucky6', {
@@ -1678,7 +1667,7 @@ body.lucky6-modal-open { overflow:hidden; }
         if (typeof window.getAuthenticatedWallet === 'function') {
           try {
             await window.getAuthenticatedWallet();
-            setFeedback('Tirage validé. Solde mis à jour après transaction.', 'success');
+            setFeedback((window.TKI18n?.t?.('runtime_final.tirage_valide_solde_mis_a_jour_apres_transaction') || "Tirage validé. Solde mis à jour après transaction."), 'success');
           } catch (walletError) {
             console.warn('Impossible de rafraîchir le wallet', walletError);
           }
@@ -1702,7 +1691,7 @@ body.lucky6-modal-open { overflow:hidden; }
       const positionLabel = result.sixth_match_position != null ? result.sixth_match_position : '—';
       const multiplierLabel = result.payout_multiplier > 0 ? `x${Number(result.payout_multiplier)}` : '—';
       const gainLabel = formatCurrency(Number(result.win_amount || 0));
-      const statusLabel = result.status === 'paid' ? 'Gagné' : 'Perdu';
+      const statusLabel = result.status === 'paid' ? group2T('lucky6.won') : group2T('lucky6.lost');
 
       resultTicket.textContent = result.ticket_number || '—';
       resultSelected.textContent = selectedLabel;
@@ -1713,9 +1702,9 @@ body.lucky6-modal-open { overflow:hidden; }
       resultStake.textContent = formatCurrency(stake);
       resultGain.textContent = gainLabel;
       resultStatus.textContent = statusLabel;
-      resultStatus.style.color = statusLabel === 'Gagné' ? '#46e36f' : '#ff5d6c';
+      resultStatus.style.color = statusLabel === group2T('lucky6.won') ? '#46e36f' : '#ff5d6c';
 
-      if (statusLabel === 'Gagné') {
+      if (statusLabel === group2T('lucky6.won')) {
         const message = `Félicitations ! Vous avez gagné ${gainLabel} 🎉`;
         luckyDrawMessage.className = 'lucky-draw-message win';
         luckyDrawMessage.textContent = message;
@@ -1737,6 +1726,9 @@ body.lucky6-modal-open { overflow:hidden; }
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
     }
   });
+</script>
+<script id="advanced-polish-i18n-helper">
+window.advancedT=(key,vars={})=>window.TKI18n?.t?.(`advanced_polish.${key}`,vars)||key;
 </script>
 </body>
 </html>

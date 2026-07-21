@@ -820,8 +820,6 @@
   }
 </style>
 <meta content="#030b1a" name="theme-color"/>
-
-
 <style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -840,15 +838,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -984,7 +979,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-game tk-file-borlette">
 <main class="app">
@@ -995,23 +989,21 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Borlette</span>
 </div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
-
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
 <section class="card borlette-hero">
 <div class="eyebrow">Borlette</div>
 <h1>Borlette</h1>
 <p class="lede">Choisissez un tirage et un numéro de 00 à 99. Ajoutez vos lignes au coupon, puis validez votre ticket.</p>
 <div class="hero-meta">
-<a class="mini-chip borlette-help-link" href="help-borlette.html">Comprendre les règles</a>
+<a class="mini-chip borlette-help-link" data-i18n="games_common.understand_rules" href="help-borlette.html">Comprendre les règles</a>
 </div>
 </section>
 <section class="borlette-workspace">
@@ -1026,17 +1018,17 @@
 <div class="field-grid">
 <article class="field-card borlette-draw-card">
 <div class="label">
-<span>Tirage</span>
+<span data-i18n="games_common.draw">Tirage</span>
 <span class="value-pill">Obligatoire</span>
 </div>
 <select aria-label="Choisir un tirage Borlette" id="draw-name-select">
-<option value="">Chargement des tirages…</option>
+<option data-i18n="games_common.loading_draws" value="">Chargement des tirages…</option>
 </select>
 <p class="helper-text">Le tirage choisi est associé au ticket pour la vérification et le suivi des résultats.</p>
 </article>
 <article class="field-card borlette-grid-card">
 <div class="label">
-<span>Numéro sélectionné</span>
+<span data-i18n="games_group1.selected_number">Numéro sélectionné</span>
 <span class="value-pill" id="selected-number-pill">00</span>
 </div>
 <div aria-label="Sélection des numéros de 00 à 99" class="number-grid" id="number-grid"></div>
@@ -1047,14 +1039,14 @@
 <article class="borlette-panel borlette-coupon">
 <div class="panel-title">
 <div>
-<h2>Coupon en cours</h2>
+<h2 data-i18n="games_common.current_bet_slip">Coupon en cours</h2>
 <p>Validation et suivi du coupon.</p>
 </div>
 <span class="chip-note">Total</span>
 </div>
 <div class="summary">
 <div class="summary-row"><span>Nombre de lignes</span><strong id="line-count">0</strong></div>
-<div class="summary-row"><span>Montant total</span><strong id="total-amount">0 HTG</strong></div>
+<div class="summary-row"><span data-i18n="games_common.total_amount">Montant total</span><strong id="total-amount">0 HTG</strong></div>
 <div class="summary-total"><span>Total du ticket</span><strong id="total-display">0 HTG</strong></div>
 </div>
 <div aria-live="polite" class="coupon-list" id="coupon-list"></div>
@@ -1064,17 +1056,17 @@
 <span>Validation</span>
 <span class="value-pill">En ligne</span>
 </div>
-<button class="btn btn-primary" id="validate-btn" style="width:100%;" type="button">Valider le ticket</button>
+<button class="btn btn-primary" data-i18n="games_common.validate_ticket" id="validate-btn" style="width:100%;" type="button">Valider le ticket</button>
 <p class="footer-note">La validation utilise votre portefeuille connecté et enregistre votre ticket de façon sécurisée.</p>
 </article>
 <article class="field-card borlette-amount-card">
 <div class="label">
-<span>Montant</span>
+<span data-i18n="games_common.amount">Montant</span>
 <span class="value-pill">HTG</span>
 </div>
 <div class="amount-row">
-<input aria-label="Montant du ticket" id="amount-input" inputmode="numeric" min="1" step="1" type="number" value="10"/>
-<button class="btn btn-primary borlette-add-button" id="add-line-btn" type="button">Ajouter au coupon</button>
+<input aria-label="Montant de la mise" data-i18n-aria-label="simple_games_qa.amount_aria" id="amount-input" inputmode="numeric" min="1" step="1" type="number" value="10"/>
+<button class="btn btn-primary borlette-add-button" data-i18n="games_common.add_to_bet_slip" id="add-line-btn" type="button">Ajouter au coupon</button>
 </div>
 <p class="helper-text">Le montant saisi s'applique au numéro sélectionné.</p>
 </article>
@@ -1085,6 +1077,7 @@
 </section>
 </main>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -1143,7 +1136,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -1162,7 +1155,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');
@@ -1311,9 +1304,6 @@
 })();
 </script>
 <script src="../js/auth-guard.js"></script>
-
-
-
 <script>
     (function () {
       const numberGrid = document.getElementById('number-grid');
@@ -1379,12 +1369,12 @@
 
       async function loadDrawSchedules() {
         try {
-          drawNameSelect.innerHTML = '<option value="">Chargement des tirages…</option>';
+          drawNameSelect.innerHTML = '<option data-i18n="games_common.loading_draws" value="">Chargement des tirages…</option>';
 
           const client = await waitForSupabaseClient();
           if (!client || typeof client.from !== 'function') {
-            drawNameSelect.innerHTML = '<option value="">Connexion au service momentanément indisponible</option>';
-            setFeedback('La connexion au service n’est pas encore disponible. Rechargez la page si nécessaire.', 'warn');
+            drawNameSelect.innerHTML = `<option value="">${gameT('simple_games_qa.draw_service_unavailable')}</option>`;
+            setFeedback((window.TKI18n?.t?.('runtime_final.la_connexion_au_service_nest_pas_encore_disponible_rechargez_la_page_si_') || "La connexion au service n’est pas encore disponible. Rechargez la page si nécessaire."), 'warn');
             return;
           }
 
@@ -1398,8 +1388,8 @@
 
           if (error) {
             console.error('Erreur chargement tirages Borlette', error);
-            drawNameSelect.innerHTML = '<option value="">Erreur de chargement des tirages</option>';
-            setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'warn');
+            drawNameSelect.innerHTML = `<option value="">${gameT('simple_games_qa.draw_service_unavailable')}</option>`;
+            setFeedback(gameT('simple_games_qa.draw_load_error', { message: error.message || gameT('simple_games_qa.unknown_error') }), 'warn');
             return;
           }
 
@@ -1409,7 +1399,7 @@
           if (!schedules.length) {
             drawNameSelect.innerHTML = '<option value="">Aucun tirage actif disponible</option>';
             selectedDrawName = '';
-            setFeedback('Aucun tirage actif disponible pour Borlette.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.aucun_tirage_actif_disponible_pour_borlette') || "Aucun tirage actif disponible pour Borlette."), 'warn');
             return;
           }
 
@@ -1422,11 +1412,11 @@
 
           selectedDrawName = drawNameSelect.value || schedules[0].draw_name;
           drawNameSelect.value = selectedDrawName;
-          setFeedback(`Tirages Borlette chargés : ${schedules.length} tirage(s) disponible(s).`, 'success');
+          setFeedback(gameT('games_group1.draws_loaded', { game: 'Borlette', count: schedules.length }), 'success');
         } catch (error) {
           console.error('Erreur chargement tirages Borlette', error);
-          drawNameSelect.innerHTML = '<option value="">Erreur de chargement des tirages</option>';
-          setFeedback(`Erreur de chargement des tirages : ${error.message || 'Erreur inconnue.'}`, 'warn');
+          drawNameSelect.innerHTML = `<option value="">${gameT('simple_games_qa.draw_service_unavailable')}</option>`;
+          setFeedback(gameT('simple_games_qa.draw_load_error', { message: error.message || gameT('simple_games_qa.unknown_error') }), 'warn');
         }
       }
 
@@ -1445,7 +1435,7 @@
             hasSelectedNumber = true;
             selectedNumberPill.textContent = value;
             renderNumbers();
-            setFeedback(`Numéro ${value} sélectionné. Vous pouvez ajuster le montant puis ajouter la ligne.`, 'warn');
+            setFeedback(gameT('games_group1.number_selected', { number: value }), 'warn');
           });
           numberGrid.appendChild(btn);
         }
@@ -1467,7 +1457,7 @@
 
             const left = document.createElement('div');
             left.className = 'coupon-left';
-            left.innerHTML = `<strong>Numéro ${line.number}</strong><span>Ajouté le ${new Date(line.createdAt).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')}</span>`;
+            left.innerHTML = `<strong>${gameT('games_group1.number')} ${line.number}</strong><span>${gameT('games_group1.added_on')} ${new Date(line.createdAt).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')}</span>`;
 
             const right = document.createElement('div');
             right.className = 'coupon-right';
@@ -1483,7 +1473,7 @@
             deleteBtn.addEventListener('click', () => {
               couponLines = couponLines.filter((entry) => entry.id !== line.id);
               renderCoupon();
-              setFeedback(`La ligne ${line.number} a été supprimée du coupon.`, 'warn');
+              setFeedback(gameT('simple_games_qa.line_removed', { number: line.number }), 'warn');
             });
 
             right.appendChild(amount);
@@ -1505,18 +1495,18 @@
         selectedDrawName = drawNameSelect.value || 'New York Midday';
 
         if (!selectedDrawName) {
-          setFeedback('Choisissez un tirage avant d’ajouter une ligne.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.choisissez_un_tirage_avant_dajouter_une_ligne') || "Choisissez un tirage avant d’ajouter une ligne."), 'warn');
           drawNameSelect.focus();
           return;
         }
 
         if (!hasSelectedNumber) {
-          setFeedback('Choisissez d’abord un numéro avant d’ajouter une ligne.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.choisissez_dabord_un_numero_avant_dajouter_une_ligne') || "Choisissez d’abord un numéro avant d’ajouter une ligne."), 'warn');
           return;
         }
 
         if (!Number.isFinite(rawAmount) || rawAmount <= 0) {
-          setFeedback('Entrez un montant valide supérieur à 0 avant d’ajouter une ligne.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.entrez_un_montant_valide_superieur_a_0_avant_dajouter_une_ligne') || "Entrez un montant valide supérieur à 0 avant d’ajouter une ligne."), 'warn');
           amountInput.focus();
           return;
         }
@@ -1530,7 +1520,7 @@
 
         couponLines = [newLine, ...couponLines];
         renderCoupon();
-        setFeedback(`Ligne ${newLine.number} ajoutée au coupon avec ${formatCurrency(newLine.amount)}.`, 'success');
+        setFeedback(gameT('simple_games_qa.line_added', { number: newLine.number, amount: formatCurrency(newLine.amount) }), 'success');
       }
 
       addLineBtn.addEventListener('click', addLineToCoupon);
@@ -1543,7 +1533,7 @@
 
       validateBtn.addEventListener('click', async () => {
         if (!currentUser) {
-          setFeedback('Vous devez être connecté pour valider un ticket.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.vous_devez_etre_connecte_pour_valider_un_ticket') || "Vous devez être connecté pour valider un ticket."), 'warn');
           if (window.saveRedirectTarget) {
             window.saveRedirectTarget('../borlette.html');
           }
@@ -1554,19 +1544,19 @@
         selectedDrawName = drawNameSelect.value || 'New York Midday';
 
         if (!selectedDrawName) {
-          setFeedback('Choisissez un tirage avant de valider le ticket.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.choisissez_un_tirage_avant_de_valider_le_ticket') || "Choisissez un tirage avant de valider le ticket."), 'warn');
           drawNameSelect.focus();
           return;
         }
 
         if (!couponLines.length) {
-          setFeedback('Validez d’abord votre montant en ajoutant une ligne au coupon avant de valider le ticket.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.validez_dabord_votre_montant_en_ajoutant_une_ligne_au_coupon_avant_de_va') || "Validez d’abord votre montant en ajoutant une ligne au coupon avant de valider le ticket."), 'warn');
           return;
         }
 
         const client = window.supabaseClient || null;
         if (!client || typeof client.from !== 'function') {
-          setFeedback('Connexion au service momentanément indisponible. Rechargez la page et réessayez.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.connexion_au_service_momentanement_indisponible_rechargez_la_page_et_ree') || "Connexion au service momentanément indisponible. Rechargez la page et réessayez."), 'warn');
           return;
         }
 
@@ -1582,7 +1572,7 @@
 
         validateBtn.disabled = true;
         validateBtn.textContent = 'Validation…';
-        setFeedback('Validation du ticket en cours…', 'warn');
+        setFeedback((window.TKI18n?.t?.('runtime_final.validation_du_ticket_en_cours') || "Validation du ticket en cours…"), 'warn');
 
         try {
           console.log('BORLETTE DEBUG - étape wallet', {
@@ -1606,14 +1596,14 @@
 
           if (walletError || !walletData) {
             const message = walletError?.message || 'Wallet introuvable pour ce compte.';
-            setFeedback(walletError?.code === 'PGRST116' ? 'Wallet introuvable pour ce compte.' : `Erreur wallet : ${message}`, 'warn');
+            setFeedback(walletError?.code === 'PGRST116' ? gameT('simple_games_qa.wallet_not_found') : gameT('simple_games_qa.wallet_error', { message }), 'warn');
             console.error('BORLETTE DEBUG - erreur wallet', walletError || new Error('Wallet introuvable pour ce compte.'));
             return;
           }
 
           const currentBalance = Number(walletData?.balance || 0);
           if (currentBalance < totalAmountValue) {
-            setFeedback(`Solde insuffisant. Solde actuel : ${formatCurrency(currentBalance)}. Total ticket : ${formatCurrency(totalAmountValue)}.`, 'warn');
+            setFeedback(gameT('simple_games_qa.insufficient_balance', { balance: formatCurrency(currentBalance), total: formatCurrency(totalAmountValue) }), 'warn');
             console.warn('BORLETTE DEBUG - solde insuffisant', {
               currentBalance,
               totalAmount: totalAmountValue,
@@ -1685,7 +1675,7 @@
 
           if (ticketError) {
             const detail = ticketError?.message || 'Erreur inconnue lors de la création du ticket.';
-            setFeedback(`Erreur ticket : ${detail}`, 'warn');
+            setFeedback(gameT('simple_games_qa.ticket_error', { message: detail }), 'warn');
             throw ticketError;
           }
 
@@ -1739,13 +1729,13 @@
 
           if (transactionError) {
             console.error('BORLETTE DEBUG - erreur apply_transaction', transactionError);
-            setFeedback(`Erreur apply_transaction : ${transactionError.message || 'Erreur inconnue lors du débit du wallet.'}`, 'warn');
+            setFeedback(gameT('simple_games_qa.transaction_error', { message: transactionError.message || gameT('simple_games_qa.unknown_error') }), 'warn');
             throw transactionError;
           }
 
           couponLines = [];
           renderCoupon();
-          setFeedback(`Ticket validé : ${ticketNumber}. Débit de ${formatCurrency(totalAmountValue)} effectué.`, 'success');
+          setFeedback(gameT('games_group1.ticket_success', { game: 'Borlette', ticket: ticketNumber, amount: formatCurrency(totalAmountValue) }), 'success');
 
           window.dispatchEvent(new CustomEvent('tonton:wallet-updated', {
             detail: {
@@ -1773,10 +1763,10 @@
 
           console.error('Erreur lors de la validation du ticket Borlette', error);
           const message = error?.message || 'Impossible d’enregistrer le ticket pour le moment.';
-          setFeedback(`Erreur de validation : ${message}`, 'warn');
+          setFeedback(gameT('simple_games_qa.validation_error', { message }), 'warn');
         } finally {
           validateBtn.disabled = false;
-          validateBtn.textContent = 'Valider le ticket';
+          validateBtn.textContent = gameT('validate_ticket');
         }
       });
 
@@ -1786,7 +1776,7 @@
 
       (async function protectPage() {
         if (!window.getCurrentUserAsync) {
-          setFeedback('Le système d’authentification est indisponible sur cette page.', 'warn');
+          setFeedback((window.TKI18n?.t?.('runtime_final.le_systeme_dauthentification_est_indisponible_sur_cette_page') || "Le système d’authentification est indisponible sur cette page."), 'warn');
           return;
         }
 
@@ -1801,7 +1791,7 @@
 
         const userLabel = document.createElement('span');
         userLabel.className = 'mini-chip';
-        userLabel.innerHTML = '👤 Connecté : <strong>' + (currentUser.full_name || currentUser.email || 'Joueur') + '</strong>';
+        userLabel.innerHTML = '👤 ' + gameT('connected') + ' : <strong>' + (currentUser.full_name || currentUser.email || 'Joueur') + '</strong>';
         document.querySelector('.hero-meta').appendChild(userLabel);
       })();
     })();
@@ -1812,6 +1802,11 @@
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
     }
   });
+</script>
+<script id="simple-games-qa-language-hook">
+window.TKI18n?.onLanguageChanged?.(() => {
+  try { if (typeof renderCoupon === 'function') renderCoupon(); } catch (error) { console.warn('Coupon language refresh failed', error); }
+});
 </script>
 </body>
 </html>

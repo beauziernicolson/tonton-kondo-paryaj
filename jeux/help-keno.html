@@ -35,6 +35,7 @@
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -53,15 +54,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -197,8 +195,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -271,7 +267,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-help tk-file-help-keno">
 <main class="app">
@@ -282,59 +277,57 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" data-i18n="help_v3.common.back_to_games" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Aide Keno</span>
 </div></header>
-
-
 <section class="card">
 <div class="eyebrow">Aide</div>
-<h1>Keno — règles détaillées</h1>
+<h1 data-i18n="help_v3.pages.keno.text_01">Keno — règles détaillées</h1>
 <p>Le Keno est un jeu de tirage rapide où vous choisissez plusieurs numéros parmi une grille de boules. Plus vous trouvez de bons numéros au moment du tirage, plus votre gain augmente. C’est un jeu simple à comprendre, mais très dynamique, car le suspense vient du tirage lui-même.</p>
-<a class="back-link" href="keno.html">← Retour à la page Keno</a>
+<a class="back-link" data-i18n="help_v3.pages.keno.text_02" href="keno.html">← Retour à la page Keno</a>
 <div class="grid">
 <article class="panel">
-<h2>1. Principe du jeu</h2>
-<p>Vous sélectionnez un ensemble de numéros dans la grille disponible. Le système garde votre sélection jusqu’au tirage.</p>
-<span class="callout">Le but est de retrouver le maximum de numéros tirés.</span>
+<h2 data-i18n="help_v3.pages.keno.text_03">1. Principe du jeu</h2>
+<p data-i18n="help_v3.pages.keno.text_04">Vous sélectionnez un ensemble de numéros dans la grille disponible. Le système garde votre sélection jusqu’au tirage.</p>
+<span class="callout" data-i18n="help_v3.pages.keno.text_05">Le but est de retrouver le maximum de numéros tirés.</span>
 </article>
 <article class="panel">
-<h2>2. Déroulement</h2>
+<h2 data-i18n="help_v3.pages.keno.text_06">2. Déroulement</h2>
 <ul>
-<li>Choisissez vos numéros.</li>
-<li>Choisissez votre mise.</li>
-<li>Validez votre ticket.</li>
-<li>Attendez le tirage.</li>
+<li data-i18n="help_v3.pages.keno.text_07">Choisissez vos numéros.</li>
+<li data-i18n="help_v3.pages.keno.text_08">Choisissez votre mise.</li>
+<li data-i18n="help_v3.pages.keno.text_09">Validez votre ticket.</li>
+<li data-i18n="help_v3.pages.keno.text_10">Attendez le tirage.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>3. Comment le gain se forme</h2>
-<p>Après le tirage, le système compare vos numéros à ceux qui sont sortis. Chaque numéro trouvé correspond à un “match”.</p>
-<p>Plus vous avez de matches, plus votre gain est élevé. Le gain exact dépend du nombre de bonnes réponses et du multiplicateur associé au jeu.</p>
+<h2 data-i18n="help_v3.pages.keno.text_11">3. Comment le gain se forme</h2>
+<p data-i18n="help_v3.pages.keno.text_12">Après le tirage, le système compare vos numéros à ceux qui sont sortis. Chaque numéro trouvé correspond à un “match”.</p>
+<p data-i18n="help_v3.pages.keno.text_13">Plus vous avez de matches, plus votre gain est élevé. Le gain exact dépend du nombre de bonnes réponses et du multiplicateur associé au jeu.</p>
 </article>
 <article class="panel">
-<h2>4. Exemple simple</h2>
-<p>Vous choisissez 6 numéros : 3, 12, 18, 24, 37 et 40.</p>
+<h2 data-i18n="help_v3.pages.keno.text_14">4. Exemple simple</h2>
+<p data-i18n="help_v3.pages.keno.text_15">Vous choisissez 6 numéros : 3, 12, 18, 24, 37 et 40.</p>
 <div class="example">
-<span class="pill">3 matches</span>
-<span class="pill">Gain modeste</span>
-<span class="pill">6 matches</span>
-<span class="pill">Gain plus important</span>
+<span class="pill" data-i18n="help_v3.pages.keno.text_16">3 matches</span>
+<span class="pill" data-i18n="help_v3.pages.keno.text_17">Gain modeste</span>
+<span class="pill" data-i18n="help_v3.pages.keno.text_18">6 matches</span>
+<span class="pill" data-i18n="help_v3.pages.keno.text_19">Gain plus important</span>
 </div>
-<p>Le principe est simple : plus vous êtes proche du tirage complet, plus le gain est intéressant.</p>
+<p data-i18n="help_v3.pages.keno.text_20">Le principe est simple : plus vous êtes proche du tirage complet, plus le gain est intéressant.</p>
 </article>
 <article class="panel" style="grid-column:1 / -1;">
-<h2>5. Ce qu’il faut retenir</h2>
+<h2 data-i18n="help_v3.pages.keno.text_21">5. Ce qu’il faut retenir</h2>
 <ul>
-<li>Le Keno repose sur la sélection de plusieurs numéros.</li>
-<li>Le nombre de correspondances détermine le gain.</li>
-<li>Le tirage est l’étape finale du jeu.</li>
-<li>Une stratégie simple consiste à jouer des numéros que vous aimez ou à utiliser un choix rapide.</li>
+<li data-i18n="help_v3.pages.keno.text_22">Le Keno repose sur la sélection de plusieurs numéros.</li>
+<li data-i18n="help_v3.pages.keno.text_23">Le nombre de correspondances détermine le gain.</li>
+<li data-i18n="help_v3.pages.keno.text_24">Le tirage est l’étape finale du jeu.</li>
+<li data-i18n="help_v3.pages.keno.text_25">Une stratégie simple consiste à jouer des numéros que vous aimez ou à utiliser un choix rapide.</li>
 </ul>
 </article>
 </div>
@@ -405,7 +398,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -424,7 +417,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

@@ -622,15 +622,12 @@ body.horse-race-modal-open {
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -766,10 +763,8 @@ body.horse-race-modal-open {
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-game tk-file-horse-racing" id="horse-race-page">
-
 <main>
 <header class="game-header" id="gameHeader">
 <a aria-label="Accueil Tonton Kondo" class="game-header__brand" href="../index.html">
@@ -778,80 +773,70 @@ body.horse-race-modal-open {
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Horse Racing</span>
 </div></header>
-<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
-
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="games_common.main_navigation"><a href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.home">Accueil</span></a><a href="../jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.games">Jeux</span></a><a href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.results">Résultats</span></a><a href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.tickets">Tickets</span></a><a href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.wallet">Portefeuille</span></a><a href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.add_funds">Dépôt</span></a><a href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span><span data-i18n="games_common.cash_out">Retrait</span></a></nav>
 <section class="horse-hero">
-<h1 class="title">Course Cheval</h1>
-<p class="subtitle">Choisissez votre cheval, définissez votre mise, puis lancez la course.</p>
+<h1 class="title" data-i18n="games_group2.horse.title">Course de chevaux</h1>
+<p class="subtitle" data-i18n="games_group2.horse.intro">Choisissez votre cheval, définissez votre mise, puis lancez la course.</p>
 </section>
-
 <section class="horse-layout">
 <article class="horse-selection-panel">
 <div class="horse-grid" id="horse-list"></div>
 </article>
-
 <aside class="bet-panel">
-<div class="balance-card"><span>Solde disponible</span><strong id="user-balance">Chargement...</strong></div>
+<div class="balance-card"><span>Solde disponible</span><strong data-i18n="games_group2.horse.loading" id="user-balance">Chargement…</strong></div>
 <div class="summary-row">
-<div><span class="k">Cheval choisi :</span> <span class="v" id="selected-horse">Aucun</span></div>
-<div><span class="k">Cote :</span> <span class="v" id="selected-odds">—</span></div>
+<div><span class="k" data-i18n="games_group2.horse.selected_horse">Cheval choisi :</span> <span class="v" data-i18n="games_group2.horse.none" id="selected-horse">Aucun</span></div>
+<div><span class="k" data-i18n="games_group2.horse.odds">Cote :</span> <span class="v" id="selected-odds">—</span></div>
 </div>
 <div class="summary-row">
-<div><span class="k">Gain potentiel :</span> <span class="v" id="potential-gain">0 HTG</span></div>
-<div><span class="k">Statut :</span> <span class="v" id="race-status">Prêt</span></div>
+<div><span class="k" data-i18n="games_group2.horse.potential_win">Gain potentiel :</span> <span class="v" id="potential-gain">0 HTG</span></div>
+<div><span class="k" data-i18n="games_group2.horse.status">${advancedT('status')} :</span> <span class="v" data-i18n="games_group2.horse.ready" id="race-status">Prêt</span></div>
 </div>
 <div class="amount-wrap">
-<label for="bet-amount">Montant de la mise</label>
+<label data-i18n="games_group2.horse.stake" for="bet-amount">Montant de la mise</label>
 <input id="bet-amount" min="1" placeholder="0" type="number"/>
 </div>
 <div class="actions">
-<button class="btn btn-secondary" id="clear-race-btn">Effacer</button>
-<button class="btn btn-primary" id="start-race-btn">Commencer</button>
+<button class="btn btn-secondary" data-i18n="games_group2.horse.clear" id="clear-race-btn">Effacer</button>
+<button class="btn btn-primary" data-i18n="games_group2.horse.start" id="start-race-btn">Commencer</button>
 </div>
 <div class="feedback" id="feedback-message"></div>
 </aside>
 </section>
-
 <section aria-hidden="true" class="horse-race-modal" id="horse-race-modal">
 <div class="horse-race-backdrop"></div>
 <div aria-modal="true" class="horse-race-dialog" role="dialog">
 <div class="track-header">
 <div>
-<div class="eyebrow">Course en direct</div>
-<h2>Piste de course</h2>
+<div class="eyebrow" data-i18n="games_group2.horse.live_race">Course en direct</div>
+<h2 data-i18n="games_group2.horse.track">Piste de course</h2>
 </div>
 <div style="display:flex;gap:10px;align-items:center">
-<span id="race-status-inline">Prêt</span>
+<span data-i18n="games_group2.horse.ready" id="race-status-inline">Prêt</span>
 <span id="race-timer">00:10</span>
 </div>
 </div>
-
-<div class="leader-badge" id="leader-badge">En tête : —</div>
+<div class="leader-badge" data-i18n="games_group2.horse.leading" id="leader-badge">En tête : —</div>
 <div class="track-wrap horse-race-track-popup">
 <div id="race-track"></div>
 </div>
-
 <div class="race-result" id="race-result"></div>
-
-<div aria-live="polite" class="horse-race-message" id="horse-race-message">
-Bonne chance ! La course va commencer.
-</div>
-
-<button class="btn btn-primary horse-race-quit-btn" id="horse-race-quit-btn" style="display:none;" type="button">
-Quitter
-</button>
+<div aria-live="polite" class="horse-race-message" data-i18n="games_group2.horse.good_luck" id="horse-race-message">Bonne chance ! La course va commencer.</div>
+<button class="btn btn-primary horse-race-quit-btn" data-i18n="games_group2.horse.quit" id="horse-race-quit-btn" style="display:none;" type="button">Quitter</button>
 </div>
 </section>
 </main>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
+<script src="../js/games-group2-i18n.js"></script>
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script id="shared-borlette-game-header-script">
@@ -910,7 +895,7 @@ Quitter
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -929,7 +914,7 @@ Quitter
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');
@@ -1244,7 +1229,7 @@ Quitter
     document.body.classList.add("horse-race-modal-open");
     $raceQuitBtn.style.display = "none";
     $raceMessage.className = "horse-race-message";
-    $raceMessage.textContent = "Bonne chance ! La course va commencer.";
+    $raceMessage.textContent = group2T('horse.good_luck');
   }
 
   function closeHorseRaceModal() {
@@ -1434,7 +1419,7 @@ Quitter
 
         const leaderBadge = document.getElementById("leader-badge");
         if (leaderBadge) {
-          leaderBadge.textContent = `En tête : ${HORSES.find((h) => h.id === leaderId)?.name || "—"}`;
+          leaderBadge.textContent = advancedT('lead',{name:HORSES.find((h)=>h.id===leaderId)?.name||'—'});
         }
 
         const $timer = document.getElementById("race-timer");
@@ -1446,7 +1431,7 @@ Quitter
             const ss = (remaining % 60).toString().padStart(2, "0");
             $timer.textContent = `${mm}:${ss}`;
           } else {
-            $timer.textContent = "Kous la ap fèt...";
+            $timer.textContent = advancedT('race');
           }
         }
 
@@ -1481,16 +1466,16 @@ Quitter
     const ticketNumber = result.ticket_number || result.ticket || result.ticketNumber || '—';
     const betAmount = Number(result.amount ?? (horseRaceState.amount || 0));
     const gainAmount = Number(result.gain ?? (winner.id === selected?.id ? Math.floor(betAmount * winner.odds) : 0));
-    const status = String(result.status || (winner.id === selected?.id ? 'Gagné' : 'Perdu')).trim();
+    const status = String(result.status || (winner.id === selected?.id ? group2T('horse.won') : group2T('horse.lost'))).trim();
 
     $result.innerHTML = `
       <h3>Résultat de la course</h3>
-      <div><strong>Ticket :</strong> ${ticketNumber}</div>
+      <div><strong>${advancedT('ticket')} :</strong> ${ticketNumber}</div>
       <div><strong>Cheval choisi :</strong> ${selected ? selected.name : '—'}</div>
       <div><strong>Cheval gagnant :</strong> ${winner.name}</div>
       <div><strong>Mise :</strong> ${betAmount.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG</div>
       <div><strong>Gain :</strong> ${gainAmount.toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} HTG</div>
-      <div><strong>Statut :</strong> ${status}</div>
+      <div><strong>${advancedT('status')} :</strong> ${status}</div>
     `;
     $result.classList.add('show');
     horseRaceState.lastResult = result;
@@ -1509,15 +1494,15 @@ Quitter
 
   async function playHorseRacePlaceholder() {
     if (horseRaceState.isPlaying) return;
-    if (!horseRaceState.selectedHorse) { setFeedback('Choisissez un cheval avant de jouer.', 'error'); return; }
-    if (!horseRaceState.amount || horseRaceState.amount <= 0) { setFeedback('Entrez un montant valide.', 'error'); return; }
+    if (!horseRaceState.selectedHorse) { setFeedback(group2T('horse.choose_horse'), 'error'); return; }
+    if (!horseRaceState.amount || horseRaceState.amount <= 0) { setFeedback((window.TKI18n?.t?.('runtime_final.entrez_un_montant_valide') || "Entrez un montant valide."), 'error'); return; }
 
     horseRaceState.isPlaying = true;
     updateHorseSummary();
     $clearBtn.disabled = true;
     setRaceStatus('Kous la kòmanse...');
     $result.classList.remove('show');
-    setFeedback('Kous la ap kouri...', 'warn');
+    setFeedback((window.TKI18n?.t?.('runtime_final.kous_la_ap_kouri') || "Kous la ap kouri..."), 'warn');
 
     openHorseRaceModal();
     resetRunners();
@@ -1528,7 +1513,7 @@ Quitter
     await animateHorseRace(result);
     showHorseRaceResult(result);
     setRaceStatus('Fini');
-    setFeedback('Kous la fini!', 'success');
+    setFeedback((window.TKI18n?.t?.('runtime_final.kous_la_fini') || "Kous la fini!"), 'success');
     horseRaceState.isPlaying = false;
     $clearBtn.disabled = false;
     updateHorseSummary();
@@ -1593,7 +1578,7 @@ Quitter
     const currentUser = await getCurrentHorseRaceUser();
     if (!currentUser?.id) {
       if (!silent) {
-        $balance.textContent = 'Connectez-vous pour jouer.';
+        $balance.textContent = advancedT('signin');
       }
       return null;
     }
@@ -1601,7 +1586,7 @@ Quitter
     const client = await waitForSupabaseClient();
     if (!client || typeof client.from !== 'function') {
       if (!silent) {
-        $balance.textContent = 'Solde indisponible';
+        $balance.textContent = advancedT('bal');
       }
       return null;
     }
@@ -1610,7 +1595,7 @@ Quitter
       const { data, error } = await client.from('wallets').select('balance,currency,status').eq('user_id', currentUser.id).maybeSingle();
       if (error || !data) {
         if (!silent) {
-          $balance.textContent = 'Solde introuvable';
+          $balance.textContent = advancedT('wallet');
         }
         return null;
       }
@@ -1620,7 +1605,7 @@ Quitter
       return data;
     } catch (error) {
       if (!silent) {
-        $balance.textContent = 'Solde indisponible';
+        $balance.textContent = advancedT('bal');
       }
       return null;
     }
@@ -1646,23 +1631,23 @@ Quitter
   async function playHorseRace() {
     if (horseRaceState.isPlaying) return;
     if (!horseRaceState.selectedHorse) {
-      setFeedback('Choisissez un cheval avant de jouer.', 'error');
+      setFeedback(group2T('horse.choose_horse'), 'error');
       return;
     }
     if (!horseRaceState.amount || horseRaceState.amount <= 0) {
-      setFeedback('Entrez un montant de mise valide.', 'error');
+      setFeedback((window.TKI18n?.t?.('runtime_final.entrez_un_montant_de_mise_valide') || "Entrez un montant de mise valide."), 'error');
       return;
     }
 
     const currentUser = await getCurrentHorseRaceUser();
     if (!currentUser?.id) {
-      setFeedback('Vous devez être connecté pour jouer.', 'error');
+      setFeedback((window.TKI18n?.t?.('runtime_final.vous_devez_etre_connecte_pour_jouer') || advancedT('signin')), 'error');
       return;
     }
 
     const client = await waitForSupabaseClient();
     if (!client || typeof client.rpc !== 'function') {
-      setFeedback('Le client Supabase n’est pas disponible.', 'error');
+      setFeedback((window.TKI18n?.t?.('runtime_final.le_client_supabase_nest_pas_disponible') || "Le client Supabase n’est pas disponible."), 'error');
       return;
     }
 
@@ -1671,7 +1656,7 @@ Quitter
     $startBtn.disabled = true;
     $clearBtn.disabled = true;
     setRaceStatus('Kous la kòmanse...');
-    setFeedback('Envoi de la mise au backend...', 'warn');
+    setFeedback((window.TKI18n?.t?.('runtime_final.envoi_de_la_mise_au_backend') || "Envoi de la mise au backend..."), 'warn');
     openHorseRaceModal();
     resetRunners();
     $result.classList.remove('show');
@@ -1695,10 +1680,10 @@ Quitter
       await animateHorseRace(data);
       showHorseRaceResult(data);
       await refreshHorseRaceBalance({ silent: true });
-      setFeedback('Kous terminée.', 'success');
+      setFeedback((window.TKI18n?.t?.('runtime_final.kous_terminee') || "Kous terminée."), 'success');
       setRaceStatus('Fini');
     } catch (error) {
-      setFeedback(error?.message || 'Erreur pendant la course. Réessayez.', 'error');
+      setFeedback(error?.message || group2T('horse.race_error'), 'error');
       setRaceStatus('Erreur');
     } finally {
       horseRaceState.isPlaying = false;
@@ -1709,13 +1694,13 @@ Quitter
   }
 
   async function initializeHorseRaceAuth() {
-    setFeedback('Vérification de votre connexion...', 'warn');
+    setFeedback((window.TKI18n?.t?.('runtime_final.verification_de_votre_connexion') || "Vérification de votre connexion..."), 'warn');
     setRaceStatus('Chargement');
-    $balance.textContent = 'Chargement du solde...';
+    $balance.textContent = gameT('loading_balance');
 
     if (typeof window.getCurrentUserAsync !== 'function') {
-      setFeedback('Le système d’authentification est indisponible.', 'error');
-      $balance.textContent = 'Solde indisponible';
+      setFeedback((window.TKI18n?.t?.('runtime_final.le_systeme_dauthentification_est_indisponible') || "Le système d’authentification est indisponible."), 'error');
+      $balance.textContent = advancedT('bal');
       setRaceStatus('Erreur');
       return;
     }
@@ -1724,8 +1709,8 @@ Quitter
       const currentUser = await getCurrentHorseRaceUser();
 
       if (!currentUser?.id) {
-        setFeedback('Vous devez être connecté pour jouer.', 'error');
-        $balance.textContent = 'Connectez-vous pour jouer.';
+        setFeedback((window.TKI18n?.t?.('runtime_final.vous_devez_etre_connecte_pour_jouer') || advancedT('signin')), 'error');
+        $balance.textContent = advancedT('signin');
         setRaceStatus('Hors ligne');
         return;
       }
@@ -1733,8 +1718,8 @@ Quitter
       const client = await waitForSupabaseClient();
 
       if (!client || typeof client.from !== 'function' || typeof client.rpc !== 'function') {
-        setFeedback('Impossible d’initialiser la connexion Supabase.', 'error');
-        $balance.textContent = 'Solde indisponible';
+        setFeedback((window.TKI18n?.t?.('runtime_final.impossible_dinitialiser_la_connexion_supabase') || "Impossible d’initialiser la connexion Supabase."), 'error');
+        $balance.textContent = advancedT('bal');
         setRaceStatus('Erreur');
         return;
       }
@@ -1742,17 +1727,17 @@ Quitter
       const wallet = await refreshHorseRaceBalance({ silent: false });
 
       if (!wallet) {
-        setFeedback('Utilisateur connecté, mais portefeuille introuvable.', 'error');
-        setRaceStatus('Erreur portefeuille');
+        setFeedback((window.TKI18n?.t?.('runtime_final.utilisateur_connecte_mais_portefeuille_introuvable') || "Utilisateur connecté, mais portefeuille introuvable."), 'error');
+        setRaceStatus(group2T('horse.wallet_error'));
         return;
       }
 
-      setFeedback('Prêt à courir !', 'success');
+      setFeedback((window.TKI18n?.t?.('runtime_final.pret_a_courir') || "Prêt à courir !"), 'success');
       setRaceStatus('Prêt');
     } catch (error) {
       console.error('Horse Racing : erreur initialisation.', error);
       setFeedback(error?.message || 'Impossible de vérifier votre connexion.', 'error');
-      $balance.textContent = 'Solde indisponible';
+      $balance.textContent = advancedT('bal');
       setRaceStatus('Erreur');
     }
   }
@@ -1774,6 +1759,9 @@ Quitter
       window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
     }
   });
+</script>
+<script id="advanced-polish-i18n-helper">
+window.advancedT=(key,vars={})=>window.TKI18n?.t?.(`advanced_polish.${key}`,vars)||key;
 </script>
 </body>
 </html>

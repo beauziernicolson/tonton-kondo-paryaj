@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tonton Kondo — Dépôt PlopPlop</title>
-  <meta name="theme-color" content="#030b1a" />
-  <link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet" />
-  <link data-main-pages-css="contrast-final" href="assets/main-pages.css" rel="stylesheet" />
-  <link data-main-header-css="shared-dashboard-exact-final" href="assets/main-header.css" rel="stylesheet" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title data-i18n="sensitive.deposit.page_title">Tonton Kondo — Dépôt PlopPlop</title>
+<meta content="#030b1a" name="theme-color"/>
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
+<link data-main-pages-css="contrast-final" href="assets/main-pages.css" rel="stylesheet"/>
+<link data-main-header-css="shared-dashboard-exact-final" href="assets/main-header.css" rel="stylesheet"/>
+<style>
     :root{--bg:#020813;--panel:rgba(8,24,43,.96);--line:rgba(255,255,255,.10);--text:#f5f7fb;--muted:#aebbd0;--gold:#ffd21f;--gold-2:#ffb900;--shadow:0 24px 60px rgba(0,0,0,.45)}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 80% 0%,rgba(255,210,31,.10),transparent 18%),radial-gradient(circle at 15% 8%,rgba(57,168,255,.12),transparent 22%),linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%)}
     .app{width:min(100%,1120px);margin:0 auto;padding:18px 16px 40px}.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.78fr);gap:18px}.panel{border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(8,24,43,.96),rgba(5,17,31,.96));box-shadow:var(--shadow);padding:18px}.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.24em;font-size:11px;font-weight:900}h1{margin:8px 0;font-size:clamp(28px,6vw,36px);line-height:1.05}p{color:var(--muted)}
@@ -18,33 +19,32 @@
 </head>
 <body class="tk-public tk-page-account tk-file-deposit tk-main-header-page">
 <main class="app">
-  <header class="mobile-header" data-i18n-aria-label="common.main_header" style="background:#071a35!important;background-image:none!important;color:#fff!important;border-color:transparent!important;">
-    <a class="brand dashboard-header-brand" data-i18n-aria-label="common.home" href="index.html">
-      <span class="dashboard-header-brand__logo"><img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png" /></span>
-      <span class="dashboard-header-brand__copy"><strong>Tonton Kondo</strong><span>PARYAJ</span></span>
-    </a>
-    <div class="wallet-chip" data-i18n-aria-label="common.user_balance"><span><strong id="header-wallet-balance">— HTG</strong><span data-i18n="dashboard.available_balance">Solde disponible</span></span></div>
-    <div class="header-actions"><div id="authHeaderActions"></div><a class="action-btn notifications-link" href="notifications.html" aria-label="Notifications"><span class="notifications-badge" hidden>0</span></a></div>
-  </header>
-  <div class="mobile-auth-bar" id="mobileAuthBar" style="background:#071a35!important;background-image:none!important;"><div class="mobile-auth-bar__guest" hidden id="mobileGuestActions"><a class="mobile-auth-bar__button" href="login-register/login.html">Connexion</a><a class="mobile-auth-bar__button mobile-auth-bar__button--primary" href="login-register/register.html">Inscription</a></div></div>
-  <nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html">Accueil</a><a href="jeux/games.html">Jeux</a><a href="results.html">Résultats</a><a href="tickets.html">Tickets</a><a href="wallet.html">Portefeuille</a><a class="is-active" href="deposit.html">Dépôt</a><a href="withdraw.html">Retrait</a></nav>
-
-  <section class="grid">
-    <article class="panel">
-      <div class="eyebrow">Dépôt PlopPlop</div>
-      <h1>Ajouter des fonds</h1>
-      <p>Créez un paiement sécurisé. Votre portefeuille est crédité uniquement après confirmation serveur.</p>
-      <div class="trust-block"><div class="trust-title">Protection financière</div><ul class="trust-list"><li>✓ Minimum 20 HTG</li><li>✓ Référence idempotente conservée lors des retries</li><li>✓ Aucun crédit avant confirmation</li></ul></div>
-      <div class="method-block"><div class="method-title">Méthodes PlopPlop</div><div class="method-grid"><div class="method-card"><strong>MonCash</strong><span>Paiement via MonCash.</span></div><div class="method-card"><strong>NatCash</strong><span>Paiement via NatCash.</span></div><div class="method-card"><strong>KashPaw</strong><span>Paiement via KashPaw.</span></div><div class="method-card"><strong>Toutes</strong><span>Afficher les méthodes disponibles.</span></div></div></div>
-      <form id="plopplop-deposit-form" novalidate>
-        <div class="field-card"><div class="label"><label for="amount-input">Montant</label><span class="muted">HTG</span></div><input id="amount-input" min="20" step="1" inputmode="decimal" placeholder="Minimum 20 HTG" required type="number" /></div>
-        <div class="field-card"><div class="label"><label for="method-input">Méthode</label></div><select id="method-input" required><option value="moncash">MonCash</option><option value="natcash">NatCash</option><option value="kashpaw">KashPaw</option><option value="all">Toutes les méthodes disponibles</option></select></div>
-        <div class="btn-row"><button class="btn btn-primary" id="submit-btn" type="submit">Continuer vers le paiement</button><a class="btn" href="wallet.html">Retour au portefeuille</a></div>
-        <div class="feedback warn" id="feedback-box" role="status" aria-live="polite">Aucun montant ne sera crédité avant confirmation du paiement.</div>
-      </form>
-    </article>
-    <article class="panel"><div class="eyebrow">Historique</div><h1>Mes dépôts</h1><p>Suivez les statuts pending, completed, manual_review ou erreur.</p><div class="history-list" id="history-list"><div class="card-item"><strong>Chargement…</strong><span>Récupération de vos dépôts PlopPlop.</span></div></div></article>
-  </section>
+<header class="mobile-header" data-i18n-aria-label="common.main_header" style="background:#071a35!important;background-image:none!important;color:#fff!important;border-color:transparent!important;">
+<a class="brand dashboard-header-brand" data-i18n-aria-label="common.home" href="index.html">
+<span class="dashboard-header-brand__logo"><img alt="Tonton Kondo" class="brand-icon" src="assets/reallogo.png"/></span>
+<span class="dashboard-header-brand__copy"><strong>Tonton Kondo</strong><span>PARYAJ</span></span>
+</a>
+<div class="wallet-chip" data-i18n-aria-label="common.user_balance"><span><strong id="header-wallet-balance">— HTG</strong><span data-i18n="dashboard.available_balance">Solde disponible</span></span></div>
+<div class="header-actions"><div id="authHeaderActions"></div><a aria-label="Notifications" class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html"><span class="notifications-badge" hidden="">0</span></a></div>
+</header>
+<div class="mobile-auth-bar" id="mobileAuthBar" style="background:#071a35!important;background-image:none!important;"><div class="mobile-auth-bar__guest" hidden="" id="mobileGuestActions"><a class="mobile-auth-bar__button" data-i18n="header.login" href="login-register/login.html">Connexion</a><a class="mobile-auth-bar__button mobile-auth-bar__button--primary" data-i18n="header.register" href="login-register/register.html">Inscription</a></div></div>
+<nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="navigation.main"><a data-i18n="navigation.home" href="index.html">Accueil</a><a data-i18n="navigation.games" href="jeux/games.html">Jeux</a><a data-i18n="navigation.results" href="results.html">Résultats</a><a data-i18n="navigation.tickets" href="tickets.html">Tickets</a><a data-i18n="navigation.wallet" href="wallet.html">Portefeuille</a><a class="is-active" data-i18n="navigation.deposit" href="deposit.html">Dépôt</a><a data-i18n="navigation.withdraw" href="withdraw.html">Retrait</a></nav>
+<section class="grid">
+<article class="panel">
+<div class="eyebrow" data-i18n="sensitive.deposit.eyebrow">Dépôt PlopPlop</div>
+<h1 data-i18n="sensitive.deposit.title">Ajouter des fonds</h1>
+<p data-i18n="sensitive.deposit.description">Créez un paiement sécurisé. Votre portefeuille est crédité uniquement après confirmation serveur.</p>
+<div class="trust-block"><div class="trust-title" data-i18n="sensitive.deposit.security_title">Protection financière</div><ul class="trust-list"><li data-i18n="sensitive.deposit.min_amount">✓ Minimum 20 HTG</li><li data-i18n="sensitive.deposit.idempotent">✓ Référence idempotente conservée lors des retries</li><li data-i18n="sensitive.deposit.no_credit_before_confirmation">✓ Aucun crédit avant confirmation</li></ul></div>
+<div class="method-block"><div class="method-title" data-i18n="sensitive.deposit.methods_title">Méthodes PlopPlop</div><div class="method-grid"><div class="method-card"><strong>MonCash</strong><span data-i18n="sensitive.deposit.moncash_help">Paiement via MonCash.</span></div><div class="method-card"><strong>NatCash</strong><span data-i18n="sensitive.deposit.natcash_help">Paiement via NatCash.</span></div><div class="method-card"><strong>KashPaw</strong><span data-i18n="sensitive.deposit.kashpaw_help">Paiement via KashPaw.</span></div><div class="method-card"><strong data-i18n="sensitive.deposit.all_methods">Toutes</strong><span data-i18n="sensitive.deposit.all_methods_help">Afficher les méthodes disponibles.</span></div></div></div>
+<form id="plopplop-deposit-form" novalidate="">
+<div class="field-card"><div class="label"><label data-i18n="sensitive.deposit.amount" for="amount-input">Montant</label><span class="muted">HTG</span></div><input data-i18n-placeholder="sensitive.deposit.amount_placeholder" id="amount-input" inputmode="decimal" min="20" placeholder="Minimum 20 HTG" required="" step="1" type="number"/></div>
+<div class="field-card"><div class="label"><label data-i18n="sensitive.deposit.method" for="method-input">Méthode</label></div><select id="method-input" required=""><option value="moncash">MonCash</option><option value="natcash">NatCash</option><option value="kashpaw">KashPaw</option><option data-i18n="sensitive.deposit.all_methods_help" value="all">Toutes les méthodes disponibles</option></select></div>
+<div class="btn-row"><button class="btn btn-primary" data-i18n="deposit_v3.submit" id="submit-btn" type="submit">Continuer vers le paiement</button><a class="btn" data-i18n="deposit_v3.back_wallet" href="wallet.html">Retour au portefeuille</a></div>
+<div aria-live="polite" class="feedback warn" data-i18n="deposit_v3.notice" id="feedback-box" role="status">Aucun montant ne sera crédité avant confirmation du paiement.</div>
+</form>
+</article>
+<article class="panel"><div class="eyebrow" data-i18n="sensitive.deposit.history_eyebrow">Historique</div><h1 data-i18n="sensitive.deposit.history_title">Mes dépôts</h1><p data-i18n="sensitive.deposit.history_description">Suivez les statuts de vos dépôts.</p><div class="history-list" id="history-list"><div class="card-item"><strong data-i18n="sensitive.deposit.loading_title">Chargement…</strong><span data-i18n="sensitive.deposit.loading_text">Récupération de vos dépôts PlopPlop.</span></div></div></article>
+</section>
 </main>
 <script src="js/i18n.js"></script>
 <script src="js/auth-config.js"></script>
@@ -52,6 +52,6 @@
 <script src="js/auth-guard.js"></script>
 <script src="js/main-header.js"></script>
 <script src="js/plopplop-deposit.js"></script>
-<script data-tk-i18n-auto-init>document.addEventListener('DOMContentLoaded',function(){window.TKI18n?.init({useLocalStorage:true,autoApply:true,observeMutations:true});});</script>
+<script data-tk-i18n-auto-init="">document.addEventListener('DOMContentLoaded',function(){window.TKI18n?.init({useLocalStorage:true,autoApply:true,observeMutations:true});});</script>
 </body>
 </html>

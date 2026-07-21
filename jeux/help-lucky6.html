@@ -35,6 +35,7 @@
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -53,15 +54,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -197,8 +195,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -271,7 +267,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-help tk-file-help-lucky6">
 <main class="app">
@@ -282,57 +277,55 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" data-i18n="help_v3.common.back_to_games" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Aide Lucky 6</span>
 </div></header>
-
-
 <section class="card">
 <div class="eyebrow">Aide</div>
-<h1>Lucky 6 — règles détaillées</h1>
+<h1 data-i18n="help_v3.pages.lucky6.text_01">Lucky 6 — règles détaillées</h1>
 <p>Lucky 6 est un jeu de tirage où le joueur choisit plusieurs boules avant le tirage. Le but est de faire correspondre le plus possible de numéros avec la sortie des boules. Plus la sélection est précise, plus le gain augmente.</p>
-<a class="back-link" href="lucky6.html">← Retour à la page Lucky 6</a>
+<a class="back-link" data-i18n="help_v3.pages.lucky6.text_02" href="lucky6.html">← Retour à la page Lucky 6</a>
 <div class="grid">
 <article class="panel">
-<h2>1. Principe du jeu</h2>
-<p>Vous choisissez vos boules avant le tirage, puis vous attendez la sortie des nombres. Le système compare ensuite votre sélection au résultat officiel.</p>
-<span class="callout">Le gain augmente selon la précision de la sélection.</span>
+<h2 data-i18n="help_v3.pages.lucky6.text_03">1. Principe du jeu</h2>
+<p data-i18n="help_v3.pages.lucky6.text_04">Vous choisissez vos boules avant le tirage, puis vous attendez la sortie des nombres. Le système compare ensuite votre sélection au résultat officiel.</p>
+<span class="callout" data-i18n="help_v3.pages.lucky6.text_05">Le gain augmente selon la précision de la sélection.</span>
 </article>
 <article class="panel">
-<h2>2. Déroulement</h2>
+<h2 data-i18n="help_v3.pages.lucky6.text_06">2. Déroulement</h2>
 <ul>
-<li>Sélectionnez vos numéros.</li>
-<li>Placez votre mise.</li>
-<li>Validez votre ticket.</li>
-<li>Attendez la sortie des boules.</li>
+<li data-i18n="help_v3.pages.lucky6.text_07">Sélectionnez vos numéros.</li>
+<li data-i18n="help_v3.pages.lucky6.text_08">Placez votre mise.</li>
+<li data-i18n="help_v3.pages.lucky6.text_09">Validez votre ticket.</li>
+<li data-i18n="help_v3.pages.lucky6.text_10">Attendez la sortie des boules.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>3. Comment le gain se calcule</h2>
-<p>Chaque numéro bien placé vous rapproche du gain maximum. Si votre sélection est très proche du tirage complet, vous obtenez un gain plus important.</p>
-<p>Le système affiche ensuite la position de correspondance et le montant à gagner selon la règle du jeu.</p>
+<h2 data-i18n="help_v3.pages.lucky6.text_11">3. Comment le gain se calcule</h2>
+<p data-i18n="help_v3.pages.lucky6.text_12">Chaque numéro bien placé vous rapproche du gain maximum. Si votre sélection est très proche du tirage complet, vous obtenez un gain plus important.</p>
+<p data-i18n="help_v3.pages.lucky6.text_13">Le système affiche ensuite la position de correspondance et le montant à gagner selon la règle du jeu.</p>
 </article>
 <article class="panel">
-<h2>4. Exemple simple</h2>
-<p>Vous choisissez 6 numéros et le tirage en affiche 5 parmi eux.</p>
+<h2 data-i18n="help_v3.pages.lucky6.text_14">4. Exemple simple</h2>
+<p data-i18n="help_v3.pages.lucky6.text_15">Vous choisissez 6 numéros et le tirage en affiche 5 parmi eux.</p>
 <div class="example">
-<span class="pill">5 bonnes boules</span>
-<span class="pill">Gain intermédiaire</span>
+<span class="pill" data-i18n="help_v3.pages.lucky6.text_16">5 bonnes boules</span>
+<span class="pill" data-i18n="help_v3.pages.lucky6.text_17">Gain intermédiaire</span>
 </div>
-<p>Si vous avez 6/6, le gain est bien plus important. Plus la sélection est juste, plus le gain est élevé.</p>
+<p data-i18n="help_v3.pages.lucky6.text_18">Si vous avez 6/6, le gain est bien plus important. Plus la sélection est juste, plus le gain est élevé.</p>
 </article>
 <article class="panel" style="grid-column:1 / -1;">
-<h2>5. Ce qu’il faut retenir</h2>
+<h2 data-i18n="help_v3.pages.lucky6.text_19">5. Ce qu’il faut retenir</h2>
 <ul>
-<li>Lucky 6 se joue avant le tirage.</li>
-<li>Le joueur choisit ses boules.</li>
-<li>La précision de la sélection détermine le gain.</li>
-<li>Le tirage officiel sert à comparer la sélection au résultat final.</li>
+<li data-i18n="help_v3.pages.lucky6.text_20">Lucky 6 se joue avant le tirage.</li>
+<li data-i18n="help_v3.pages.lucky6.text_21">Le joueur choisit ses boules.</li>
+<li data-i18n="help_v3.pages.lucky6.text_22">La précision de la sélection détermine le gain.</li>
+<li data-i18n="help_v3.pages.lucky6.text_23">Le tirage officiel sert à comparer la sélection au résultat final.</li>
 </ul>
 </article>
 </div>
@@ -403,7 +396,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -422,7 +415,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

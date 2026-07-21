@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
 <html lang="fr">
-<head>
+<head data-i18n="admin_v3.admin_results.item_001">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="Interface admin pour la saisie manuelle des résultats Borlette." name="description"/>
-<title>Tonton Kondo — Résultats admin</title>
+<title data-i18n="admin_v3.admin_results.item_001">Tonton Kondo — Résultats admin</title>
 <style>
     :root {
       --bg:#020813;
@@ -101,90 +101,90 @@
 <a class="brand" href="../index.html">
 <img alt="Logo Tonton Kondo" src="../assets/logo.png"/>
 <span class="brand-text">
-<strong>Tonton Kondo</strong>
-<span>Paryaj</span>
+<strong data-i18n="admin_v3.admin_results.item_003">Tonton Kondo</strong>
+<span data-i18n="admin_v3.admin_results.item_004">Paryaj</span>
 </span>
 </a>
-<span class="pill">Admin — résultats Borlette</span>
+<span class="pill" data-i18n="admin_v3.admin_results.item_005">Admin — résultats Borlette</span>
 </header>
 <section class="hero-card">
 <article>
-<div class="eyebrow">Phase 2.5</div>
-<h1>Résultats manuels Borlette</h1>
-<p>Cette page prépare la saisie officielle des tirages Borlette. Pour l’instant, elle enregistre uniquement les résultats manuellement sans calculer les gains ni modifier les tickets.</p>
-<span class="mini-chip">🧩 <strong>Supabase</strong> — saisie admin</span>
+<div class="eyebrow" data-i18n="admin_v3.admin_results.item_006">Phase 2.5</div>
+<h1 data-i18n="admin_v3.admin_results.item_007">Résultats manuels Borlette</h1>
+<p data-i18n="admin_v3.admin_results.item_008">Cette page prépare la saisie officielle des tirages Borlette. Pour l’instant, elle enregistre uniquement les résultats manuellement sans calculer les gains ni modifier les tickets.</p>
+<span class="mini-chip">🧩 <strong data-i18n="admin_v3.admin_results.item_009">Supabase</strong> — saisie admin</span>
 </article>
 <article class="panel" style="padding:14px;">
 <div class="panel-head">
 <div>
-<h2>Ajouter un résultat</h2>
-<p>Formulaire de saisie manuelle des tirages.</p>
+<h2 data-i18n="admin_v3.admin_results.item_011">Ajouter un résultat</h2>
+<p data-i18n="admin_v3.admin_results.item_012">Formulaire de saisie manuelle des tirages.</p>
 </div>
 </div>
 <div class="field-grid">
 <div class="field-card">
-<div class="label"><span>Jeu</span><span class="muted">Borlette, Lotto 4 ou Lotto 5</span></div>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_013">Jeu</span><span class="muted" data-i18n="admin_v3.admin_results.item_014">Borlette, Lotto 4 ou Lotto 5</span></div>
 <select id="game-type-input">
-<option value="borlette">Borlette</option>
-<option value="lotto4">Lotto 4</option>
-<option value="lotto5">Lotto 5</option>
+<option data-i18n="admin_v3.admin_results.item_015" value="borlette">Borlette</option>
+<option data-i18n="admin_v3.admin_results.item_016" value="lotto4">Lotto 4</option>
+<option data-i18n="admin_v3.admin_results.item_017" value="lotto5">Lotto 5</option>
 </select>
-<p class="muted" style="margin-top:8px; font-size:12px;">Le Mariage est vérifié automatiquement à partir des 3 lots Borlette du même tirage. Lotto 4 publie des lots 2 chiffres distincts. Lotto 5 publie 3 lots (3-2-2 chiffres) avec aperçu des options.</p>
+<p class="muted" data-i18n="admin_v3.admin_results.item_018" style="margin-top:8px; font-size:12px;">Le Mariage est vérifié automatiquement à partir des 3 lots Borlette du même tirage. Lotto 4 publie des lots 2 chiffres distincts. Lotto 5 publie 3 lots (3-2-2 chiffres) avec aperçu des options.</p>
 </div>
 <div class="field-card">
-<div class="label"><span>Nom du tirage</span></div>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_019">Nom du tirage</span></div>
 <select id="draw-name-input">
-<option value="">Chargement des tirages…</option>
+<option data-i18n="admin_v3.admin_results.item_020" value="">Chargement des tirages…</option>
 </select>
 </div>
 <div class="field-card">
-<div class="label"><span>Date du tirage</span></div>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_021">Date du tirage</span></div>
 <input id="draw-date-input" type="date"/>
 </div>
 <div class="field-card borlette-field">
-<div class="label"><span>1er lot complet Lotto 3</span></div>
-<input id="first-prize-full-input" maxlength="3" placeholder="Ex. 742" type="text"/>
-<p class="muted" style="margin-top:8px; font-size:12px;">Saisissez 742 pour que le 1er lot Borlette soit auto-rempli avec 42.</p>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_022">1er lot complet Lotto 3</span></div>
+<input data-i18n-placeholder="admin_v3.admin_results.attr_055" id="first-prize-full-input" maxlength="3" placeholder="Ex. 742" type="text"/>
+<p class="muted" data-i18n="admin_v3.admin_results.item_023" style="margin-top:8px; font-size:12px;">Saisissez 742 pour que le 1er lot Borlette soit auto-rempli avec 42.</p>
 </div>
 <div class="field-card borlette-field">
-<div class="label"><span>1er lot Borlette</span></div>
-<input id="winning-number-input" maxlength="16" placeholder="Ex. 42" type="text"/>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_024">1er lot Borlette</span></div>
+<input data-i18n-placeholder="admin_v3.admin_results.attr_056" id="winning-number-input" maxlength="16" placeholder="Ex. 42" type="text"/>
 </div>
 <div class="field-card lotto4-field hidden">
-<div class="label"><span>1er lot Lotto 4</span></div>
-<input id="lotto4-first-prize-input" maxlength="2" placeholder="Ex. 71" type="text"/>
-<p class="muted" style="margin-top:8px; font-size:12px;">Saisissez exactement 2 chiffres pour le 1er lot.</p>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_025">1er lot Lotto 4</span></div>
+<input data-i18n-placeholder="admin_v3.admin_results.attr_057" id="lotto4-first-prize-input" maxlength="2" placeholder="Ex. 71" type="text"/>
+<p class="muted" data-i18n="admin_v3.admin_results.item_026" style="margin-top:8px; font-size:12px;">Saisissez exactement 2 chiffres pour le 1er lot.</p>
 </div>
 <div class="field-card lotto5-field hidden">
-<div class="label"><span>1er lot Lotto 5</span></div>
-<input id="lotto5-first-prize-input" maxlength="3" placeholder="Ex. 711" type="text"/>
-<p class="muted" style="margin-top:8px; font-size:12px;">Saisissez exactement 3 chiffres pour le 1er lot Lotto 5.</p>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_027">1er lot Lotto 5</span></div>
+<input data-i18n-placeholder="admin_v3.admin_results.attr_058" id="lotto5-first-prize-input" maxlength="3" placeholder="Ex. 711" type="text"/>
+<p class="muted" data-i18n="admin_v3.admin_results.item_028" style="margin-top:8px; font-size:12px;">Saisissez exactement 3 chiffres pour le 1er lot Lotto 5.</p>
 </div>
 <div class="field-card borlette-field lotto4-field lotto5-field common-two-digit-field">
-<div class="label"><span>2e lot</span></div>
-<input id="second-prize-input" maxlength="2" placeholder="Ex. 08" type="text"/>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_029">2e lot</span></div>
+<input data-i18n-placeholder="admin_v3.admin_results.attr_059" id="second-prize-input" maxlength="2" placeholder="Ex. 08" type="text"/>
 </div>
 <div class="field-card borlette-field lotto4-field lotto5-field common-two-digit-field">
-<div class="label"><span>3e lot</span></div>
-<input id="third-prize-input" maxlength="2" placeholder="Ex. 87" type="text"/>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_030">3e lot</span></div>
+<input data-i18n-placeholder="admin_v3.admin_results.attr_060" id="third-prize-input" maxlength="2" placeholder="Ex. 87" type="text"/>
 </div>
 <div class="field-card lotto4-field lotto5-field hidden">
-<div class="label"><span>Aperçu des options Lotto 4 / Lotto 5</span></div>
-<div class="feedback" id="lotto4-preview-box">Les options Lotto seront affichées ici.</div>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_031">Aperçu des options Lotto 4 / Lotto 5</span></div>
+<div class="feedback" data-i18n="admin_v3.admin_results.item_032" id="lotto4-preview-box">Les options Lotto seront affichées ici.</div>
 </div>
 <div class="field-card">
-<div class="label"><span>Statut</span></div>
+<div class="label"><span data-i18n="admin_v3.admin_results.item_033">Statut</span></div>
 <select id="status-input">
-<option value="draft">Draft</option>
-<option value="published">Published</option>
-<option value="cancelled">Cancelled</option>
+<option data-i18n="admin_v3.admin_results.item_034" value="draft">Draft</option>
+<option data-i18n="admin_v3.admin_results.item_035" value="published">Published</option>
+<option data-i18n="admin_v3.admin_results.item_036" value="cancelled">Cancelled</option>
 </select>
 </div>
 <div class="btn-row">
-<button class="btn btn-primary" id="save-btn" type="button">Publier le résultat</button>
-<button class="btn btn-secondary" id="reset-btn" type="button">Réinitialiser</button>
+<button class="btn btn-primary" data-i18n="admin_v3.admin_results.item_037" id="save-btn" type="button">Publier le résultat</button>
+<button class="btn btn-secondary" data-i18n="admin_v3.admin_results.item_038" id="reset-btn" type="button">Réinitialiser</button>
 </div>
-<div class="feedback warn" id="feedback-box">Les résultats sont enregistrés manuellement pour l’instant.</div>
+<div class="feedback warn" data-i18n="admin_v3.admin_results.item_039" id="feedback-box">Les résultats sont enregistrés manuellement pour l’instant.</div>
 </div>
 </article>
 </section>
@@ -192,20 +192,20 @@
 <article class="panel">
 <div class="panel-head">
 <div>
-<h2>Résultats récents</h2>
-<p>Liste des derniers tirages saisis.</p>
+<h2 data-i18n="admin_v3.admin_results.item_040">Résultats récents</h2>
+<p data-i18n="admin_v3.admin_results.item_041">Liste des derniers tirages saisis.</p>
 </div>
 </div>
-<div class="feedback" id="results-state">Chargement des résultats…</div>
+<div class="feedback" data-i18n="admin_v3.admin_results.item_042" id="results-state">Chargement des résultats…</div>
 <div class="table-card">
 <table>
 <thead>
 <tr>
-<th>Tirage</th>
-<th>Date</th>
-<th>Résultat</th>
-<th>Statut</th>
-<th>Actions</th>
+<th data-i18n="admin_v3.admin_results.item_043">Tirage</th>
+<th data-i18n="admin_v3.admin_results.item_044">Date</th>
+<th data-i18n="admin_v3.admin_results.item_045">Résultat</th>
+<th data-i18n="admin_v3.admin_results.item_033">Statut</th>
+<th data-i18n="admin_v3.admin_results.item_046">Actions</th>
 </tr>
 </thead>
 <tbody id="results-table-body"></tbody>
@@ -215,14 +215,14 @@
 <article class="panel">
 <div class="panel-head">
 <div>
-<h2>Informations</h2>
-<p>Ce que cette page prépare.</p>
+<h2 data-i18n="admin_v3.admin_results.item_047">Informations</h2>
+<p data-i18n="admin_v3.admin_results.item_048">Ce que cette page prépare.</p>
 </div>
 </div>
 <div class="field-grid">
-<div class="field-card"><strong>V1</strong><p class="muted">Saisie manuelle par l’admin, sans calcul de gains ni modification des tickets.</p></div>
-<div class="field-card"><strong>Prochaine étape</strong><p class="muted">Comparer les résultats officiels avec les tickets Borlette pour identifier les gains futurs.</p></div>
-<div class="field-card"><strong>Rôle</strong><p class="muted">Seuls les admins et super_admin peuvent créer / modifier / supprimer ces résultats.</p></div>
+<div class="field-card"><strong data-i18n="admin_v3.admin_results.item_049">V1</strong><p class="muted" data-i18n="admin_v3.admin_results.item_050">Saisie manuelle par l’admin, sans calcul de gains ni modification des tickets.</p></div>
+<div class="field-card"><strong data-i18n="admin_v3.admin_results.item_051">Prochaine étape</strong><p class="muted" data-i18n="admin_v3.admin_results.item_052">Comparer les résultats officiels avec les tickets Borlette pour identifier les gains futurs.</p></div>
+<div class="field-card"><strong data-i18n="admin_v3.admin_results.item_053">Rôle</strong><p class="muted" data-i18n="admin_v3.admin_results.item_054">Seuls les admins et super_admin peuvent créer / modifier / supprimer ces résultats.</p></div>
 </div>
 </article>
 </section>
@@ -353,22 +353,29 @@
           }
         } catch (error) {
           console.error('Erreur chargement tirages admin', error);
-          drawNameInput.innerHTML = '<option value="">Erreur de chargement</option>';
+          drawNameInput.innerHTML = `<option value="">${t('admin_polish.loading_error')}</option>`;
         }
+      }
+
+      function t(key, vars = {}) { return window.TKI18n?.t?.(key, vars) || key; }
+      function formatAdminStatus(value) {
+        const key = String(value || 'draft').toLowerCase();
+        const map = { pending:'status_pending', approved:'status_approved', rejected:'status_rejected', cancelled:'status_cancelled', completed:'status_completed', failed:'status_failed', published:'status_published', draft:'status_draft' };
+        return t(`admin_polish.${map[key] || 'status_draft'}`);
       }
 
       function renderResults() {
         resultsBody.innerHTML = '';
         if (!results.length) {
-          resultsBody.innerHTML = '<tr><td colspan="5" class="muted">Aucun résultat enregistré pour l’instant.</td></tr>';
+          resultsBody.innerHTML = `<tr><td colspan="5" class="muted">${(window.TKI18n?.t('runtime_v3.admin.no_results') || "Aucun résultat enregistré pour l’instant.")}</td></tr>`;
           return;
         }
 
         results.forEach((item) => {
           const tr = document.createElement('tr');
-          let resultLabel = `Combinaison gagnante : ${item.winning_number || '—'}`;
+          let resultLabel = t('admin_polish.winning_combination', { number: item.winning_number || '—' });
           if (String(item.game_type || '').toLowerCase() === 'borlette') {
-            resultLabel = `Lotto 3 : ${item.first_prize_full_number || '—'} • 1er lot ${item.first_prize_number || '—'} • 2e lot ${item.second_prize_number || '—'} • 3e lot ${item.third_prize_number || '—'}`;
+            resultLabel = `Lotto 3 : ${item.first_prize_full_number || '—'} • ${t('admin_polish.first_prize')} ${item.first_prize_number || '—'} • ${t('admin_polish.second_prize')} ${item.second_prize_number || '—'} • ${t('admin_polish.third_prize')} ${item.third_prize_number || '—'}`;
           } else if (String(item.game_type || '').toLowerCase() === 'lotto4') {
             resultLabel = `Lotto 4 : 1er lot ${item.first_prize_number || '—'} • 2e lot ${item.second_prize_number || '—'} • 3e lot ${item.third_prize_number || '—'}`;
           } else if (String(item.game_type || '').toLowerCase() === 'lotto5') {
@@ -379,10 +386,10 @@
             <td>${item.draw_name || '—'}</td>
             <td>${formatDate(item.draw_date)}</td>
             <td>${resultLabel}</td>
-            <td><span class="badge ${item.status || 'draft'}">${item.status || 'draft'}</span></td>
+            <td><span class="badge ${item.status || 'draft'}">${formatAdminStatus(item.status)}</span></td>
             <td>
-              <button class="btn btn-secondary" type="button" data-action="edit" data-id="${item.id}">Modifier</button>
-              <button class="btn btn-danger" type="button" data-action="cancel" data-id="${item.id}">Annuler</button>
+              <button class="btn btn-secondary" type="button" data-action="edit" data-id="${item.id}">${t('admin_polish.edit')}</button>
+              <button class="btn btn-danger" type="button" data-action="cancel" data-id="${item.id}">${t('admin_polish.cancel')}</button>
             </td>
           `;
           resultsBody.appendChild(tr);
@@ -392,7 +399,7 @@
       async function loadResults() {
         try {
           resultsState.className = 'feedback';
-          resultsState.textContent = 'Chargement des derniers résultats…';
+          resultsState.textContent = (window.TKI18n?.t('runtime_v3.admin.results_loading') || "Chargement des derniers résultats…");
 
           const client = window.supabaseClient || null;
           if (!client || typeof client.from !== 'function') {
@@ -409,11 +416,11 @@
 
           results = data || [];
           renderResults();
-          resultsState.textContent = results.length ? `Affichage de ${results.length} résultat(s).` : 'Aucun résultat enregistré pour l’instant.';
+          resultsState.textContent = results.length ? `Affichage de ${results.length} résultat(s).` : window.TKI18n?.t('admin_v3.messages.no_result') || window.TKI18n?.t('admin_v3.messages.no_result') || "Aucun résultat enregistré pour l’instant.";
         } catch (error) {
           console.error('Erreur chargement résultats.', error);
           resultsState.className = 'feedback error';
-          resultsState.textContent = `Erreur Supabase : ${error.message || 'Impossible de charger les résultats.'}`;
+          resultsState.textContent = `Erreur Supabase : ${error.message || window.TKI18n?.t('admin_v3.messages.load_results_error') || window.TKI18n?.t('admin_v3.messages.load_results_error') || "Impossible de charger les résultats."}`;
         }
       }
 
@@ -429,12 +436,12 @@
         thirdPrizeInput.value = '';
         statusInput.value = 'published';
         setFieldVisibility();
-        setFeedback('Le formulaire a été réinitialisé.', 'warn');
+        setFeedback((window.TKI18n?.t('runtime_v3.admin.form_reset') || "Le formulaire a été réinitialisé."), 'warn');
       }
 
       async function saveResult() {
         if (!currentUser) {
-          setFeedback('Vous devez être connecté en tant qu’admin pour enregistrer un résultat.', 'error');
+          setFeedback(window.TKI18n?.t('admin_v3.messages.admin_login_required') || window.TKI18n?.t('admin_v3.messages.admin_login_required') || "Vous devez être connecté en tant qu’admin pour enregistrer un résultat.", 'error');
           return;
         }
 
@@ -455,17 +462,17 @@
 
         if (gameType === 'lotto4') {
           if (!/^[0-9]{2}$/.test(lotto4FirstPrize)) {
-            setFeedback('Le 1er lot Lotto 4 doit contenir exactement 2 chiffres.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.le_1er_lot_lotto_4_doit_contenir_exactement_2_chiffres') || "Le 1er lot Lotto 4 doit contenir exactement 2 chiffres."), 'warn');
             lotto4FirstPrizeInput.focus();
             return;
           }
           if (!/^[0-9]{2}$/.test(secondPrize)) {
-            setFeedback('Le 2e lot Lotto 4 doit contenir exactement 2 chiffres.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.le_2e_lot_lotto_4_doit_contenir_exactement_2_chiffres') || "Le 2e lot Lotto 4 doit contenir exactement 2 chiffres."), 'warn');
             secondPrizeInput.focus();
             return;
           }
           if (!/^[0-9]{2}$/.test(thirdPrize)) {
-            setFeedback('Le 3e lot Lotto 4 doit contenir exactement 2 chiffres.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.le_3e_lot_lotto_4_doit_contenir_exactement_2_chiffres') || "Le 3e lot Lotto 4 doit contenir exactement 2 chiffres."), 'warn');
             thirdPrizeInput.focus();
             return;
           }
@@ -476,23 +483,23 @@
           payload.winning_number = lotto4FirstPrize;
 
           if (!payload.draw_name || !payload.draw_date) {
-            setFeedback('Remplissez le tirage et la date avant de publier.', 'warn');
+            setFeedback(window.TKI18n?.t('admin_v3.messages.draw_date_required') || window.TKI18n?.t('admin_v3.messages.draw_date_required') || "Remplissez le tirage et la date avant de publier.", 'warn');
             return;
           }
         } else if (gameType === 'lotto5') {
           const lotto5FirstPrize = lotto5FirstPrizeInput.value.trim();
           if (!/^[0-9]{3}$/.test(lotto5FirstPrize)) {
-            setFeedback('Le 1er lot Lotto 5 doit contenir exactement 3 chiffres.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.le_1er_lot_lotto_5_doit_contenir_exactement_3_chiffres') || "Le 1er lot Lotto 5 doit contenir exactement 3 chiffres."), 'warn');
             lotto5FirstPrizeInput.focus();
             return;
           }
           if (!/^[0-9]{2}$/.test(secondPrize)) {
-            setFeedback('Le 2e lot Lotto 5 doit contenir exactement 2 chiffres.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.le_2e_lot_lotto_5_doit_contenir_exactement_2_chiffres') || "Le 2e lot Lotto 5 doit contenir exactement 2 chiffres."), 'warn');
             secondPrizeInput.focus();
             return;
           }
           if (!/^[0-9]{2}$/.test(thirdPrize)) {
-            setFeedback('Le 3e lot Lotto 5 doit contenir exactement 2 chiffres.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.le_3e_lot_lotto_5_doit_contenir_exactement_2_chiffres') || "Le 3e lot Lotto 5 doit contenir exactement 2 chiffres."), 'warn');
             thirdPrizeInput.focus();
             return;
           }
@@ -512,12 +519,12 @@
           };
 
           if (!payload.draw_name || !payload.draw_date) {
-            setFeedback('Remplissez le tirage et la date avant de publier.', 'warn');
+            setFeedback(window.TKI18n?.t('admin_v3.messages.draw_date_required') || window.TKI18n?.t('admin_v3.messages.draw_date_required') || "Remplissez le tirage et la date avant de publier.", 'warn');
             return;
           }
         } else {
           if (!/^\d{3}$/.test(firstPrizeFull)) {
-            setFeedback('Le 1er lot complet Lotto 3 doit être un nombre à 3 chiffres.', 'warn');
+            setFeedback((window.TKI18n?.t?.('runtime_final.le_1er_lot_complet_lotto_3_doit_etre_un_nombre_a_3_chiffres') || "Le 1er lot complet Lotto 3 doit être un nombre à 3 chiffres."), 'warn');
             firstPrizeFullInput.focus();
             return;
           }
@@ -529,7 +536,7 @@
           }
 
           if (!firstPrize || !secondPrize || !thirdPrize) {
-            setFeedback('Veuillez saisir les 3 lots Borlette.', 'warn');
+            setFeedback(window.TKI18n?.t('admin_v3.messages.borlette_prizes_required') || window.TKI18n?.t('admin_v3.messages.borlette_prizes_required') || "Veuillez saisir les 3 lots Borlette.", 'warn');
             return;
           }
 
@@ -540,7 +547,7 @@
           payload.winning_number = firstPrize;
 
           if (!payload.draw_name || !payload.draw_date || !payload.first_prize_full_number || !payload.first_prize_number || !payload.second_prize_number || !payload.third_prize_number) {
-            setFeedback('Remplissez le tirage, la date et la combinaison / numéro gagnant avant de publier.', 'warn');
+            setFeedback(window.TKI18n?.t('admin_v3.messages.winning_number_required') || window.TKI18n?.t('admin_v3.messages.winning_number_required') || "Remplissez le tirage, la date et la combinaison / numéro gagnant avant de publier.", 'warn');
             return;
           }
         }
@@ -602,7 +609,7 @@
           resetForm();
         } catch (error) {
           console.error('Erreur enregistrement résultat.', error);
-          setFeedback(`Erreur d’enregistrement : ${error.message || 'Impossible de créer le résultat.'}`, 'error');
+          setFeedback(`Erreur d’enregistrement : ${error.message || window.TKI18n?.t('admin_v3.messages.create_result_error') || window.TKI18n?.t('admin_v3.messages.create_result_error') || "Impossible de créer le résultat."}`, 'error');
         }
       }
 
@@ -622,11 +629,11 @@
             }
             const { error } = await client.from('draw_results').update({ status: 'cancelled' }).eq('id', id);
             if (error) throw error;
-            setFeedback('Résultat marqué comme annulé.', 'warn');
+            setFeedback((window.TKI18n?.t('runtime_v3.admin.result_cancelled') || "Résultat marqué comme annulé."), 'warn');
             await loadResults();
           } catch (error) {
             console.error('Erreur annulation résultat.', error);
-            setFeedback(`Erreur d’annulation : ${error.message || 'Impossible de modifier le statut.'}`, 'error');
+            setFeedback(`Erreur d’annulation : ${error.message || window.TKI18n?.t('admin_v3.messages.update_status_error') || window.TKI18n?.t('admin_v3.messages.update_status_error') || "Impossible de modifier le statut."}`, 'error');
           }
         }
 
@@ -662,13 +669,13 @@
           }
 
           setFieldVisibility();
-          setFeedback('Formulaire rempli avec le tirage sélectionné. Modifiez les champs puis publiez à nouveau.', 'warn');
+          setFeedback(window.TKI18n?.t('admin_v3.messages.form_filled') || window.TKI18n?.t('admin_v3.messages.form_filled') || "Formulaire rempli avec le tirage sélectionné. Modifiez les champs puis publiez à nouveau.", 'warn');
         }
       }
 
       (async function init() {
         if (!window.getCurrentUserAsync) {
-          setFeedback('Le système d’authentification est indisponible sur cette page.', 'error');
+          setFeedback((window.TKI18n?.t?.('runtime_final.le_systeme_dauthentification_est_indisponible_sur_cette_page') || "Le système d’authentification est indisponible sur cette page."), 'error');
           return;
         }
 

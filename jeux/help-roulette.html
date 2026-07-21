@@ -35,6 +35,7 @@
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -53,15 +54,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -197,8 +195,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -271,7 +267,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-help tk-file-help-roulette">
 <main class="app">
@@ -282,58 +277,56 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" data-i18n="help_v3.common.back_to_games" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Aide Roulette</span>
 </div></header>
-
-
 <section class="card">
 <div class="eyebrow">Aide</div>
-<h1>Roulette — règles détaillées</h1>
+<h1 data-i18n="help_v3.pages.roulette.text_01">Roulette — règles détaillées</h1>
 <p>La roulette est l’un des jeux les plus simples à lire : une roue tourne et un numéro gagnant est sélectionné. Le joueur place une mise sur un résultat possible, puis il attend que la roue s’arrête. Selon le type de pari choisi, la récompense change.</p>
-<a class="back-link" href="roulette.html">← Retour à la page Roulette</a>
+<a class="back-link" data-i18n="help_v3.pages.roulette.text_02" href="roulette.html">← Retour à la page Roulette</a>
 <div class="grid">
 <article class="panel">
-<h2>1. Principe du jeu</h2>
-<p>La roue choisit un numéro gagnant. Vous devez parier sur le résultat que vous pensez voir apparaître.</p>
-<span class="callout">Le pari réussi rapporte en fonction du type de mise choisi.</span>
+<h2 data-i18n="help_v3.pages.roulette.text_03">1. Principe du jeu</h2>
+<p data-i18n="help_v3.pages.roulette.text_04">La roue choisit un numéro gagnant. Vous devez parier sur le résultat que vous pensez voir apparaître.</p>
+<span class="callout" data-i18n="help_v3.pages.roulette.text_05">Le pari réussi rapporte en fonction du type de mise choisi.</span>
 </article>
 <article class="panel">
-<h2>2. Types de mises</h2>
+<h2 data-i18n="help_v3.pages.roulette.text_06">2. Types de mises</h2>
 <ul>
-<li>Numéro direct : vous misez sur un numéro précis.</li>
-<li>Rouge / Noir : vous misez sur la couleur du résultat.</li>
-<li>Pair / Impair : vous misez sur la parité du numéro.</li>
-<li>Colonnes : vous misez sur une colonne de la table.</li>
-<li>Douzaines : vous misez sur un groupe de 12 numéros.</li>
+<li data-i18n="help_v3.pages.roulette.text_07">Numéro direct : vous misez sur un numéro précis.</li>
+<li data-i18n="help_v3.pages.roulette.text_08">Rouge / Noir : vous misez sur la couleur du résultat.</li>
+<li data-i18n="help_v3.pages.roulette.text_09">Pair / Impair : vous misez sur la parité du numéro.</li>
+<li data-i18n="help_v3.pages.roulette.text_10">Colonnes : vous misez sur une colonne de la table.</li>
+<li data-i18n="help_v3.pages.roulette.text_11">Douzaines : vous misez sur un groupe de 12 numéros.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>3. Comment les gains fonctionnent</h2>
-<p>Un pari sur un numéro direct est généralement plus risqué mais plus rémunérateur. Les paris plus larges comme couleur, pair/impair ou douzaine sont plus simples et rapportent souvent moins.</p>
-<p>Le gain dépend donc du type de pari, de la probabilité de sortie et du multiplicateur utilisé par le jeu.</p>
+<h2 data-i18n="help_v3.pages.roulette.text_12">3. Comment les gains fonctionnent</h2>
+<p data-i18n="help_v3.pages.roulette.text_13">Un pari sur un numéro direct est généralement plus risqué mais plus rémunérateur. Les paris plus larges comme couleur, pair/impair ou douzaine sont plus simples et rapportent souvent moins.</p>
+<p data-i18n="help_v3.pages.roulette.text_14">Le gain dépend donc du type de pari, de la probabilité de sortie et du multiplicateur utilisé par le jeu.</p>
 </article>
 <article class="panel">
-<h2>4. Exemple simple</h2>
-<p>Vous misez 10 HTG sur le rouge.</p>
+<h2 data-i18n="help_v3.pages.roulette.text_15">4. Exemple simple</h2>
+<p data-i18n="help_v3.pages.roulette.text_16">Vous misez 10 HTG sur le rouge.</p>
 <div class="example">
-<span class="pill">Si la roue tombe sur rouge</span>
-<span class="pill">Vous gagnez</span>
+<span class="pill" data-i18n="help_v3.pages.roulette.text_17">Si la roue tombe sur rouge</span>
+<span class="pill" data-i18n="help_v3.pages.roulette.text_18">Vous gagnez</span>
 </div>
-<p>Si la roue tombe sur noir, vous perdez votre mise. Les gains varient selon le type de pari et les règles du plateau.</p>
+<p data-i18n="help_v3.pages.roulette.text_19">Si la roue tombe sur noir, vous perdez votre mise. Les gains varient selon le type de pari et les règles du plateau.</p>
 </article>
 <article class="panel" style="grid-column:1 / -1;">
-<h2>5. Ce qu’il faut retenir</h2>
+<h2 data-i18n="help_v3.pages.roulette.text_20">5. Ce qu’il faut retenir</h2>
 <ul>
-<li>Le résultat de la roue est aléatoire.</li>
-<li>Chaque type de pari a un niveau de risque différent.</li>
-<li>Un pari simple et large est plus sûr qu’un pari direct.</li>
-<li>Le gain dépend du pari choisi et du multiplicateur associé.</li>
+<li data-i18n="help_v3.pages.roulette.text_21">Le résultat de la roue est aléatoire.</li>
+<li data-i18n="help_v3.pages.roulette.text_22">Chaque type de pari a un niveau de risque différent.</li>
+<li data-i18n="help_v3.pages.roulette.text_23">Un pari simple et large est plus sûr qu’un pari direct.</li>
+<li data-i18n="help_v3.pages.roulette.text_24">Le gain dépend du pari choisi et du multiplicateur associé.</li>
 </ul>
 </article>
 </div>
@@ -404,7 +397,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -423,7 +416,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Tonton Kondo — Historique</title>
+<title data-i18n="history_v4.page_title">Tonton Kondo — Historique</title>
 <style>
     :root {
       --bg:#020813;
@@ -103,10 +103,10 @@
 </div>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<a class="action-btn" data-i18n-aria-label="common.promotions" type="button" href="promotion.html">
 <svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
 <span class="badge">3</span>
-</button>
+</a>
 <a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
 <svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
 <span class="badge notifications-badge" hidden="">0</span>
@@ -139,30 +139,30 @@
 <section class="card">
 <div class="topbar">
 <div>
-<div class="eyebrow">Historique</div>
-<h1>Vos dernières activités</h1>
+<div class="eyebrow" data-i18n="history_v4.eyebrow">Historique du compte</div>
+<h1 data-i18n="history_v3.title">Retrouvez toute votre activité</h1>
 <p>Votre espace de suivi personnel, avec vos tickets, transactions et solde disponibles en un seul endroit.</p>
 </div>
 <a class="btn" href="index.html">Retour à l’accueil</a>
 </div>
-<div class="pill" id="history-pill">Connectez-vous pour voir votre historique.</div>
+<div class="pill" data-i18n="history_v4.sign_in_prompt" id="history-pill">Connectez-vous pour consulter votre historique.</div>
 </section>
 <section class="grid">
 <article class="card mini-card">
-<h2 style="margin: 0 0 10px; font-size: 20px;">Résumé</h2>
-<div class="stat"><div><small>Tickets enregistrés</small><strong id="summary-tickets">0</strong></div><span class="badge" id="summary-status">Chargement</span></div>
-<div class="stat"><div><small>Montant total</small><strong id="summary-amount">0 HTG</strong></div><span class="badge" id="summary-balance-label">Wallet</span></div>
-<div class="stat"><div><small>Solde disponible</small><strong id="summary-balance">0 HTG</strong></div><span class="badge" id="summary-role">Client</span></div>
+<h2 data-i18n="history_v3.summary_title" style="margin: 0 0 10px; font-size: 20px;">Vue d’ensemble</h2>
+<div class="stat"><div><small data-i18n="history_v4.tickets_saved">Tickets enregistrés</small><strong id="summary-tickets">0</strong></div><span class="badge" data-i18n="history_v4.loading_status" id="summary-status">Chargement</span></div>
+<div class="stat"><div><small data-i18n="history_v4.total_amount">Montant total</small><strong id="summary-amount">0 HTG</strong></div><span class="badge" data-i18n="history_v4.wallet_badge" id="summary-balance-label">Portefeuille</span></div>
+<div class="stat"><div><small data-i18n="history_v4.available_balance">Solde disponible</small><strong id="summary-balance">0 HTG</strong></div><span class="badge" data-i18n="history_v4.client_role" id="summary-role">Client</span></div>
 </article>
 <article class="card mini-card">
-<h2 style="margin: 0 0 10px; font-size: 20px;">Historique détaillé</h2>
+<h2 data-i18n="history_v3.details_title" style="margin: 0 0 10px; font-size: 20px;">Activité détaillée</h2>
 <div class="filters" id="history-filters">
-<button class="filter-btn active" data-filter="tickets" type="button">Tickets</button>
-<button class="filter-btn" data-filter="transactions" type="button">Transactions</button>
-<button class="filter-btn" data-filter="gains" type="button">Gains</button>
-<button class="filter-btn" data-filter="pertes" type="button">Pertes</button>
-<button class="filter-btn" data-filter="depots" type="button">Dépôts</button>
-<button class="filter-btn" data-filter="retraits" type="button">Retraits</button>
+<button class="filter-btn active" data-filter="tickets" data-i18n="history_v3.filters.tickets" type="button">Tickets</button>
+<button class="filter-btn" data-filter="transactions" data-i18n="history_v3.filters.transactions" type="button">Transactions</button>
+<button class="filter-btn" data-filter="gains" data-i18n="history_v3.filters.wins" type="button">Gains</button>
+<button class="filter-btn" data-filter="pertes" data-i18n="history_v3.filters.losses" type="button">Pertes</button>
+<button class="filter-btn" data-filter="depots" data-i18n="history_v3.filters.deposits" type="button">Dépôts</button>
+<button class="filter-btn" data-filter="retraits" data-i18n="history_v3.filters.withdrawals" type="button">Retraits</button>
 </div>
 <div class="history-feed" id="history-feed"></div>
 <p class="hint" style="margin-top: 8px;">Les paiements et gains sont présentés ici pour votre suivi clair et sécurisé.</p>
@@ -175,7 +175,8 @@
 <script src="js/auth-guard.js"></script><script src="js/main-header.js"></script>
 <script>
     (async function initHistoryPage() {
-      const historyFeed = document.getElementById('history-feed');
+      function t(key, fallback, variables = {}) { const value=window.TKI18n?.t?.(key,variables); return value && value!==key ? value : fallback; }
+    const historyFeed = document.getElementById('history-feed');
       const summaryTickets = document.getElementById('summary-tickets');
       const summaryAmount = document.getElementById('summary-amount');
       const summaryBalance = document.getElementById('summary-balance');
@@ -185,35 +186,18 @@
       const historyPill = document.getElementById('history-pill');
       const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
 
-      const GAME_LABELS = {
-        borlette: 'Borlette',
-        mariage: 'Mariage',
-        penalty: 'Penalty',
-        lotto3: 'Lotto3',
-        lotto4: 'Lotto4',
-        lotto5: 'Lotto5',
-        keno: 'Keno',
-        roulette: 'Roulette',
-        lucky6: 'Lucky 6',
-        horse_racing: 'Course Cheval',
-        american_roulette: 'Roulette Américaine',
-        roulette_ameri: 'Roulette Américaine',
+      const GAME_LABEL_KEYS = {
+        borlette: 'games_group1.borlette.title', mariage: 'games_group1.mariage.title', penalty: 'games_group2.penalty.title',
+        lotto3: 'games_group1.lotto3.title', lotto4: 'games_group1.lotto4.title', lotto5: 'games_group1.lotto5.title',
+        keno: 'games_group2.keno.title', roulette: 'games_group2.roulette.title', lucky6: 'games_group2.lucky6.title',
+        horse_racing: 'history_v4.game_horse', american_roulette: 'history_v4.game_american_roulette', roulette_ameri: 'history_v4.game_american_roulette'
       };
 
-      const GAME_ICONS = {
-        horse_racing: '🐎',
-        american_roulette: '🎰',
-        roulette_ameri: '🎰',
-      };
+      const GAME_ICONS = { horse_racing: '🐎', american_roulette: '🎰', roulette_ameri: '🎰' };
 
-      const STATUS_LABELS = {
-        pending: 'En attente',
-        won: 'Gagné',
-        lost: 'Perdu',
-        paid: 'Payé',
-        completed: 'Terminé',
-        cancelled: 'Annulé',
-        confirmed: 'Confirmé',
+      const STATUS_KEYS = {
+        pending:'history_v4.status_pending', won:'history_v4.status_won', lost:'history_v4.status_lost', paid:'history_v4.status_paid',
+        completed:'history_v4.status_completed', cancelled:'history_v4.status_cancelled', confirmed:'history_v4.status_confirmed'
       };
 
       function formatCurrency(value, currency = 'HTG') {
@@ -222,37 +206,28 @@
 
       function formatGameLabel(gameType) {
         const normalized = String(gameType || '').toLowerCase();
-        const label = GAME_LABELS[normalized] || 'Jeu inconnu';
+        const label = t(GAME_LABEL_KEYS[normalized] || 'history_v4.game_unknown');
         const icon = GAME_ICONS[normalized];
         return icon ? `${icon} ${label}` : label;
       }
 
       function formatStatusLabel(status) {
         const normalized = String(status || '').toLowerCase();
-        return STATUS_LABELS[normalized] || String(status || 'Inconnu');
+        return t(STATUS_KEYS[normalized] || 'history_v4.status_unknown');
       }
 
-      function statusLabel(status) {
-        return String(status || 'pending').toLowerCase();
-      }
+      function statusLabel(status) { return String(status || 'pending').toLowerCase(); }
 
       function formatPenaltyOutcome(outcome) {
         const normalized = String(outcome || '').toLowerCase();
-        if (normalized === 'won') return 'Gagné';
-        if (normalized === 'lost') return 'Perdu';
+        if (normalized === 'won') return t('history_v4.outcome_won');
+        if (normalized === 'lost') return t('history_v4.outcome_lost');
         return String(outcome || '—');
       }
 
       function typeLabel(type) {
-        const map = {
-          bet: 'Mise',
-          win: 'Gain',
-          deposit: 'Dépôt',
-          withdrawal: 'Retrait',
-          refund: 'Remboursement',
-          adjustment: 'Ajustement',
-        };
-        return map[String(type || '').toLowerCase()] || String(type || 'Transaction');
+        const map = { bet:'history_v4.type_bet', win:'history_v4.type_win', deposit:'history_v4.type_deposit', withdrawal:'history_v4.type_withdrawal', refund:'history_v4.type_refund', adjustment:'history_v4.type_adjustment' };
+        return t(map[String(type || '').toLowerCase()] || 'history_v4.type_transaction');
       }
 
       const user = await window.getCurrentUserAsync?.();
@@ -264,12 +239,12 @@
 
       const client = window.supabaseClient || null;
       if (!client || typeof client.from !== 'function') {
-        historyFeed.innerHTML = '<div class="empty-state">Connexion au service momentanément indisponible. Réessayez dans quelques instants.</div>';
+        historyFeed.innerHTML = `<div class="empty-state">${t('history_v3.service_error','Votre historique est momentanément indisponible.')}</div>`;
         return;
       }
 
       try {
-        historyFeed.innerHTML = '<div class="state-box">Chargement de votre historique…</div>';
+        historyFeed.innerHTML = `<div class="state-box">${t('history_v3.loading','Chargement de votre historique…')}</div>`;
 
         const [ticketsResponse, transactionsResponse, depositRequestsResponse, withdrawalRequestsResponse, walletResponse] = await Promise.all([
           client
@@ -474,10 +449,10 @@
         summaryTickets.textContent = String(tickets.length);
         summaryAmount.textContent = formatCurrency(totalAmount, currency);
         summaryBalance.textContent = formatCurrency(balance, currency);
-        summaryStatus.textContent = `${wonTickets} gagnés • ${lostTickets} perdus`;
-        summaryBalanceLabel.textContent = `${pendingTickets} en attente`;
+        summaryStatus.textContent = t('history_v3.status_summary','{{wins}} gagnés • {{losses}} perdus',{wins:wonTickets,losses:lostTickets});
+        summaryBalanceLabel.textContent = t('history_v3.pending_summary','{{count}} en attente',{count:pendingTickets});
         summaryRole.textContent = String(user.role || 'client').toUpperCase();
-        historyPill.textContent = `Connecté : ${user.full_name || user.email || 'Joueur'} • ${currency}`;
+        historyPill.textContent = t('history_v4.connected_as','Connecté : {{name}} • {{currency}}',{name:user.full_name || user.email || 'Joueur',currency});
 
         const feedItems = [
           ...tickets.map((ticket) => {
@@ -525,8 +500,8 @@
           ...depositRequests.map((item) => ({
             kind: 'deposit',
             filter: 'depots',
-            tag: 'Dépôt',
-            title: `Dépôt — ${item.reference || item.method || 'Demande'}`,
+            tag: t('history_v4.deposit'),
+            title: `Dépôt — ${item.reference || item.method || t('history_v4.request')}`,
             meta: `${new Date(item.created_at).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} • ${item.status || 'pending'}`,
             amount: `${formatCurrency(Number(item.amount || 0), item.currency || currency)}`,
             gain: `Méthode : ${String(item.method || '—').toUpperCase()}`,
@@ -539,8 +514,8 @@
           ...withdrawalRequests.map((item) => ({
             kind: 'withdrawal',
             filter: 'retraits',
-            tag: 'Retrait',
-            title: `Retrait — ${item.phone || item.method || 'Demande'}`,
+            tag: t('history_v4.withdrawal'),
+            title: `Retrait — ${item.phone || item.method || t('history_v4.request')}`,
             meta: `${new Date(item.created_at).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} • ${item.status || 'pending'}`,
             amount: `${formatCurrency(Number(item.amount || 0), item.currency || currency)}`,
             gain: `Méthode : ${String(item.method || '—').toUpperCase()}`,
@@ -580,7 +555,7 @@
             : visible;
 
           if (!limited.length) {
-            historyFeed.innerHTML = '<div class="empty-state">Aucune activité ne correspond à ce filtre pour le moment.</div>';
+            historyFeed.innerHTML = `<div class="empty-state">${t('history_v3.empty_filter','Aucune activité ne correspond à ce filtre pour le moment.')}</div>`;
             return;
           }
 
@@ -850,8 +825,8 @@
           });
         });
       } catch (error) {
-        console.error('Erreur chargement historique.', error);
-        historyFeed.innerHTML = '<div class="empty-state">Le chargement a échoué. Réessayez dans quelques instants.</div>';
+        console.error(t('history_v4.console_load'), error);
+        historyFeed.innerHTML = `<div class="empty-state">${t('history_v3.load_failed','Le chargement de votre historique a échoué.')}</div>`;
       }
     })();
   </script>

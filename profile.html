@@ -167,10 +167,10 @@
 </div>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<a class="action-btn" data-i18n-aria-label="common.promotions" type="button" href="promotion.html">
 <svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
 <span class="badge">3</span>
-</button>
+</a>
 <a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
 <svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
 <span class="badge notifications-badge" hidden="">0</span>
@@ -202,52 +202,52 @@
 <nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <section class="shell">
 <article class="panel">
-<span class="badge-tag" data-i18n="profile.player_profile"></span>
-<h1 data-i18n="profile.personal_information"></h1>
-<p data-i18n="profile.personal_information_description"></p>
+<span class="badge-tag" data-i18n="profile_v3.eyebrow"></span>
+<h1 data-i18n="profile_v3.title"></h1>
+<p data-i18n="profile_v3.description"></p>
 <div class="profile-card">
 <div class="profile-row">
 <div style="display:flex; align-items:center; gap:10px;">
 <img alt="Avatar" class="avatar" data-profile-avatar="" src="assets/reallogo.png" style="object-fit: cover; width: 56px; height: 56px;"/>
 <div>
 <strong data-i18n="common.player_space_loading" data-profile-name="" style="display:block; color:#fff;"></strong>
-<span data-i18n="common.client" data-profile-role-tag="" style="color:var(--muted); font-size:13px; text-transform: uppercase;"></span>
+<span data-i18n="profile_v3.identity_card" data-profile-role-tag="" style="color:var(--muted); font-size:13px; text-transform: uppercase;"></span>
 </div>
 </div>
-<span class="status" data-i18n="profile.account_status_placeholder" data-profile-account-status=""></span>
+<span class="status" data-i18n="profile_v3.account_status_placeholder" data-profile-account-status=""></span>
 </div>
-<p class="mini-note" data-i18n="profile.account_details_note"></p>
+<p class="mini-note" data-i18n="profile_v3.account_details_note"></p>
 </div>
 <div class="info-grid">
-<div class="info-item"><span data-i18n="profile.full_name"></span><strong data-i18n="common.player_space_loading" data-profile-name-full=""></strong></div>
-<div class="info-item"><span data-i18n="profile.first_name"></span><strong data-i18n="common.player_space_loading" data-profile-first-name=""></strong></div>
-<div class="info-item"><span data-i18n="profile.last_name"></span><strong data-i18n="common.player_space_loading" data-profile-last-name=""></strong></div>
-<div class="info-item"><span data-i18n="profile.phone"></span><strong data-i18n="common.player_space_loading" data-profile-phone=""></strong></div>
-<div class="info-item"><span data-i18n="profile.email"></span><strong data-i18n="common.player_space_loading" data-profile-email=""></strong></div>
-<div class="info-item"><span data-i18n="common.role"></span><strong data-i18n="common.player_space_loading" data-profile-role=""></strong></div>
-<div class="info-item"><span data-i18n="profile.account_status"></span><strong data-i18n="common.player_space_loading" data-profile-status=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.full_name"></span><strong data-i18n="common.player_space_loading" data-profile-name-full=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.first_name"></span><strong data-i18n="common.player_space_loading" data-profile-first-name=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.last_name"></span><strong data-i18n="common.player_space_loading" data-profile-last-name=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.mobile_number"></span><strong data-i18n="common.player_space_loading" data-profile-phone=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.email_address"></span><strong data-i18n="common.player_space_loading" data-profile-email=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.role"></span><strong data-i18n="common.player_space_loading" data-profile-role=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.account_status"></span><strong data-i18n="common.player_space_loading" data-profile-status=""></strong></div>
 </div>
-<button class="btn btn-primary" data-i18n="common.logout" id="logoutBtn" type="button"></button>
-<a class="btn btn-secondary" data-i18n="profile.back_to_dashboard" href="dashboard.html"></a>
+<button class="btn btn-primary" data-i18n="profile_v3.logout" id="logoutBtn" type="button"></button>
+<a class="btn btn-secondary" data-i18n="profile_v3.back_to_dashboard" href="dashboard.html"></a>
 </article>
 <article class="panel">
-<span class="badge-tag" data-i18n="profile.wallet"></span>
-<h1 data-i18n="profile.overview"></h1>
-<p data-i18n="profile.overview_description"></p>
+<span class="badge-tag" data-i18n="profile_v3.wallet_badge"></span>
+<h1 data-i18n="profile_v3.wallet_title"></h1>
+<p data-i18n="profile_v3.wallet_description"></p>
 <div class="info-grid">
-<div class="info-item"><span data-i18n="common.available_balance"></span><strong data-i18n="common.player_space_loading" data-profile-balance=""></strong></div>
-<div class="info-item"><span data-i18n="common.currency"></span><strong data-i18n="common.player_space_loading" data-profile-currency=""></strong></div>
-<div class="info-item"><span data-i18n="profile.wallet_status"></span><strong data-i18n="common.player_space_loading" data-profile-wallet-status=""></strong></div>
-<div class="info-item"><span data-i18n="profile.provider"></span><strong data-i18n="common.player_space_loading" data-profile-provider=""></strong></div>
-<div class="info-item"><span data-i18n="profile.created_at"></span><strong data-i18n="common.player_space_loading" data-profile-created-at=""></strong></div>
-<div class="info-item"><span data-i18n="profile.avatar"></span><strong data-i18n="profile.avatar_note" data-profile-avatar-note=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.available_balance"></span><strong data-i18n="common.player_space_loading" data-profile-balance=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.currency"></span><strong data-i18n="common.player_space_loading" data-profile-currency=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.wallet_status"></span><strong data-i18n="common.player_space_loading" data-profile-wallet-status=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.provider"></span><strong data-i18n="common.player_space_loading" data-profile-provider=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.created_at"></span><strong data-i18n="common.player_space_loading" data-profile-created-at=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.profile_photo"></span><strong data-i18n="profile_v3.profile_photo_note" data-profile-avatar-note=""></strong></div>
 </div>
 <div class="profile-card" style="margin-top: 12px;">
-<strong data-i18n="common.quick_history" style="color:#fff;"></strong>
-<p class="mini-note" data-i18n="profile.security_note"></p>
+<strong data-i18n="profile_v3.security_title" style="color:#fff;"></strong>
+<p class="mini-note" data-i18n="profile_v3.security_note"></p>
 <div class="info-grid">
-<div class="info-item"><span data-i18n="profile.last_updated"></span><strong data-i18n="common.player_space_loading"></strong></div>
-<div class="info-item"><span data-i18n="profile.access_type"></span><strong data-i18n="common.player_space_loading" data-profile-provider-sub=""></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.last_updated"></span><strong data-i18n="common.player_space_loading"></strong></div>
+<div class="info-item"><span data-i18n="profile_v3.access_type"></span><strong data-i18n="common.player_space_loading" data-profile-provider-sub=""></strong></div>
 </div>
 </div>
 </article>
@@ -271,16 +271,23 @@
     }
 
     function formatStatusValue(value) {
-      const rawValue = String(value || '').trim();
-      if (!rawValue) return tkText('common.player_space_loading', 'Chargement…');
-      return rawValue;
+      const rawValue = String(value || '').trim().toLowerCase();
+      if (!rawValue) return tkText('profile_v3.not_available', 'Non renseigné');
+      const statusKeys = { active: 'profile_v3.status_active', inactive: 'profile_v3.status_inactive', pending: 'profile_v3.status_pending' };
+      return statusKeys[rawValue] ? tkText(statusKeys[rawValue], value) : value;
+    }
+
+    function formatRoleValue(value) {
+      const rawValue = String(value || '').trim().toLowerCase();
+      const roleKeys = { client: 'profile_v3.role_client', admin: 'profile_v3.role_admin', agent: 'profile_v3.role_agent' };
+      return roleKeys[rawValue] ? tkText(roleKeys[rawValue], value) : (value || tkText('profile_v3.not_available', 'Non renseigné'));
     }
 
     function renderProfileStaticLabels() {
       if (!window.TKI18n || typeof window.TKI18n.applyTranslations !== 'function') {
         return;
       }
-      document.title = tkText('profile.page_title', 'Tonton Kondo — Profil');
+      document.title = tkText('profile_v3.page_title', 'Tonton Kondo — Profil');
       window.TKI18n.applyTranslations(document);
     }
 
@@ -329,51 +336,51 @@
       if (nameEl) nameEl.textContent = displayName;
 
       const roleTagEl = document.querySelector('[data-profile-role-tag]');
-      if (roleTagEl) roleTagEl.textContent = String(roleValue).toUpperCase();
+      if (roleTagEl) roleTagEl.textContent = formatRoleValue(roleValue).toUpperCase();
 
       const accountStatusEl = document.querySelector('[data-profile-account-status]');
       if (accountStatusEl) {
-        accountStatusEl.textContent = `${tkText('profile.status_prefix', 'Statut :')} ${formatStatusValue(statusValue)}`;
+        accountStatusEl.textContent = `${tkText('profile_v3.status_prefix', 'Statut :')} ${formatStatusValue(statusValue)}`;
       }
 
       const nameFullEl = document.querySelector('[data-profile-name-full]');
-      if (nameFullEl) nameFullEl.textContent = profile.full_name || currentUser.full_name || user.user_metadata?.full_name || user.user_metadata?.name || tkText('common.player_space_loading', 'Chargement…');
+      if (nameFullEl) nameFullEl.textContent = profile.full_name || currentUser.full_name || user.user_metadata?.full_name || user.user_metadata?.name || tkText('profile_v3.not_available', 'Non renseigné');
 
       const firstNameEl = document.querySelector('[data-profile-first-name]');
-      if (firstNameEl) firstNameEl.textContent = profile.first_name || currentUser.first_name || user.user_metadata?.first_name || tkText('common.player_space_loading', 'Chargement…');
+      if (firstNameEl) firstNameEl.textContent = profile.first_name || currentUser.first_name || user.user_metadata?.first_name || tkText('profile_v3.not_available', 'Non renseigné');
 
       const lastNameEl = document.querySelector('[data-profile-last-name]');
-      if (lastNameEl) lastNameEl.textContent = profile.last_name || currentUser.last_name || user.user_metadata?.last_name || tkText('common.player_space_loading', 'Chargement…');
+      if (lastNameEl) lastNameEl.textContent = profile.last_name || currentUser.last_name || user.user_metadata?.last_name || tkText('profile_v3.not_available', 'Non renseigné');
 
       const phoneEl = document.querySelector('[data-profile-phone]');
-      if (phoneEl) phoneEl.textContent = profile.phone || currentUser.phone || user.phone || tkText('common.player_space_loading', 'Chargement…');
+      if (phoneEl) phoneEl.textContent = profile.phone || currentUser.phone || user.phone || tkText('profile_v3.not_available', 'Non renseigné');
 
       const emailEl = document.querySelector('[data-profile-email]');
-      if (emailEl) emailEl.textContent = profile.email || currentUser.email || user.email || tkText('common.player_space_loading', 'Chargement…');
+      if (emailEl) emailEl.textContent = profile.email || currentUser.email || user.email || tkText('profile_v3.not_available', 'Non renseigné');
 
       const roleEl = document.querySelector('[data-profile-role]');
-      if (roleEl) roleEl.textContent = roleValue || tkText('common.player_space_loading', 'Chargement…');
+      if (roleEl) roleEl.textContent = formatRoleValue(roleValue);
 
       const statusEl = document.querySelector('[data-profile-status]');
-      if (statusEl) statusEl.textContent = statusValue || tkText('common.player_space_loading', 'Chargement…');
+      if (statusEl) statusEl.textContent = formatStatusValue(statusValue);
 
       const balanceEl = document.querySelector('[data-profile-balance]');
-      if (balanceEl) balanceEl.textContent = wallet.balance != null ? `${Number(wallet.balance || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${wallet.currency || 'HTG'}` : tkText('common.player_space_loading', 'Chargement…');
+      if (balanceEl) balanceEl.textContent = wallet.balance != null ? `${Number(wallet.balance || 0).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} ${wallet.currency || 'HTG'}` : tkText('profile_v3.not_available', 'Non renseigné');
 
       const currencyEl = document.querySelector('[data-profile-currency]');
       if (currencyEl) currencyEl.textContent = wallet.currency || 'HTG';
 
       const walletStatusEl = document.querySelector('[data-profile-wallet-status]');
-      if (walletStatusEl) walletStatusEl.textContent = wallet.status || tkText('common.player_space_loading', 'Chargement…');
+      if (walletStatusEl) walletStatusEl.textContent = wallet.status || tkText('profile_v3.not_available', 'Non renseigné');
 
       const providerEl = document.querySelector('[data-profile-provider]');
-      if (providerEl) providerEl.textContent = wallet.provider || user.app_metadata?.provider || tkText('common.player_space_loading', 'Chargement…');
+      if (providerEl) providerEl.textContent = wallet.provider || user.app_metadata?.provider || tkText('profile_v3.not_available', 'Non renseigné');
 
       const createdAtEl = document.querySelector('[data-profile-created-at]');
-      if (createdAtEl) createdAtEl.textContent = profile.created_at || currentUser.created_at || user.created_at || tkText('common.player_space_loading', 'Chargement…');
+      if (createdAtEl) createdAtEl.textContent = profile.created_at || currentUser.created_at || user.created_at || tkText('profile_v3.not_available', 'Non renseigné');
 
       const providerSubEl = document.querySelector('[data-profile-provider-sub]');
-      if (providerSubEl) providerSubEl.textContent = wallet.provider || user.app_metadata?.provider || tkText('common.player_space_loading', 'Chargement…');
+      if (providerSubEl) providerSubEl.textContent = wallet.provider || user.app_metadata?.provider || tkText('profile_v3.not_available', 'Non renseigné');
     }
 
     (async () => {
@@ -411,7 +418,7 @@
         if (result?.ok) {
           window.tryRedirectToLogin('login-register/login.html');
         } else {
-          window.alert(result?.message || tkText('profile.logout_failed', 'Déconnexion impossible.'));
+          window.alert(result?.message || tkText('profile_v3.logout_failed', 'Déconnexion impossible.'));
         }
       });
     })();
@@ -479,7 +486,7 @@
           }
         }
       } catch (err) {
-        console.warn("Erreur d'initialisation du header premium:", err);
+        console.warn(tkText('profile_v4.console_header', 'Impossible d’initialiser le header du profil.'), err);
       }
     })();
   </script>

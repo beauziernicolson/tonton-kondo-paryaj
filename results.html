@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Tonton Kondo — Résultats</title>
+<title data-i18n="results_v3.page_title">Tonton Kondo — Résultats officiels</title>
 <style>
     :root {
       --bg: #020813;
@@ -81,13 +81,13 @@
 </div>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<a class="action-btn" data-i18n-aria-label="common.promotions" type="button" href="promotion.html">
 <svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
 <span class="badge">3</span>
-</button>
+</a>
 <a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
 <svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
-<span class="badge notifications-badge" hidden="">0</span>
+<span class="badge notifications-badge" hidden="" id="notificationBadge">0</span>
 </a>
 <div class="user-menu-wrap" id="userMenuWrap">
 <button aria-expanded="false" aria-haspopup="menu" class="action-btn user-button" data-i18n-aria-label="common.user_menu" id="userMenuButton" type="button">
@@ -117,17 +117,17 @@
 <section class="card">
 <div class="topbar">
 <div>
-<div class="eyebrow">Résultats officiels</div>
-<h1>Tous les tirages publiés</h1>
-<p>Consultez les résultats officiels des tirages disponibles sur votre espace joueur.</p>
+<div class="eyebrow" data-i18n="results_v3.eyebrow">Résultats officiels</div>
+<h1 data-i18n="results_v3.title">Tous les tirages publiés</h1>
+<p data-i18n="results_v3.description">Consultez les numéros officiels des derniers tirages disponibles sur Tonton Kondo.</p>
 </div>
-<a class="btn" href="dashboard.html">Retour</a>
+<a class="btn" data-i18n="results_v3.back" href="dashboard.html">Retour au tableau de bord</a>
 </div>
-<div class="pill" id="results-pill">Connectez-vous pour consulter les résultats.</div>
+<div class="pill" data-i18n="results_v3.sign_in_prompt" id="results-pill">Connectez-vous pour consulter les résultats.</div>
 <div class="filters" id="results-filters">
-<button class="filter-btn active" data-filter="all" type="button">Tous</button>
-<button class="filter-btn" data-filter="borlette" type="button">Lotto 3</button>
-<button class="filter-btn" data-filter="mariage" type="button">Mariage</button>
+<button class="filter-btn active" data-filter="all" data-i18n="results_v3.filter_all" type="button">Tous</button>
+<button class="filter-btn" data-filter="borlette" data-i18n="results_v3.filter_lotto3" type="button">Lotto 3</button>
+<button class="filter-btn" data-filter="mariage" data-i18n="results_v3.filter_mariage" type="button">Mariage</button>
 </div>
 <div id="results-list"></div>
 </section>
@@ -138,43 +138,42 @@
 <script src="js/auth-guard.js"></script><script src="js/main-header.js"></script>
 <script>
     (async function initResultsPage() {
+      const t = (key, params = {}) => window.TKI18n?.t?.(key, params) || key;
       const resultsList = document.getElementById('results-list');
       const resultsPill = document.getElementById('results-pill');
       const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
 
       function formatDate(value) {
-        if (!value) return 'Date inconnue';
+        if (!value) return t('results_v3.unknown_date');
         return new Date(value).toLocaleDateString(window.TKI18n?.getLocale?.() || 'fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
       }
 
       function renderItem(item) {
-        const gameLabel = item.game_type === 'borlette' ? 'Lotto 3' : 'Mariage';
+        const normalizedGame = String(item.game_type || '').toLowerCase();
+        const gameLabel = ['borlette', 'lotto3', 'lotto_3'].includes(normalizedGame)
+          ? t('results_v3.game_lotto3')
+          : t('results_v3.game_mariage');
         const winningNumber = item.winning_number || '—';
         const firstPrize = item.first_prize_full_number || '—';
         const secondPrize = item.second_prize_number || '—';
         const thirdPrize = item.third_prize_number || '—';
         const drawDate = formatDate(item.draw_date);
-        const source = item.source || 'manual';
 
         return `
           <article class="result-card">
             <div class="result-row">
               <div class="result-meta">
-                <strong>${item.draw_name || 'Tirage inconnu'}</strong>
+                <strong>${item.draw_name || t('results_v3.unknown_draw')}</strong>
                 <span>${drawDate} • ${gameLabel}</span>
               </div>
-              <div style="display:grid;gap:8px;justify-content:end;align-items:start;">
-                <span class="badge game">${gameLabel}</span>
-                <span class="badge source">${source}</span>
-                <span class="badge status">Publié</span>
-              </div>
+              <span class="badge game">${gameLabel}</span>
             </div>
             <div class="result-body">
-              <div class="result-line"><label>Numéro gagnant</label><strong>${winningNumber}</strong></div>
+              <div class="result-line"><label>${t('results_v3.winning_number')}</label><strong>${winningNumber}</strong></div>
               ${item.game_type === 'borlette' ? `
-                <div class="result-line"><label>1er lot complet</label><strong>${firstPrize}</strong></div>
-                <div class="result-line"><label>2e lot</label><strong>${secondPrize}</strong></div>
-                <div class="result-line"><label>3e lot</label><strong>${thirdPrize}</strong></div>
+                <div class="result-line"><label>${t('results_v3.first_prize')}</label><strong>${firstPrize}</strong></div>
+                <div class="result-line"><label>${t('results_v3.second_prize')}</label><strong>${secondPrize}</strong></div>
+                <div class="result-line"><label>${t('results_v3.third_prize')}</label><strong>${thirdPrize}</strong></div>
               ` : ''}
             </div>
           </article>
@@ -184,11 +183,14 @@
       function renderResults(items, filter = 'all') {
         const filtered = items.filter((item) => {
           if (filter === 'all') return true;
-          return String(item.game_type || '').toLowerCase() === String(filter).toLowerCase();
+          const type = String(item.game_type || '').toLowerCase();
+          if (filter === 'borlette') return ['borlette', 'lotto3', 'lotto_3'].includes(type);
+          if (filter === 'mariage') return ['mariage', 'marriage'].includes(type);
+          return type === String(filter).toLowerCase();
         });
 
         if (!filtered.length) {
-          resultsList.innerHTML = '<div class="empty-state">Aucun tirage n’est disponible pour ce filtre pour le moment.</div>';
+          resultsList.innerHTML = `<div class="empty-state">${t('results_v3.empty_filter')}</div>`;
           return;
         }
 
@@ -203,6 +205,18 @@
         });
       });
 
+      window.TKI18n?.onLanguageChanged?.(() => {
+        const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+        renderResults(window.__drawResults || [], activeFilter);
+        const currentUser = window.__resultsCurrentUser;
+        if (currentUser) {
+          resultsPill.textContent = t('results_v3.connected_count', {
+            name: currentUser.full_name || currentUser.email || t('results_v3.player'),
+            count: (window.__drawResults || []).length
+          });
+        }
+      });
+
       const user = await window.getCurrentUserAsync?.();
       if (!user) {
         if (window.saveRedirectTarget) window.saveRedirectTarget('results.html');
@@ -210,18 +224,19 @@
         return;
       }
 
-      resultsPill.textContent = `Connecté · ${user.full_name || user.email || 'Joueur'}`;
-      resultsList.innerHTML = '<div class="state-box">Chargement des tirages en cours…</div>';
+      window.__resultsCurrentUser = user;
+      resultsPill.textContent = t('results_v3.connected', { name: user.full_name || user.email || t('results_v3.player') });
+      resultsList.innerHTML = `<div class="state-box">${t('results_v3.loading')}</div>`;
 
       try {
         const client = window.supabaseClient || null;
         if (!client || typeof client.from !== 'function') {
-          throw new Error('Connexion au service momentanément indisponible. Réessayez dans quelques instants.');
+          throw new Error(t('results_v3.service_unavailable'));
         }
 
         const { data, error } = await client
           .from('draw_results')
-          .select('id, game_type, draw_name, draw_date, winning_number, first_prize_full_number, second_prize_number, third_prize_number, source')
+          .select('id, game_type, draw_name, draw_date, winning_number, first_prize_full_number, second_prize_number, third_prize_number')
           .eq('status', 'published')
           .order('draw_date', { ascending: false })
           .limit(50);
@@ -232,10 +247,10 @@
 
         window.__drawResults = data || [];
         renderResults(window.__drawResults, 'all');
-        resultsPill.textContent = `Connecté · ${user.full_name || user.email || 'Joueur'} • ${window.__drawResults.length} résultat(s)`;
+        resultsPill.textContent = t('results_v3.connected_count', { name: user.full_name || user.email || t('results_v3.player'), count: window.__drawResults.length });
       } catch (error) {
-        console.error('Erreur chargement résultats.', error);
-        resultsList.innerHTML = '<div class="state-box">Les résultats sont temporairement indisponibles.</div>';
+        console.error(t('results_v3.console_load_error'), error);
+        resultsList.innerHTML = `<div class="state-box">${t('results_v3.results_unavailable')}</div>`;
       }
     })();
   </script>

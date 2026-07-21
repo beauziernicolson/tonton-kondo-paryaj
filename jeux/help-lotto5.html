@@ -35,6 +35,7 @@
     @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
   </style>
 <script src="../js/i18n.js"></script>
+<script src="../js/games-common-i18n.js"></script>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><style id="shared-borlette-game-header">
 .game-header{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;margin-bottom:16px;padding:12px 14px;border:1px solid #cbd8e8;border-radius:20px;background:#fff;box-shadow:0 14px 35px rgba(7,26,53,.10)}
 .game-header__brand{display:flex;align-items:center;gap:12px;min-width:0;color:#071a35;text-decoration:none}
@@ -53,15 +54,12 @@
 @media(max-width:600px){.game-header{padding:10px;border-radius:17px}.game-header__brand img{width:52px;height:52px;flex-basis:52px;border-radius:14px}.game-header__actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.game-header__wallet{grid-column:1/-1;width:100%;min-width:0}.game-header__button,.game-header__badge{width:100%;min-width:0;min-height:42px;padding:8px;white-space:normal;text-align:center}}
 @media(max-width:380px){.game-header__actions{grid-template-columns:1fr}.game-header__wallet{grid-column:auto}}
 </style>
-
 <style id="header-nav-order-fix">
   .game-header + .tk-primary-nav {
     margin-top:0 !important;
     margin-bottom:16px !important;
   }
 </style>
-
-
 <style id="mobile-minimal-game-header">
   /* Mobile uniquement : header minimal avec retour + solde centré */
   @media (max-width: 760px) {
@@ -197,8 +195,6 @@
     }
   }
 </style>
-
-
 <style id="blue-header-and-mobile-help-grid-fix">
   /* Header desktop/tablette bleu navy */
   .game-header {
@@ -271,7 +267,6 @@
     }
   }
 </style>
-
 </head>
 <body class="tk-public tk-page-help tk-file-help-lotto5">
 <main class="app">
@@ -282,58 +277,56 @@
 </a>
 <div class="game-header__actions">
 <div aria-live="polite" class="game-header__wallet" id="gameHeaderWallet">
-<span class="game-header__wallet-label">Solde disponible</span>
-<strong class="game-header__wallet-value" id="gameHeaderBalance">Chargement…</strong>
+<span class="game-header__wallet-label" data-i18n="games_common.available_balance">Solde disponible</span>
+<strong class="game-header__wallet-value" data-i18n="games_common.loading" id="gameHeaderBalance">Chargement…</strong>
 </div>
-<a class="game-header__button" href="../profile.html">Profil</a>
-<button class="game-header__button" id="gameHeaderLogout" type="button">Déconnexion</button>
-<a class="game-header__button" href="games.html">← Retour aux jeux</a>
+<a class="game-header__button" data-i18n="games_common.profile" href="../profile.html">Profil</a>
+<button class="game-header__button" data-i18n="games_common.logout" id="gameHeaderLogout" type="button">Déconnexion</button>
+<a class="game-header__button" data-i18n="help_v3.common.back_to_games" href="games.html">← <span data-i18n="games_common.back_to_games">Retour aux jeux</span></a>
 <span class="game-header__badge">Aide Lotto 5</span>
 </div></header>
-
-
 <section class="card">
 <div class="eyebrow">Aide</div>
-<h1>Lotto 5 — règles détaillées</h1>
+<h1 data-i18n="help_v3.pages.lotto5.text_01">Lotto 5 — règles détaillées</h1>
 <p>Le Lotto 5 est un jeu de numéro à 5 chiffres. Le joueur choisit un nombre compris entre 00000 et 99999, puis il sélectionne une option de jeu liée au premier et au deuxième lot selon les règles du tirage. L’objectif est de reproduire la combinaison attendue avec la bonne structure et la bonne position.</p>
-<a class="back-link" href="lotto5.html">← Retour à la page Lotto 5</a>
+<a class="back-link" data-i18n="help_v3.pages.lotto5.text_02" href="lotto5.html">← Retour à la page Lotto 5</a>
 <div class="grid">
 <article class="panel">
-<h2>1. Principe du jeu</h2>
-<p>Vous devez choisir un numéro à 5 chiffres. Par exemple 74208. Ce numéro est ensuite comparé à la combinaison du tirage publié selon les règles de l’option choisie.</p>
-<span class="callout">Le numéro doit être exact, et l’ordre des chiffres compte.</span>
+<h2 data-i18n="help_v3.pages.lotto5.text_03">1. Principe du jeu</h2>
+<p data-i18n="help_v3.pages.lotto5.text_04">Vous devez choisir un numéro à 5 chiffres. Par exemple 74208. Ce numéro est ensuite comparé à la combinaison du tirage publié selon les règles de l’option choisie.</p>
+<span class="callout" data-i18n="help_v3.pages.lotto5.text_05">Le numéro doit être exact, et l’ordre des chiffres compte.</span>
 </article>
 <article class="panel">
-<h2>2. Comment jouer</h2>
+<h2 data-i18n="help_v3.pages.lotto5.text_06">2. Comment jouer</h2>
 <ul>
-<li>Choisissez un tirage disponible.</li>
-<li>Sélectionnez un numéro à 5 chiffres.</li>
-<li>Choisissez une option de combinaison.</li>
-<li>Indiquez votre mise et validez votre ticket.</li>
+<li data-i18n="help_v3.pages.lotto5.text_07">Choisissez un tirage disponible.</li>
+<li data-i18n="help_v3.pages.lotto5.text_08">Sélectionnez un numéro à 5 chiffres.</li>
+<li data-i18n="help_v3.pages.lotto5.text_09">Choisissez une option de combinaison.</li>
+<li data-i18n="help_v3.pages.lotto5.text_10">Indiquez votre mise et validez votre ticket.</li>
 </ul>
 </article>
 <article class="panel">
-<h2>3. Le rôle des options</h2>
-<p>Chaque option représente une manière différente de combiner les chiffres du premier et du deuxième lot selon les règles du jeu. Le gain est affiché selon le multiplicateur associé à l’option sélectionnée.</p>
-<p>Votre ticket est gagnant si la combinaison choisie correspond à la logique de l’option et au résultat publié.</p>
+<h2 data-i18n="help_v3.pages.lotto5.text_11">3. Le rôle des options</h2>
+<p data-i18n="help_v3.pages.lotto5.text_12">Chaque option représente une manière différente de combiner les chiffres du premier et du deuxième lot selon les règles du jeu. Le gain est affiché selon le multiplicateur associé à l’option sélectionnée.</p>
+<p data-i18n="help_v3.pages.lotto5.text_13">Votre ticket est gagnant si la combinaison choisie correspond à la logique de l’option et au résultat publié.</p>
 </article>
 <article class="panel">
-<h2>4. Exemple simple</h2>
-<p>Supposons que la combinaison attendue selon l’option choisie se base sur 74208.</p>
+<h2 data-i18n="help_v3.pages.lotto5.text_14">4. Exemple simple</h2>
+<p data-i18n="help_v3.pages.lotto5.text_15">Supposons que la combinaison attendue selon l’option choisie se base sur 74208.</p>
 <div class="example">
-<span class="pill">Vous jouez 74208</span>
-<span class="pill">Résultat attendu = 74208</span>
-<span class="pill">Vous gagnez</span>
+<span class="pill" data-i18n="help_v3.pages.lotto5.text_16">Vous jouez 74208</span>
+<span class="pill" data-i18n="help_v3.pages.lotto5.text_17">Résultat attendu = 74208</span>
+<span class="pill" data-i18n="help_v3.pages.lotto5.text_18">Vous gagnez</span>
 </div>
-<p>Si vous jouez 72408, vous perdez, car la séquence n’est plus la bonne.</p>
+<p data-i18n="help_v3.pages.lotto5.text_19">Si vous jouez 72408, vous perdez, car la séquence n’est plus la bonne.</p>
 </article>
 <article class="panel" style="grid-column:1 / -1;">
-<h2>5. Ce qu’il faut retenir</h2>
+<h2 data-i18n="help_v3.pages.lotto5.text_20">5. Ce qu’il faut retenir</h2>
 <ul>
-<li>Le Lotto 5 se joue sur un nombre à 5 chiffres.</li>
-<li>Chaque option suit une logique spécifique de combinaison.</li>
-<li>Le gain dépend du multiplicateur affiché.</li>
-<li>L’ordre des chiffres est toujours important.</li>
+<li data-i18n="help_v3.pages.lotto5.text_21">Le Lotto 5 se joue sur un nombre à 5 chiffres.</li>
+<li data-i18n="help_v3.pages.lotto5.text_22">Chaque option suit une logique spécifique de combinaison.</li>
+<li data-i18n="help_v3.pages.lotto5.text_23">Le gain dépend du multiplicateur affiché.</li>
+<li data-i18n="help_v3.pages.lotto5.text_24">L’ordre des chiffres est toujours important.</li>
 </ul>
 </article>
 </div>
@@ -404,7 +397,7 @@
           : null;
 
         if (!client?.from || !user?.id) {
-          if (balanceNode) balanceNode.textContent = 'Connexion requise';
+          if (balanceNode) balanceNode.textContent = gameT('connection_required');
           return null;
         }
 
@@ -423,7 +416,7 @@
       } catch (error) {
         console.error('Erreur solde du header :', error);
         walletBox?.classList.add('is-error');
-        if (balanceNode) balanceNode.textContent = 'Solde indisponible';
+        if (balanceNode) balanceNode.textContent = gameT('balance_unavailable');
         return null;
       } finally {
         walletBox?.classList.remove('is-loading');

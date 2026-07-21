@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tonton Kondo — Promotions</title>
+<style>
+  :root {
+    --bg-image: url("assets/back.png");
+    --accent: #ffd21f;
+    --accent-2: #ffb900;
+    --surface: rgba(6, 12, 30, 0.92);
+    --surface-soft: rgba(255, 255, 255, 0.06);
+    --surface-strong: rgba(255, 255, 255, 0.12);
+    --text: #ffffff;
+    --muted: rgba(255, 255, 255, 0.7);
+    --border: rgba(255, 255, 255, 0.1);
+    --radius: 24px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(180deg, rgba(4, 12, 30, 0.96), rgba(2, 6, 18, 0.94)), var(--bg-image);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  header.mobile-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(20px);
+    background: rgba(3, 7, 22, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .mobile-header .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mobile-header .action-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    text-decoration: none;
+  }
+
+  .mobile-header .badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    padding: 0 6px;
+    font-size: 10px;
+    line-height: 18px;
+    font-weight: 700;
+    color: #071a35;
+    background: #ffd21f;
+  }
+
+  .promotion-page {
+    min-height: 100vh;
+    padding: clamp(28px, 5vw, 56px) clamp(18px, 4vw, 40px);
+  }
+
+  .promo-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .promo-copy {
+    max-width: 680px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(255, 210, 31, 0.14);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.86rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+  }
+
+  .hero-subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 42rem;
+    margin-bottom: 28px;
+  }
+
+  .primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 0 26px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #071a35;
+    font-weight: 900;
+    text-decoration: none;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .primary-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 40px rgba(255, 178, 31, 0.24);
+  }
+
+  .promo-hero-card {
+    padding: 28px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.24);
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .hero-card-title {
+    font-size: 1rem;
+    font-weight: 900;
+    margin-bottom: 14px;
+  }
+
+  .hero-card-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 0.98rem;
+  }
+
+  .promo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .promo-card {
+    padding: 24px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+    min-height: 240px;
+    display: grid;
+    gap: 18px;
+  }
+
+  .card-title {
+    font-size: 1.18rem;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .card-text {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 0.98rem;
+  }
+
+  .card-badge {
+    display: inline-flex;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-note {
+    margin-top: 32px;
+    color: rgba(255, 255, 255, 0.64);
+    max-width: 48rem;
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 900px) {
+    .promo-hero { grid-template-columns: 1fr; }
+    .promo-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    .promotion-page { padding: 18px 14px 28px; }
+    .hero-title { font-size: 2.3rem; }
+    .promo-hero-card { padding: 22px; }
+    .promo-card { padding: 20px; }
+    .primary-btn { width: 100%; }
+    .mobile-header .header-actions { gap: 8px; }
+    .mobile-header .action-btn { width: 42px; height: 42px; }
+  }
+</style>
+<link data-tk-design="paryajpam-inspired-v1" href="assets/tk-paryajpam-inspired.css" rel="stylesheet"/>
+<link data-main-header-css="shared-dashboard-exact-final" href="assets/main-header.css" rel="stylesheet"/>
+<meta content="#030b1a" name="theme-color"/>
+</head>
+<body class="tk-public tk-page-promotions tk-main-header-page">
+<header class="mobile-header" data-i18n-aria-label="common.main_header">
+<a class="brand main-site-brand borlette-brand-exact" data-i18n-aria-label="common.home" href="index.html">
+  <img alt="Tonton Kondo" class="brand-icon borlette-brand-exact__logo" src="assets/reallogo.png"/>
+  <span class="borlette-brand-exact__copy">
+    <strong class="borlette-brand-exact__top">TONTON</strong>
+    <strong class="borlette-brand-exact__middle">KONDO</strong>
+    <span class="borlette-brand-exact__bottom">PARYAJ</span>
+  </span>
+</a>
+<div class="wallet-chip" data-i18n-aria-label="common.user_balance">
+<span>
+<strong data-i18n="common.player_space_loading" id="wallet-balance"></strong>
+<span data-i18n="dashboard.available_balance" id="wallet-label"></span>
+</span>
+</div>
+<div class="header-actions">
+<div id="authHeaderActions"></div>
+<a class="action-btn" data-i18n-aria-label="common.promotions" href="promotion.html">
+<svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
+</a>
+<a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
+<svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
+<span class="badge notifications-badge" hidden="">0</span>
+</a>
+<div class="user-menu-wrap" hidden="" id="userMenuWrap">
+<button aria-expanded="false" class="action-btn user-button" data-i18n-aria-label="common.user_menu" id="userMenuButton" type="button">
+<span class="user-avatar" id="userAvatar">TK</span>
+</button>
+<div aria-hidden="true" class="user-menu" id="userMenu" role="menu">
+<a class="user-menu-link" data-i18n="common.tickets" href="tickets.html"></a>
+<a class="user-menu-link" data-i18n="common.history" href="history.html"></a>
+<a class="user-menu-link" data-i18n="common.results" href="results.html"></a>
+<a class="user-menu-link" data-i18n="common.deposit" href="deposit.html"></a>
+<a class="user-menu-link" data-i18n="common.withdraw" href="withdraw.html"></a>
+<a class="user-menu-link" data-i18n="common.wallet" href="wallet.html"></a>
+<a class="user-menu-link" data-i18n="common.profile" href="profile.html"></a>
+<a class="user-menu-link" data-i18n="common.settings" href="settings.html"></a>
+<div class="user-menu-divider"></div>
+<button class="user-menu-link user-menu-logout" data-i18n="common.logout" id="logoutMenuBtn" type="button"></button>
+</div>
+</div>
+</div>
+</header>
+<div class="mobile-auth-bar" id="mobileAuthBar">
+  <div class="mobile-auth-bar__guest" id="mobileGuestActions" hidden>
+    <a class="mobile-auth-bar__button" href="login-register/login.html">Connexion</a>
+    <a class="mobile-auth-bar__button mobile-auth-bar__button--primary" href="login-register/register.html">Inscription</a>
+  </div>
+</div>
+<main class="promotion-page">
+<section class="promo-hero">
+<div class="promo-copy">
+<span class="eyebrow" data-i18n="common.promotions">Promotions</span>
+<h1 class="hero-title" data-i18n="promotion.hero_title">Profitez de nos offres spéciales</h1>
+<p class="hero-subtitle" data-i18n="promotion.hero_subtitle">Découvrez les promotions en cours et les nouveautés à venir pour vos jeux et votre wallet.</p>
+<a class="primary-btn" href="dashboard.html" data-i18n="promotion.cta_dashboard">← Retour au tableau de bord</a>
+</div>
+<div class="promo-hero-card">
+<div class="hero-badge" data-i18n="promotion.badge_new">Nouveau</div>
+<p class="hero-card-title" data-i18n="promotion.notice_title">Offres sélectionnées</p>
+<p class="hero-card-desc" data-i18n="promotion.notice_text">Nous préparons des promotions exclusives pour vous. Revenez bientôt pour les dernières récompenses.</p>
+</div>
+</section>
+<section class="promo-grid">
+<article class="promo-card">
+<div class="card-badge" data-i18n="promotion.badge_coming_soon">Bientôt</div>
+<h2 class="card-title" data-i18n="promotion.card_deposit_bonus_title">Bonus de dépôt</h2>
+<p class="card-text" data-i18n="promotion.card_deposit_bonus_text">Recevez un bonus de dépôt exclusif dès que nos premières offres seront activées.</p>
+</article>
+<article class="promo-card">
+<div class="card-badge" data-i18n="promotion.badge_coming_soon">Bientôt</div>
+<h2 class="card-title" data-i18n="promotion.card_loyalty_title">Programme de fidélité</h2>
+<p class="card-text" data-i18n="promotion.card_loyalty_text">Cumulez des points à chaque pari pour des récompenses réservées aux joueurs fidèles.</p>
+</article>
+<article class="promo-card">
+<div class="card-badge" data-i18n="promotion.badge_coming_soon">Bientôt</div>
+<h2 class="card-title" data-i18n="promotion.card_special_events_title">Événements spéciaux</h2>
+<p class="card-text" data-i18n="promotion.card_special_events_text">Bientôt : paris, tournois et offres limitées pour des gains encore plus attractifs.</p>
+</article>
+</section>
+<p class="footer-note">Toutes les promotions sont en préparation. Restez connecté pour voir les offres actives apparaître dans votre espace joueur.</p>
+</main>
+<script src="js/i18n.js"></script>
+<script src="js/auth-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/main-header.js"></script>
+<script>
+  window.addEventListener('load', async () => {
+    console.log('Promotion auth diagnostic', {
+      getCurrentUserAsync: typeof window.getCurrentUserAsync,
+      supabaseClient: typeof window.supabaseClient,
+      user: typeof window.getCurrentUserAsync === 'function'
+        ? await window.getCurrentUserAsync()
+        : null
+    });
+  });
+</script>
+<script data-tk-i18n-auto-init="">
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.TKI18n) {
+      window.TKI18n.init({ useLocalStorage: true, autoApply: true, observeMutations: true });
+    }
+  });
+</script>
+</body>
+</html>

@@ -56,7 +56,7 @@
     return `${prefix}${target}`;
   }
 
-  let TEMPORARY_AUTH_REDIRECTS_DISABLED = true;
+  let TEMPORARY_AUTH_REDIRECTS_DISABLED = false;
 
   function tryRedirectToLogin(target) {
     if (TEMPORARY_AUTH_REDIRECTS_DISABLED) {
@@ -393,16 +393,12 @@
     try {
       const user = await waitForSession();
       if (!user) {
-        // ⚠️ TEMPORAIRE : remettre avant production
-        // Auth obligatoire désactivée temporairement
-        /*
         if (global.saveRedirectTarget) {
           global.saveRedirectTarget(getNormalizedPathname().replace(/^\/+/, ''));
         }
 
         const target = getRelativeHref('login-register/login.html');
         global.location.replace(target);
-        */
       }
     } catch (error) {
       console.warn('auth-guard protection failed:', error);

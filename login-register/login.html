@@ -7,17 +7,16 @@
 <title>Tonton Kondo | Connexion / Inscription</title>
 <style>
     :root {
-      --bg-dark: #020812;
-      --panel: rgba(8, 24, 43, 0.95);
-      --panel-2: rgba(5, 16, 31, 0.96);
-      --line: rgba(255, 255, 255, 0.12);
-      --gold: #ffd21f;
-      --gold-2: #ffb900;
-      --text: #f5f7fb;
-      --muted: #aebbd0;
-      --danger: #ff6b6b;
-      --radius: 28px;
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      --bg-image: url("../assets/back.png");
+      --radius: 18px;
+      --shadow-lg: 0 20px 50px rgba(2, 6, 23, 0.45);
+      --accent: #ffd21f;
+      --accent-2: #ffb900;
+      --muted: #6b7280;
+      --panel-bg: #ffffff;
+      --panel-text: #071a35;
+      --input-border: #e6eef8;
+      --input-bg: #ffffff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,174 +24,94 @@
     body {
       min-height: 100vh;
       font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 80% 0%, rgba(255, 210, 31, 0.10), transparent 18%),
-        radial-gradient(circle at 15% 8%, rgba(57, 168, 255, 0.12), transparent 24%),
-        linear-gradient(180deg, #010610 0%, #061426 45%, #020813 100%);
-      overflow-x: hidden;
+      color: var(--panel-text);
+      background-image: linear-gradient(rgba(3,7,18,0.55), rgba(3,7,18,0.55)), var(--bg-image);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
 
     .auth-page {
       min-height: 100vh;
-      position: relative;
       display: grid;
       place-items: center;
-      padding: 32px 18px 56px;
-      background: linear-gradient(135deg, rgba(2, 8, 20, 0.96), rgba(4, 10, 24, 0.88));
+      padding: 48px 18px;
     }
 
     .auth-card {
-      width: min(100%, 640px);
+      width: min(100%, 760px);
       position: relative;
       z-index: 2;
-      padding: clamp(24px, 4vw, 42px);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(8, 24, 43, 0.96), rgba(5, 17, 31, 0.96));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
+      padding: clamp(22px, 4.8vw, 56px);
+      border-radius: calc(var(--radius) + 6px);
+      background: rgba(255,255,255,0.88);
+      color: var(--panel-text);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(8, 36, 56, 0.06);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-bottom: 24px;
-      color: var(--text);
-      text-decoration: none;
-    }
+    .brand { display:flex; align-items:center; gap:14px; margin:0 auto 18px; text-decoration:none; justify-content:center; }
+    .brand img { width:72px; height:72px; object-fit:cover; border-radius:14px; }
+    .brand-text strong { display:block; font-size:26px; color:var(--panel-text); letter-spacing:0.02em; }
+    .brand-text span { display:block; font-size:13px; color:var(--muted); letter-spacing:0.24em; text-transform:uppercase; }
 
-    .brand img {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 210, 31, 0.18);
-      padding: 8px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    }
+    .tabs { display:flex; gap:12px; margin:8px 0 20px; }
+    .tab { flex:1; padding:12px 14px; border-radius:12px; border:1px solid transparent; background:transparent; cursor:pointer; font-weight:800; color:var(--muted); }
+    .tab.active { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:#071a35; box-shadow: 0 8px 20px rgba(255,178,0,0.12); }
 
-    .brand-text strong {
-      display: block;
-      font-size: 18px;
-      letter-spacing: 0.03em;
-      color: #fff;
-    }
+    .auth-title { font-size: clamp(22px, 3vw, 30px); font-weight:900; margin-bottom:6px; color:var(--panel-text); }
+    .auth-subtitle { color:var(--muted); font-size:15px; margin-bottom:18px; }
 
-    .brand-text span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.35em;
-      margin-top: 2px;
-    }
+    .form-group { margin-bottom:16px; }
+    .form-label { display:block; font-weight:700; font-size:13px; margin-bottom:8px; color:var(--panel-text); }
+    .input-wrap { position:relative; }
+    .input-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--muted); }
+    .password-toggle { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none;border:none; cursor:pointer; color:var(--muted); }
+    .form-input { width:100%; height:56px; border-radius:12px; border:1px solid var(--input-border); padding:0 50px; font-size:16px; background:var(--input-bg); color:var(--panel-text); }
+    .form-input::placeholder { color:#9aa6bf; }
+    .form-input:focus { outline: none; box-shadow: 0 6px 18px rgba(7,26,53,0.08); border-color: rgba(7,26,53,0.12); }
 
-    .tabs {
-      width: 100%;
-      height: 58px;
-      padding: 4px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border: 1px solid rgba(255, 210, 31, 0.18);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.03);
-      margin-bottom: 24px;
-      overflow: hidden;
-    }
+    .forgot { display:flex; justify-content:flex-end; margin-top:-4px; margin-bottom:14px; }
+    .forgot a { color:var(--accent); text-decoration:none; font-weight:700; }
 
-    .tab {
-      border: none;
-      outline: none;
-      cursor: pointer;
-      border-radius: 10px;
-      background: transparent;
-      color: #e5ebf4;
-      font-size: 15px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: 0.25s ease;
-    }
+    .primary-btn { width:100%; height:56px; border-radius:12px; border:none; cursor:pointer; background: linear-gradient(180deg,var(--accent),var(--accent-2)); color:#071a35; font-weight:900; font-size:16px; }
 
-    .tab.active {
-      color: #fff7da;
-      background: linear-gradient(135deg, rgba(255, 210, 31, 0.20), rgba(255, 185, 0, 0.10));
-      box-shadow: inset 0 0 0 1px rgba(255, 210, 31, 0.16);
-    }
+    .divider { display:flex; align-items:center; gap:14px; margin:18px 0; color:var(--muted); font-size:13px; }
+    .divider::before, .divider::after { content:""; height:1px; flex:1; background:linear-gradient(90deg, rgba(7,26,53,0.06), rgba(7,26,53,0.02)); }
 
-    .auth-title { font-size: clamp(24px, 3.2vw, 32px); font-weight: 900; margin-bottom: 8px; color: #fff; }
-    .auth-subtitle { color: var(--muted); font-size: 15px; line-height: 1.55; margin-bottom: 24px; }
+    .google-btn { width:100%; height:50px; border-radius:10px; border:1px solid rgba(7,26,53,0.06); background:transparent; color:var(--panel-text); display:flex; align-items:center; justify-content:center; gap:12px; font-weight:700; }
+    .google-icon { width:34px; height:34px; border-radius:8px; display:grid; place-items:center; background:#f3f6fb; }
 
-    .form-group { margin-bottom: 16px; }
-    .form-label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: #fff; }
-    .input-wrap { position: relative; }
-    .input-icon, .password-toggle { position: absolute; top: 50%; transform: translateY(-50%); color: #c8cfdf; opacity: 0.9; }
-    .input-icon { left: 16px; font-size: 18px; }
-    .password-toggle { right: 16px; cursor: pointer; background: none; border: none; font-size: 18px; }
-    .form-input { width: 100%; height: 56px; border: 1px solid rgba(255,255,255,.14); outline: none; border-radius: 12px; background: rgba(255,255,255,.04); color: #fff; padding: 0 48px; font-size: 15px; transition: 0.25s ease; }
-    .form-input::placeholder { color: rgba(230, 235, 248, 0.68); }
-    .form-input:focus { border-color: rgba(255, 210, 31, 0.50); box-shadow: 0 0 0 4px rgba(255, 210, 31, 0.12); }
+    .switch-text { margin-top:18px; text-align:center; color:var(--muted); }
+    .switch-text a { color:var(--accent); font-weight:800; text-decoration:none; }
 
-    .forgot { display: flex; justify-content: flex-end; margin-top: -4px; margin-bottom: 18px; }
-    .forgot a { color: var(--gold); text-decoration: none; font-weight: 700; font-size: 14px; }
-    .forgot a:hover { text-decoration: underline; }
+    .signup-only { display:none; }
+    body.signup-mode .signup-only { display:block; }
+    body.signup-mode .forgot { display:none; }
 
-    .primary-btn { width: 100%; height: 56px; border: none; border-radius: 12px; cursor: pointer; background: linear-gradient(180deg, var(--gold), var(--gold-2)); color: #111; font-size: 16px; font-weight: 900; box-shadow: 0 10px 28px rgba(255, 210, 31, 0.22); transition: 0.25s ease; }
-    .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(255, 210, 31, 0.30); }
-    .primary-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    .trust-bar { margin-top:18px; display:flex; gap:12px; padding-top:12px; border-top:1px solid rgba(7,26,53,0.04); }
+    .trust-item { display:flex; align-items:center; gap:12px; color:var(--panel-text); }
+    .trust-icon { width:40px; height:40px; border-radius:10px; background:linear-gradient(180deg, rgba(255,210,31,0.12), rgba(255,185,0,0.08)); display:grid; place-items:center; color:var(--accent); font-size:18px; }
 
-    .divider { display: flex; align-items: center; gap: 14px; margin: 20px 0; color: var(--muted); font-size: 13px; }
-    .divider::before, .divider::after { content: ""; height: 1px; flex: 1; background: rgba(255, 210, 31, 0.24); }
+    .form-message { margin-top:6px; display:none; color:var(--accent); font-size:13px; font-weight:700; }
+    .form-message.error { color:#ff6b6b; }
+    .hint { color:var(--muted); font-size:13px; margin-top:6px; }
 
-    .google-btn { width: 100%; height: 54px; border-radius: 12px; border: 1px solid rgba(255, 210, 31, 0.20); background: rgba(255,255,255,.04); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 15px; font-weight: 700; transition: 0.25s ease; }
-    .google-btn:hover { background: rgba(255,255,255,.08); border-color: rgba(255, 210, 31, 0.30); }
-    .google-btn:disabled { opacity: 0.75; cursor: not-allowed; }
-
-    .google-icon { width: 34px; height: 34px; border-radius: 9px; background: rgba(255,255,255,.06); display: grid; place-items: center; flex: 0 0 34px; }
-    .google-icon svg { width: 20px; height: 20px; display: block; }
-
-    .switch-text { margin-top: 22px; text-align: center; color: var(--muted); font-size: 14px; }
-    .switch-text a { color: var(--gold); text-decoration: none; font-weight: 800; margin-left: 4px; }
-    .switch-text a:hover { text-decoration: underline; }
-
-    .signup-only { display: none; }
-    body.signup-mode .signup-only { display: block; }
-    body.signup-mode .forgot { display: none; }
-
-    .trust-bar { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; min-height: 78px; padding: 16px clamp(18px, 6vw, 120px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; background: linear-gradient(180deg, rgba(5, 9, 20, 0.70), rgba(3, 7, 16, 0.98)); border-top: 1px solid rgba(255, 210, 31, 0.14); }
-    .trust-item { display: flex; align-items: center; justify-content: center; gap: 12px; color: #fff; }
-    .trust-icon { width: 40px; height: 40px; border: 1px solid rgba(255, 210, 31, 0.24); border-radius: 14px; display: grid; place-items: center; color: var(--gold); font-size: 20px; flex: 0 0 auto; }
-    .trust-title { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
-    .trust-desc { font-size: 12px; color: var(--muted); }
-
-    .form-message { margin-top: 6px; display: none; color: var(--gold); font-size: 13px; font-weight: 700; }
-    .form-message.error { color: var(--danger); }
-    .hint { color: var(--muted); font-size: 13px; margin-top: 6px; }
-
-    @media (max-width: 1024px) {
-      .auth-page { padding: 24px 20px 112px; }
-      .auth-card { width: min(100%, 590px); }
-      .trust-bar { grid-template-columns: 1fr; position: relative; margin-top: -86px; padding: 18px 20px; }
-      .trust-item { justify-content: flex-start; }
+    @media (max-width: 920px) {
+      .auth-card { width: min(100%, 520px); padding:20px; }
+      .brand img { width:48px; height:48px; }
     }
 
     @media (max-width: 520px) {
-      .auth-page { align-items: flex-start; padding: 20px 14px 28px; }
-      .auth-card { border-radius: 22px; padding: 22px 16px; }
-      .brand { gap: 12px; margin-bottom: 20px; }
-      .brand img { width: 48px; height: 48px; }
-      .tabs { height: 54px; margin-bottom: 20px; }
-      .tab { font-size: 13px; }
-      .auth-title { font-size: 22px; }
-      .auth-subtitle { font-size: 14px; }
-      .form-input, .primary-btn, .google-btn { height: 54px; }
-      .trust-bar { display: none; }
+      .auth-page { align-items:flex-start; padding:18px 14px; }
+      .auth-card { border-radius:14px; padding:16px; }
+      .tabs { gap:8px; margin-bottom:12px; }
+      .auth-title { font-size:20px; }
+      .form-input, .primary-btn, .google-btn { height:48px; }
+      .trust-bar { display:none; }
     }
   </style>
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/></head>
@@ -207,41 +126,41 @@
 </span>
 </a>
 <div class="tabs">
-<button class="tab active" id="loginTab" type="button"><span>↪</span>Connexion</button>
-<button class="tab" id="signupTab" type="button"><span>👤+</span>Inscription</button>
+<button class="tab active" data-i18n="auth.login_tab" id="loginTab" type="button"><span>↪</span>Connexion</button>
+<button class="tab" data-i18n="auth.register_tab" id="signupTab" type="button"><span>👤+</span>Inscription</button>
 </div>
-<h2 class="auth-title" id="formTitle">Bienvenue sur Tonton Kondo</h2>
-<p class="auth-subtitle" id="formSubtitle">Accédez à votre compte pour gérer vos jeux, tickets et transactions.</p>
+<h2 class="auth-title" data-i18n="auth.login_title" id="formTitle">Bienvenue sur Tonton Kondo</h2>
+<p class="auth-subtitle" data-i18n="auth.login_subtitle" id="formSubtitle">Accédez à votre compte pour gérer vos jeux, tickets et transactions.</p>
 <form id="authForm" novalidate="">
 <div class="form-group" id="phoneGroup">
-<label class="form-label" for="phone">Téléphone</label>
+<label class="form-label" data-i18n="auth.phone_label" for="phone">Téléphone</label>
 <div class="input-wrap">
 <span class="input-icon">📱</span>
-<input class="form-input" id="phone" name="phone" placeholder="50933123456 ou 33123456" type="tel"/>
+<input class="form-input" data-i18n-placeholder="auth.phone_placeholder" id="phone" name="phone" placeholder="50933123456 ou 33123456" type="tel"/>
 </div>
-<p class="hint">Connectez-vous avec votre numéro de téléphone.</p>
+<p class="hint" data-i18n="auth.phone_hint">Connectez-vous avec votre numéro de téléphone.</p>
 </div>
 <div class="form-group signup-only" id="fullnameGroup" style="display:none;">
-<label class="form-label" for="fullname">Nom complet</label>
+<label class="form-label" data-i18n="auth.full_name_label" for="fullname">Nom complet</label>
 <div class="input-wrap">
 <span class="input-icon">👤</span>
-<input class="form-input" id="fullname" name="full_name" placeholder="Entrez votre nom complet" type="text"/>
+<input class="form-input" data-i18n-placeholder="auth.full_name_placeholder" id="fullname" name="full_name" placeholder="Entrez votre nom complet" type="text"/>
 </div>
 </div>
 <div class="form-group">
-<label class="form-label" for="password">Mot de passe</label>
+<label class="form-label" data-i18n="auth.password_label" for="password">Mot de passe</label>
 <div class="input-wrap">
 <span class="input-icon">🔒</span>
-<input class="form-input" id="password" name="password" placeholder="Entrez votre mot de passe" required="" type="password"/>
-<button aria-label="Afficher ou masquer le mot de passe" class="password-toggle" id="togglePassword" type="button">⌧</button>
+<input class="form-input" data-i18n-placeholder="auth.password_placeholder" id="password" name="password" placeholder="Entrez votre mot de passe" required="" type="password"/>
+<button aria-label="Afficher ou masquer le mot de passe" class="password-toggle" data-i18n-aria-label="auth.show_password" id="togglePassword" type="button">⌧</button>
 </div>
 </div>
 <div class="forgot">
-<a href="forgot-password.html">Mot de passe oublié ?</a>
+<a data-i18n="auth.forgot_password" href="forgot-password.html">Mot de passe oublié ?</a>
 </div>
 <button class="primary-btn" id="submitBtn" type="submit">Se connecter →</button>
 <div class="form-message" id="formMessage"></div>
-<div class="divider">ou</div>
+<div class="divider" data-i18n="auth.or">ou</div>
 <button class="google-btn" id="googleBtn" type="button">
 <span aria-hidden="true" class="google-icon">
 <svg focusable="false" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -257,9 +176,9 @@
 </form>
 </section>
 <section class="trust-bar">
-<div class="trust-item"><div class="trust-icon">🛡</div><div><p class="trust-title">Sécurisé et fiable</p><p class="trust-desc">Vos données sont protégées</p></div></div>
-<div class="trust-item"><div class="trust-icon">🏆</div><div><p class="trust-title">Expérience premium</p><p class="trust-desc">Jeux et tirages exclusifs</p></div></div>
-<div class="trust-item"><div class="trust-icon">🎧</div><div><p class="trust-title">Support 24/7</p><p class="trust-desc">Notre équipe est là pour vous</p></div></div>
+<div class="trust-item"><div class="trust-icon">🛡</div><div><p class="trust-title" data-i18n="auth.secure_title">Sécurisé et fiable</p><p class="trust-desc" data-i18n="auth.secure_description">Vos données sont protégées</p></div></div>
+<div class="trust-item"><div class="trust-icon">🏆</div><div><p class="trust-title" data-i18n="auth.premium_title">Expérience premium</p><p class="trust-desc" data-i18n="auth.premium_description">Jeux et tirages exclusifs</p></div></div>
+<div class="trust-item"><div class="trust-icon">🎧</div><div><p class="trust-title" data-i18n="auth.support_title">Support 24/7</p><p class="trust-desc" data-i18n="auth.support_description">Notre équipe est là pour vous</p></div></div>
 </section>
 </main>
 <script src="../js/i18n.js"></script>
@@ -268,6 +187,7 @@
 <script src="../js/auth-guard.js"></script>
 <script>
     const body = document.body;
+    const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
     const loginTab = document.getElementById('loginTab');
     const signupTab = document.getElementById('signupTab');
     const formTitle = document.getElementById('formTitle');
@@ -361,7 +281,7 @@
       }
 
       submitBtn.disabled = true;
-      submitBtn.textContent = mode === 'signup' ? 'Création du compte...' : 'Connexion...';
+      submitBtn.textContent = mode === 'signup' ? tr('sensitive.auth.signup_loading') : tr('sensitive.auth.login_loading');
 
       try {
         const result = mode === 'signup'
@@ -384,7 +304,7 @@
     googleBtn.addEventListener('click', async () => {
       if (googleBtn.disabled) return;
       googleBtn.disabled = true;
-      googleBtn.textContent = 'Connexion Google...';
+      googleBtn.textContent = tr('sensitive.auth.google_loading');
       setMessage('');
 
       try {

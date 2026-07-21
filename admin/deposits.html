@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <html lang="fr">
-<head>
+<head data-i18n="admin_v3.admin_deposits.item_001">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Tonton Kondo — Dépôts admin</title>
+<title data-i18n="admin_v3.admin_deposits.item_001">Tonton Kondo — Dépôts admin</title>
 <style>
     :root {
       --bg:#020813;
@@ -71,53 +71,53 @@
 <a class="brand" href="../admin/index.html">
 <img alt="Logo Tonton Kondo" src="../assets/logo.png"/>
 <span class="brand-text">
-<strong>Tonton Kondo</strong>
-<span>Paryaj</span>
+<strong data-i18n="admin_v3.admin_deposits.item_003">Tonton Kondo</strong>
+<span data-i18n="admin_v3.admin_deposits.item_004">Paryaj</span>
 </span>
 </a>
-<span class="pill">Admin — Dépôts</span>
+<span class="pill" data-i18n="admin_v3.admin_deposits.item_005">Admin — Dépôts</span>
 </header>
 <section class="hero-card">
 <article class="panel">
-<div class="eyebrow">Phase 3.3</div>
-<h1>Gestion des dépôts</h1>
-<p>Consultez les demandes de dépôt en attente et approuvez ou refusez-les. Les paiements ne sont pas modifiés ici sans passer par la logique de transaction existante.</p>
-<span class="mini-chip">🔐 Accès admin / super_admin</span>
+<div class="eyebrow" data-i18n="admin_v3.admin_deposits.item_006">Phase 3.3</div>
+<h1 data-i18n="admin_v3.admin_deposits.item_007">Gestion des dépôts</h1>
+<p data-i18n="admin_v3.admin_deposits.item_008">Consultez les demandes de dépôt en attente et approuvez ou refusez-les. Les paiements ne sont pas modifiés ici sans passer par la logique de transaction existante.</p>
+<span class="mini-chip" data-i18n="admin_v3.admin_deposits.item_009">🔐 Accès admin / super_admin</span>
 <span class="mini-chip">🧾 Demandes pending</span>
 </article>
 <article class="panel">
 <div class="panel-head">
 <div>
-<h2>État</h2>
-<p>Validation des demandes de dépôt.</p>
+<h2 data-i18n="admin_v3.admin_deposits.item_011">État</h2>
+<p data-i18n="admin_v3.admin_deposits.item_012">Validation des demandes de dépôt.</p>
 </div>
 </div>
-<div class="feedback warn" id="feedback-box">Chargement des demandes…</div>
-<div class="access-box" hidden="" id="access-denied">Accès refusé. Cette page est réservée aux admins et super_admin.</div>
+<div class="feedback warn" data-i18n="admin_v3.admin_deposits.item_013" id="feedback-box">Chargement des demandes…</div>
+<div class="access-box" data-i18n="admin_v3.admin_deposits.item_014" hidden="" id="access-denied">Accès refusé. Cette page est réservée aux admins et super_admin.</div>
 </article>
 </section>
 <section class="layout-grid">
 <article class="panel">
 <div class="panel-head">
 <div>
-<h2>Demandes de dépôt</h2>
-<p>Liste des demandes avec client, méthode, statut et actions admin.</p>
+<h2 data-i18n="admin_v3.admin_deposits.item_015">Demandes de dépôt</h2>
+<p data-i18n="admin_v3.admin_deposits.item_016">Liste des demandes avec client, méthode, statut et actions admin.</p>
 </div>
 </div>
 <div class="table-card">
 <table>
 <thead>
 <tr>
-<th>Client</th>
-<th>Email</th>
-<th>Montant</th>
-<th>Méthode</th>
-<th>Téléphone</th>
-<th>Référence</th>
-<th>Statut</th>
-<th>Date</th>
-<th>Note admin</th>
-<th>Actions</th>
+<th data-i18n="admin_v3.admin_deposits.item_017">Client</th>
+<th data-i18n="admin_v3.admin_deposits.item_018">Email</th>
+<th data-i18n="admin_v3.admin_deposits.item_019">Montant</th>
+<th data-i18n="admin_v3.admin_deposits.item_020">Méthode</th>
+<th data-i18n="admin_v3.admin_deposits.item_021">Téléphone</th>
+<th data-i18n="admin_v3.admin_deposits.item_022">Référence</th>
+<th data-i18n="admin_v3.admin_deposits.item_023">Statut</th>
+<th data-i18n="admin_v3.admin_deposits.item_024">Date</th>
+<th data-i18n="admin_v3.admin_deposits.item_025">Note admin</th>
+<th data-i18n="admin_v3.admin_deposits.item_026">Actions</th>
 </tr>
 </thead>
 <tbody id="deposits-table-body"></tbody>
@@ -130,6 +130,7 @@
 <script src="../js/auth-config.js"></script>
 <script src="../js/auth.js"></script>
 <script>
+    const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
     const feedbackBox = document.getElementById('feedback-box');
     const accessDeniedBox = document.getElementById('access-denied');
     const depositsBody = document.getElementById('deposits-table-body');
@@ -191,7 +192,7 @@
 
       const client = window.supabaseClient || null;
       if (!client || typeof client.from !== 'function') {
-        setFeedback('Connexion Supabase indisponible.', 'error');
+        setFeedback(tr('sensitive.admin.service_unavailable'), 'error');
         return;
       }
 
@@ -205,8 +206,8 @@
         if (error) throw error;
 
         if (!data || !data.length) {
-          depositsBody.innerHTML = '<tr><td colspan="10" class="muted">Aucune demande de dépôt.</td></tr>';
-          setFeedback('Aucune demande de dépôt à traiter.', 'warn');
+          depositsBody.innerHTML = `<tr><td colspan="10" class="muted">${tr('sensitive.admin.no_deposits')}</td></tr>`;
+          setFeedback(tr('sensitive.admin.no_deposits_feedback'), 'warn');
           return;
         }
 
@@ -234,7 +235,7 @@
 
         setFeedback('Demandes de dépôt chargées.', 'success');
       } catch (error) {
-        console.error('Erreur chargement dépôts admin.', error);
+        console.error(tr('sensitive.admin.deposit_load_error'), error);
         setFeedback(error.message || 'Impossible de charger les demandes de dépôt.', 'error');
       }
     }
@@ -245,7 +246,7 @@
 
       const client = window.supabaseClient || null;
       if (!client || typeof client.from !== 'function') {
-        setFeedback('Connexion Supabase indisponible.', 'error');
+        setFeedback(tr('sensitive.admin.service_unavailable'), 'error');
         return;
       }
 
@@ -271,7 +272,7 @@
             p_type: 'deposit',
             p_amount: Number(requestData.amount),
             p_reference: `DEP-${requestData.id}`,
-            p_description: 'Dépôt approuvé'
+            p_description: tr('sensitive.admin.deposit_approved_desc')
           });
 
           if (rpcError) {
@@ -292,10 +293,10 @@
 
         if (updateError) throw updateError;
 
-        setFeedback(action === 'approve' ? 'Dépôt approuvé avec succès.' : 'Dépôt refusé.', 'success');
+        setFeedback(action === 'approve' ? tr('sensitive.admin.deposit_approved') : tr('sensitive.admin.deposit_rejected'), 'success');
         await loadDeposits();
       } catch (error) {
-        console.error('Erreur traitement dépôt admin.', error);
+        console.error(tr('sensitive.admin.deposit_action_error'), error);
         setFeedback(error.message || 'Impossible de traiter cette demande.', 'error');
       }
     }

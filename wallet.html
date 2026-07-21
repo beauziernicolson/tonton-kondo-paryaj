@@ -145,10 +145,10 @@
 </div>
 <div class="header-actions">
 <div id="authHeaderActions"></div>
-<button class="action-btn" data-i18n-aria-label="common.promotions" type="button">
+<a class="action-btn" data-i18n-aria-label="common.promotions" type="button" href="promotion.html">
 <svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="8"></rect><path d="M12 8v13M3 12h18"></path><path d="M12 8H8a2.5 2.5 0 1 1 2.5-2.5C10.5 7 12 8 12 8Z"></path><path d="M12 8h4a2.5 2.5 0 1 0-2.5-2.5C13.5 7 12 8 12 8Z"></path></svg>
 <span class="badge">3</span>
-</button>
+</a>
 <a class="action-btn notifications-link" data-i18n-aria-label="common.notifications" href="notifications.html">
 <svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
 <span class="badge notifications-badge" hidden="">0</span>
@@ -180,27 +180,27 @@
 <nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav"><a href="index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a href="jeux/games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a href="results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a href="tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a class="is-active" href="wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a href="deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a href="withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <section class="grid">
 <article class="panel">
-<div class="eyebrow" data-i18n="wallet.eyebrow">Portefeuille</div>
-<h1 data-i18n="wallet.balance_heading">Solde actuel</h1>
-<p data-i18n="wallet.description">Consultez le solde de votre compte et accédez aux dépôts et retraits.</p>
+<div class="eyebrow" data-i18n="wallet_v3.eyebrow">Votre portefeuille</div>
+<h1 data-i18n="wallet_v3.title">Gérez votre argent en toute simplicité</h1>
+<p data-i18n="wallet_v3.description">Consultez votre solde, ajoutez des fonds ou demandez un retrait depuis un seul espace.</p>
 <div class="stat-grid">
-<div class="stat-card"><small data-i18n="common.available_balance">Solde disponible</small><strong data-i18n="wallet.header_balance_loading" id="wallet-balance">Chargement de votre portefeuille…</strong><span data-i18n="common.available_balance" id="wallet-caption">Solde disponible</span></div>
-<div class="stat-card"><small data-i18n="common.currency">Devise</small><strong data-i18n="wallet.currency_placeholder" id="wallet-currency">HTG</strong><span data-i18n="wallet.currency_help">Monnaie du wallet</span></div>
-<div class="stat-card"><small data-i18n="common.status">Statut</small><strong data-i18n="wallet.status_placeholder" id="wallet-status">active</strong><span data-i18n="wallet.status_help">État du portefeuille</span></div>
+<div class="stat-card"><small data-i18n="wallet_v3.available_label">Disponible pour jouer ou effectuer un retrait</small><strong data-i18n="wallet.header_balance_loading" id="wallet-balance">Chargement de votre portefeuille…</strong><span data-i18n="common.available_balance" id="wallet-caption">Solde disponible</span></div>
+<div class="stat-card"><small data-i18n="wallet_v3.currency_label">Devise du compte</small><strong data-i18n="wallet.currency_placeholder" id="wallet-currency">HTG</strong><span data-i18n="wallet_v3.currency_help">Toutes vos opérations sont enregistrées dans cette devise.</span></div>
+<div class="stat-card"><small data-i18n="wallet_v3.status_label">État du portefeuille</small><strong data-i18n="wallet.status_placeholder" id="wallet-status">active</strong><span data-i18n="wallet_v3.status_help">Votre portefeuille est prêt à être utilisé.</span></div>
 </div>
 <div class="action-row">
-<button class="btn btn-primary" data-i18n="wallet.refresh_balance" id="refresh-wallet-btn" type="button">Rafraîchir le solde</button>
-<a class="btn btn-secondary" data-i18n="common.deposit" href="deposit.html">Dépôt</a>
-<a class="btn btn-secondary" data-i18n="common.withdraw" href="withdraw.html">Retrait</a>
-<a class="btn btn-secondary" data-i18n="wallet.back_to_dashboard" href="dashboard.html">Retour au tableau de bord</a>
+<button class="btn btn-primary" data-i18n="wallet_v3.refresh" id="refresh-wallet-btn" type="button">Rafraîchir le solde</button>
+<a class="btn btn-secondary" data-i18n="wallet_v3.add_funds" href="deposit.html">Ajouter des fonds</a>
+<a class="btn btn-secondary" data-i18n="wallet_v3.cash_out" href="withdraw.html">Retirer des fonds</a>
+<a class="btn btn-secondary" data-i18n="wallet_v3.back_dashboard" href="dashboard.html">Retour au tableau de bord</a>
 </div>
 </article>
 <article class="panel">
-<div class="eyebrow" data-i18n="wallet.transactions_eyebrow">Transactions</div>
-<h1 data-i18n="wallet.transactions_heading">Derniers mouvements</h1>
-<p data-i18n="wallet.transactions_description">Historique des transactions de votre portefeuille.</p>
+<div class="eyebrow" data-i18n="wallet_v3.activity_eyebrow">Activité financière</div>
+<h1 data-i18n="wallet_v3.activity_title">Mouvements récents</h1>
+<p data-i18n="wallet_v3.activity_description">Suivez les dépôts, retraits, mises et gains enregistrés sur votre compte.</p>
 <div class="list" id="transactions-list">
-<div class="item"><strong data-i18n="wallet.loading_transactions">Chargement de votre portefeuille…</strong><span data-i18n="wallet.loading_transactions_subtitle">Chargement de vos mouvements récents…</span></div>
+<div class="item"><strong data-i18n="wallet_v3.loading_title">Chargement de vos opérations…</strong><span data-i18n="wallet_v3.loading_text">Nous récupérons les derniers mouvements de votre portefeuille.</span></div>
 </div>
 </article>
 </section>
@@ -254,12 +254,12 @@
     function getTransactionStatusLabel(status) {
       const normalizedStatus = String(status || '').toLowerCase();
       const statusKeys = {
-        pending: 'wallet.status.pending',
-        approved: 'wallet.status.approved',
-        rejected: 'wallet.status.rejected',
-        completed: 'wallet.status.completed',
+        pending: 'wallet_v4.status_pending',
+        approved: 'wallet_v4.status_approved',
+        rejected: 'wallet_v4.status_rejected',
+        completed: 'wallet_v4.status_completed',
         paid: 'wallet.status.paid',
-        failed: 'wallet.status.failed',
+        failed: 'wallet_v4.status_failed',
         cancelled: 'wallet.status.cancelled',
         active: 'common.active'
       };
@@ -275,7 +275,7 @@
     function formatTransactionDate(createdAt) {
       const dateValue = createdAt ? new Date(createdAt) : null;
       if (!dateValue || Number.isNaN(dateValue.getTime())) {
-        return window.TKI18n.t('wallet.transaction_date_unknown');
+        return window.TKI18n.t('wallet_v3.date_unknown');
       }
       return dateValue.toLocaleString(getWalletLocale());
     }
@@ -284,7 +284,7 @@
       if (!window.TKI18n || typeof window.TKI18n.applyTranslations !== 'function') {
         return;
       }
-      document.title = window.TKI18n.t('wallet.page_title');
+      document.title = window.TKI18n.t('wallet_v3.page_title');
       window.TKI18n.applyTranslations(document);
     }
 
@@ -309,7 +309,7 @@
       if (statusEl) statusEl.textContent = getTransactionStatusLabel(status);
 
       const captionEl = document.getElementById('wallet-caption');
-      if (captionEl) captionEl.textContent = tkText('common.available_balance', 'Solde disponible');
+      if (captionEl) captionEl.textContent = tkText('wallet_v3.available_label', 'Disponible pour jouer ou effectuer un retrait');
 
       const list = document.getElementById('transactions-list');
       if (!list) return;
@@ -317,9 +317,9 @@
       if (!walletPageState.transactions || !walletPageState.transactions.length) {
         list.innerHTML = `
           <div class="item">
-            <strong>${tkText('wallet.empty_state_title', 'Aucune opération pour le moment.')}</strong>
-            <span>${tkText('wallet.empty_state_text', 'Vos mouvements apparaîtront ici.')}</span>
-            <a class="btn btn-secondary" href="deposit.html" style="margin-top:8px; display:inline-flex;">${tkText('wallet.empty_state_cta', 'Faire un dépôt')}</a>
+            <strong>${tkText('wallet_v3.empty_title', 'Aucune opération pour le moment')}</strong>
+            <span>${tkText('wallet_v3.empty_text', 'Vos opérations apparaîtront ici.')}</span>
+            <a class="btn btn-secondary" href="deposit.html" style="margin-top:8px; display:inline-flex;">${tkText('wallet_v3.empty_cta', 'Ajouter des fonds')}</a>
           </div>
         `;
         return;
@@ -330,7 +330,7 @@
           <strong>${getTransactionTypeLabel(item.type)}</strong>
           <span>${formatTransactionDate(item.created_at)} • ${getTransactionStatusLabel(item.status)}</span>
           <span class="muted">${window.TKI18n.t('wallet.reference_label', { reference: item.reference || '—' })}</span>
-          <span class="muted">${item.description || tkText('wallet.transaction_description_fallback', 'Mouvement wallet')}</span>
+          <span class="muted">${item.description || tkText('wallet_v3.transaction_fallback', 'Opération sur le portefeuille')}</span>
           <strong style="margin-top:6px; color: var(--gold);">${window.TKI18n.t('wallet.amount_value', { amount: Number(item.amount || 0).toLocaleString(getWalletLocale()), currency })}</strong>
         </article>
       `).join('');
@@ -411,13 +411,13 @@
         walletPageState.transactions = Array.isArray(data) ? data : [];
         renderWalletPageUi();
       } catch (error) {
-        console.error('Erreur chargement transactions wallet.', error);
+        console.error(tkText('wallet_v4.console_transactions', 'Impossible de charger les opérations du portefeuille.'), error);
         walletPageState.transactions = [];
         const list = document.getElementById('transactions-list');
         if (list) {
           list.innerHTML = `
             <div class="item">
-              <strong>${tkText('wallet.error_title', 'Erreur')}</strong>
+              <strong>${tkText('wallet_v4.error_title', 'Une erreur est survenue')}</strong>
               <span>${tkText('wallet.error_loading_transactions', 'Impossible de charger les transactions.')}</span>
             </div>
           `;
