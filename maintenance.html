@@ -56,14 +56,16 @@
       backdrop-filter: blur(18px);
     }
 
-    .logo {
-      display: block;
-      width: min(250px, 70%);
-      max-height: 110px;
-      object-fit: contain;
+    .brand {
       margin: 0 auto 30px;
-      filter: drop-shadow(0 8px 20px rgba(0,0,0,.25));
+      font-size: clamp(28px, 6vw, 48px);
+      font-weight: 950;
+      letter-spacing: -.04em;
+      color: var(--white);
+      text-shadow: 0 8px 20px rgba(0,0,0,.25);
     }
+
+    .brand span { color: var(--yellow); }
 
     .badge {
       display: inline-flex;
@@ -136,7 +138,7 @@
   <div class="glow two"></div>
 
   <main class="card">
-    <img class="logo" src="/assets/reallogo.png" alt="Tonton Kondo">
+    <div class="brand" aria-label="Tonton Kondo">TONTON <span>KONDO</span></div>
 
     <div class="badge">
       <span class="dot"></span>
