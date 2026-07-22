@@ -10,14 +10,20 @@
   const VERIFY_FUNCTION = 'plopplop-verify-payment';
   const VALID_METHODS = new Set(['moncash', 'natcash', 'kashpaw', 'all']);
   const FINAL_STATUSES = new Set(['completed', 'manual_review', 'amount_mismatch', 'cancelled']);
-  const STATUS_MESSAGES = {
-    pending: tr('sensitive.deposit.pending'),
-    completed: tr('sensitive.deposit.completed'),
-    failed: tr('sensitive.deposit.failed'),
-    amount_mismatch: tr('sensitive.deposit.amount_mismatch'),
-    manual_review: tr('sensitive.deposit.manual_review'),
-    cancelled: tr('sensitive.deposit.cancelled')
-  };
+  // Résolu à l'appel (et non au chargement) : sinon les libellés sont figés
+  // avant que les traductions i18n ne soient prêtes, ce qui affichait la clé brute
+  // « sensitive.deposit.completed » au lieu du texte humain.
+  function statusMessage(status) {
+    const messages = {
+      pending: tr('sensitive.deposit.pending'),
+      completed: tr('sensitive.deposit.completed'),
+      failed: tr('sensitive.deposit.failed'),
+      amount_mismatch: tr('sensitive.deposit.amount_mismatch'),
+      manual_review: tr('sensitive.deposit.manual_review'),
+      cancelled: tr('sensitive.deposit.cancelled')
+    };
+    return messages[String(status || 'pending')] || null;
+  }
 
   let busy = false;
   let historyBusy = false;
@@ -122,7 +128,7 @@
         if (body?.error === 'request_id conflict') {
           return tr('sensitive.deposit.request_conflict');
         }
-        if (body?.status === 'manual_review') return STATUS_MESSAGES.manual_review;
+        if (body?.status === 'manual_review') return statusMessage('manual_review');
         if (body?.error) return String(body.error);
       }
     } catch {
@@ -183,7 +189,7 @@
     const message = panel.querySelector('[data-plopplop-status-message]');
     const verifyButton = panel.querySelector('[data-plopplop-verify]');
     if (title) title.textContent = status === 'completed' ? tr('sensitive.deposit.confirmed_title') : tr('sensitive.deposit.tracking_title');
-    if (message) message.textContent = STATUS_MESSAGES[status] || STATUS_MESSAGES.failed;
+    if (message) message.textContent = statusMessage(status) || statusMessage('failed');
     if (verifyButton) verifyButton.hidden = status !== 'pending' && status !== 'failed';
   }
 
@@ -224,7 +230,7 @@
           <strong>${escapeHtml(new Date(item.created_at).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR'))}</strong>
           <span>${escapeHtml(money(item.amount))} • ${escapeHtml(methodLabel(item.payment_method))}</span>
           <span>${tr('sensitive.deposit.reference')} : ${escapeHtml(item.provider_reference || '—')}</span>
-          <span>${tr('sensitive.deposit.status')} : ${escapeHtml(STATUS_MESSAGES[String(item.status || 'pending')] || String(item.status || 'pending'))}</span>
+          <span>${tr('sensitive.deposit.status')} : ${escapeHtml(statusMessage(item.status) || String(item.status || 'pending'))}</span>
           ${item.status === 'pending' ? `<button class="btn" data-request-id="${escapeHtml(item.request_id)}" type="button">${tr('sensitive.deposit.verify_now')}</button>` : ''}
         </article>`).join('');
     } catch (error) {
@@ -295,7 +301,7 @@
         window.location.assign(redirect);
         return;
       }
-      setFeedback(STATUS_MESSAGES[status] || STATUS_MESSAGES.pending, status === 'pending' ? 'warn' : 'error');
+      setFeedback(statusMessage(status) || statusMessage('pending'), status === 'pending' ? 'warn' : 'error');
     } catch (error) {
       const message = await parseFunctionError(error);
       setFeedback(message, 'error');
@@ -323,7 +329,7 @@
       if (status === 'completed') savePending(null);
       else savePending({ ...current, request_id: requestId, status, updated_at: new Date().toISOString() });
 
-      setFeedback(STATUS_MESSAGES[status] || STATUS_MESSAGES.failed, status === 'completed' ? 'success' : (status === 'pending' ? 'warn' : 'error'));
+      setFeedback(statusMessage(status) || statusMessage('failed'), status === 'completed' ? 'success' : (status === 'pending' ? 'warn' : 'error'));
       showStatus({ status });
       await Promise.all([loadHistory(), refreshWallet()]);
     } catch (error) {

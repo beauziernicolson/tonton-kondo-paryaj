@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Tonton Kondo — Jeux</title>
+<title data-i18n="games_catalog.page_title">Tonton Kondo — Jeux</title>
 <style>
     :root {
       --bg:#020813; --panel:rgba(8,24,43,.96); --line:rgba(255,255,255,.12); --text:#f5f7fb; --muted:#aebbd0;
@@ -298,7 +298,11 @@
     }
   }
 </style>
-<link href="../assets/main-header.css" rel="stylesheet"/></head>
+<link href="../assets/main-header.css" rel="stylesheet"/><style id="games-catalog-final-fixes">
+.game-header__actions > a[href="games.html"]{color:#071a35!important;-webkit-text-fill-color:#071a35!important;}
+.game-header__actions > a[href="games.html"] span{color:#071a35!important;-webkit-text-fill-color:#071a35!important;}
+@media(max-width:760px){.game-header__actions > a[href="games.html"],.game-header__actions > a[href="games.html"] span{color:transparent!important;-webkit-text-fill-color:transparent!important;}}
+</style></head>
 <body class="tk-public tk-page-games tk-file-games tk-main-header-page">
 <main class="app">
 <header class="game-header" id="gameHeader">
@@ -318,98 +322,98 @@
 </div></header>
 <nav aria-label="Navigation principale Tonton Kondo" class="tk-primary-nav" data-i18n-aria-label="navigation.main"><a data-i18n="navigation.home" href="../index.html"><span aria-hidden="true" class="tk-nav-dot"></span>Accueil</a><a class="is-active" data-i18n="navigation.games" href="games.html"><span aria-hidden="true" class="tk-nav-dot"></span>Jeux</a><a data-i18n="navigation.results" href="../results.html"><span aria-hidden="true" class="tk-nav-dot"></span>Résultats</a><a data-i18n="navigation.tickets" href="../tickets.html"><span aria-hidden="true" class="tk-nav-dot"></span>Tickets</a><a data-i18n="navigation.wallet" href="../wallet.html"><span aria-hidden="true" class="tk-nav-dot"></span>Portefeuille</a><a data-i18n="navigation.deposit" href="../deposit.html"><span aria-hidden="true" class="tk-nav-dot"></span>Dépôt</a><a data-i18n="navigation.withdraw" href="../withdraw.html"><span aria-hidden="true" class="tk-nav-dot"></span>Retrait</a></nav>
 <section class="hero-card">
-<div class="eyebrow">Catalogue</div>
-<h1>Jeux disponibles</h1>
-<p>Accédez rapidement à Borlette, Mariage, Lotto 3, Lotto 4, Lotto 5, Keno, Roulette et Lucky 6. Les jeux déjà prêts sont visibles directement depuis cette page.</p>
+<div class="eyebrow" data-i18n="games_catalog.catalog_eyebrow">Catalogue</div>
+<h1 data-i18n="games_catalog.title">Jeux disponibles</h1>
+<p data-i18n="games_catalog.intro">Accédez rapidement à Borlette, Mariage, Lotto 3, Lotto 4, Lotto 5, Keno, Roulette et Lucky 6. Les jeux déjà prêts sont visibles directement depuis cette page.</p>
 </section>
 <section class="grid">
 <article class="panel">
-<h2>Jeux principaux</h2>
-<p>Les jeux actifs et leurs raccourcis de jeu.</p>
+<h2 data-i18n="games_catalog.main_title">Jeux principaux</h2>
+<p data-i18n="games_catalog.main_subtitle">Les jeux actifs et leurs raccourcis de jeu.</p>
 <div class="game-grid">
 <article class="game-card">
 <span class="tag">Borlette</span>
 <strong>Borlette</strong>
-<p class="desc">Choisissez vos boules, votre tirage et validez votre ticket Borlette.</p>
-<div class="actions"><a class="btn btn-primary" href="borlette.html">Jouer</a><a class="btn btn-secondary" href="help-borlette.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.borlette_desc">Choisissez vos boules, votre tirage et validez votre ticket Borlette.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play" href="borlette.html">Jouer</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-borlette.html">Comprendre</a></div>
 </article>
 <article class="game-card">
 <span class="tag">Mariage</span>
 <strong>Mariage</strong>
-<p class="desc">Jouez deux numéros avec les 3 lots Borlette du même tirage.</p>
-<div class="actions"><a class="btn btn-primary" href="mariage.html">Jouer</a><a class="btn btn-secondary" href="help-mariage.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.mariage_desc">Jouez deux numéros avec les 3 lots Borlette du même tirage.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play" href="mariage.html">Jouer</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-mariage.html">Comprendre</a></div>
 </article>
 <article class="game-card">
 <span class="tag">Lotto 3</span>
 <strong>Lotto 3</strong>
-<p class="desc">Choisissez un numéro 000 à 999. Le gain principal est basé sur le premier lot complet Borlette.</p>
-<div class="actions"><a class="btn btn-primary" href="lotto3.html">Jouer</a><a class="btn btn-secondary" href="help-lotto3.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.lotto3_desc">Choisissez un numéro 000 à 999. Le gain principal est basé sur le premier lot complet Borlette.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play" href="lotto3.html">Jouer</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-lotto3.html">Comprendre</a></div>
 </article>
 <article class="game-card">
 <span class="tag">Lotto 4</span>
 <strong>Lotto 4</strong>
-<p class="desc">Jouez un numéro à 4 chiffres et tentez de gagner gros.</p>
-<div class="actions"><a class="btn btn-primary" href="lotto4.html">Jouer maintenant</a><a class="btn btn-secondary" href="help-lotto4.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.lotto4_desc">Jouez un numéro à 4 chiffres et tentez de gagner gros.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play_now" href="lotto4.html">Jouer maintenant</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-lotto4.html">Comprendre</a></div>
 </article>
 <article class="game-card">
 <span class="tag">Lotto 5</span>
 <strong>Lotto 5</strong>
-<p class="desc">Jouez un numéro à 5 chiffres avec des gains encore plus élevés.</p>
-<div class="actions"><a class="btn btn-primary" href="lotto5.html">Jouer maintenant</a><a class="btn btn-secondary" href="help-lotto5.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.lotto5_desc">Jouez un numéro à 5 chiffres avec des gains encore plus élevés.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play_now" href="lotto5.html">Jouer maintenant</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-lotto5.html">Comprendre</a></div>
 </article>
 <article class="game-card">
-<span class="tag">Instantané</span>
+<span class="tag" data-i18n="games_catalog.instant">Instantané</span>
 <strong>Keno</strong>
-<p class="desc">Choisissez vos numéros et suivez le tirage instantané.</p>
-<div class="actions"><a class="btn btn-primary" href="keno.html">Jouer maintenant</a><a class="btn btn-secondary" href="help-keno.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.keno_desc">Choisissez vos numéros et suivez le tirage instantané.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play_now" href="keno.html">Jouer maintenant</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-keno.html">Comprendre</a></div>
 </article>
 <article class="game-card">
-<span class="tag">Nouveau</span>
+<span class="tag" data-i18n="games_catalog.new">Nouveau</span>
 <strong>Roulette</strong>
-<p class="desc">Misez sur vos numéros, couleurs ou combinaisons et tentez de gagner gros.</p>
-<div class="actions"><a class="btn btn-primary" href="roulette.html">Jouer maintenant</a><a class="btn btn-secondary" href="help-roulette.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.roulette_desc">Misez sur vos numéros, couleurs ou combinaisons et tentez de gagner gros.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play_now" href="roulette.html">Jouer maintenant</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-roulette.html">Comprendre</a></div>
 </article>
 <article class="game-card">
-<span class="tag">Nouveau</span>
-<strong>American Roulette</strong>
-<p class="desc">Version américaine de la roulette avec 0 et 00 séparés pour des mises spécifiques.</p>
-<div class="actions"><a class="btn btn-primary" href="american-roulette.html">Jouer maintenant</a><a class="btn btn-secondary" href="help-american-roulette.html">Comprendre</a></div>
+<span class="tag" data-i18n="games_catalog.new">Nouveau</span>
+<strong data-i18n="games_catalog.american_name">American Roulette</strong>
+<p class="desc" data-i18n="games_catalog.american_desc">Version américaine de la roulette avec 0 et 00 séparés pour des mises spécifiques.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play_now" href="american-roulette.html">Jouer maintenant</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-american-roulette.html">Comprendre</a></div>
 </article>
 <article class="game-card">
-<span class="tag">Nouveau</span>
+<span class="tag" data-i18n="games_catalog.new">Nouveau</span>
 <strong>Penalty</strong>
-<p class="desc">Tirez au but depuis une grille de 24 secteurs et pariez sur le secteur, la couleur ou l’événement.</p>
-<div class="actions"><a class="btn btn-primary" href="penalty.html">Jouer maintenant</a><a class="btn btn-secondary" href="help-penalty.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.penalty_desc">Tirez au but depuis une grille de 24 secteurs et pariez sur le secteur, la couleur ou l’événement.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play_now" href="penalty.html">Jouer maintenant</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-penalty.html">Comprendre</a></div>
 </article>
 <article class="game-card">
-<span class="tag">Nouveau</span>
-<strong>Horse Racing</strong>
-<p class="desc">Découvrez une course de chevaux interactive avec des coureurs réalistes et un finish serré.</p>
-<div class="actions"><a class="btn btn-primary" href="horse-racing.html">Jouer maintenant</a><a class="btn btn-secondary" href="help-horse-racing.html">Comprendre</a></div>
+<span class="tag" data-i18n="games_catalog.new">Nouveau</span>
+<strong data-i18n="games_catalog.horse_name">Horse Racing</strong>
+<p class="desc" data-i18n="games_catalog.horse_desc">Découvrez une course de chevaux interactive avec des coureurs réalistes et un finish serré.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play_now" href="horse-racing.html">Jouer maintenant</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-horse-racing.html">Comprendre</a></div>
 </article>
 <article class="game-card">
-<span class="tag">Nouveau</span>
+<span class="tag" data-i18n="games_catalog.new">Nouveau</span>
 <strong>Lucky 6</strong>
-<p class="desc">Choisissez 6 numéros et gagnez selon la position du 6e match.</p>
-<div class="actions"><a class="btn btn-primary" href="lucky6.html">Jouer maintenant</a><a class="btn btn-secondary" href="help-lucky6.html">Comprendre</a></div>
+<p class="desc" data-i18n="games_catalog.lucky6_desc">Choisissez 6 numéros et gagnez selon la position du 6e match.</p>
+<div class="actions"><a class="btn btn-primary" data-i18n="games_catalog.play_now" href="lucky6.html">Jouer maintenant</a><a class="btn btn-secondary" data-i18n="games_catalog.learn" href="help-lucky6.html">Comprendre</a></div>
 </article>
 </div>
 </article>
 <article class="panel">
-<h2>Comprendre les règles</h2>
-<p>Accédez aux aides de chaque jeu pour vérifier la logique et les règles de base.</p>
+<h2 data-i18n="games_catalog.help_title">Comprendre les règles</h2>
+<p data-i18n="games_catalog.help_subtitle">Accédez aux aides de chaque jeu pour vérifier la logique et les règles de base.</p>
 <div class="help-grid">
-<article class="mini-card"><strong>Règles Borlette</strong><p>3 lots, multiplicateurs x60 / x20 / x10, résultat calculé à partir du tirage publié.</p><a class="btn btn-secondary" href="help-borlette.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Mariage</strong><p>Combinaison de deux numéros, ordre non important, gain x5000 sur les 3 lots Borlette.</p><a class="btn btn-secondary" href="help-mariage.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Lotto 3</strong><p>Numéro 000 à 999, ordre exact obligatoire, gain principal = mise × 500.</p><a class="btn btn-secondary" href="help-lotto3.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Lotto 4</strong><p>Numéro 0000 à 9999, ordre exact obligatoire, gain basé sur l’option et le multiplicateur.</p><a class="btn btn-secondary" href="help-lotto4.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Lotto 5</strong><p>Numéro 00000 à 99999, combinaison selon l’option choisie, gain selon le multiplicateur.</p><a class="btn btn-secondary" href="help-lotto5.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Keno</strong><p>Sélection de plusieurs numéros, tirage rapide et gain selon le nombre de matches.</p><a class="btn btn-secondary" href="help-keno.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Roulette</strong><p>Pari sur un numéro, une couleur, une colonne, une douzaine ou un groupe de nombres.</p><a class="btn btn-secondary" href="help-roulette.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles American Roulette</strong><p>Roulette avec 0 et 00, plusieurs types de paris et couleurs verte, rouge et noire.</p><a class="btn btn-secondary" href="help-american-roulette.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Penalty</strong><p>Jeu instantané de tir au but avec résultat selon le côté choisi.</p><a class="btn btn-secondary" href="help-penalty.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Horse Racing</strong><p>Course virtuelle, cheval à choisir et gain lié à la cote du cheval.</p><a class="btn btn-secondary" href="help-horse-racing.html">Ouvrir</a></article>
-<article class="mini-card"><strong>Règles Lucky 6</strong><p>Choix de six boules avant le tirage, gain selon la précision de la sélection.</p><a class="btn btn-secondary" href="help-lucky6.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.borlette_rules_title">Règles Borlette</strong><p data-i18n="games_catalog.borlette_rules">3 lots, multiplicateurs x60 / x20 / x10, résultat calculé à partir du tirage publié.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-borlette.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.mariage_rules_title">Règles Mariage</strong><p data-i18n="games_catalog.mariage_rules">Combinaison de deux numéros, ordre non important, gain x5000 sur les 3 lots Borlette.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-mariage.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.lotto3_rules_title">Règles Lotto 3</strong><p data-i18n="games_catalog.lotto3_rules">Numéro 000 à 999, ordre exact obligatoire, gain principal = mise × 500.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-lotto3.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.lotto4_rules_title">Règles Lotto 4</strong><p data-i18n="games_catalog.lotto4_rules">Numéro 0000 à 9999, ordre exact obligatoire, gain basé sur l’option et le multiplicateur.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-lotto4.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.lotto5_rules_title">Règles Lotto 5</strong><p data-i18n="games_catalog.lotto5_rules">Numéro 00000 à 99999, combinaison selon l’option choisie, gain selon le multiplicateur.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-lotto5.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.keno_rules_title">Règles Keno</strong><p data-i18n="games_catalog.keno_rules">Sélection de plusieurs numéros, tirage rapide et gain selon le nombre de matches.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-keno.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.roulette_rules_title">Règles Roulette</strong><p data-i18n="games_catalog.roulette_rules">Pari sur un numéro, une couleur, une colonne, une douzaine ou un groupe de nombres.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-roulette.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.american_rules_title">Règles American Roulette</strong><p data-i18n="games_catalog.american_rules">Roulette avec 0 et 00, plusieurs types de paris et couleurs verte, rouge et noire.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-american-roulette.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.penalty_rules_title">Règles Penalty</strong><p data-i18n="games_catalog.penalty_rules">Jeu instantané de tir au but avec résultat selon le côté choisi.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-penalty.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.horse_rules_title">Règles Horse Racing</strong><p data-i18n="games_catalog.horse_rules">Course virtuelle, cheval à choisir et gain lié à la cote du cheval.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-horse-racing.html">Ouvrir</a></article>
+<article class="mini-card"><strong data-i18n="games_catalog.lucky6_rules_title">Règles Lucky 6</strong><p data-i18n="games_catalog.lucky6_rules">Choix de six boules avant le tirage, gain selon la précision de la sélection.</p><a class="btn btn-secondary" data-i18n="games_catalog.open" href="help-lucky6.html">Ouvrir</a></article>
 </div>
 </article>
 </section>

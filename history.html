@@ -198,7 +198,9 @@
 
       const STATUS_KEYS = {
         pending:'history_v4.status_pending', won:'history_v4.status_won', lost:'history_v4.status_lost', paid:'history_v4.status_paid',
-        completed:'history_v4.status_completed', cancelled:'history_v4.status_cancelled', confirmed:'history_v4.status_confirmed'
+        completed:'history_v4.status_completed', cancelled:'history_v4.status_cancelled', confirmed:'history_v4.status_confirmed',
+        refunded:'history_v4.status_refunded', failed:'history_v4.status_failed', manual_review:'history_v4.status_manual_review',
+        processing:'history_v4.status_processing', reserved:'history_v4.status_reserved', amount_mismatch:'history_v4.status_amount_mismatch'
       };
 
       function formatCurrency(value, currency = 'HTG') {
@@ -247,7 +249,7 @@
       try {
         historyFeed.innerHTML = `<div class="state-box">${t('history_v3.loading','Chargement de votre historique…')}</div>`;
 
-        const [ticketsResponse, transactionsResponse, depositRequestsResponse, withdrawalRequestsResponse, walletResponse] = await Promise.all([
+        const [ticketsResponse, transactionsResponse, depositRequestsResponse, withdrawalRequestsResponse, plopplopDepositsResponse, plopplopWithdrawalsResponse, walletResponse] = await Promise.all([
           client
             .from('tickets')
             .select('id, ticket_number, game_type, draw_name, total_amount, status, created_at')
@@ -268,6 +270,17 @@
             .select('id, amount, currency, method, status, phone, created_at')
             .eq('user_id', user.id)
             .order('created_at', { ascending: false }),
+          // Dépôts/retraits PlopPlop : nouvelles tables (les *_requests ci-dessus sont l'ancien système).
+          client
+            .from('plopplop_deposits')
+            .select('id, amount, payment_method, status, provider_reference, created_at')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false }),
+          client
+            .from('plopplop_withdrawals')
+            .select('id, amount, method, recipient, status, provider_reference, created_at')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false }),
           client
             .from('wallets')
             .select('balance, currency, status')
@@ -285,6 +298,11 @@
         const transactions = transactionsResponse.data || [];
         const depositRequests = depositRequestsResponse.data || [];
         const withdrawalRequests = withdrawalRequestsResponse.data || [];
+        // Tables PlopPlop tolérantes à l'échec : une erreur ici ne doit pas casser tout l'historique.
+        if (plopplopDepositsResponse.error) console.warn('Erreur plopplop_deposits:', plopplopDepositsResponse.error);
+        if (plopplopWithdrawalsResponse.error) console.warn('Erreur plopplop_withdrawals:', plopplopWithdrawalsResponse.error);
+        const plopplopDeposits = plopplopDepositsResponse.error ? [] : (plopplopDepositsResponse.data || []);
+        const plopplopWithdrawals = plopplopWithdrawalsResponse.error ? [] : (plopplopWithdrawalsResponse.data || []);
         const wallet = walletResponse.data;
 
         const ticketItemsResponse = await client
@@ -525,6 +543,34 @@
             method: item.method,
             phone: item.phone,
             currency: item.currency || currency,
+          })),
+          ...plopplopDeposits.map((item) => ({
+            kind: 'deposit',
+            filter: 'depots',
+            tag: t('history_v4.deposit'),
+            title: `${t('history_v4.deposit')} — ${String(item.payment_method || '—').toUpperCase()}`,
+            meta: `${new Date(item.created_at).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} • ${formatStatusLabel(item.status)}`,
+            amount: `${formatCurrency(Number(item.amount || 0), currency)}`,
+            gain: `Méthode : ${String(item.payment_method || '—').toUpperCase()}`,
+            result: `Référence : ${item.provider_reference || '—'}`,
+            status: item.status,
+            method: item.payment_method,
+            reference: item.provider_reference,
+            currency,
+          })),
+          ...plopplopWithdrawals.map((item) => ({
+            kind: 'withdrawal',
+            filter: 'retraits',
+            tag: t('history_v4.withdrawal'),
+            title: `${t('history_v4.withdrawal')} — ${String(item.method || '—').toUpperCase()}`,
+            meta: `${new Date(item.created_at).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR')} • ${formatStatusLabel(item.status)}`,
+            amount: `${formatCurrency(Number(item.amount || 0), currency)}`,
+            gain: `Méthode : ${String(item.method || '—').toUpperCase()}`,
+            result: `Téléphone : ${item.recipient || '—'}`,
+            status: item.status,
+            method: item.method,
+            phone: item.recipient,
+            currency,
           })),
           ...transactions.map((item) => ({
             kind: 'transaction',

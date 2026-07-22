@@ -111,7 +111,7 @@
 <article class="stat-card">
 <span class="stat-icon gold"><svg viewbox="0 0 24 24"><path d="M4 7h16v10H4z"></path><path d="M7 7V5h10v2"></path><path d="M9 12h6"></path></svg></span>
 <small data-i18n="dashboard_v3.total_tickets"></small>
-<strong data-dashboard-tickets="">0 HTG</strong>
+<strong data-dashboard-tickets="">0</strong>
 </article>
 <article class="stat-card">
 <span class="stat-icon gold"><svg viewbox="0 0 24 24"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v5a5 5 0 0 1-10 0z"></path><path d="M5 6H3a4 4 0 0 0 4 4"></path><path d="M19 6h2a4 4 0 0 1-4 4"></path></svg></span>
@@ -120,8 +120,8 @@
 </article>
 <article class="stat-card">
 <span class="stat-icon"><svg viewbox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15v-4"></path><path d="M12 15V8"></path><path d="M16 15v-6"></path></svg></span>
-<small data-i18n="dashboard_v3.total_wins"></small>
-<strong>0 HTG</strong>
+<small data-i18n="dashboard_v3.total_wager"></small>
+<strong data-dashboard-wager="">0 HTG</strong>
 </article>
 <article class="stat-card">
 <span class="stat-icon"><svg viewbox="0 0 24 24"><path d="M6 7h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"></path><path d="M16 7V5a2 2 0 0 0-2-2H8"></path><path d="M18 13h.01"></path></svg></span>
@@ -222,14 +222,19 @@
 
     function getHistoryStatusLabel(status) {
       const normalized = String(status || '').toLowerCase();
-      const key = { pending:'finance.status.pending', approved:'finance.status.approved', rejected:'finance.status.rejected', completed:'finance.status.completed', paid:'finance.status.paid', failed:'finance.status.failed', cancelled:'finance.status.cancelled' }[normalized];
+      const key = {
+        pending:'finance.status.pending', approved:'finance.status.approved', rejected:'finance.status.rejected',
+        completed:'finance.status.completed', paid:'finance.status.paid', failed:'finance.status.failed',
+        cancelled:'finance.status.cancelled', refunded:'finance.status.refunded', processing:'finance.status.processing',
+        reserved:'finance.status.reserved', manual_review:'finance.status.manual_review', amount_mismatch:'finance.status.amount_mismatch'
+      }[normalized];
       return key ? tkText(key, status) : tkText('finance.status.default', 'Statut indisponible');
     }
 
     function getHistoryStatusClass(status) {
       const normalized = String(status || '').toLowerCase();
-      if (normalized === 'approved') return 'history-badge success';
-      if (normalized === 'rejected') return 'history-badge danger';
+      if (['completed', 'approved', 'paid'].includes(normalized)) return 'history-badge success';
+      if (['rejected', 'failed', 'cancelled', 'amount_mismatch'].includes(normalized)) return 'history-badge danger';
       return 'history-badge pending';
     }
 
@@ -360,6 +365,9 @@
       if (historyContainer) {
         renderQuickHistory(historyContainer, dashboardTranslationState.quickHistoryItems);
       }
+
+      // Recalcule les statistiques pour que le format monétaire suive la nouvelle langue.
+      loadDashboardStats();
     }
 
     function setDashboardRenderer() {
@@ -421,30 +429,57 @@
         return;
       }
 
+      // Les dépôts/retraits PlopPlop sont stockés dans plopplop_deposits/plopplop_withdrawals,
+      // et les opérations manuelles/héritées dans deposit_requests/withdrawal_requests.
+      // On interroge les quatre sources, chacune tolérante à l'échec, puis on fusionne
+      // pour afficher les 4 mouvements les plus récents (dépôts + retraits confondus).
+      const safeQuery = async (promise, type) => {
+        try {
+          const { data, error } = await promise;
+          if (error) return [];
+          return (data || []).map((item) => ({ ...item, type }));
+        } catch {
+          return [];
+        }
+      };
+
       try {
-        const [{ data: deposits = [], error: depositError }, { data: withdrawals = [], error: withdrawalError }] = await Promise.all([
-          client
-            .from('deposit_requests')
-            .select('id, amount, currency, status, created_at, method')
-            .eq('user_id', userId)
-            .order('created_at', { ascending: false })
-            .limit(4),
-          client
-            .from('withdrawal_requests')
-            .select('id, amount, currency, status, created_at, method')
-            .eq('user_id', userId)
-            .order('created_at', { ascending: false })
-            .limit(4)
+        const [ppDeposits, ppWithdrawals, legacyDeposits, legacyWithdrawals] = await Promise.all([
+          safeQuery(
+            client.from('plopplop_deposits')
+              .select('id, amount, payment_method, status, created_at')
+              .eq('user_id', userId)
+              .order('created_at', { ascending: false })
+              .limit(4),
+            'deposit'
+          ),
+          safeQuery(
+            client.from('plopplop_withdrawals')
+              .select('id, amount, method, status, created_at')
+              .eq('user_id', userId)
+              .order('created_at', { ascending: false })
+              .limit(4),
+            'withdrawal'
+          ),
+          safeQuery(
+            client.from('deposit_requests')
+              .select('id, amount, currency, status, created_at, method')
+              .eq('user_id', userId)
+              .order('created_at', { ascending: false })
+              .limit(4),
+            'deposit'
+          ),
+          safeQuery(
+            client.from('withdrawal_requests')
+              .select('id, amount, currency, status, created_at, method')
+              .eq('user_id', userId)
+              .order('created_at', { ascending: false })
+              .limit(4),
+            'withdrawal'
+          )
         ]);
 
-        if (depositError || withdrawalError) {
-          throw depositError || withdrawalError;
-        }
-
-        const merged = [
-          ...(deposits || []).map((item) => ({ ...item, type: 'deposit' })),
-          ...(withdrawals || []).map((item) => ({ ...item, type: 'withdrawal' }))
-        ]
+        const merged = [...ppDeposits, ...ppWithdrawals, ...legacyDeposits, ...legacyWithdrawals]
           .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
           .slice(0, 4);
 
@@ -453,6 +488,58 @@
       } catch (error) {
         console.error('Erreur chargement historique rapide.', error);
         container.innerHTML = `<div class="empty-history-inner"><div><strong>${tkText('common.cannot_load_recent_activity', 'Impossible de charger vos dernières activités.')}</strong></div></div>`;
+      }
+    }
+
+    async function loadDashboardStats() {
+      const ticketsEl = document.querySelector('[data-dashboard-tickets]');
+      const gainsEl = document.querySelector('[data-dashboard-gains]');
+      const wagerEl = document.querySelector('[data-dashboard-wager]');
+      if (!ticketsEl && !gainsEl && !wagerEl) return;
+
+      const currentUser = await (window.getCurrentUserAsync ? window.getCurrentUserAsync() : (window.getCurrentUser ? window.getCurrentUser() : null));
+      const client = window.supabaseClient || null;
+      const userId = currentUser?.id;
+      if (!userId || !client || typeof client.from !== 'function') return;
+
+      const locale = window.TKI18n?.getLocale?.() || 'fr-FR';
+      const money = (value) => `${Number(value || 0).toLocaleString(locale)} HTG`;
+
+      const today = new Date();
+      const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const endOfDay = new Date(startOfDay);
+      endOfDay.setDate(endOfDay.getDate() + 1);
+
+      try {
+        const [ticketsResult, txResult] = await Promise.all([
+          // total_amount = mise du ticket → nombre de tickets (lignes) + total misé (somme).
+          client.from('tickets').select('total_amount').eq('user_id', userId),
+          // Gains du jour : crédits de type « win » validés aujourd'hui.
+          client.from('transactions')
+            .select('amount')
+            .eq('user_id', userId)
+            .eq('type', 'win')
+            .eq('status', 'completed')
+            .gte('created_at', startOfDay.toISOString())
+            .lt('created_at', endOfDay.toISOString())
+        ]);
+
+        if (!ticketsResult.error) {
+          const rows = Array.isArray(ticketsResult.data) ? ticketsResult.data : [];
+          if (ticketsEl) ticketsEl.textContent = rows.length.toLocaleString(locale);
+          if (wagerEl) {
+            const totalWager = rows.reduce((sum, row) => sum + Number(row.total_amount || 0), 0);
+            wagerEl.textContent = money(totalWager);
+          }
+        }
+
+        if (!txResult.error && gainsEl) {
+          const txs = Array.isArray(txResult.data) ? txResult.data : [];
+          const dailyWins = txs.reduce((sum, entry) => sum + Number(entry.amount || 0), 0);
+          gainsEl.textContent = dailyWins > 0 ? `+ ${money(dailyWins)}` : money(0);
+        }
+      } catch (error) {
+        console.error('Erreur chargement statistiques dashboard.', error);
       }
     }
 
@@ -485,7 +572,7 @@
         window.renderDashboardPage(dashboardData);
       }
 
-      await loadQuickHistory();
+      await Promise.all([loadQuickHistory(), loadDashboardStats()]);
 
       const role = String((dashboardData?.profile?.role || currentUser.role || 'client')).toLowerCase();
       const target = window.resolveRoleDestination ? window.resolveRoleDestination(role) : 'dashboard.html';

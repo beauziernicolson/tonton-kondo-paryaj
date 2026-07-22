@@ -200,6 +200,18 @@ body.tk-file-profile .info-item span,
 body.tk-file-wallet .item span,
 body.tk-file-settings .item span,
 body.tk-file-notifications .summary-tile span{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
+
+/* Notifications : le bloc résumé (non lues / affichées / filtre) est dans le .hero,
+   dont la règle générale ".hero strong{color:#fff}" est plus spécifique que la règle
+   ci-dessus et gagnait la cascade, rendant les chiffres blancs sur fond blanc. */
+body.tk-page-account.tk-file-notifications .hero .summary-tile strong,
+body.tk-page-account.tk-file-notifications .hero .summary-tile small,
+body.tk-page-account.tk-file-notifications .hero .summary-tile span{
+  color:#071a35!important;
+  -webkit-text-fill-color:#071a35!important;
+}
+body.tk-page-account.tk-file-notifications .hero .summary-tile small{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
+body.tk-page-account.tk-file-notifications .hero .summary-tile span{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
 body.tk-file-settings .switch-track{background:#cbd5e1!important;border-color:#aebdce!important}
 body.tk-file-settings .setting-switch input:checked + .switch-shell .switch-track{background:#173f70!important}
 
@@ -210,6 +222,33 @@ body.tk-file-tickets .details-card{background:#fff!important;color:#071a35!impor
 body.tk-file-tickets .panel-head h2,
 body.tk-file-tickets .summary-card strong{color:#071a35!important;-webkit-text-fill-color:#071a35!important}
 body.tk-file-tickets .panel-head span{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
+
+/* Historique — « Activité détaillée » : les cartes gardaient le style sombre du
+   thème d'origine alors que la page est claire, et main-pages force la couleur du
+   texte en encre foncée (via .history-feed) → texte foncé sur carte foncée, illisible.
+   On repasse ces cartes en clair pour un contraste correct. */
+body.tk-file-history .history-item{
+  background:#fff!important;
+  border-color:#d8e2ed!important;
+  color:#071a35!important;
+  box-shadow:0 10px 26px rgba(7,26,53,.07)!important;
+}
+body.tk-file-history .history-item strong{color:#071a35!important;-webkit-text-fill-color:#071a35!important}
+body.tk-file-history .history-item span{color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
+body.tk-file-history .history-item em{color:#a87300!important;-webkit-text-fill-color:#a87300!important}
+body.tk-file-history .history-item .tag{
+  background:#eef4fa!important;
+  border-color:#cdd9e7!important;
+  color:#173354!important;
+  -webkit-text-fill-color:#173354!important;
+}
+body.tk-file-history .detail-card{background:#f5f8fc!important;border-color:#dbe5ef!important}
+body.tk-file-history .detail-card-title{color:#a87300!important;-webkit-text-fill-color:#a87300!important}
+body.tk-file-history .detail-row,
+body.tk-file-history .detail-row span{color:#41546d!important;-webkit-text-fill-color:#41546d!important}
+body.tk-file-history .detail-row span:last-child{color:#071a35!important;-webkit-text-fill-color:#071a35!important}
+body.tk-file-history .empty-state,
+body.tk-file-history .state-box{background:#f7faff!important;border-color:#d4dfeb!important;color:#5b6f87!important;-webkit-text-fill-color:#5b6f87!important}
 
 /* Navigation principale blanche */
 body.tk-page-account:not(.tk-file-dashboard) .tk-primary-nav{background:#fff!important;border-color:#d4deea!important}

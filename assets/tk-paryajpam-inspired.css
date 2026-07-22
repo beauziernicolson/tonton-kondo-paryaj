@@ -852,3 +852,7 @@ body.tk-page-game .btn-primary{background:var(--tk-yellow)!important;color:#071a
   body.tk-page-game :where(.num-btn,.number-btn){min-height:38px!important;font-size:12px!important;padding:7px 0!important}
   body.tk-page-game :where(.card,.panel,.field-card){border-radius:14px!important}
 }
+
+/* Return-to-games button text */
+.game-header__actions > a[href="games.html"],.game-header__actions > a[href="games.html"] span{color:#071a35!important;-webkit-text-fill-color:#071a35!important;}
+@media(max-width:760px){.game-header__actions > a[href="games.html"],.game-header__actions > a[href="games.html"] span{color:transparent!important;-webkit-text-fill-color:transparent!important;}}

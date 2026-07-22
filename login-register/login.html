@@ -117,11 +117,13 @@
 <link data-tk-design="paryajpam-inspired-v1" href="../assets/tk-paryajpam-inspired.css" rel="stylesheet"/><meta content="#030b1a" name="theme-color"/><link href="../assets/login-redesign.css" rel="stylesheet"/><link href="../assets/login-redesign-v2.css" rel="stylesheet"/></head>
 <body class="tk-public tk-page-auth tk-file-login">
 <main class="auth-page">
-<section class="auth-card auth-card-redesigned">
+<div class="auth-hero-block">
 <a aria-label="Accueil Tonton Kondo" class="brand auth-hero-brand-v2" href="../index.html">
-<img alt="Logo Tonton Kondo" class="auth-hero-brand-v2__logo" src="../assets/reallogo.png"/>
+<span class="auth-hero-brand-v2__logo">
+<img alt="Logo Tonton Kondo" src="../assets/reallogo.png"/>
+</span>
 <span class="auth-hero-brand-v2__copy">
-<strong>Tonton Kondo</strong>
+<h1>Tonton Kondo</h1>
 <span>PARYAJ</span>
 </span>
 </a><div class="auth-brand-intro">
@@ -129,6 +131,8 @@
 <span class="auth-brand-intro__text" data-i18n="auth.brand_tagline">PLATEFORME DE JEUX &amp; PARYAJ</span>
 <span class="auth-brand-intro__line"></span>
 </div>
+</div>
+<section class="auth-card auth-card-redesigned">
 <div class="tabs">
 <button class="tab active" data-i18n="auth.login_tab" id="loginTab" type="button"><span>↪</span>Connexion</button>
 <button class="tab" data-i18n="auth.register_tab" id="signupTab" type="button"><span>👤+</span>Inscription</button>
@@ -139,7 +143,7 @@
 <div class="form-group" id="phoneGroup">
 <label class="form-label" data-i18n="auth.phone_label" for="phone">Téléphone</label>
 <div class="input-wrap">
-<span class="input-icon">📱</span>
+<span aria-hidden="true" class="input-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
 <input class="form-input" data-i18n-placeholder="auth.phone_placeholder" id="phone" name="phone" placeholder="50933123456 ou 33123456" type="tel"/>
 </div>
 <p class="hint" data-i18n="auth.phone_hint">Connectez-vous avec votre numéro de téléphone.</p>
@@ -147,16 +151,18 @@
 <div class="form-group signup-only" id="fullnameGroup" style="display:none;">
 <label class="form-label" data-i18n="auth.full_name_label" for="fullname">Nom complet</label>
 <div class="input-wrap">
-<span class="input-icon">👤</span>
+<span aria-hidden="true" class="input-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
 <input class="form-input" data-i18n-placeholder="auth.full_name_placeholder" id="fullname" name="full_name" placeholder="Entrez votre nom complet" type="text"/>
 </div>
 </div>
 <div class="form-group">
 <label class="form-label" data-i18n="auth.password_label" for="password">Mot de passe</label>
 <div class="input-wrap">
-<span class="input-icon">🔒</span>
+<span aria-hidden="true" class="input-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
 <input class="form-input" data-i18n-placeholder="auth.password_placeholder" id="password" name="password" placeholder="Entrez votre mot de passe" required="" type="password"/>
-<button aria-label="Afficher ou masquer le mot de passe" class="password-toggle" data-i18n-aria-label="auth.show_password" id="togglePassword" type="button">⌧</button>
+<button aria-label="Afficher ou masquer le mot de passe" class="password-toggle" data-i18n-aria-label="auth.show_password" id="togglePassword" type="button">
+<svg data-eye-off fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+</button>
 </div>
 </div>
 <div class="forgot">
@@ -165,7 +171,7 @@
 <button class="primary-btn" data-i18n="auth.login_button_arrow" id="submitBtn" type="submit">Se connecter →</button>
 <div class="form-message" id="formMessage"></div>
 <div class="divider" data-i18n="auth.or">ou</div>
-<button class="google-btn" data-i18n="auth.continue_google" id="googleBtn" type="button">
+<button class="google-btn" id="googleBtn" type="button">
 <span aria-hidden="true" class="google-icon">
 <svg focusable="false" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M21.805 10.023H12v4.03h5.383c-.23 1.22-.94 2.26-2.01 2.96l3.25 2.52c1.9-1.74 3.0-4.31 3.0-7.37 0-.66-.06-1.3-.18-1.91z" fill="#4285F4"></path>
@@ -174,15 +180,15 @@
 <path d="M12 6.04c1.46 0 2.77.5 3.8 1.49l2.83-2.83C16.95 3.18 14.69 2 12 2 7.82 2 4.08 4.46 2.98 7.5l3.44 2.57C6.78 7.98 9.01 6.04 12 6.04z" fill="#EA4335"></path>
 </svg>
 </span>
-          Continuer avec Google
-        </button>
+<span class="google-btn-label" data-i18n="auth.continue_google" id="googleBtnLabel">Continuer avec Google</span>
+</button>
 <p class="switch-text" id="switchText"><span data-i18n="auth.no_account">Vous n’avez pas encore de compte ?</span> <a data-i18n="auth.register_link" href="#" id="switchLink">Inscrivez-vous</a></p>
 </form>
 </section>
 <section class="trust-bar">
-<div class="trust-item"><div class="trust-icon">🛡</div><div><p class="trust-title" data-i18n="auth.secure_title">Sécurisé et fiable</p><p class="trust-desc" data-i18n="auth.secure_description">Vos données sont protégées</p></div></div>
-<div class="trust-item"><div class="trust-icon">🏆</div><div><p class="trust-title" data-i18n="auth.premium_title">Expérience premium</p><p class="trust-desc" data-i18n="auth.premium_description">Jeux et tirages exclusifs</p></div></div>
-<div class="trust-item"><div class="trust-icon">🎧</div><div><p class="trust-title" data-i18n="auth.support_title">Support 24/7</p><p class="trust-desc" data-i18n="auth.support_description">Notre équipe est là pour vous</p></div></div>
+<div class="trust-item"><div class="trust-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></div><div><p class="trust-title" data-i18n="auth.secure_title">Sécurisé et fiable</p><p class="trust-desc" data-i18n="auth.secure_description">Vos données sont protégées</p></div></div>
+<div class="trust-item"><div class="trust-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"></path><path d="M17 5h3v2a3 3 0 0 1-3 3"></path><path d="M7 5H4v2a3 3 0 0 0 3 3"></path></svg></div><div><p class="trust-title" data-i18n="auth.premium_title">Expérience premium</p><p class="trust-desc" data-i18n="auth.premium_description">Jeux et tirages exclusifs</p></div></div>
+<div class="trust-item"><div class="trust-icon"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg></div><div><p class="trust-title" data-i18n="auth.support_title">Support 24/7</p><p class="trust-desc" data-i18n="auth.support_description">Notre équipe est là pour vous</p></div></div>
 </section>
 </main>
 <script src="../js/i18n.js"></script>
@@ -204,6 +210,7 @@
     const togglePassword = document.getElementById('togglePassword');
     const form = document.getElementById('authForm');
     const googleBtn = document.getElementById('googleBtn');
+    const googleBtnLabel = document.getElementById('googleBtnLabel');
     const formMessage = document.getElementById('formMessage');
     const fullnameInput = document.getElementById('fullname');
     const phoneInput = document.getElementById('phone');
@@ -256,10 +263,12 @@
 
     loginTab.addEventListener('click', () => setMode('login'));
     signupTab.addEventListener('click', () => setMode('signup'));
+    const EYE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+    const EYE_OFF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.53 18.53 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
     togglePassword.addEventListener('click', () => {
       const isPassword = passwordInput.type === 'password';
       passwordInput.type = isPassword ? 'text' : 'password';
-      togglePassword.textContent = isPassword ? '👁' : '⌧';
+      togglePassword.innerHTML = isPassword ? EYE_ICON : EYE_OFF_ICON;
     });
 
     form.addEventListener('submit', async (event) => {
@@ -309,7 +318,7 @@
     googleBtn.addEventListener('click', async () => {
       if (googleBtn.disabled) return;
       googleBtn.disabled = true;
-      googleBtn.textContent = tr('sensitive.auth.google_loading');
+      googleBtnLabel.textContent = tr('sensitive.auth.google_loading');
       setMessage('');
 
       try {
@@ -321,7 +330,7 @@
         setMessage(error?.message || tr('auth.google_failed'), true);
       } finally {
         googleBtn.disabled = false;
-        googleBtn.textContent = tr('auth.continue_google');
+        googleBtnLabel.textContent = tr('auth.continue_google');
       }
     });
 

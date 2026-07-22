@@ -69,9 +69,11 @@
     .check { display:flex; align-items:flex-start; gap:10px; color: var(--muted); font-size:13px; border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:12px; background: rgba(255,255,255,.03); }
     .check input { margin-top:3px; accent-color: var(--gold); }
 
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:14px; border:0; padding:13px 16px; font-weight:900; cursor:pointer; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; border-radius:14px; border:0; padding:13px 16px; font-weight:900; cursor:pointer; }
     .btn-primary { background:linear-gradient(180deg, var(--gold), var(--gold-2)); color:#111; box-shadow:0 10px 28px rgba(255,210,31,.22); }
     .btn-secondary { background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10); color:#fff; }
+    .google-icon { display:flex; align-items:center; justify-content:center; width:20px; height:20px; flex:0 0 auto; background:#fff; border-radius:50%; padding:3px; box-sizing:border-box; }
+    .google-icon svg { width:100%; height:100%; display:block; }
 
     .footer-links { display:flex; gap:8px; flex-wrap:wrap; align-items:center; color: var(--muted); font-size:13px; }
     .inline-link { color: var(--gold); font-weight:700; }
@@ -125,7 +127,17 @@
 <span data-i18n="auth.terms_accept">J’accepte les conditions d’utilisation et la politique de confidentialité du projet Tonton Kondo.</span>
 </label>
 <button class="btn btn-primary" data-i18n="auth.register_button" type="submit">Créer mon compte</button>
-<button class="btn btn-secondary" data-i18n="auth.continue_google" id="googleRegisterBtn" type="button">Créer un compte avec Google</button>
+<button class="btn btn-secondary" id="googleRegisterBtn" type="button">
+<span aria-hidden="true" class="google-icon">
+<svg focusable="false" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M21.805 10.023H12v4.03h5.383c-.23 1.22-.94 2.26-2.01 2.96l3.25 2.52c1.9-1.74 3.0-4.31 3.0-7.37 0-.66-.06-1.3-.18-1.91z" fill="#4285F4"></path>
+<path d="M12 22c2.7 0 4.96-.89 6.62-2.42l-3.25-2.52c-.9.61-2.04.98-3.37.98-2.59 0-4.79-1.75-5.58-4.11L2.98 14.5A9.985 9.985 0 0 0 12 22z" fill="#34A853"></path>
+<path d="M6.42 13.93A6.01 6.01 0 0 1 6.42 10.07L2.98 7.5A10.006 10.006 0 0 0 2 12c0 1.64.4 3.19 1.1 4.5l3.32-2.57z" fill="#FBBC05"></path>
+<path d="M12 6.04c1.46 0 2.77.5 3.8 1.49l2.83-2.83C16.95 3.18 14.69 2 12 2 7.82 2 4.08 4.46 2.98 7.5l3.44 2.57C6.78 7.98 9.01 6.04 12 6.04z" fill="#EA4335"></path>
+</svg>
+</span>
+<span data-i18n="auth.continue_google" id="googleRegisterBtnLabel">Créer un compte avec Google</span>
+</button>
 <a class="btn btn-secondary" data-i18n="auth.already_account" href="login.html">J’ai déjà un compte</a>
 </form>
 <div class="footer-links">
@@ -143,14 +155,15 @@
 <script src="../js/auth-guard.js"></script>
 <script src="../js/plopplop-pending-sync.js"></script>
 <script>
+    const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
     const registerForm = document.getElementById('registerForm');
     const googleRegisterBtn = document.getElementById('googleRegisterBtn');
-    const googleDefaultLabel = googleRegisterBtn?.textContent || 'Créer un compte avec Google';
+    const googleRegisterBtnLabel = document.getElementById('googleRegisterBtnLabel');
+    const googleDefaultLabel = googleRegisterBtnLabel?.textContent || 'Créer un compte avec Google';
 
     registerForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
     const formData = Object.fromEntries(new FormData(registerForm).entries());
 
       if (formData.password !== formData.confirmPassword) {
@@ -195,19 +208,19 @@
       if (googleRegisterBtn.disabled) return;
 
       googleRegisterBtn.disabled = true;
-      googleRegisterBtn.textContent = tr('sensitive.auth.google_loading');
+      googleRegisterBtnLabel.textContent = tr('sensitive.auth.google_loading');
 
       try {
         const result = await window.loginWithGoogle?.();
 
         if (result && !result.ok) {
           googleRegisterBtn.disabled = false;
-          googleRegisterBtn.textContent = googleDefaultLabel;
+          googleRegisterBtnLabel.textContent = googleDefaultLabel;
           window.alert(result.message || 'La connexion Google n’a pas pu être lancée.');
         }
       } catch (error) {
         googleRegisterBtn.disabled = false;
-        googleRegisterBtn.textContent = googleDefaultLabel;
+        googleRegisterBtnLabel.textContent = googleDefaultLabel;
         window.alert(error?.message || 'La connexion Google n’a pas pu être lancée.');
       }
     });

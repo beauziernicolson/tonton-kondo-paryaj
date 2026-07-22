@@ -10,16 +10,21 @@
   const VERIFY_FUNCTION = 'plopplop-verify-withdrawal';
   const VALID_METHODS = new Set(['moncash', 'natcash']);
   const FINAL_STATUSES = new Set(['completed', 'refunded', 'manual_review', 'cancelled']);
-  const STATUS_MESSAGES = {
-    reserved: tr('sensitive.withdraw.reserved'),
-    processing: tr('sensitive.withdraw.processing'),
-    pending: tr('sensitive.withdraw.pending'),
-    completed: tr('sensitive.withdraw.completed'),
-    failed: tr('sensitive.withdraw.failed'),
-    refunded: tr('sensitive.withdraw.refunded'),
-    manual_review: tr('sensitive.withdraw.manual_review'),
-    cancelled: tr('sensitive.withdraw.cancelled')
-  };
+  // Résolu à l'appel (et non au chargement) : sinon les libellés sont figés avant que
+  // les traductions i18n ne soient prêtes et la clé brute s'affiche à la place du texte.
+  function statusMessage(status) {
+    const messages = {
+      reserved: tr('sensitive.withdraw.reserved'),
+      processing: tr('sensitive.withdraw.processing'),
+      pending: tr('sensitive.withdraw.pending'),
+      completed: tr('sensitive.withdraw.completed'),
+      failed: tr('sensitive.withdraw.failed'),
+      refunded: tr('sensitive.withdraw.refunded'),
+      manual_review: tr('sensitive.withdraw.manual_review'),
+      cancelled: tr('sensitive.withdraw.cancelled')
+    };
+    return messages[String(status || '')] || null;
+  }
 
   let busy = false;
   let historyBusy = false;
@@ -120,7 +125,8 @@
         if (body?.error === 'Withdrawal provider is not configured') return { message: tr('sensitive.withdraw.provider_unavailable'), status, reachedServer };
         if (body?.error === 'Insufficient wallet balance') return { message: tr('sensitive.withdraw.insufficient'), status, reachedServer };
         if (body?.error === 'request_id conflict') return { message: tr('sensitive.withdraw.request_conflict'), status, reachedServer };
-        if (status && STATUS_MESSAGES[status]) return { message: STATUS_MESSAGES[status], status, reachedServer };
+        const statusText = statusMessage(status);
+        if (status && statusText) return { message: statusText, status, reachedServer };
         if (body?.error) return { message: String(body.error), status, reachedServer };
       }
     } catch {
@@ -170,7 +176,7 @@
     const message = panel.querySelector('[data-withdraw-status-message]');
     const verifyButton = panel.querySelector('[data-withdraw-verify]');
     if (title) title.textContent = status === 'completed' ? tr('sensitive.withdraw.completed_title') : status === 'refunded' ? tr('sensitive.withdraw.refunded_title') : tr('sensitive.withdraw.tracking_title');
-    if (message) message.textContent = STATUS_MESSAGES[status] || STATUS_MESSAGES.pending;
+    if (message) message.textContent = statusMessage(status) || statusMessage('pending');
     if (verifyButton) verifyButton.hidden = !['pending', 'processing', 'reserved', 'failed'].includes(status);
   }
 
@@ -209,9 +215,9 @@
           <article class="card-item" data-provider="plopplop">
             <strong>${escapeHtml(new Date(item.created_at).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR'))}</strong>
             <span>${escapeHtml(money(item.amount))} • ${escapeHtml(methodLabel(item.method))}</span>
-            <span>Destinataire : ${escapeHtml(maskRecipient(item.recipient))}</span>
+            <span>${tr('sensitive.withdraw.recipient')} : ${escapeHtml(maskRecipient(item.recipient))}</span>
             <span>${tr('sensitive.withdraw.reference')} : ${escapeHtml(item.provider_reference || '—')}</span>
-            <span>Statut : ${escapeHtml(status)}</span>
+            <span>${tr('sensitive.withdraw.status')} : ${escapeHtml(statusMessage(status) || status)}</span>
             ${['pending', 'processing', 'reserved', 'failed'].includes(status) ? `<button class="btn" data-withdraw-request-id="${escapeHtml(item.request_id)}" type="button">${tr('sensitive.withdraw.verify_now')}</button>` : ''}
           </article>`;
       }).join('');
@@ -276,7 +282,7 @@
       const status = String(data?.status || 'pending');
       if (FINAL_STATUSES.has(status)) savePending(null);
       else savePending({ request_id: requestId, amount, method, recipient, status, provider_reference: data?.provider_reference || null, updated_at: new Date().toISOString() });
-      setFeedback(STATUS_MESSAGES[status] || STATUS_MESSAGES.pending, status === 'completed' ? 'success' : status === 'refunded' ? 'warn' : status === 'manual_review' ? 'error' : 'warn');
+      setFeedback(statusMessage(status) || statusMessage('pending'), status === 'completed' ? 'success' : status === 'refunded' ? 'warn' : status === 'manual_review' ? 'error' : 'warn');
       showStatus({ status });
       await Promise.all([loadHistory(), refreshWallet()]);
     } catch (error) {
@@ -315,7 +321,7 @@
       const current = readPending() || {};
       if (FINAL_STATUSES.has(status)) savePending(null);
       else savePending({ ...current, request_id: requestId, status, updated_at: new Date().toISOString() });
-      setFeedback(STATUS_MESSAGES[status] || STATUS_MESSAGES.pending, status === 'completed' ? 'success' : status === 'refunded' ? 'warn' : status === 'manual_review' ? 'error' : 'warn');
+      setFeedback(statusMessage(status) || statusMessage('pending'), status === 'completed' ? 'success' : status === 'refunded' ? 'warn' : status === 'manual_review' ? 'error' : 'warn');
       showStatus({ status });
       await Promise.all([loadHistory(), refreshWallet()]);
     } catch (error) {

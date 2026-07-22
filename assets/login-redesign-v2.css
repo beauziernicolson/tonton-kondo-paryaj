@@ -8,9 +8,10 @@ html body.tk-file-login{
   overflow-x:hidden!important;
   color:#071a35!important;
   background:
-    radial-gradient(circle at 70% 0%,rgba(255,210,31,.12),transparent 24%),
-    radial-gradient(circle at 10% 8%,rgba(57,168,255,.15),transparent 28%),
-    linear-gradient(180deg,#010610 0%,#061426 45%,#020813 100%)!important;
+    radial-gradient(circle at 70% 0%,rgba(255,210,31,.14),transparent 26%),
+    radial-gradient(circle at 10% 8%,rgba(57,168,255,.16),transparent 30%),
+    linear-gradient(180deg,rgba(1,6,16,.82) 0%,rgba(6,20,38,.72) 45%,rgba(2,8,19,.86) 100%),
+    url("back.png") center center/cover no-repeat!important;
   background-attachment:fixed!important;
 }
 
@@ -35,69 +36,94 @@ body.tk-file-login .auth-card-redesigned{
   backdrop-filter:blur(18px)!important;
 }
 
+body.tk-file-login .auth-hero-block{
+  width:min(680px,100%)!important;
+  margin:0 auto 22px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:14px!important;
+}
+
 body.tk-file-login .auth-hero-brand-v2{
   width:100%!important;
-  margin:0 auto 17px!important;
+  margin:0 auto!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
-  gap:22px!important;
+  gap:18px!important;
   text-decoration:none!important;
 }
 
 body.tk-file-login .auth-hero-brand-v2__logo{
-  width:112px!important;
-  height:112px!important;
-  flex:0 0 112px!important;
-  padding:12px!important;
+  width:104px!important;
+  height:104px!important;
+  flex:0 0 104px!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+
+body.tk-file-login .auth-hero-brand-v2__logo img{
+  width:100%!important;
+  height:100%!important;
+  margin:0 auto!important;
   display:block!important;
   object-fit:contain!important;
   object-position:center!important;
-  border-radius:28px!important;
-  background:#ffffff!important;
-  border:1px solid #d3dfeb!important;
-  box-shadow:0 18px 42px rgba(7,26,53,.22)!important;
-  box-sizing:border-box!important;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,.4))!important;
 }
 
 body.tk-file-login .auth-hero-brand-v2__copy{
   display:flex!important;
   flex-direction:column!important;
-  align-items:flex-start!important;
+  align-items:center!important;
   justify-content:center!important;
   min-width:0!important;
 }
 
-body.tk-file-login .auth-hero-brand-v2__copy strong{
+body.tk-file-login .auth-hero-brand-v2__copy h1{
   display:block!important;
-  color:#071a35!important;
-  -webkit-text-fill-color:#071a35!important;
-  font-size:43px!important;
+  margin:0!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:34px!important;
   font-weight:950!important;
   line-height:.92!important;
-  letter-spacing:-.045em!important;
+  letter-spacing:-.03em!important;
   white-space:nowrap!important;
 }
 
 body.tk-file-login .auth-hero-brand-v2__copy span{
   display:block!important;
-  margin-top:13px!important;
-  color:#b67c00!important;
-  -webkit-text-fill-color:#b67c00!important;
-  font-size:14px!important;
+  margin-top:10px!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:12px!important;
   font-weight:950!important;
-  letter-spacing:.43em!important;
+  letter-spacing:.4em!important;
   line-height:1!important;
   text-transform:uppercase!important;
 }
 
 body.tk-file-login .auth-brand-intro{
-  margin:0 auto 28px!important;
+  margin:0 auto!important;
 }
 
 body.tk-file-login .auth-brand-intro__text{
-  color:#5f7187!important;
-  -webkit-text-fill-color:#5f7187!important;
+  color:rgba(255,255,255,.72)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
+}
+
+body.tk-file-login .auth-brand-intro__line{
+  background:rgba(255,255,255,.4)!important;
 }
 
 body.tk-file-login .auth-title,
@@ -122,6 +148,55 @@ body.tk-file-login .tabs{
   margin-inline:auto!important;
 }
 
+/* Icônes (téléphone / personne / cadenas) : elles étaient en position absolute
+   héritée de l'ancien design, ce qui les faisait chevaucher le texte saisi
+   une fois le champ passé en layout flex. On les remet dans le flux flex. */
+body.tk-file-login .input-icon{
+  position:static!important;
+  left:auto!important;
+  top:auto!important;
+  transform:none!important;
+  flex:0 0 auto!important;
+  width:19px!important;
+  height:19px!important;
+  margin-left:15px!important;
+  padding-left:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:#8093ab!important;
+}
+
+body.tk-file-login .input-icon svg{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+}
+
+body.tk-file-login .form-input{
+  flex:1 1 auto!important;
+  min-width:0!important;
+}
+
+body.tk-file-login .password-toggle{
+  position:static!important;
+  right:auto!important;
+  top:auto!important;
+  transform:none!important;
+  flex:0 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:40px!important;
+  height:40px!important;
+  margin-right:6px!important;
+}
+
+body.tk-file-login .password-toggle svg{
+  width:19px!important;
+  height:19px!important;
+}
+
 body.tk-file-login .primary-btn,
 body.tk-file-login .google-btn{
   min-height:54px!important;
@@ -132,6 +207,33 @@ body.tk-file-login .google-btn{
   background:#ffffff!important;
   border:1px solid #cad7e5!important;
   color:#071a35!important;
+  font-weight:750!important;
+  box-shadow:0 8px 20px rgba(7,26,53,.08)!important;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
+}
+
+body.tk-file-login .google-btn:hover{
+  transform:translateY(-1px)!important;
+  border-color:#a9c0d8!important;
+  box-shadow:0 12px 26px rgba(7,26,53,.14)!important;
+}
+
+body.tk-file-login .google-icon{
+  width:22px!important;
+  height:22px!important;
+  flex:0 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+body.tk-file-login .google-icon svg{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
 }
 
 body.tk-file-login .switch-text{
@@ -140,6 +242,40 @@ body.tk-file-login .switch-text{
 
 body.tk-file-login .trust-bar{
   width:min(680px,100%)!important;
+}
+
+/* Barre de confiance : icônes SVG jaunes, titres jaunes, textes blancs. */
+body.tk-file-login .trust-icon{
+  width:42px!important;
+  height:42px!important;
+  flex:0 0 42px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:12px!important;
+  background:rgba(255,210,31,.12)!important;
+  border:1px solid rgba(255,210,31,.24)!important;
+  color:#ffd21f!important;
+  -webkit-text-fill-color:#ffd21f!important;
+  font-size:0!important;
+}
+
+body.tk-file-login .trust-icon svg{
+  width:22px!important;
+  height:22px!important;
+  display:block!important;
+  color:#ffd21f!important;
+  stroke:#ffd21f!important;
+}
+
+body.tk-file-login .trust-title{
+  color:#ffd21f!important;
+  -webkit-text-fill-color:#ffd21f!important;
+}
+
+body.tk-file-login .trust-desc{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
 }
 
 @media(max-width:720px){
@@ -159,15 +295,17 @@ body.tk-file-login .trust-bar{
   }
 
   body.tk-file-login .auth-hero-brand-v2__logo{
-    width:78px!important;
-    height:78px!important;
-    flex-basis:78px!important;
-    padding:8px!important;
-    border-radius:20px!important;
+    width:82px!important;
+    height:82px!important;
+    flex-basis:82px!important;
+    padding:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
   }
 
-  body.tk-file-login .auth-hero-brand-v2__copy strong{
-    font-size:29px!important;
+  body.tk-file-login .auth-hero-brand-v2__copy h1{
+    font-size:26px!important;
   }
 
   body.tk-file-login .auth-hero-brand-v2__copy span{
@@ -188,13 +326,16 @@ body.tk-file-login .trust-bar{
 
 @media(max-width:380px){
   body.tk-file-login .auth-hero-brand-v2__logo{
-    width:66px!important;
-    height:66px!important;
-    flex-basis:66px!important;
+    width:70px!important;
+    height:70px!important;
+    flex-basis:70px!important;
+    padding:0!important;
+    border-radius:0!important;
+    background:transparent!important;
   }
 
-  body.tk-file-login .auth-hero-brand-v2__copy strong{
-    font-size:24px!important;
+  body.tk-file-login .auth-hero-brand-v2__copy h1{
+    font-size:21px!important;
   }
 
   body.tk-file-login .auth-hero-brand-v2__copy span{
