@@ -1,9 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/:path*",
-      "destination": "/maintenance.html"
+      "src": "/(.*)",
+      "status": 503,
+      "headers": {
+        "Cache-Control": "no-store, max-age=0",
+        "Retry-After": "3600"
+      },
+      "dest": "/maintenance.html"
     }
   ]
 }
