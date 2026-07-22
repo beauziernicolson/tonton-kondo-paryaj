@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tonton Kondo — Maintenance</title>
+  <style>
+    :root {
+      --navy: #06152f;
+      --navy-light: #0d2852;
+      --yellow: #ffc928;
+      --white: #ffffff;
+      --muted: #c7d2e5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255, 201, 40, .13), transparent 30%),
+        radial-gradient(circle at 85% 85%, rgba(57, 128, 255, .16), transparent 32%),
+        linear-gradient(145deg, var(--navy), #020817 75%);
+      color: var(--white);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+
+    .glow {
+      position: fixed;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .18;
+      pointer-events: none;
+    }
+
+    .glow.one { top: -160px; left: -100px; background: var(--yellow); }
+    .glow.two { right: -140px; bottom: -160px; background: #246cff; }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 720px);
+      padding: clamp(32px, 6vw, 64px);
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 28px;
+      background: rgba(5, 19, 43, .78);
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+      backdrop-filter: blur(18px);
+    }
+
+    .logo {
+      display: block;
+      width: min(250px, 70%);
+      max-height: 110px;
+      object-fit: contain;
+      margin: 0 auto 30px;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.25));
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 24px;
+      padding: 9px 15px;
+      border-radius: 999px;
+      background: rgba(255, 201, 40, .12);
+      border: 1px solid rgba(255, 201, 40, .34);
+      color: var(--yellow);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--yellow);
+      box-shadow: 0 0 0 5px rgba(255,201,40,.12);
+      animation: pulse 1.6s infinite;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+      font-size: clamp(34px, 7vw, 62px);
+      line-height: 1.05;
+      letter-spacing: -.035em;
+    }
+
+    h1 span { color: var(--yellow); }
+
+    p {
+      max-width: 570px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(16px, 2.5vw, 19px);
+      line-height: 1.7;
+    }
+
+    .separator {
+      width: 70px;
+      height: 4px;
+      margin: 30px auto;
+      border-radius: 99px;
+      background: var(--yellow);
+    }
+
+    .footer {
+      color: rgba(255,255,255,.58);
+      font-size: 13px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(.72); opacity: .55; }
+    }
+
+    @media (max-width: 520px) {
+      body { padding: 16px; }
+      .card { border-radius: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+
+  <main class="card">
+    <img class="logo" src="/assets/reallogo.png" alt="Tonton Kondo">
+
+    <div class="badge">
+      <span class="dot"></span>
+      Maintenance en cours
+    </div>
+
+    <h1>Nou ap tounen <span>byento.</span></h1>
+
+    <p>
+      Tonton Kondo ap fè kèk amelyorasyon pou l ka ofri w yon eksperyans
+      ki pi rapid, pi senp epi pi an sekirite. Mèsi pou pasyans ou.
+    </p>
+
+    <div class="separator"></div>
+
+    <p class="footer">© 2026 Tonton Kondo. Tout dwa rezève.</p>
+  </main>
+</body>
+</html>

@@ -1,29 +1,22 @@
 (function () {
   'use strict';
-  const tr = (key, vars = {}) => window.TKI18n?.t?.(key, vars) || key;
 
   if (window.__TK_PLOPPLOP_DEPOSIT_LOADED__) return;
   window.__TK_PLOPPLOP_DEPOSIT_LOADED__ = true;
 
   const STORAGE_KEY = 'tk-plopplop-pending-deposit-v1';
-  const CREATE_FUNCTION = 'plopplop-create-payment';
+  const CREATE_FUNCTION = 'swift-action';
   const VERIFY_FUNCTION = 'plopplop-verify-payment';
   const VALID_METHODS = new Set(['moncash', 'natcash', 'kashpaw', 'all']);
   const FINAL_STATUSES = new Set(['completed', 'manual_review', 'amount_mismatch', 'cancelled']);
-  // Résolu à l'appel (et non au chargement) : sinon les libellés sont figés
-  // avant que les traductions i18n ne soient prêtes, ce qui affichait la clé brute
-  // « sensitive.deposit.completed » au lieu du texte humain.
-  function statusMessage(status) {
-    const messages = {
-      pending: tr('sensitive.deposit.pending'),
-      completed: tr('sensitive.deposit.completed'),
-      failed: tr('sensitive.deposit.failed'),
-      amount_mismatch: tr('sensitive.deposit.amount_mismatch'),
-      manual_review: tr('sensitive.deposit.manual_review'),
-      cancelled: tr('sensitive.deposit.cancelled')
-    };
-    return messages[String(status || 'pending')] || null;
-  }
+  const STATUS_MESSAGES = {
+    pending: 'Paiement en attente de confirmation. Aucun montant n’a été ajouté.',
+    completed: 'Votre dépôt est confirmé et votre portefeuille a été crédité.',
+    failed: 'La vérification a échoué. Vous pouvez réessayer avec la même référence.',
+    amount_mismatch: 'Le montant reçu est incohérent. Le dépôt est en révision manuelle et aucun crédit n’a été effectué.',
+    manual_review: 'Le paiement nécessite une révision manuelle. Aucun montant n’a été ajouté.',
+    cancelled: 'Ce paiement a été annulé.'
+  };
 
   let busy = false;
   let historyBusy = false;
@@ -92,7 +85,7 @@
     if (!button) return;
     button.disabled = busy;
     button.setAttribute('aria-busy', String(busy));
-    button.textContent = busy ? (label || tr('sensitive.deposit.processing')) : tr('sensitive.deposit.continue');
+    button.textContent = busy ? (label || 'Traitement…') : 'Continuer vers le paiement';
   }
 
   async function getClient() {
@@ -101,7 +94,7 @@
       const client = await window.getSupabaseClient();
       if (client) return client;
     }
-    throw new Error(tr('sensitive.deposit.supabase_unavailable'));
+    throw new Error('Connexion Supabase indisponible.');
   }
 
   async function requireSession(client) {
@@ -109,7 +102,7 @@
     if (error || !data?.session) {
       window.saveRedirectTarget?.('deposit.html');
       window.tryRedirectToLogin?.('login-register/login.html');
-      throw new Error(tr('sensitive.deposit.login_required'));
+      throw new Error('Vous devez être connecté.');
     }
     return data.session;
   }
@@ -120,21 +113,21 @@
       if (response && typeof response.clone === 'function') {
         const body = await response.clone().json();
         if (body?.error === 'Payment provider is not configured') {
-          return tr('sensitive.deposit.provider_locked');
+          return 'Le service PlopPlop est verrouillé jusqu’à la validation de sa configuration.';
         }
         if (body?.error === 'Redirect origins are not configured') {
-          return tr('sensitive.deposit.redirect_unavailable');
+          return 'Les domaines officiels de redirection PlopPlop ne sont pas encore confirmés.';
         }
         if (body?.error === 'request_id conflict') {
-          return tr('sensitive.deposit.request_conflict');
+          return 'Cette référence correspond à un autre montant ou à une autre méthode.';
         }
-        if (body?.status === 'manual_review') return statusMessage('manual_review');
+        if (body?.status === 'manual_review') return STATUS_MESSAGES.manual_review;
         if (body?.error) return String(body.error);
       }
     } catch {
       // Le message générique ci-dessous reste sûr.
     }
-    return error?.message || tr('sensitive.deposit.generic_error');
+    return error?.message || 'Une erreur est survenue. Réessayez sans changer le montant ni la méthode.';
   }
 
   function validRedirectUrl(value) {
@@ -160,15 +153,15 @@
       <strong data-plopplop-status-title>Suivi du paiement</strong>
       <p data-plopplop-status-message></p>
       <div class="btn-row">
-        <button class="btn btn-primary" data-plopplop-verify type="button">${tr('sensitive.deposit.verify_payment')}</button>
-        <button class="btn" data-plopplop-clear type="button">${tr('sensitive.deposit.new_attempt')}</button>
+        <button class="btn btn-primary" data-plopplop-verify type="button">Vérifier le paiement</button>
+        <button class="btn" data-plopplop-clear type="button">Nouvelle tentative</button>
       </div>`;
 
     byId('feedback-box')?.insertAdjacentElement('afterend', panel);
     panel.querySelector('[data-plopplop-verify]')?.addEventListener('click', async () => {
       const pending = readPending();
       if (!pending?.request_id) {
-        setFeedback(tr('sensitive.deposit.no_pending'), 'warn');
+        setFeedback('Aucun paiement en attente.', 'warn');
         return;
       }
       await verifyPayment(pending.request_id);
@@ -176,7 +169,7 @@
     panel.querySelector('[data-plopplop-clear]')?.addEventListener('click', () => {
       savePending(null);
       panel.hidden = true;
-      setFeedback(tr('sensitive.deposit.new_attempt_ready'), 'warn');
+      setFeedback('Vous pouvez démarrer une nouvelle tentative.', 'warn');
     });
     return panel;
   }
@@ -188,8 +181,8 @@
     const title = panel.querySelector('[data-plopplop-status-title]');
     const message = panel.querySelector('[data-plopplop-status-message]');
     const verifyButton = panel.querySelector('[data-plopplop-verify]');
-    if (title) title.textContent = status === 'completed' ? tr('sensitive.deposit.confirmed_title') : tr('sensitive.deposit.tracking_title');
-    if (message) message.textContent = statusMessage(status) || statusMessage('failed');
+    if (title) title.textContent = status === 'completed' ? 'Paiement confirmé' : 'Suivi du paiement';
+    if (message) message.textContent = STATUS_MESSAGES[status] || STATUS_MESSAGES.failed;
     if (verifyButton) verifyButton.hidden = status !== 'pending' && status !== 'failed';
   }
 
@@ -198,7 +191,7 @@
   }
 
   function methodLabel(value) {
-    return ({ moncash: 'MonCash', natcash: 'NatCash', kashpaw: 'KashPaw', all: tr('sensitive.deposit.all_methods') })[String(value || '').toLowerCase()] || '—';
+    return ({ moncash: 'MonCash', natcash: 'NatCash', kashpaw: 'KashPaw', all: 'Toutes' })[String(value || '').toLowerCase()] || '—';
   }
 
   async function loadHistory() {
@@ -221,7 +214,7 @@
       if (error) throw error;
 
       if (!data?.length) {
-        list.innerHTML = `<div class="card-item"><strong>${tr('sensitive.deposit.empty_title')}</strong><span>${tr('sensitive.deposit.empty_text')}</span></div>`;
+        list.innerHTML = '<div class="card-item"><strong>Aucun dépôt PlopPlop</strong><span>Vos futurs paiements apparaîtront ici.</span></div>';
         return;
       }
 
@@ -229,13 +222,13 @@
         <article class="card-item" data-provider="plopplop">
           <strong>${escapeHtml(new Date(item.created_at).toLocaleString(window.TKI18n?.getLocale?.() || 'fr-FR'))}</strong>
           <span>${escapeHtml(money(item.amount))} • ${escapeHtml(methodLabel(item.payment_method))}</span>
-          <span>${tr('sensitive.deposit.reference')} : ${escapeHtml(item.provider_reference || '—')}</span>
-          <span>${tr('sensitive.deposit.status')} : ${escapeHtml(statusMessage(item.status) || String(item.status || 'pending'))}</span>
-          ${item.status === 'pending' ? `<button class="btn" data-request-id="${escapeHtml(item.request_id)}" type="button">${tr('sensitive.deposit.verify_now')}</button>` : ''}
+          <span>Réf. : ${escapeHtml(item.provider_reference || '—')}</span>
+          <span>Statut : ${escapeHtml(String(item.status || 'pending'))}</span>
+          ${item.status === 'pending' ? `<button class="btn" data-request-id="${escapeHtml(item.request_id)}" type="button">Vérifier maintenant</button>` : ''}
         </article>`).join('');
     } catch (error) {
       console.error('Erreur historique PlopPlop.', error);
-      list.innerHTML = `<div class="card-item"><strong>${tr('sensitive.deposit.history_unavailable')}</strong><span>${tr('sensitive.deposit.reload')}</span></div>`;
+      list.innerHTML = '<div class="card-item"><strong>Historique indisponible</strong><span>Rechargez la page pour réessayer.</span></div>';
     } finally {
       historyBusy = false;
     }
@@ -260,15 +253,15 @@
     const amount = Number(byId('amount-input')?.value);
     const paymentMethod = String(byId('method-input')?.value || '').trim().toLowerCase();
     if (!Number.isFinite(amount) || amount < 20 || Math.abs(amount * 100 - Math.round(amount * 100)) > 1e-8) {
-      setFeedback(tr('sensitive.deposit.min_error'), 'error');
+      setFeedback('Le montant minimum est de 20 HTG.', 'error');
       return;
     }
     if (!VALID_METHODS.has(paymentMethod)) {
-      setFeedback(tr('sensitive.deposit.method_error'), 'error');
+      setFeedback('Choisissez une méthode PlopPlop valide.', 'error');
       return;
     }
 
-    setBusy(true, tr('sensitive.deposit.connecting'));
+    setBusy(true, 'Connexion à PlopPlop…');
     const requestId = getOrCreateRequestId(amount, paymentMethod);
 
     try {
@@ -294,14 +287,14 @@
       await loadHistory();
 
       if (data?.payment_url && !redirect) {
-        throw new Error(tr('sensitive.deposit.invalid_url'));
+        throw new Error('L’URL de paiement retournée est invalide.');
       }
       if (redirect) {
-        setFeedback(tr('sensitive.deposit.redirecting'), 'success');
+        setFeedback('Redirection vers la page de paiement sécurisée…', 'success');
         window.location.assign(redirect);
         return;
       }
-      setFeedback(statusMessage(status) || statusMessage('pending'), status === 'pending' ? 'warn' : 'error');
+      setFeedback(STATUS_MESSAGES[status] || STATUS_MESSAGES.pending, status === 'pending' ? 'warn' : 'error');
     } catch (error) {
       const message = await parseFunctionError(error);
       setFeedback(message, 'error');
@@ -329,7 +322,7 @@
       if (status === 'completed') savePending(null);
       else savePending({ ...current, request_id: requestId, status, updated_at: new Date().toISOString() });
 
-      setFeedback(statusMessage(status) || statusMessage('failed'), status === 'completed' ? 'success' : (status === 'pending' ? 'warn' : 'error'));
+      setFeedback(STATUS_MESSAGES[status] || STATUS_MESSAGES.failed, status === 'completed' ? 'success' : (status === 'pending' ? 'warn' : 'error'));
       showStatus({ status });
       await Promise.all([loadHistory(), refreshWallet()]);
     } catch (error) {
